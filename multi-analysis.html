@@ -1,300 +1,436 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>MayTya AI | Multi Timeframe</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>MayTya AI | Smart Market Analysis</title>
+
+<!-- Lightweight Charts -->
+<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.min.js"></script>
+
 
 <style>
+
+/* ================================
+   RESET
+================================ */
+
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+box-sizing:border-box;
+margin:0;
+padding:0;
 }
+
+
+/* ================================
+   BODY
+================================ */
 
 body{
-  font-family:Arial,sans-serif;
-  background:#070707;
-  color:#fff;
+font-family:Arial,sans-serif;
+background:#070707;
+color:#fff;
 }
 
+
+/* ================================
+   HEADER
+================================ */
+
 header{
-  text-align:center;
-  padding:22px 15px;
-  background:#0d0d0d;
-  border-bottom:1px solid #30260f;
+text-align:center;
+padding:22px 15px;
+background:#0d0d0d;
+border-bottom:1px solid #30260f;
 }
 
 .logo{
-  color:#d6ad45;
-  font-size:28px;
-  font-weight:900;
-  letter-spacing:2px;
+color:#d6ad45;
+font-size:28px;
+font-weight:900;
+letter-spacing:2px;
 }
 
 .subtitle{
-  color:#777;
-  font-size:11px;
-  margin-top:7px;
+color:#777;
+font-size:11px;
+margin-top:7px;
 }
+
+
+/* ================================
+   CONTAINER
+================================ */
 
 .container{
-  max-width:1200px;
-  margin:auto;
-  padding:20px 14px 40px;
+max-width:1200px;
+margin:auto;
+padding:20px 14px 40px;
 }
 
+
+/* ================================
+   TITLE
+================================ */
+
 .title{
-  text-align:center;
-  padding:20px 0;
+text-align:center;
+padding:20px 0;
 }
 
 .title h1{
-  font-size:27px;
+font-size:27px;
 }
 
 .title span{
-  color:#d6ad45;
+color:#d6ad45;
 }
 
-/* ASSETS */
+
+/* ================================
+   ASSET SELECTOR
+================================ */
 
 .asset-selector{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-bottom:20px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin-bottom:20px;
 }
 
 .asset{
-  padding:15px 8px;
-  background:#111;
-  border:1px solid #30260f;
-  border-radius:12px;
-  text-align:center;
-  cursor:pointer;
-  transition:.2s;
+padding:15px 8px;
+background:#111;
+border:1px solid #30260f;
+border-radius:12px;
+text-align:center;
+cursor:pointer;
+transition:.2s;
 }
 
 .asset:hover{
-  border-color:#d6ad45;
+border-color:#d6ad45;
 }
 
 .asset.active{
-  border-color:#d6ad45;
-  color:#d6ad45;
-  box-shadow:0 0 15px rgba(214,173,69,.08);
+border-color:#d6ad45;
+color:#d6ad45;
+box-shadow:0 0 15px rgba(214,173,69,.08);
 }
 
-/* PRICE */
+
+/* ================================
+   PRICE CARD
+================================ */
 
 .price-card{
-  background:linear-gradient(145deg,#171717,#0c0c0c);
-  border:1px solid #30260f;
-  border-radius:20px;
-  padding:20px;
-  margin-bottom:20px;
+background:linear-gradient(145deg,#171717,#0c0c0c);
+border:1px solid #30260f;
+border-radius:20px;
+padding:20px;
+margin-bottom:20px;
 }
 
 .price-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
 }
 
 .asset-name{
-  color:#d6ad45;
-  font-size:21px;
-  font-weight:bold;
+color:#d6ad45;
+font-size:21px;
+font-weight:bold;
 }
 
 .live{
-  color:#55d68a;
-  font-size:11px;
+color:#55d68a;
+font-size:11px;
 }
 
 .price{
-  font-size:34px;
-  font-weight:bold;
-  margin-top:12px;
+font-size:34px;
+font-weight:bold;
+margin-top:12px;
 }
 
-/* MULTI TIMEFRAME */
+
+/* ================================
+   CHART
+================================ */
+
+.chart-card{
+background:linear-gradient(145deg,#151515,#0b0b0b);
+border:1px solid #30260f;
+border-radius:20px;
+padding:15px;
+margin-bottom:20px;
+overflow:hidden;
+}
+
+.chart-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:12px;
+}
+
+.chart-title{
+color:#d6ad45;
+font-size:18px;
+font-weight:bold;
+}
+
+.chart-subtitle{
+color:#666;
+font-size:10px;
+margin-top:5px;
+}
+
+.chart-tf{
+color:#d6ad45;
+background:#111;
+border:1px solid #30260f;
+padding:8px 13px;
+border-radius:10px;
+font-size:12px;
+}
+
+#chart{
+width:100%;
+height:420px;
+border-radius:14px;
+overflow:hidden;
+}
+
+
+/* ================================
+   SECTION TITLE
+================================ */
 
 .section-title{
-  color:#d6ad45;
-  font-size:18px;
-  font-weight:bold;
-  margin:25px 0 14px;
+color:#d6ad45;
+font-size:18px;
+font-weight:bold;
+margin:25px 0 14px;
 }
+
+
+/* ================================
+   TIMEFRAME GRID
+================================ */
 
 .timeframe-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:14px;
 }
 
+
+/* ================================
+   TIMEFRAME CARD
+================================ */
+
 .tf-card{
-  background:linear-gradient(145deg,#151515,#0b0b0b);
-  border:1px solid #30260f;
-  border-radius:18px;
-  padding:18px;
+background:linear-gradient(145deg,#151515,#0b0b0b);
+border:1px solid #30260f;
+border-radius:18px;
+padding:18px;
 }
 
 .tf-title{
-  text-align:center;
-  font-size:20px;
-  font-weight:bold;
-  color:#d6ad45;
-  padding-bottom:14px;
-  border-bottom:1px solid #292929;
-  margin-bottom:14px;
+text-align:center;
+font-size:20px;
+font-weight:bold;
+color:#d6ad45;
+padding-bottom:14px;
+border-bottom:1px solid #292929;
+margin-bottom:14px;
 }
 
+
+/* ================================
+   ROW
+================================ */
+
 .row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:10px 0;
-  border-bottom:1px solid #1c1c1c;
-  gap:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px 0;
+border-bottom:1px solid #1c1c1c;
+gap:10px;
 }
 
 .row:last-child{
-  border-bottom:0;
+border-bottom:0;
 }
 
 .label{
-  color:#777;
-  font-size:12px;
+color:#777;
+font-size:12px;
 }
 
 .value{
-  font-size:14px;
-  font-weight:bold;
-  text-align:left;
+font-size:14px;
+font-weight:bold;
+text-align:left;
 }
 
 .support{
-  color:#55d68a;
+color:#55d68a;
 }
 
 .resistance{
-  color:#ff6262;
+color:#ff6262;
 }
 
 .bull{
-  color:#55d68a;
+color:#55d68a;
 }
 
 .bear{
-  color:#ff6262;
+color:#ff6262;
 }
 
 .neutral{
-  color:#d6ad45;
+color:#d6ad45;
 }
 
-/* SUMMARY */
+
+/* ================================
+   SUMMARY
+================================ */
 
 .summary{
-  margin-top:20px;
-  background:linear-gradient(145deg,#171717,#0c0c0c);
-  border:1px solid #30260f;
-  border-radius:20px;
-  padding:20px;
+margin-top:20px;
+background:linear-gradient(145deg,#171717,#0c0c0c);
+border:1px solid #30260f;
+border-radius:20px;
+padding:20px;
 }
 
 .summary-title{
-  color:#d6ad45;
-  font-size:19px;
-  font-weight:bold;
-  margin-bottom:15px;
+color:#d6ad45;
+font-size:19px;
+font-weight:bold;
+margin-bottom:15px;
 }
 
 .summary-box{
-  background:#101010;
-  border:1px solid #29210e;
-  border-radius:14px;
-  padding:15px;
-  margin-bottom:10px;
+background:#101010;
+border:1px solid #29210e;
+border-radius:14px;
+padding:15px;
+margin-bottom:10px;
 }
 
 .summary-label{
-  color:#777;
-  font-size:12px;
-  margin-bottom:8px;
+color:#777;
+font-size:12px;
+margin-bottom:8px;
 }
 
 .summary-value{
-  font-size:17px;
-  font-weight:bold;
+font-size:17px;
+font-weight:bold;
 }
 
-/* STATUS */
+
+/* ================================
+   STATUS
+================================ */
 
 .status{
-  margin-top:18px;
-  background:#101010;
-  border-radius:14px;
-  padding:15px;
-  color:#aaa;
-  line-height:1.8;
-  text-align:center;
+margin-top:18px;
+background:#101010;
+border-radius:14px;
+padding:15px;
+color:#aaa;
+line-height:1.8;
+text-align:center;
 }
+
+
+/* ================================
+   NOTICE
+================================ */
 
 .notice{
-  margin-top:18px;
-  padding:13px;
-  border-radius:12px;
-  background:#0d0d0d;
-  border:1px solid #241d0c;
-  color:#777;
-  font-size:11px;
-  line-height:1.8;
-  text-align:center;
+margin-top:18px;
+padding:13px;
+border-radius:12px;
+background:#0d0d0d;
+border:1px solid #241d0c;
+color:#777;
+font-size:11px;
+line-height:1.8;
+text-align:center;
 }
+
+
+/* ================================
+   BACK
+================================ */
 
 .back{
-  display:block;
-  text-align:center;
-  color:#d6ad45;
-  text-decoration:none;
-  margin-top:25px;
+display:block;
+text-align:center;
+color:#d6ad45;
+text-decoration:none;
+margin-top:25px;
 }
 
-/* MOBILE */
+
+/* ================================
+   MOBILE
+================================ */
 
 @media(max-width:800px){
 
-  .timeframe-grid{
-    grid-template-columns:1fr;
-  }
+.timeframe-grid{
+grid-template-columns:1fr;
+}
 
 }
 
 @media(max-width:550px){
 
-  .asset-selector{
-    grid-template-columns:1fr;
-  }
+.asset-selector{
+grid-template-columns:1fr;
+}
 
-  .price{
-    font-size:28px;
-  }
+.price{
+font-size:28px;
+}
 
-  .title h1{
-    font-size:23px;
-  }
+.title h1{
+font-size:23px;
+}
+
+#chart{
+height:330px;
+}
 
 }
+
 </style>
+
 </head>
 
 
 <body>
+
+
+<!-- ================================
+     HEADER
+================================ -->
 
 <header>
 
@@ -309,20 +445,28 @@ SMART MULTI-TIMEFRAME MARKET ANALYSIS
 </header>
 
 
+
 <main class="container">
 
+
+<!-- ================================
+     TITLE
+================================ -->
 
 <section class="title">
 
 <h1>
 📊 تحلیل
-<span>چندتایم‌فریمی</span>
+<span>هوشمند بازار</span>
 </h1>
 
 </section>
 
 
-<!-- ASSET SELECTOR -->
+
+<!-- ================================
+     ASSETS
+================================ -->
 
 <div class="asset-selector">
 
@@ -350,13 +494,19 @@ onclick="selectAsset('GOLD',this)"
 </div>
 
 
-<!-- PRICE -->
+
+<!-- ================================
+     PRICE
+================================ -->
 
 <section class="price-card">
 
 <div class="price-top">
 
-<div id="assetName" class="asset-name">
+<div
+id="assetName"
+class="asset-name"
+>
 ₿ BTC / USDT
 </div>
 
@@ -366,21 +516,64 @@ onclick="selectAsset('GOLD',this)"
 
 </div>
 
-<div id="price" class="price">
+<div
+id="price"
+class="price"
+>
 در حال دریافت...
 </div>
 
 </section>
 
 
-<!-- TIMEFRAME -->
+
+<!-- ================================
+     CHART
+================================ -->
+
+<section class="chart-card">
+
+<div class="chart-header">
+
+<div>
+
+<div class="chart-title">
+📈 چارت زنده بازار
+</div>
+
+<div class="chart-subtitle">
+Candles / EMA20 / EMA50 / Support / Resistance
+</div>
+
+</div>
+
+<div
+id="chartTimeframe"
+class="chart-tf"
+>
+15M
+</div>
+
+</div>
+
+<div id="chart"></div>
+
+</section>
+
+
+
+<!-- ================================
+     TIMEFRAMES
+================================ -->
 
 <div class="section-title">
 📊 وضعیت هم‌زمان تایم‌فریم‌ها
 </div>
 
 
+
 <div class="timeframe-grid">
+
 
 
 <!-- 15M -->
@@ -393,40 +586,62 @@ onclick="selectAsset('GOLD',this)"
 
 <div class="row">
 <span class="label">روند</span>
-<strong id="trend15m" class="value">—</strong>
+<strong
+id="trend15m"
+class="value"
+>—</strong>
 </div>
 
 <div class="row">
 <span class="label">RSI</span>
-<strong id="rsi15m" class="value">—</strong>
+<strong
+id="rsi15m"
+class="value"
+>—</strong>
 </div>
 
 <div class="row">
 <span class="label">EMA 20</span>
-<strong id="ema2015m" class="value">—</strong>
+<strong
+id="ema2015m"
+class="value"
+>—</strong>
 </div>
 
 <div class="row">
 <span class="label">EMA 50</span>
-<strong id="ema5015m" class="value">—</strong>
+<strong
+id="ema5015m"
+class="value"
+>—</strong>
 </div>
 
 <div class="row">
 <span class="label">حمایت</span>
-<strong id="support15m" class="value support">—</strong>
+<strong
+id="support15m"
+class="value support"
+>—</strong>
 </div>
 
 <div class="row">
 <span class="label">مقاومت</span>
-<strong id="resistance15m" class="value resistance">—</strong>
+<strong
+id="resistance15m"
+class="value resistance"
+>—</strong>
 </div>
 
 <div class="row">
 <span class="label">قدرت بازار</span>
-<strong id="strength15m" class="value">—</strong>
+<strong
+id="strength15m"
+class="value"
+>—</strong>
 </div>
 
 </div>
+
 
 
 <!-- 1H -->
@@ -439,40 +654,62 @@ onclick="selectAsset('GOLD',this)"
 
 <div class="row">
 <span class="label">روند</span>
-<strong id="trend1h" class="value">—</strong>
+<strong
+id="trend1h"
+class="value"
+>—</strong>
 </div>
 
 <div class="row">
 <span class="label">RSI</span>
-<strong id="rsi1h" class="value">—</strong>
+<strong
+id="rsi1h"
+class="value"
+>—</strong>
 </div>
 
 <div class="row">
 <span class="label">EMA 20</span>
-<strong id="ema201h" class="value">—</strong>
+<strong
+id="ema201h"
+class="value"
+>—</strong>
 </div>
 
 <div class="row">
 <span class="label">EMA 50</span>
-<strong id="ema501h" class="value">—</strong>
+<strong
+id="ema501h"
+class="value"
+>—</strong>
 </div>
 
 <div class="row">
 <span class="label">حمایت</span>
-<strong id="support1h" class="value support">—</strong>
+<strong
+id="support1h"
+class="value support"
+>—</strong>
 </div>
 
 <div class="row">
 <span class="label">مقاومت</span>
-<strong id="resistance1h" class="value resistance">—</strong>
+<strong
+id="resistance1h"
+class="value resistance"
+>—</strong>
 </div>
 
 <div class="row">
 <span class="label">قدرت بازار</span>
-<strong id="strength1h" class="value">—</strong>
+<strong
+id="strength1h"
+class="value"
+>—</strong>
 </div>
 
 </div>
+
 
 
 <!-- 4H -->
@@ -485,45 +722,70 @@ onclick="selectAsset('GOLD',this)"
 
 <div class="row">
 <span class="label">روند</span>
-<strong id="trend4h" class="value">—</strong>
+<strong
+id="trend4h"
+class="value"
+>—</strong>
 </div>
 
 <div class="row">
 <span class="label">RSI</span>
-<strong id="rsi4h" class="value">—</strong>
+<strong
+id="rsi4h"
+class="value"
+>—</strong>
 </div>
 
 <div class="row">
 <span class="label">EMA 20</span>
-<strong id="ema204h" class="value">—</strong>
+<strong
+id="ema204h"
+class="value"
+>—</strong>
 </div>
 
 <div class="row">
 <span class="label">EMA 50</span>
-<strong id="ema504h" class="value">—</strong>
+<strong
+id="ema504h"
+class="value"
+>—</strong>
 </div>
 
 <div class="row">
 <span class="label">حمایت</span>
-<strong id="support4h" class="value support">—</strong>
+<strong
+id="support4h"
+class="value support"
+>—</strong>
 </div>
 
 <div class="row">
 <span class="label">مقاومت</span>
-<strong id="resistance4h" class="value resistance">—</strong>
+<strong
+id="resistance4h"
+class="value resistance"
+>—</strong>
 </div>
 
 <div class="row">
 <span class="label">قدرت بازار</span>
-<strong id="strength4h" class="value">—</strong>
+<strong
+id="strength4h"
+class="value"
+>—</strong>
 </div>
 
 </div>
 
+
 </div>
 
 
-<!-- SUMMARY -->
+
+<!-- ================================
+     SUMMARY
+================================ -->
 
 <section class="summary">
 
@@ -531,13 +793,17 @@ onclick="selectAsset('GOLD',this)"
 🧠 جمع‌بندی هوشمند بازار
 </div>
 
+
 <div class="summary-box">
 
 <div class="summary-label">
 هم‌جهتی روندها
 </div>
 
-<div id="alignment" class="summary-value">
+<div
+id="alignment"
+class="summary-value"
+>
 در حال محاسبه...
 </div>
 
@@ -550,7 +816,10 @@ onclick="selectAsset('GOLD',this)"
 قدرت غالب
 </div>
 
-<div id="dominantStrength" class="summary-value">
+<div
+id="dominantStrength"
+class="summary-value"
+>
 در حال محاسبه...
 </div>
 
@@ -563,7 +832,10 @@ onclick="selectAsset('GOLD',this)"
 وضعیت چندتایم‌فریمی
 </div>
 
-<div id="multiSignal" class="summary-value">
+<div
+id="multiSignal"
+class="summary-value"
+>
 در حال محاسبه...
 </div>
 
@@ -576,7 +848,10 @@ onclick="selectAsset('GOLD',this)"
 سناریوی صعودی
 </div>
 
-<div id="bullScenario" class="summary-value bull">
+<div
+id="bullScenario"
+class="summary-value bull"
+>
 —
 </div>
 
@@ -589,7 +864,10 @@ onclick="selectAsset('GOLD',this)"
 سناریوی نزولی
 </div>
 
-<div id="bearScenario" class="summary-value bear">
+<div
+id="bearScenario"
+class="summary-value bear"
+>
 —
 </div>
 
@@ -598,10 +876,23 @@ onclick="selectAsset('GOLD',this)"
 </section>
 
 
-<div id="status" class="status">
+
+<!-- ================================
+     STATUS
+================================ -->
+
+<div
+id="status"
+class="status"
+>
 ⏳ در حال دریافت اطلاعات بازار...
 </div>
 
+
+
+<!-- ================================
+     NOTICE
+================================ -->
 
 <div class="notice">
 
@@ -609,6 +900,7 @@ onclick="selectAsset('GOLD',this)"
 مقادیر نمایش‌داده‌شده تضمین‌کننده خرید یا فروش نیستند.
 
 </div>
+
 
 
 <a
@@ -622,9 +914,33 @@ class="back"
 </main>
 
 
+
 <script>
 
+/* =================================
+   SETTINGS
+================================= */
+
 let currentAsset="BTC";
+
+let chart=null;
+
+let candleSeries=null;
+
+let ema20Series=null;
+
+let ema50Series=null;
+
+let supportLine=null;
+
+let resistanceLine=null;
+
+
+const intervals=[
+"15m",
+"1h",
+"4h"
+];
 
 
 const assets={
@@ -642,19 +958,18 @@ symbol:"ETHUSDT"
 };
 
 
-const intervals=[
-"15m",
-"1h",
-"4h"
-];
-
-
 let marketData={};
 
 
+
+/* =================================
+   PRICE FORMAT
+================================= */
+
 function formatPrice(value){
 
-return "$"+Number(value).toLocaleString(
+return "$"+
+Number(value).toLocaleString(
 undefined,
 {
 maximumFractionDigits:2
@@ -664,17 +979,29 @@ maximumFractionDigits:2
 }
 
 
+
+/* =================================
+   EMA
+================================= */
+
 function ema(values,period){
 
 if(values.length<period)
 return null;
 
-const multiplier=2/(period+1);
+
+const multiplier=
+2/(period+1);
+
 
 let result=
 values
 .slice(0,period)
-.reduce((a,b)=>a+b,0)/period;
+.reduce(
+(a,b)=>a+b,
+0
+)/period;
+
 
 for(
 let i=period;
@@ -684,21 +1011,33 @@ i++
 
 result=
 (values[i]-result)
-*multiplier+result;
+*multiplier+
+result;
 
 }
+
 
 return result;
 
 }
 
 
-function calculateRSI(values,period=14){
+
+/* =================================
+   RSI
+================================= */
+
+function calculateRSI(
+values,
+period=14
+){
 
 if(values.length<=period)
 return null;
 
+
 let gains=0;
+
 let losses=0;
 
 
@@ -711,17 +1050,23 @@ i++
 const change=
 values[i]-values[i-1];
 
+
 if(change>0)
+
 gains+=change;
 
 else
+
 losses+=Math.abs(change);
 
 }
 
 
-let avgGain=gains/period;
-let avgLoss=losses/period;
+let avgGain=
+gains/period;
+
+let avgLoss=
+losses/period;
 
 
 for(
@@ -733,11 +1078,15 @@ i++
 const change=
 values[i]-values[i-1];
 
+
 const gain=
 change>0?change:0;
 
+
 const loss=
-change<0?Math.abs(change):0;
+change<0?
+Math.abs(change):
+0;
 
 
 avgGain=
@@ -762,35 +1111,35 @@ const rs=
 avgGain/avgLoss;
 
 
-return 100-(100/(1+rs));
+return 100-
+(
+100/(1+rs)
+);
 
 }
 
 
-function setValue(id,value,className="value"){
 
-const el=document.getElementById(id);
-
-if(!el)
-return;
-
-el.innerText=value;
-
-el.className=className;
-
-}
-
+/* =================================
+   ANALYZE CANDLES
+================================= */
 
 function analyze(candles){
 
 const closes=
-candles.map(c=>Number(c[4]));
+candles.map(
+c=>Number(c[4])
+);
 
 const highs=
-candles.map(c=>Number(c[2]));
+candles.map(
+c=>Number(c[2])
+);
 
 const lows=
-candles.map(c=>Number(c[3]));
+candles.map(
+c=>Number(c[3])
+);
 
 
 const price=
@@ -800,21 +1149,29 @@ closes[closes.length-1];
 const ema20=
 ema(closes,20);
 
+
 const ema50=
 ema(closes,50);
+
 
 const rsi=
 calculateRSI(closes);
 
 
 const support=
-Math.min(...lows.slice(-20));
+Math.min(
+...lows.slice(-20)
+);
+
 
 const resistance=
-Math.max(...highs.slice(-20));
+Math.max(
+...highs.slice(-20)
+);
 
 
 let trend;
+
 let trendClass;
 
 
@@ -824,6 +1181,7 @@ ema20>ema50
 ){
 
 trend="🟢 صعودی";
+
 trendClass="value bull";
 
 }
@@ -834,6 +1192,7 @@ ema20<ema50
 ){
 
 trend="🔴 نزولی";
+
 trendClass="value bear";
 
 }
@@ -841,33 +1200,44 @@ trendClass="value bear";
 else{
 
 trend="🟡 خنثی";
+
 trendClass="value neutral";
 
 }
 
 
 let strength;
+
 let strengthClass;
 
 
 if(rsi>=60){
 
-strength="🟢 خریداران قوی";
-strengthClass="value bull";
+strength=
+"🟢 خریداران قوی";
+
+strengthClass=
+"value bull";
 
 }
 
 else if(rsi<=40){
 
-strength="🔴 فروشندگان قوی";
-strengthClass="value bear";
+strength=
+"🔴 فروشندگان قوی";
+
+strengthClass=
+"value bear";
 
 }
 
 else{
 
-strength="🟡 تعادل نسبی";
-strengthClass="value neutral";
+strength=
+"🟡 تعادل نسبی";
+
+strengthClass=
+"value neutral";
 
 }
 
@@ -881,7 +1251,8 @@ ema20>ema50 &&
 rsi>=55
 ){
 
-signal="🟢 تمایل صعودی";
+signal=
+"🟢 تمایل صعودی";
 
 }
 
@@ -891,13 +1262,15 @@ ema20<ema50 &&
 rsi<=45
 ){
 
-signal="🔴 تمایل نزولی";
+signal=
+"🔴 تمایل نزولی";
 
 }
 
 else{
 
-signal="🟡 رنج / انتظار";
+signal=
+"🟡 رنج / انتظار";
 
 }
 
@@ -921,34 +1294,344 @@ signal
 }
 
 
-async function fetchTimeframe(interval){
 
-const symbol=
-assets[currentAsset].symbol;
+/* =================================
+   CREATE CHART
+================================= */
 
+function createChart(){
 
-const url=
-`https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=100`;
-
-
-const response=
-await fetch(url);
+const container=
+document.getElementById("chart");
 
 
-if(!response.ok)
-throw new Error("API ERROR");
+if(!container)
+return;
 
 
-const candles=
-await response.json();
+chart=
+LightweightCharts.createChart(
+container,
+{
+
+layout:{
+background:{
+color:"#0b0b0b"
+},
+textColor:"#999"
+},
+
+grid:{
+vertLines:{
+color:"#171717"
+},
+horzLines:{
+color:"#171717"
+}
+},
+
+rightPriceScale:{
+borderColor:"#292929"
+},
+
+timeScale:{
+borderColor:"#292929",
+timeVisible:true,
+secondsVisible:false
+}
+
+}
+);
 
 
-return analyze(candles);
+candleSeries=
+chart.addCandlestickSeries({
+
+upColor:"#55d68a",
+
+downColor:"#ff6262",
+
+borderVisible:false,
+
+wickUpColor:"#55d68a",
+
+wickDownColor:"#ff6262"
+
+});
+
+
+ema20Series=
+chart.addLineSeries({
+
+color:"#d6ad45",
+
+lineWidth:2,
+
+title:"EMA20"
+
+});
+
+
+ema50Series=
+chart.addLineSeries({
+
+color:"#777",
+
+lineWidth:2,
+
+title:"EMA50"
+
+});
 
 }
 
 
-function renderTimeframe(interval,data){
+
+/* =================================
+   EMA DATA
+================================= */
+
+function calculateEMAData(
+values,
+period,
+candles
+){
+
+if(values.length<period)
+return[];
+
+
+const multiplier=
+2/(period+1);
+
+
+let previous=
+values
+.slice(0,period)
+.reduce(
+(a,b)=>a+b,
+0
+)/period;
+
+
+const result=[];
+
+
+result.push({
+
+time:
+Math.floor(
+candles[period-1][0]/1000
+),
+
+value:previous
+
+});
+
+
+for(
+let i=period;
+i<values.length;
+i++
+){
+
+previous=
+(values[i]-previous)
+*multiplier+
+previous;
+
+
+result.push({
+
+time:
+Math.floor(
+candles[i][0]/1000
+),
+
+value:previous
+
+});
+
+}
+
+
+return result;
+
+}
+
+
+
+/* =================================
+   UPDATE CHART
+================================= */
+
+function updateChart(
+candles,
+support,
+resistance
+){
+
+if(!chart)
+createChart();
+
+
+const formatted=
+candles.map(c=>({
+
+time:
+Math.floor(c[0]/1000),
+
+open:Number(c[1]),
+
+high:Number(c[2]),
+
+low:Number(c[3]),
+
+close:Number(c[4])
+
+}));
+
+
+candleSeries.setData(
+formatted
+);
+
+
+const closes=
+candles.map(
+c=>Number(c[4])
+);
+
+
+const ema20Data=
+calculateEMAData(
+closes,
+20,
+candles
+);
+
+
+const ema50Data=
+calculateEMAData(
+closes,
+50,
+candles
+);
+
+
+ema20Series.setData(
+ema20Data
+);
+
+
+ema50Series.setData(
+ema50Data
+);
+
+
+/* SUPPORT */
+
+if(supportLine){
+
+candleSeries.removePriceLine(
+supportLine
+);
+
+}
+
+
+supportLine=
+candleSeries.createPriceLine({
+
+price:support,
+
+color:"#55d68a",
+
+lineWidth:1,
+
+lineStyle:
+LightweightCharts.LineStyle.Dashed,
+
+axisLabelVisible:true,
+
+title:"SUPPORT"
+
+});
+
+
+/* RESISTANCE */
+
+if(resistanceLine){
+
+candleSeries.removePriceLine(
+resistanceLine
+);
+
+}
+
+
+resistanceLine=
+candleSeries.createPriceLine({
+
+price:resistance,
+
+color:"#ff6262",
+
+lineWidth:1,
+
+lineStyle:
+LightweightCharts.LineStyle.Dashed,
+
+axisLabelVisible:true,
+
+title:"RESISTANCE"
+
+});
+
+
+chart
+.timeScale()
+.fitContent();
+
+}
+
+
+
+/* =================================
+   SET VALUE
+================================= */
+
+function setValue(
+id,
+value,
+className="value"
+){
+
+const el=
+document.getElementById(id);
+
+
+if(!el)
+return;
+
+
+el.innerText=value;
+
+el.className=
+className;
+
+}
+
+
+
+/* =================================
+   RENDER TIMEFRAME
+================================= */
+
+function renderTimeframe(
+interval,
+data
+){
 
 const id=
 interval.toLowerCase();
@@ -964,7 +1647,7 @@ data.trendClass
 setValue(
 "rsi"+id,
 data.rsi.toFixed(2),
-" value"
+"value"
 );
 
 
@@ -1005,6 +1688,55 @@ data.strengthClass
 }
 
 
+
+/* =================================
+   FETCH TIMEFRAME
+================================= */
+
+async function fetchTimeframe(
+interval
+){
+
+const symbol=
+assets[currentAsset].symbol;
+
+
+const url=
+`https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=100`;
+
+
+const response=
+await fetch(url);
+
+
+if(!response.ok)
+
+throw new Error(
+"Binance API Error"
+);
+
+
+const candles=
+await response.json();
+
+
+return{
+
+candles,
+
+data:
+analyze(candles)
+
+};
+
+}
+
+
+
+/* =================================
+   SUMMARY
+================================= */
+
 function updateSummary(){
 
 const data15=
@@ -1017,7 +1749,11 @@ const data4h=
 marketData["4h"];
 
 
-if(!data15 || !data1h || !data4h)
+if(
+!data15 ||
+!data1h ||
+!data4h
+)
 return;
 
 
@@ -1030,18 +1766,16 @@ data4h
 
 const bullish=
 all.filter(
-x=>x.signal.includes("صعودی")
+x=>
+x.signal.includes("صعودی")
 ).length;
 
 
 const bearish=
 all.filter(
-x=>x.signal.includes("نزولی")
+x=>
+x.signal.includes("نزولی")
 ).length;
-
-
-const neutral=
-3-bullish-bearish;
 
 
 let alignment;
@@ -1049,38 +1783,44 @@ let alignment;
 
 if(bullish===3){
 
-alignment="🟢 هر ۳ تایم‌فریم صعودی";
+alignment=
+"🟢 هر ۳ تایم‌فریم صعودی";
 
 }
 
 else if(bearish===3){
 
-alignment="🔴 هر ۳ تایم‌فریم نزولی";
+alignment=
+"🔴 هر ۳ تایم‌فریم نزولی";
 
 }
 
 else if(bullish>bearish){
 
-alignment="🟢 تمایل غالب صعودی";
+alignment=
+"🟢 تمایل غالب صعودی";
 
 }
 
 else if(bearish>bullish){
 
-alignment="🔴 تمایل غالب نزولی";
+alignment=
+"🔴 تمایل غالب نزولی";
 
 }
 
 else{
 
-alignment="🟡 ترکیبی / بدون هم‌جهتی";
+alignment=
+"🟡 ترکیبی / بدون هم‌جهتی";
 
 }
 
 
 document.getElementById(
 "alignment"
-).innerText=alignment;
+).innerText=
+alignment;
 
 
 const buyers=
@@ -1100,26 +1840,30 @@ let strength;
 
 if(buyers>sellers){
 
-strength="🟢 قدرت بیشتر خریداران";
+strength=
+"🟢 قدرت بیشتر خریداران";
 
 }
 
 else if(sellers>buyers){
 
-strength="🔴 قدرت بیشتر فروشندگان";
+strength=
+"🔴 قدرت بیشتر فروشندگان";
 
 }
 
 else{
 
-strength="🟡 قدرت متعادل";
+strength=
+"🟡 قدرت متعادل";
 
 }
 
 
 document.getElementById(
 "dominantStrength"
-).innerText=strength;
+).innerText=
+strength;
 
 
 let multiSignal;
@@ -1127,43 +1871,60 @@ let multiSignal;
 
 if(bullish>=2){
 
-multiSignal="🟢 تمایل چندتایم‌فریمی صعودی";
+multiSignal=
+"🟢 تمایل چندتایم‌فریمی صعودی";
 
 }
 
 else if(bearish>=2){
 
-multiSignal="🔴 تمایل چندتایم‌فریمی نزولی";
+multiSignal=
+"🔴 تمایل چندتایم‌فریمی نزولی";
 
 }
 
 else{
 
-multiSignal="🟡 وضعیت ترکیبی";
+multiSignal=
+"🟡 وضعیت ترکیبی";
 
 }
 
 
 document.getElementById(
 "multiSignal"
-).innerText=multiSignal;
+).innerText=
+multiSignal;
 
+
+/* BULL */
 
 document.getElementById(
 "bullScenario"
 ).innerText=
 "عبور معتبر از مقاومت 1H: "+
-formatPrice(data1h.resistance);
+formatPrice(
+data1h.resistance
+);
 
+
+/* BEAR */
 
 document.getElementById(
 "bearScenario"
 ).innerText=
 "شکست معتبر حمایت 1H: "+
-formatPrice(data1h.support);
+formatPrice(
+data1h.support
+);
 
 }
 
+
+
+/* =================================
+   LOAD ALL
+================================= */
 
 async function loadAll(){
 
@@ -1171,16 +1932,21 @@ if(currentAsset==="GOLD"){
 
 document.getElementById(
 "assetName"
-).innerText="🥇 XAU / USD";
+).innerText=
+"🥇 XAU / USD";
+
 
 document.getElementById(
 "price"
-).innerText="اتصال داده واقعی طلا در مرحله بعد";
+).innerText=
+"اتصال داده واقعی طلا در مرحله بعد";
+
 
 document.getElementById(
 "status"
 ).innerText=
 "🥇 اتصال داده واقعی XAU/USD هنوز فعال نشده است.";
+
 
 return;
 
@@ -1196,51 +1962,88 @@ assets[currentAsset].name;
 document.getElementById(
 "status"
 ).innerText=
-"⏳ دریافت هم‌زمان داده‌های 15M / 1H / 4H...";
+"⏳ دریافت داده‌های بازار...";
 
 
 try{
 
 const results=
 await Promise.all(
+
 intervals.map(
-interval=>fetchTimeframe(interval)
+interval=>
+fetchTimeframe(interval)
 )
+
 );
 
 
 marketData={};
 
+
 intervals.forEach(
 (interval,index)=>{
-marketData[interval]=results[index];
+
+marketData[interval]=
+results[index].data;
+
+
 renderTimeframe(
 interval,
-results[index]
+results[index].data
 );
+
 }
 );
 
 
+/* PRICE */
+
 document.getElementById(
 "price"
 ).innerText=
-formatPrice(results[0].price);
+formatPrice(
+results[0].data.price
+);
 
+
+/* CHART = 15M */
+
+document.getElementById(
+"chartTimeframe"
+).innerText=
+"15M";
+
+
+updateChart(
+
+results[0].candles,
+
+results[0].data.support,
+
+results[0].data.resistance
+
+);
+
+
+/* SUMMARY */
 
 updateSummary();
 
+
+/* STATUS */
 
 document.getElementById(
 "status"
 ).innerText=
 "✅ داده‌های 15M، 1H و 4H با موفقیت به‌روزرسانی شدند.";
 
-
 }
+
 catch(error){
 
 console.error(error);
+
 
 document.getElementById(
 "status"
@@ -1252,19 +2055,46 @@ document.getElementById(
 }
 
 
-function selectAsset(asset,element){
 
-currentAsset=asset;
+/* =================================
+   SELECT ASSET
+================================= */
+
+function selectAsset(
+asset,
+element
+){
+
+currentAsset=
+asset;
 
 
 document
 .querySelectorAll(".asset")
 .forEach(
-el=>el.classList.remove("active")
+el=>
+el.classList.remove("active")
 );
 
 
-element.classList.add("active");
+element.classList.add(
+"active"
+);
+
+
+if(asset==="GOLD"){
+
+if(chart){
+
+candleSeries.setData([]);
+
+ema20Series.setData([]);
+
+ema50Series.setData([]);
+
+}
+
+}
 
 
 loadAll();
@@ -1272,8 +2102,17 @@ loadAll();
 }
 
 
+
+/* =================================
+   START
+================================= */
+
 loadAll();
 
+
+/* =================================
+   AUTO REFRESH
+================================= */
 
 setInterval(
 loadAll,
@@ -1282,5 +2121,7 @@ loadAll,
 
 </script>
 
+
 </body>
+
 </html>
