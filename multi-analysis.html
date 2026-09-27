@@ -4,14 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>MayTya AI | Multi Analysis</title>
+<title>MayTya AI | Smart Multi Analysis</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
   font-family:Arial,sans-serif;
@@ -40,7 +36,7 @@ header{
 }
 
 .container{
-  max-width:1000px;
+  max-width:1050px;
   margin:auto;
   padding:20px 14px 40px;
 }
@@ -50,19 +46,14 @@ header{
   padding:20px 0;
 }
 
-.title h1{
-  font-size:27px;
-}
-
-.title span{
-  color:#d6ad45;
-}
+.title h1{font-size:27px}
+.title span{color:#d6ad45}
 
 .asset-selector{
   display:flex;
   gap:10px;
   overflow-x:auto;
-  margin-bottom:18px;
+  margin-bottom:15px;
 }
 
 .asset{
@@ -97,8 +88,9 @@ header{
   cursor:pointer;
 }
 
-.tf:hover{
+.tf.active{
   border-color:#d6ad45;
+  color:#d6ad45;
 }
 
 .main-card{
@@ -145,16 +137,59 @@ header{
   font-weight:bold;
 }
 
-.support{
+.support{color:#55d68a}
+.resistance{color:#ff6262}
+.trend{color:#d6ad45}
+
+.bull{
   color:#55d68a;
 }
 
-.resistance{
+.bear{
   color:#ff6262;
 }
 
-.trend{
+.neutral{
   color:#d6ad45;
+}
+
+.analysis{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-top:12px;
+}
+
+.indicator{
+  background:#101010;
+  border:1px solid #29210e;
+  border-radius:14px;
+  padding:16px;
+}
+
+.signal{
+  margin-top:18px;
+  padding:18px;
+  border-radius:15px;
+  background:#0d0d0d;
+  border:1px solid #30260f;
+}
+
+.signal-title{
+  color:#d6ad45;
+  font-weight:bold;
+  margin-bottom:12px;
+}
+
+.signal-row{
+  display:flex;
+  justify-content:space-between;
+  padding:7px 0;
+  border-bottom:1px solid #1d1d1d;
+}
+
+.signal-row:last-child{
+  border-bottom:0;
 }
 
 .status{
@@ -187,7 +222,9 @@ header{
 }
 
 @media(max-width:550px){
-  .grid{
+
+  .grid,
+  .analysis{
     grid-template-columns:1fr;
   }
 
@@ -208,20 +245,20 @@ header{
 <main class="container">
 
 <section class="title">
-  <h1>📊 تحلیل <span>چندتایم‌فریمی</span></h1>
+  <h1>📊 تحلیل <span>هوشمند بازار</span></h1>
 </section>
 
 <div class="asset-selector">
 
-  <div class="asset active" onclick="selectAsset('BTC')">
+  <div class="asset active" onclick="selectAsset('BTC',this)">
     ₿ بیت‌کوین
   </div>
 
-  <div class="asset" onclick="selectAsset('ETH')">
+  <div class="asset" onclick="selectAsset('ETH',this)">
     Ξ اتریوم
   </div>
 
-  <div class="asset" onclick="selectAsset('GOLD')">
+  <div class="asset" onclick="selectAsset('GOLD',this)">
     🥇 طلا
   </div>
 
@@ -229,15 +266,15 @@ header{
 
 <div class="timeframes">
 
-  <div class="tf" onclick="loadAnalysis('15m')">
+  <div class="tf active" onclick="loadAnalysis('15m',this)">
     15M
   </div>
 
-  <div class="tf" onclick="loadAnalysis('1h')">
+  <div class="tf" onclick="loadAnalysis('1h',this)">
     1H
   </div>
 
-  <div class="tf" onclick="loadAnalysis('4h')">
+  <div class="tf" onclick="loadAnalysis('4h',this)">
     4H
   </div>
 
@@ -277,6 +314,53 @@ header{
 
   </div>
 
+  <div class="analysis">
+
+    <div class="indicator">
+      <div class="label">RSI</div>
+      <div id="rsi" class="value">—</div>
+    </div>
+
+    <div class="indicator">
+      <div class="label">EMA 20</div>
+      <div id="ema20" class="value">—</div>
+    </div>
+
+    <div class="indicator">
+      <div class="label">EMA 50</div>
+      <div id="ema50" class="value">—</div>
+    </div>
+
+    <div class="indicator">
+      <div class="label">قدرت بازار</div>
+      <div id="strength" class="value">—</div>
+    </div>
+
+  </div>
+
+  <div class="signal">
+
+    <div class="signal-title">
+      🎯 سناریوی معاملاتی
+    </div>
+
+    <div class="signal-row">
+      <span>سناریوی صعودی</span>
+      <strong id="bullScenario" class="bull">—</strong>
+    </div>
+
+    <div class="signal-row">
+      <span>سناریوی نزولی</span>
+      <strong id="bearScenario" class="bear">—</strong>
+    </div>
+
+    <div class="signal-row">
+      <span>وضعیت فعلی</span>
+      <strong id="marketSignal">—</strong>
+    </div>
+
+  </div>
+
   <div id="status" class="status">
     ⏳ در حال دریافت اطلاعات بازار...
   </div>
@@ -284,8 +368,7 @@ header{
 </section>
 
 <div class="notice">
-  ⚠️ این تحلیل به‌صورت خودکار از داده‌های بازار محاسبه می‌شود
-  و سیگنال قطعی خرید یا فروش محسوب نمی‌شود.
+  ⚠️ تحلیل‌ها بر اساس داده‌های بازار و محاسبات تکنیکال تولید می‌شوند و سیگنال قطعی خرید یا فروش نیستند.
 </div>
 
 <a href="index.html" class="back">
@@ -297,6 +380,7 @@ header{
 <script>
 
 let currentAsset = "BTC";
+let currentInterval = "15m";
 
 const assets = {
 
@@ -313,157 +397,18 @@ const assets = {
 };
 
 
-function selectAsset(asset){
+function formatPrice(value){
 
-  currentAsset = asset;
-
-  document.querySelectorAll(".asset")
-    .forEach(el => el.classList.remove("active"));
-
-  event.currentTarget.classList.add("active");
-
-  if(asset === "GOLD"){
-
-    document.getElementById("assetTitle").innerText =
-      "🥇 XAU / USD";
-
-    document.getElementById("price").innerText =
-      "در حال اتصال...";
-
-    document.getElementById("status").innerText =
-      "🥇 اتصال تحلیل طلا در مرحله بعد فعال می‌شود.";
-
-    document.getElementById("trend").innerText = "—";
-    document.getElementById("support").innerText = "—";
-    document.getElementById("resistance").innerText = "—";
-
-    return;
-  }
-
-  document.getElementById("assetTitle").innerText =
-    assets[asset].name;
-
-  loadAnalysis(
-    document.getElementById("timeframe").innerText.toLowerCase()
+  return "$" + Number(value).toLocaleString(
+    undefined,
+    {maximumFractionDigits:2}
   );
-}
-
-
-async function loadAnalysis(interval){
-
-  if(currentAsset === "GOLD"){
-    document.getElementById("status").innerText =
-      "🥇 تحلیل چندتایم‌فریمی طلا در مرحله بعد فعال می‌شود.";
-    return;
-  }
-
-  document.getElementById("timeframe").innerText =
-    interval.toUpperCase();
-
-  document.getElementById("status").innerText =
-    "⏳ در حال دریافت داده‌های بازار...";
-
-  try{
-
-    const symbol =
-      assets[currentAsset].symbol;
-
-    const response = await fetch(
-      `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=50`
-    );
-
-    if(!response.ok){
-      throw new Error("API Error");
-    }
-
-    const candles = await response.json();
-
-    const closes =
-      candles.map(c => Number(c[4]));
-
-    const highs =
-      candles.map(c => Number(c[2]));
-
-    const lows =
-      candles.map(c => Number(c[3]));
-
-    const price =
-      closes[closes.length - 1];
-
-    const short =
-      closes.slice(-10)
-      .reduce((a,b)=>a+b,0) / 10;
-
-    const long =
-      closes.slice(-30)
-      .reduce((a,b)=>a+b,0) / 30;
-
-    let trend;
-
-    if(short > long){
-      trend = "🟢 صعودی";
-    }
-    else if(short < long){
-      trend = "🔴 نزولی";
-    }
-    else{
-      trend = "🟡 خنثی";
-    }
-
-    const support =
-      Math.min(...lows.slice(-20));
-
-    const resistance =
-      Math.max(...highs.slice(-20));
-
-    document.getElementById("price").innerText =
-      "$" +
-      price.toLocaleString(
-        undefined,
-        {maximumFractionDigits:2}
-      );
-
-    document.getElementById("trend").innerText =
-      trend;
-
-    document.getElementById("support").innerText =
-      "$" +
-      support.toLocaleString(
-        undefined,
-        {maximumFractionDigits:2}
-      );
-
-    document.getElementById("resistance").innerText =
-      "$" +
-      resistance.toLocaleString(
-        undefined,
-        {maximumFractionDigits:2}
-      );
-
-    document.getElementById("status").innerText =
-      "✅ تحلیل " +
-      assets[currentAsset].name +
-      " در تایم‌فریم " +
-      interval.toUpperCase() +
-      " به‌روزرسانی شد.";
-
-  }
-
-  catch(error){
-
-    console.error(error);
-
-    document.getElementById("status").innerText =
-      "⚠️ دریافت اطلاعات بازار با مشکل مواجه شد.";
-
-  }
 
 }
 
 
-loadAnalysis("15m");
+function ema(values,period){
 
-</script>
+  if(values.length < period) return null;
 
-</body>
-</html>
+  const multiplier = 2/(period+1);
