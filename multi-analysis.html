@@ -1,2127 +1,1751 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
+<title>MayTya AI | Market Engine</title>
 
-<title>MayTya AI | Smart Market Analysis</title>
-
-<!-- Lightweight Charts -->
-<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.min.js"></script>
-
+<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
 
 <style>
-
-/* ================================
-   RESET
-================================ */
-
 *{
-box-sizing:border-box;
-margin:0;
-padding:0;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
-
-
-/* ================================
-   BODY
-================================ */
 
 body{
-font-family:Arial,sans-serif;
-background:#070707;
-color:#fff;
+  font-family:Arial,sans-serif;
+  background:#070707;
+  color:#fff;
 }
 
-
-/* ================================
-   HEADER
-================================ */
-
 header{
-text-align:center;
-padding:22px 15px;
-background:#0d0d0d;
-border-bottom:1px solid #30260f;
+  text-align:center;
+  padding:22px 15px;
+  background:#0d0d0d;
+  border-bottom:1px solid #30260f;
 }
 
 .logo{
-color:#d6ad45;
-font-size:28px;
-font-weight:900;
-letter-spacing:2px;
+  color:#d6ad45;
+  font-size:28px;
+  font-weight:900;
+  letter-spacing:2px;
 }
 
 .subtitle{
-color:#777;
-font-size:11px;
-margin-top:7px;
+  color:#777;
+  font-size:11px;
+  margin-top:7px;
 }
-
-
-/* ================================
-   CONTAINER
-================================ */
 
 .container{
-max-width:1200px;
-margin:auto;
-padding:20px 14px 40px;
+  max-width:1200px;
+  margin:auto;
+  padding:20px 14px 45px;
 }
 
-
-/* ================================
-   TITLE
-================================ */
-
 .title{
-text-align:center;
-padding:20px 0;
+  text-align:center;
+  padding:15px 0 20px;
 }
 
 .title h1{
-font-size:27px;
+  font-size:27px;
 }
 
 .title span{
-color:#d6ad45;
+  color:#d6ad45;
 }
 
-
-/* ================================
-   ASSET SELECTOR
-================================ */
-
-.asset-selector{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px;
-margin-bottom:20px;
+.assets{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:18px;
 }
 
 .asset{
-padding:15px 8px;
-background:#111;
-border:1px solid #30260f;
-border-radius:12px;
-text-align:center;
-cursor:pointer;
-transition:.2s;
-}
-
-.asset:hover{
-border-color:#d6ad45;
+  background:#111;
+  border:1px solid #30260f;
+  border-radius:12px;
+  padding:15px;
+  text-align:center;
+  cursor:pointer;
 }
 
 .asset.active{
-border-color:#d6ad45;
-color:#d6ad45;
-box-shadow:0 0 15px rgba(214,173,69,.08);
+  color:#d6ad45;
+  border-color:#d6ad45;
 }
 
-
-/* ================================
-   PRICE CARD
-================================ */
+.price-card,
+.chart-card,
+.summary,
+.tf-card{
+  background:linear-gradient(145deg,#171717,#0b0b0b);
+  border:1px solid #30260f;
+  border-radius:20px;
+}
 
 .price-card{
-background:linear-gradient(145deg,#171717,#0c0c0c);
-border:1px solid #30260f;
-border-radius:20px;
-padding:20px;
-margin-bottom:20px;
+  padding:20px;
+  margin-bottom:18px;
 }
 
 .price-top{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
 .asset-name{
-color:#d6ad45;
-font-size:21px;
-font-weight:bold;
+  color:#d6ad45;
+  font-size:21px;
+  font-weight:bold;
 }
 
 .live{
-color:#55d68a;
-font-size:11px;
+  color:#55d68a;
+  font-size:11px;
 }
 
 .price{
-font-size:34px;
-font-weight:bold;
-margin-top:12px;
+  font-size:34px;
+  font-weight:bold;
+  margin-top:12px;
 }
-
-
-/* ================================
-   CHART
-================================ */
 
 .chart-card{
-background:linear-gradient(145deg,#151515,#0b0b0b);
-border:1px solid #30260f;
-border-radius:20px;
-padding:15px;
-margin-bottom:20px;
-overflow:hidden;
+  padding:15px;
+  margin-bottom:22px;
 }
 
-.chart-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:12px;
+.chart-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
 }
 
 .chart-title{
-color:#d6ad45;
-font-size:18px;
-font-weight:bold;
+  color:#d6ad45;
+  font-size:18px;
+  font-weight:bold;
 }
 
-.chart-subtitle{
-color:#666;
-font-size:10px;
-margin-top:5px;
+.chart-info{
+  color:#777;
+  font-size:10px;
+  margin-top:5px;
 }
 
 .chart-tf{
-color:#d6ad45;
-background:#111;
-border:1px solid #30260f;
-padding:8px 13px;
-border-radius:10px;
-font-size:12px;
+  color:#d6ad45;
+  border:1px solid #30260f;
+  background:#111;
+  padding:8px 13px;
+  border-radius:10px;
 }
 
 #chart{
-width:100%;
-height:420px;
-border-radius:14px;
-overflow:hidden;
+  width:100%;
+  height:420px;
 }
-
-
-/* ================================
-   SECTION TITLE
-================================ */
 
 .section-title{
-color:#d6ad45;
-font-size:18px;
-font-weight:bold;
-margin:25px 0 14px;
+  color:#d6ad45;
+  font-size:18px;
+  font-weight:bold;
+  margin:20px 0 13px;
 }
 
-
-/* ================================
-   TIMEFRAME GRID
-================================ */
-
-.timeframe-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:14px;
+.timeframes{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
 }
-
-
-/* ================================
-   TIMEFRAME CARD
-================================ */
 
 .tf-card{
-background:linear-gradient(145deg,#151515,#0b0b0b);
-border:1px solid #30260f;
-border-radius:18px;
-padding:18px;
+  padding:18px;
 }
 
 .tf-title{
-text-align:center;
-font-size:20px;
-font-weight:bold;
-color:#d6ad45;
-padding-bottom:14px;
-border-bottom:1px solid #292929;
-margin-bottom:14px;
+  color:#d6ad45;
+  font-size:20px;
+  font-weight:bold;
+  text-align:center;
+  padding-bottom:13px;
+  border-bottom:1px solid #292929;
+  margin-bottom:8px;
 }
 
-
-/* ================================
-   ROW
-================================ */
-
 .row{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:10px 0;
-border-bottom:1px solid #1c1c1c;
-gap:10px;
+  display:flex;
+  justify-content:space-between;
+  padding:10px 0;
+  border-bottom:1px solid #1d1d1d;
+  gap:10px;
 }
 
 .row:last-child{
-border-bottom:0;
+  border-bottom:0;
 }
 
 .label{
-color:#777;
-font-size:12px;
+  color:#777;
+  font-size:12px;
 }
 
 .value{
-font-size:14px;
-font-weight:bold;
-text-align:left;
+  font-size:13px;
+  font-weight:bold;
 }
 
-.support{
-color:#55d68a;
+.green{
+  color:#55d68a;
 }
 
-.resistance{
-color:#ff6262;
+.red{
+  color:#ff6262;
 }
 
-.bull{
-color:#55d68a;
+.gold{
+  color:#d6ad45;
 }
-
-.bear{
-color:#ff6262;
-}
-
-.neutral{
-color:#d6ad45;
-}
-
-
-/* ================================
-   SUMMARY
-================================ */
 
 .summary{
-margin-top:20px;
-background:linear-gradient(145deg,#171717,#0c0c0c);
-border:1px solid #30260f;
-border-radius:20px;
-padding:20px;
+  margin-top:20px;
+  padding:20px;
 }
 
 .summary-title{
-color:#d6ad45;
-font-size:19px;
-font-weight:bold;
-margin-bottom:15px;
+  color:#d6ad45;
+  font-size:19px;
+  font-weight:bold;
+  margin-bottom:14px;
 }
 
 .summary-box{
-background:#101010;
-border:1px solid #29210e;
-border-radius:14px;
-padding:15px;
-margin-bottom:10px;
+  background:#101010;
+  border:1px solid #29210e;
+  border-radius:13px;
+  padding:14px;
+  margin-bottom:10px;
 }
 
 .summary-label{
-color:#777;
-font-size:12px;
-margin-bottom:8px;
+  color:#777;
+  font-size:11px;
+  margin-bottom:7px;
 }
 
 .summary-value{
-font-size:17px;
-font-weight:bold;
+  font-size:16px;
+  font-weight:bold;
 }
-
-
-/* ================================
-   STATUS
-================================ */
 
 .status{
-margin-top:18px;
-background:#101010;
-border-radius:14px;
-padding:15px;
-color:#aaa;
-line-height:1.8;
-text-align:center;
+  margin-top:18px;
+  padding:14px;
+  background:#101010;
+  border-radius:13px;
+  text-align:center;
+  color:#aaa;
+  font-size:12px;
+  line-height:1.8;
 }
-
-
-/* ================================
-   NOTICE
-================================ */
 
 .notice{
-margin-top:18px;
-padding:13px;
-border-radius:12px;
-background:#0d0d0d;
-border:1px solid #241d0c;
-color:#777;
-font-size:11px;
-line-height:1.8;
-text-align:center;
+  margin-top:15px;
+  color:#666;
+  font-size:10px;
+  line-height:1.8;
+  text-align:center;
 }
-
-
-/* ================================
-   BACK
-================================ */
 
 .back{
-display:block;
-text-align:center;
-color:#d6ad45;
-text-decoration:none;
-margin-top:25px;
+  display:block;
+  text-align:center;
+  color:#d6ad45;
+  text-decoration:none;
+  margin-top:25px;
 }
-
-
-/* ================================
-   MOBILE
-================================ */
 
 @media(max-width:800px){
-
-.timeframe-grid{
-grid-template-columns:1fr;
-}
-
+  .timeframes{
+    grid-template-columns:1fr;
+  }
 }
 
 @media(max-width:550px){
+  .assets{
+    grid-template-columns:1fr;
+  }
 
-.asset-selector{
-grid-template-columns:1fr;
+  .price{
+    font-size:28px;
+  }
+
+  #chart{
+    height:330px;
+  }
 }
-
-.price{
-font-size:28px;
-}
-
-.title h1{
-font-size:23px;
-}
-
-#chart{
-height:330px;
-}
-
-}
-
 </style>
-
 </head>
-
 
 <body>
 
-
-<!-- ================================
-     HEADER
-================================ -->
-
 <header>
-
-<div class="logo">
-MAYTYA AI
-</div>
-
-<div class="subtitle">
-SMART MULTI-TIMEFRAME MARKET ANALYSIS
-</div>
-
+  <div class="logo">MAYTYA AI</div>
+  <div class="subtitle">SMART MARKET ANALYSIS ENGINE</div>
 </header>
-
-
 
 <main class="container">
 
-
-<!-- ================================
-     TITLE
-================================ -->
-
 <section class="title">
-
-<h1>
-📊 تحلیل
-<span>هوشمند بازار</span>
-</h1>
-
+  <h1>📊 <span>MayTya AI</span> Market Engine</h1>
 </section>
 
+<div class="assets">
 
+  <div class="asset active"
+       onclick="changeAsset('BTC',this)">
+    ₿ بیت‌کوین
+  </div>
 
-<!-- ================================
-     ASSETS
-================================ -->
+  <div class="asset"
+       onclick="changeAsset('ETH',this)">
+    Ξ اتریوم
+  </div>
 
-<div class="asset-selector">
-
-<div
-class="asset active"
-onclick="selectAsset('BTC',this)"
->
-₿ بیت‌کوین
-</div>
-
-<div
-class="asset"
-onclick="selectAsset('ETH',this)"
->
-Ξ اتریوم
-</div>
-
-<div
-class="asset"
-onclick="selectAsset('GOLD',this)"
->
-🥇 طلا
-</div>
+  <div class="asset"
+       onclick="changeAsset('GOLD',this)">
+    🥇 طلا
+  </div>
 
 </div>
-
-
-
-<!-- ================================
-     PRICE
-================================ -->
 
 <section class="price-card">
 
-<div class="price-top">
+  <div class="price-top">
 
-<div
-id="assetName"
-class="asset-name"
->
-₿ BTC / USDT
-</div>
+    <div id="assetName" class="asset-name">
+      ₿ BTC / USDT
+    </div>
 
-<div class="live">
-● LIVE DATA
-</div>
+    <div class="live">
+      ● LIVE
+    </div>
 
-</div>
+  </div>
 
-<div
-id="price"
-class="price"
->
-در حال دریافت...
-</div>
+  <div id="price" class="price">
+    در حال اتصال...
+  </div>
 
 </section>
-
-
-
-<!-- ================================
-     CHART
-================================ -->
 
 <section class="chart-card">
 
-<div class="chart-header">
+  <div class="chart-head">
 
-<div>
+    <div>
+      <div class="chart-title">
+        📈 چارت بازار
+      </div>
 
-<div class="chart-title">
-📈 چارت زنده بازار
-</div>
+      <div class="chart-info">
+        Candles • EMA20 • EMA50 • Support • Resistance
+      </div>
+    </div>
 
-<div class="chart-subtitle">
-Candles / EMA20 / EMA50 / Support / Resistance
-</div>
+    <div id="chartTF" class="chart-tf">
+      15M
+    </div>
 
-</div>
+  </div>
 
-<div
-id="chartTimeframe"
-class="chart-tf"
->
-15M
-</div>
-
-</div>
-
-<div id="chart"></div>
+  <div id="chart"></div>
 
 </section>
 
-
-
-<!-- ================================
-     TIMEFRAMES
-================================ -->
-
 <div class="section-title">
-📊 وضعیت هم‌زمان تایم‌فریم‌ها
+📊 تحلیل چندتایم‌فریمی
 </div>
 
-
-
-<div class="timeframe-grid">
-
-
+<div class="timeframes">
 
 <!-- 15M -->
-
 <div class="tf-card">
 
-<div class="tf-title">
-15M
-</div>
+  <div class="tf-title">15M</div>
 
-<div class="row">
-<span class="label">روند</span>
-<strong
-id="trend15m"
-class="value"
->—</strong>
-</div>
+  <div class="row">
+    <span class="label">روند</span>
+    <strong id="trend15" class="value">—</strong>
+  </div>
 
-<div class="row">
-<span class="label">RSI</span>
-<strong
-id="rsi15m"
-class="value"
->—</strong>
-</div>
+  <div class="row">
+    <span class="label">RSI</span>
+    <strong id="rsi15" class="value">—</strong>
+  </div>
 
-<div class="row">
-<span class="label">EMA 20</span>
-<strong
-id="ema2015m"
-class="value"
->—</strong>
-</div>
+  <div class="row">
+    <span class="label">EMA20</span>
+    <strong id="ema2015" class="value">—</strong>
+  </div>
 
-<div class="row">
-<span class="label">EMA 50</span>
-<strong
-id="ema5015m"
-class="value"
->—</strong>
-</div>
+  <div class="row">
+    <span class="label">EMA50</span>
+    <strong id="ema5015" class="value">—</strong>
+  </div>
 
-<div class="row">
-<span class="label">حمایت</span>
-<strong
-id="support15m"
-class="value support"
->—</strong>
-</div>
+  <div class="row">
+    <span class="label">حمایت</span>
+    <strong id="support15" class="value green">—</strong>
+  </div>
 
-<div class="row">
-<span class="label">مقاومت</span>
-<strong
-id="resistance15m"
-class="value resistance"
->—</strong>
-</div>
+  <div class="row">
+    <span class="label">مقاومت</span>
+    <strong id="resistance15" class="value red">—</strong>
+  </div>
 
-<div class="row">
-<span class="label">قدرت بازار</span>
-<strong
-id="strength15m"
-class="value"
->—</strong>
-</div>
+  <div class="row">
+    <span class="label">قدرت</span>
+    <strong id="strength15" class="value">—</strong>
+  </div>
 
 </div>
-
 
 
 <!-- 1H -->
-
 <div class="tf-card">
 
-<div class="tf-title">
-1H
-</div>
+  <div class="tf-title">1H</div>
 
-<div class="row">
-<span class="label">روند</span>
-<strong
-id="trend1h"
-class="value"
->—</strong>
-</div>
+  <div class="row">
+    <span class="label">روند</span>
+    <strong id="trend1h" class="value">—</strong>
+  </div>
 
-<div class="row">
-<span class="label">RSI</span>
-<strong
-id="rsi1h"
-class="value"
->—</strong>
-</div>
+  <div class="row">
+    <span class="label">RSI</span>
+    <strong id="rsi1h" class="value">—</strong>
+  </div>
 
-<div class="row">
-<span class="label">EMA 20</span>
-<strong
-id="ema201h"
-class="value"
->—</strong>
-</div>
+  <div class="row">
+    <span class="label">EMA20</span>
+    <strong id="ema201h" class="value">—</strong>
+  </div>
 
-<div class="row">
-<span class="label">EMA 50</span>
-<strong
-id="ema501h"
-class="value"
->—</strong>
-</div>
+  <div class="row">
+    <span class="label">EMA50</span>
+    <strong id="ema501h" class="value">—</strong>
+  </div>
 
-<div class="row">
-<span class="label">حمایت</span>
-<strong
-id="support1h"
-class="value support"
->—</strong>
-</div>
+  <div class="row">
+    <span class="label">حمایت</span>
+    <strong id="support1h" class="value green">—</strong>
+  </div>
 
-<div class="row">
-<span class="label">مقاومت</span>
-<strong
-id="resistance1h"
-class="value resistance"
->—</strong>
-</div>
+  <div class="row">
+    <span class="label">مقاومت</span>
+    <strong id="resistance1h" class="value red">—</strong>
+  </div>
 
-<div class="row">
-<span class="label">قدرت بازار</span>
-<strong
-id="strength1h"
-class="value"
->—</strong>
-</div>
+  <div class="row">
+    <span class="label">قدرت</span>
+    <strong id="strength1h" class="value">—</strong>
+  </div>
 
 </div>
-
 
 
 <!-- 4H -->
-
 <div class="tf-card">
 
-<div class="tf-title">
-4H
-</div>
+  <div class="tf-title">4H</div>
 
-<div class="row">
-<span class="label">روند</span>
-<strong
-id="trend4h"
-class="value"
->—</strong>
-</div>
+  <div class="row">
+    <span class="label">روند</span>
+    <strong id="trend4h" class="value">—</strong>
+  </div>
 
-<div class="row">
-<span class="label">RSI</span>
-<strong
-id="rsi4h"
-class="value"
->—</strong>
-</div>
+  <div class="row">
+    <span class="label">RSI</span>
+    <strong id="rsi4h" class="value">—</strong>
+  </div>
 
-<div class="row">
-<span class="label">EMA 20</span>
-<strong
-id="ema204h"
-class="value"
->—</strong>
-</div>
+  <div class="row">
+    <span class="label">EMA20</span>
+    <strong id="ema204h" class="value">—</strong>
+  </div>
 
-<div class="row">
-<span class="label">EMA 50</span>
-<strong
-id="ema504h"
-class="value"
->—</strong>
-</div>
+  <div class="row">
+    <span class="label">EMA50</span>
+    <strong id="ema504h" class="value">—</strong>
+  </div>
 
-<div class="row">
-<span class="label">حمایت</span>
-<strong
-id="support4h"
-class="value support"
->—</strong>
-</div>
+  <div class="row">
+    <span class="label">حمایت</span>
+    <strong id="support4h" class="value green">—</strong>
+  </div>
 
-<div class="row">
-<span class="label">مقاومت</span>
-<strong
-id="resistance4h"
-class="value resistance"
->—</strong>
-</div>
+  <div class="row">
+    <span class="label">مقاومت</span>
+    <strong id="resistance4h" class="value red">—</strong>
+  </div>
 
-<div class="row">
-<span class="label">قدرت بازار</span>
-<strong
-id="strength4h"
-class="value"
->—</strong>
+  <div class="row">
+    <span class="label">قدرت</span>
+    <strong id="strength4h" class="value">—</strong>
+  </div>
+
 </div>
 
 </div>
 
-
-</div>
-
-
-
-<!-- ================================
-     SUMMARY
-================================ -->
 
 <section class="summary">
 
-<div class="summary-title">
-🧠 جمع‌بندی هوشمند بازار
-</div>
+  <div class="summary-title">
+    🧠 جمع‌بندی موتور تحلیل
+  </div>
 
+  <div class="summary-box">
+    <div class="summary-label">
+      هم‌جهتی تایم‌فریم‌ها
+    </div>
 
-<div class="summary-box">
+    <div id="alignment" class="summary-value">
+      در حال محاسبه...
+    </div>
+  </div>
 
-<div class="summary-label">
-هم‌جهتی روندها
-</div>
+  <div class="summary-box">
+    <div class="summary-label">
+      قدرت غالب بازار
+    </div>
 
-<div
-id="alignment"
-class="summary-value"
->
-در حال محاسبه...
-</div>
+    <div id="dominance" class="summary-value">
+      در حال محاسبه...
+    </div>
+  </div>
 
-</div>
+  <div class="summary-box">
+    <div class="summary-label">
+      وضعیت کلی
+    </div>
 
+    <div id="overall" class="summary-value">
+      در حال محاسبه...
+    </div>
+  </div>
 
-<div class="summary-box">
+  <div class="summary-box">
+    <div class="summary-label">
+      سناریوی صعودی
+    </div>
 
-<div class="summary-label">
-قدرت غالب
-</div>
+    <div id="bullScenario"
+         class="summary-value green">
+      —
+    </div>
+  </div>
 
-<div
-id="dominantStrength"
-class="summary-value"
->
-در حال محاسبه...
-</div>
+  <div class="summary-box">
+    <div class="summary-label">
+      سناریوی نزولی
+    </div>
 
-</div>
-
-
-<div class="summary-box">
-
-<div class="summary-label">
-وضعیت چندتایم‌فریمی
-</div>
-
-<div
-id="multiSignal"
-class="summary-value"
->
-در حال محاسبه...
-</div>
-
-</div>
-
-
-<div class="summary-box">
-
-<div class="summary-label">
-سناریوی صعودی
-</div>
-
-<div
-id="bullScenario"
-class="summary-value bull"
->
-—
-</div>
-
-</div>
-
-
-<div class="summary-box">
-
-<div class="summary-label">
-سناریوی نزولی
-</div>
-
-<div
-id="bearScenario"
-class="summary-value bear"
->
-—
-</div>
-
-</div>
+    <div id="bearScenario"
+         class="summary-value red">
+      —
+    </div>
+  </div>
 
 </section>
 
 
-
-<!-- ================================
-     STATUS
-================================ -->
-
-<div
-id="status"
-class="status"
->
-⏳ در حال دریافت اطلاعات بازار...
+<div id="status" class="status">
+⏳ موتور تحلیل در حال اتصال است...
 </div>
-
-
-
-<!-- ================================
-     NOTICE
-================================ -->
 
 <div class="notice">
-
-⚠️ این داشبورد از داده‌های بازار و محاسبات تکنیکال استفاده می‌کند.
-مقادیر نمایش‌داده‌شده تضمین‌کننده خرید یا فروش نیستند.
-
+⚠️ اطلاعات این صفحه محاسبات تکنیکال بر پایه داده بازار هستند و تضمین‌کننده نتیجه معاملاتی نیستند.
+<br>
+Charts powered by TradingView Lightweight Charts.
 </div>
 
-
-
-<a
-href="index.html"
-class="back"
->
-← بازگشت به داشبورد اصلی
+<a href="index.html" class="back">
+← بازگشت به داشبورد
 </a>
-
 
 </main>
 
 
-
 <script>
 
-/* =================================
-   SETTINGS
-================================= */
+/* ==========================================
+   MAYTYA AI ENGINE
+========================================== */
 
-let currentAsset="BTC";
+const ASSETS = {
 
-let chart=null;
+  BTC:{
+    name:"₿ BTC / USDT",
+    symbol:"BTCUSDT"
+  },
 
-let candleSeries=null;
-
-let ema20Series=null;
-
-let ema50Series=null;
-
-let supportLine=null;
-
-let resistanceLine=null;
-
-
-const intervals=[
-"15m",
-"1h",
-"4h"
-];
-
-
-const assets={
-
-BTC:{
-name:"₿ BTC / USDT",
-symbol:"BTCUSDT"
-},
-
-ETH:{
-name:"Ξ ETH / USDT",
-symbol:"ETHUSDT"
-}
+  ETH:{
+    name:"Ξ ETH / USDT",
+    symbol:"ETHUSDT"
+  }
 
 };
 
 
-let marketData={};
+const TIMEFRAMES = [
+  "15m",
+  "1h",
+  "4h"
+];
 
 
+let currentAsset = "BTC";
 
-/* =================================
-   PRICE FORMAT
-================================= */
+let chart = null;
 
-function formatPrice(value){
+let candleSeries = null;
 
-return "$"+
-Number(value).toLocaleString(
-undefined,
-{
-maximumFractionDigits:2
+let ema20Series = null;
+
+let ema50Series = null;
+
+let supportPriceLine = null;
+
+let resistancePriceLine = null;
+
+let dataStore = {};
+
+
+/* ==========================================
+   FORMAT
+========================================== */
+
+function priceFormat(value){
+
+  if(value === null ||
+     value === undefined ||
+     isNaN(value))
+    return "—";
+
+  return "$" +
+    Number(value).toLocaleString(
+      "en-US",
+      {
+        maximumFractionDigits:2
+      }
+    );
 }
-);
-
-}
 
 
-
-/* =================================
+/* ==========================================
    EMA
-================================= */
+========================================== */
 
-function ema(values,period){
+function calculateEMA(values,period){
 
-if(values.length<period)
-return null;
+  if(values.length < period)
+    return null;
 
+  const multiplier =
+    2/(period+1);
 
-const multiplier=
-2/(period+1);
+  let result =
+    values
+    .slice(0,period)
+    .reduce(
+      (a,b)=>a+b,
+      0
+    )/period;
 
+  for(
+    let i=period;
+    i<values.length;
+    i++
+  ){
 
-let result=
-values
-.slice(0,period)
-.reduce(
-(a,b)=>a+b,
-0
-)/period;
+    result =
+      (values[i]-result) *
+      multiplier +
+      result;
 
+  }
 
-for(
-let i=period;
-i<values.length;
-i++
-){
-
-result=
-(values[i]-result)
-*multiplier+
-result;
-
+  return result;
 }
 
 
-return result;
-
-}
-
-
-
-/* =================================
+/* ==========================================
    RSI
-================================= */
+========================================== */
 
 function calculateRSI(
-values,
-period=14
+  values,
+  period=14
 ){
 
-if(values.length<=period)
-return null;
+  if(values.length <= period)
+    return null;
 
+  let gains=0;
+  let losses=0;
 
-let gains=0;
+  for(
+    let i=1;
+    i<=period;
+    i++
+  ){
 
-let losses=0;
+    const change =
+      values[i]-values[i-1];
 
+    if(change>0)
+      gains += change;
+    else
+      losses += Math.abs(change);
 
-for(
-let i=1;
-i<=period;
-i++
-){
+  }
 
-const change=
-values[i]-values[i-1];
+  let avgGain =
+    gains/period;
 
+  let avgLoss =
+    losses/period;
 
-if(change>0)
+  for(
+    let i=period+1;
+    i<values.length;
+    i++
+  ){
 
-gains+=change;
+    const change =
+      values[i]-values[i-1];
 
-else
+    const gain =
+      change>0 ? change : 0;
 
-losses+=Math.abs(change);
+    const loss =
+      change<0 ?
+      Math.abs(change) :
+      0;
 
+    avgGain =
+      (
+        avgGain*(period-1)+gain
+      )/period;
+
+    avgLoss =
+      (
+        avgLoss*(period-1)+loss
+      )/period;
+
+  }
+
+  if(avgLoss===0)
+    return 100;
+
+  const rs =
+    avgGain/avgLoss;
+
+  return 100 -
+    (
+      100/(1+rs)
+    );
 }
 
 
-let avgGain=
-gains/period;
-
-let avgLoss=
-losses/period;
-
-
-for(
-let i=period+1;
-i<values.length;
-i++
-){
-
-const change=
-values[i]-values[i-1];
-
-
-const gain=
-change>0?change:0;
-
-
-const loss=
-change<0?
-Math.abs(change):
-0;
-
-
-avgGain=
-(
-avgGain*(period-1)+gain
-)/period;
-
-
-avgLoss=
-(
-avgLoss*(period-1)+loss
-)/period;
-
-}
-
-
-if(avgLoss===0)
-return 100;
-
-
-const rs=
-avgGain/avgLoss;
-
-
-return 100-
-(
-100/(1+rs)
-);
-
-}
-
-
-
-/* =================================
-   ANALYZE CANDLES
-================================= */
+/* ==========================================
+   ANALYZE
+========================================== */
 
 function analyze(candles){
 
-const closes=
-candles.map(
-c=>Number(c[4])
-);
+  const closes =
+    candles.map(
+      c=>Number(c[4])
+    );
 
-const highs=
-candles.map(
-c=>Number(c[2])
-);
+  const highs =
+    candles.map(
+      c=>Number(c[2])
+    );
 
-const lows=
-candles.map(
-c=>Number(c[3])
-);
-
-
-const price=
-closes[closes.length-1];
+  const lows =
+    candles.map(
+      c=>Number(c[3])
+    );
 
 
-const ema20=
-ema(closes,20);
+  const price =
+    closes[closes.length-1];
 
 
-const ema50=
-ema(closes,50);
+  const ema20 =
+    calculateEMA(
+      closes,
+      20
+    );
 
 
-const rsi=
-calculateRSI(closes);
+  const ema50 =
+    calculateEMA(
+      closes,
+      50
+    );
 
 
-const support=
-Math.min(
-...lows.slice(-20)
-);
+  const rsi =
+    calculateRSI(closes);
 
 
-const resistance=
-Math.max(
-...highs.slice(-20)
-);
+  const support =
+    Math.min(
+      ...lows.slice(-20)
+    );
 
 
-let trend;
-
-let trendClass;
-
-
-if(
-price>ema20 &&
-ema20>ema50
-){
-
-trend="🟢 صعودی";
-
-trendClass="value bull";
-
-}
-
-else if(
-price<ema20 &&
-ema20<ema50
-){
-
-trend="🔴 نزولی";
-
-trendClass="value bear";
-
-}
-
-else{
-
-trend="🟡 خنثی";
-
-trendClass="value neutral";
-
-}
+  const resistance =
+    Math.max(
+      ...highs.slice(-20)
+    );
 
 
-let strength;
+  let trend =
+    "🟡 خنثی";
 
-let strengthClass;
-
-
-if(rsi>=60){
-
-strength=
-"🟢 خریداران قوی";
-
-strengthClass=
-"value bull";
-
-}
-
-else if(rsi<=40){
-
-strength=
-"🔴 فروشندگان قوی";
-
-strengthClass=
-"value bear";
-
-}
-
-else{
-
-strength=
-"🟡 تعادل نسبی";
-
-strengthClass=
-"value neutral";
-
-}
+  let trendClass =
+    "gold";
 
 
-let signal;
+  if(
+    price > ema20 &&
+    ema20 > ema50
+  ){
+
+    trend =
+      "🟢 صعودی";
+
+    trendClass =
+      "green";
+
+  }
+
+  else if(
+    price < ema20 &&
+    ema20 < ema50
+  ){
+
+    trend =
+      "🔴 نزولی";
+
+    trendClass =
+      "red";
+
+  }
 
 
-if(
-price>ema20 &&
-ema20>ema50 &&
-rsi>=55
-){
+  let strength =
+    "🟡 متعادل";
 
-signal=
-"🟢 تمایل صعودی";
-
-}
-
-else if(
-price<ema20 &&
-ema20<ema50 &&
-rsi<=45
-){
-
-signal=
-"🔴 تمایل نزولی";
-
-}
-
-else{
-
-signal=
-"🟡 رنج / انتظار";
-
-}
+  let strengthClass =
+    "gold";
 
 
-return{
+  if(rsi >= 60){
 
-price,
-ema20,
-ema50,
-rsi,
-support,
-resistance,
-trend,
-trendClass,
-strength,
-strengthClass,
-signal
+    strength =
+      "🟢 خریداران قوی";
 
-};
+    strengthClass =
+      "green";
+
+  }
+
+  else if(rsi <= 40){
+
+    strength =
+      "🔴 فروشندگان قوی";
+
+    strengthClass =
+      "red";
+
+  }
+
+
+  let signal =
+    "🟡 ترکیبی";
+
+
+  if(
+    price > ema20 &&
+    ema20 > ema50 &&
+    rsi >= 55
+  ){
+
+    signal =
+      "bullish";
+
+  }
+
+  else if(
+    price < ema20 &&
+    ema20 < ema50 &&
+    rsi <= 45
+  ){
+
+    signal =
+      "bearish";
+
+  }
+
+
+  return {
+
+    price,
+    ema20,
+    ema50,
+    rsi,
+    support,
+    resistance,
+    trend,
+    trendClass,
+    strength,
+    strengthClass,
+    signal
+
+  };
 
 }
 
 
-
-/* =================================
+/* ==========================================
    CREATE CHART
-================================= */
+========================================== */
 
 function createChart(){
 
-const container=
-document.getElementById("chart");
+  const container =
+    document.getElementById("chart");
+
+  if(!container)
+    return;
 
 
-if(!container)
-return;
+  if(
+    typeof LightweightCharts ===
+    "undefined"
+  ){
+
+    document.getElementById(
+      "status"
+    ).innerText =
+      "⚠️ کتابخانه چارت بارگذاری نشد.";
+
+    return;
+
+  }
 
 
-chart=
-LightweightCharts.createChart(
-container,
-{
+  chart =
+    LightweightCharts.createChart(
+      container,
+      {
 
-layout:{
-background:{
-color:"#0b0b0b"
-},
-textColor:"#999"
-},
+        width:
+          container.clientWidth,
 
-grid:{
-vertLines:{
-color:"#171717"
-},
-horzLines:{
-color:"#171717"
+        height:
+          container.clientHeight,
+
+        layout:{
+          background:{
+            color:"#0b0b0b"
+          },
+          textColor:"#999"
+        },
+
+        grid:{
+          vertLines:{
+            color:"#171717"
+          },
+          horzLines:{
+            color:"#171717"
+          }
+        },
+
+        rightPriceScale:{
+          borderColor:"#292929"
+        },
+
+        timeScale:{
+          borderColor:"#292929",
+          timeVisible:true,
+          secondsVisible:false
+        }
+
+      }
+    );
+
+
+  candleSeries =
+    chart.addCandlestickSeries({
+
+      upColor:"#55d68a",
+
+      downColor:"#ff6262",
+
+      borderVisible:false,
+
+      wickUpColor:"#55d68a",
+
+      wickDownColor:"#ff6262"
+
+    });
+
+
+  ema20Series =
+    chart.addLineSeries({
+
+      color:"#d6ad45",
+
+      lineWidth:2,
+
+      title:"EMA20"
+
+    });
+
+
+  ema50Series =
+    chart.addLineSeries({
+
+      color:"#888",
+
+      lineWidth:2,
+
+      title:"EMA50"
+
+    });
+
+
+  window.addEventListener(
+    "resize",
+    resizeChart
+  );
+
 }
-},
-
-rightPriceScale:{
-borderColor:"#292929"
-},
-
-timeScale:{
-borderColor:"#292929",
-timeVisible:true,
-secondsVisible:false
-}
-
-}
-);
 
 
-candleSeries=
-chart.addCandlestickSeries({
+/* ==========================================
+   RESIZE
+========================================== */
 
-upColor:"#55d68a",
+function resizeChart(){
 
-downColor:"#ff6262",
+  if(!chart)
+    return;
 
-borderVisible:false,
+  const container =
+    document.getElementById(
+      "chart"
+    );
 
-wickUpColor:"#55d68a",
-
-wickDownColor:"#ff6262"
-
-});
-
-
-ema20Series=
-chart.addLineSeries({
-
-color:"#d6ad45",
-
-lineWidth:2,
-
-title:"EMA20"
-
-});
-
-
-ema50Series=
-chart.addLineSeries({
-
-color:"#777",
-
-lineWidth:2,
-
-title:"EMA50"
-
-});
+  chart.resize(
+    container.clientWidth,
+    container.clientHeight
+  );
 
 }
 
 
+/* ==========================================
+   EMA SERIES DATA
+========================================== */
 
-/* =================================
-   EMA DATA
-================================= */
-
-function calculateEMAData(
-values,
-period,
-candles
+function makeEMAData(
+  candles,
+  period
 ){
 
-if(values.length<period)
-return[];
+  const closes =
+    candles.map(
+      c=>Number(c[4])
+    );
+
+  if(closes.length < period)
+    return [];
 
 
-const multiplier=
-2/(period+1);
+  const multiplier =
+    2/(period+1);
 
 
-let previous=
-values
-.slice(0,period)
-.reduce(
-(a,b)=>a+b,
-0
-)/period;
+  let previous =
+    closes
+    .slice(0,period)
+    .reduce(
+      (a,b)=>a+b,
+      0
+    )/period;
 
 
-const result=[];
+  const result=[];
 
 
-result.push({
+  result.push({
 
-time:
-Math.floor(
-candles[period-1][0]/1000
-),
+    time:
+      Math.floor(
+        candles[period-1][0]/1000
+      ),
 
-value:previous
+    value:previous
 
-});
-
-
-for(
-let i=period;
-i<values.length;
-i++
-){
-
-previous=
-(values[i]-previous)
-*multiplier+
-previous;
+  });
 
 
-result.push({
+  for(
+    let i=period;
+    i<closes.length;
+    i++
+  ){
 
-time:
-Math.floor(
-candles[i][0]/1000
-),
+    previous =
+      (
+        closes[i]-previous
+      )*multiplier+
+      previous;
 
-value:previous
 
-});
+    result.push({
+
+      time:
+        Math.floor(
+          candles[i][0]/1000
+        ),
+
+      value:previous
+
+    });
+
+  }
+
+
+  return result;
 
 }
 
 
-return result;
-
-}
-
-
-
-/* =================================
+/* ==========================================
    UPDATE CHART
-================================= */
+========================================== */
 
 function updateChart(
-candles,
-support,
-resistance
+  candles,
+  data
 ){
 
-if(!chart)
-createChart();
+  if(!chart)
+    createChart();
+
+  if(!candleSeries)
+    return;
 
 
-const formatted=
-candles.map(c=>({
+  const candleData =
+    candles.map(c=>({
 
-time:
-Math.floor(c[0]/1000),
+      time:
+        Math.floor(
+          c[0]/1000
+        ),
 
-open:Number(c[1]),
+      open:Number(c[1]),
 
-high:Number(c[2]),
+      high:Number(c[2]),
 
-low:Number(c[3]),
+      low:Number(c[3]),
 
-close:Number(c[4])
+      close:Number(c[4])
 
-}));
-
-
-candleSeries.setData(
-formatted
-);
+    }));
 
 
-const closes=
-candles.map(
-c=>Number(c[4])
-);
+  candleSeries.setData(
+    candleData
+  );
 
 
-const ema20Data=
-calculateEMAData(
-closes,
-20,
-candles
-);
+  ema20Series.setData(
+    makeEMAData(
+      candles,
+      20
+    )
+  );
 
 
-const ema50Data=
-calculateEMAData(
-closes,
-50,
-candles
-);
+  ema50Series.setData(
+    makeEMAData(
+      candles,
+      50
+    )
+  );
 
 
-ema20Series.setData(
-ema20Data
-);
+  if(supportPriceLine){
+
+    candleSeries.removePriceLine(
+      supportPriceLine
+    );
+
+  }
 
 
-ema50Series.setData(
-ema50Data
-);
+  if(resistancePriceLine){
+
+    candleSeries.removePriceLine(
+      resistancePriceLine
+    );
+
+  }
 
 
-/* SUPPORT */
+  supportPriceLine =
+    candleSeries.createPriceLine({
 
-if(supportLine){
+      price:data.support,
 
-candleSeries.removePriceLine(
-supportLine
-);
+      color:"#55d68a",
 
-}
+      lineWidth:1,
 
+      lineStyle:
+        LightweightCharts.LineStyle.Dashed,
 
-supportLine=
-candleSeries.createPriceLine({
+      axisLabelVisible:true,
 
-price:support,
+      title:"SUPPORT"
 
-color:"#55d68a",
-
-lineWidth:1,
-
-lineStyle:
-LightweightCharts.LineStyle.Dashed,
-
-axisLabelVisible:true,
-
-title:"SUPPORT"
-
-});
+    });
 
 
-/* RESISTANCE */
+  resistancePriceLine =
+    candleSeries.createPriceLine({
 
-if(resistanceLine){
+      price:data.resistance,
 
-candleSeries.removePriceLine(
-resistanceLine
-);
+      color:"#ff6262",
 
-}
+      lineWidth:1,
 
+      lineStyle:
+        LightweightCharts.LineStyle.Dashed,
 
-resistanceLine=
-candleSeries.createPriceLine({
+      axisLabelVisible:true,
 
-price:resistance,
+      title:"RESISTANCE"
 
-color:"#ff6262",
-
-lineWidth:1,
-
-lineStyle:
-LightweightCharts.LineStyle.Dashed,
-
-axisLabelVisible:true,
-
-title:"RESISTANCE"
-
-});
+    });
 
 
-chart
-.timeScale()
-.fitContent();
+  chart.timeScale()
+    .fitContent();
 
 }
 
 
+/* ==========================================
+   RENDER
+========================================== */
 
-/* =================================
-   SET VALUE
-================================= */
-
-function setValue(
-id,
-value,
-className="value"
+function renderTF(
+  interval,
+  data
 ){
 
-const el=
-document.getElementById(id);
+  const id =
+    interval==="15m"
+    ? "15"
+    : interval==="1h"
+    ? "1h"
+    : "4h";
 
 
-if(!el)
-return;
+  const trend =
+    document.getElementById(
+      "trend"+id
+    );
+
+  const rsi =
+    document.getElementById(
+      "rsi"+id
+    );
+
+  const ema20 =
+    document.getElementById(
+      "ema20"+id
+    );
+
+  const ema50 =
+    document.getElementById(
+      "ema50"+id
+    );
+
+  const support =
+    document.getElementById(
+      "support"+id
+    );
+
+  const resistance =
+    document.getElementById(
+      "resistance"+id
+    );
+
+  const strength =
+    document.getElementById(
+      "strength"+id
+    );
 
 
-el.innerText=value;
+  trend.innerText =
+    data.trend;
 
-el.className=
-className;
-
-}
-
+  trend.className =
+    "value "+data.trendClass;
 
 
-/* =================================
-   RENDER TIMEFRAME
-================================= */
-
-function renderTimeframe(
-interval,
-data
-){
-
-const id=
-interval.toLowerCase();
+  rsi.innerText =
+    data.rsi.toFixed(2);
 
 
-setValue(
-"trend"+id,
-data.trend,
-data.trendClass
-);
+  ema20.innerText =
+    priceFormat(data.ema20);
 
 
-setValue(
-"rsi"+id,
-data.rsi.toFixed(2),
-"value"
-);
+  ema50.innerText =
+    priceFormat(data.ema50);
 
 
-setValue(
-"ema20"+id,
-formatPrice(data.ema20),
-"value"
-);
+  support.innerText =
+    priceFormat(data.support);
 
 
-setValue(
-"ema50"+id,
-formatPrice(data.ema50),
-"value"
-);
+  resistance.innerText =
+    priceFormat(data.resistance);
 
 
-setValue(
-"support"+id,
-formatPrice(data.support),
-"value support"
-);
+  strength.innerText =
+    data.strength;
 
-
-setValue(
-"resistance"+id,
-formatPrice(data.resistance),
-"value resistance"
-);
-
-
-setValue(
-"strength"+id,
-data.strength,
-data.strengthClass
-);
-
-}
-
-
-
-/* =================================
-   FETCH TIMEFRAME
-================================= */
-
-async function fetchTimeframe(
-interval
-){
-
-const symbol=
-assets[currentAsset].symbol;
-
-
-const url=
-`https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=100`;
-
-
-const response=
-await fetch(url);
-
-
-if(!response.ok)
-
-throw new Error(
-"Binance API Error"
-);
-
-
-const candles=
-await response.json();
-
-
-return{
-
-candles,
-
-data:
-analyze(candles)
-
-};
+  strength.className =
+    "value "+data.strengthClass;
 
 }
 
 
-
-/* =================================
+/* ==========================================
    SUMMARY
-================================= */
+========================================== */
 
 function updateSummary(){
 
-const data15=
-marketData["15m"];
+  const a =
+    dataStore["15m"];
 
-const data1h=
-marketData["1h"];
+  const b =
+    dataStore["1h"];
 
-const data4h=
-marketData["4h"];
+  const c =
+    dataStore["4h"];
 
 
-if(
-!data15 ||
-!data1h ||
-!data4h
-)
-return;
+  if(!a || !b || !c)
+    return;
 
 
-const all=[
-data15,
-data1h,
-data4h
-];
+  const all=[a,b,c];
 
 
-const bullish=
-all.filter(
-x=>
-x.signal.includes("صعودی")
-).length;
+  const bullish =
+    all.filter(
+      x=>x.signal==="bullish"
+    ).length;
 
 
-const bearish=
-all.filter(
-x=>
-x.signal.includes("نزولی")
-).length;
+  const bearish =
+    all.filter(
+      x=>x.signal==="bearish"
+    ).length;
 
 
-let alignment;
+  let alignment;
 
 
-if(bullish===3){
+  if(bullish===3){
 
-alignment=
-"🟢 هر ۳ تایم‌فریم صعودی";
+    alignment =
+      "🟢 هر سه تایم‌فریم صعودی";
 
-}
+  }
 
-else if(bearish===3){
+  else if(bearish===3){
 
-alignment=
-"🔴 هر ۳ تایم‌فریم نزولی";
+    alignment =
+      "🔴 هر سه تایم‌فریم نزولی";
 
-}
+  }
 
-else if(bullish>bearish){
+  else if(bullish>bearish){
 
-alignment=
-"🟢 تمایل غالب صعودی";
+    alignment =
+      "🟢 تمایل غالب صعودی";
 
-}
+  }
 
-else if(bearish>bullish){
+  else if(bearish>bullish){
 
-alignment=
-"🔴 تمایل غالب نزولی";
+    alignment =
+      "🔴 تمایل غالب نزولی";
 
-}
+  }
 
-else{
+  else{
 
-alignment=
-"🟡 ترکیبی / بدون هم‌جهتی";
+    alignment =
+      "🟡 ترکیبی";
 
-}
+  }
 
 
-document.getElementById(
-"alignment"
-).innerText=
-alignment;
+  document.getElementById(
+    "alignment"
+  ).innerText =
+    alignment;
 
 
-const buyers=
-all.filter(
-x=>x.rsi>=60
-).length;
+  const buyers =
+    all.filter(
+      x=>x.rsi>=60
+    ).length;
 
 
-const sellers=
-all.filter(
-x=>x.rsi<=40
-).length;
+  const sellers =
+    all.filter(
+      x=>x.rsi<=40
+    ).length;
 
 
-let strength;
+  let dominance;
 
 
-if(buyers>sellers){
+  if(buyers>sellers){
 
-strength=
-"🟢 قدرت بیشتر خریداران";
+    dominance =
+      "🟢 قدرت بیشتر خریداران";
 
-}
+  }
 
-else if(sellers>buyers){
+  else if(sellers>buyers){
 
-strength=
-"🔴 قدرت بیشتر فروشندگان";
+    dominance =
+      "🔴 قدرت بیشتر فروشندگان";
 
-}
+  }
 
-else{
+  else{
 
-strength=
-"🟡 قدرت متعادل";
+    dominance =
+      "🟡 قدرت متعادل";
 
-}
+  }
 
 
-document.getElementById(
-"dominantStrength"
-).innerText=
-strength;
+  document.getElementById(
+    "dominance"
+  ).innerText =
+    dominance;
 
 
-let multiSignal;
+  let overall;
 
 
-if(bullish>=2){
+  if(bullish>=2){
 
-multiSignal=
-"🟢 تمایل چندتایم‌فریمی صعودی";
+    overall =
+      "🟢 تمایل چندتایم‌فریمی صعودی";
 
-}
+  }
 
-else if(bearish>=2){
+  else if(bearish>=2){
 
-multiSignal=
-"🔴 تمایل چندتایم‌فریمی نزولی";
+    overall =
+      "🔴 تمایل چندتایم‌فریمی نزولی";
 
-}
+  }
 
-else{
+  else{
 
-multiSignal=
-"🟡 وضعیت ترکیبی";
+    overall =
+      "🟡 وضعیت ترکیبی / انتظار";
 
-}
+  }
 
 
-document.getElementById(
-"multiSignal"
-).innerText=
-multiSignal;
+  document.getElementById(
+    "overall"
+  ).innerText =
+    overall;
 
 
-/* BULL */
+  document.getElementById(
+    "bullScenario"
+  ).innerText =
+    "عبور معتبر از مقاومت 1H: "+
+    priceFormat(b.resistance);
 
-document.getElementById(
-"bullScenario"
-).innerText=
-"عبور معتبر از مقاومت 1H: "+
-formatPrice(
-data1h.resistance
-);
 
-
-/* BEAR */
-
-document.getElementById(
-"bearScenario"
-).innerText=
-"شکست معتبر حمایت 1H: "+
-formatPrice(
-data1h.support
-);
+  document.getElementById(
+    "bearScenario"
+  ).innerText =
+    "شکست معتبر حمایت 1H: "+
+    priceFormat(b.support);
 
 }
 
 
+/* ==========================================
+   LOAD ONE TIMEFRAME
+========================================== */
 
-/* =================================
-   LOAD ALL
-================================= */
-
-async function loadAll(){
-
-if(currentAsset==="GOLD"){
-
-document.getElementById(
-"assetName"
-).innerText=
-"🥇 XAU / USD";
-
-
-document.getElementById(
-"price"
-).innerText=
-"اتصال داده واقعی طلا در مرحله بعد";
-
-
-document.getElementById(
-"status"
-).innerText=
-"🥇 اتصال داده واقعی XAU/USD هنوز فعال نشده است.";
-
-
-return;
-
-}
-
-
-document.getElementById(
-"assetName"
-).innerText=
-assets[currentAsset].name;
-
-
-document.getElementById(
-"status"
-).innerText=
-"⏳ دریافت داده‌های بازار...";
-
-
-try{
-
-const results=
-await Promise.all(
-
-intervals.map(
-interval=>
-fetchTimeframe(interval)
-)
-
-);
-
-
-marketData={};
-
-
-intervals.forEach(
-(interval,index)=>{
-
-marketData[interval]=
-results[index].data;
-
-
-renderTimeframe(
-interval,
-results[index].data
-);
-
-}
-);
-
-
-/* PRICE */
-
-document.getElementById(
-"price"
-).innerText=
-formatPrice(
-results[0].data.price
-);
-
-
-/* CHART = 15M */
-
-document.getElementById(
-"chartTimeframe"
-).innerText=
-"15M";
-
-
-updateChart(
-
-results[0].candles,
-
-results[0].data.support,
-
-results[0].data.resistance
-
-);
-
-
-/* SUMMARY */
-
-updateSummary();
-
-
-/* STATUS */
-
-document.getElementById(
-"status"
-).innerText=
-"✅ داده‌های 15M، 1H و 4H با موفقیت به‌روزرسانی شدند.";
-
-}
-
-catch(error){
-
-console.error(error);
-
-
-document.getElementById(
-"status"
-).innerText=
-"⚠️ دریافت اطلاعات بازار با مشکل مواجه شد.";
-
-}
-
-}
-
-
-
-/* =================================
-   SELECT ASSET
-================================= */
-
-function selectAsset(
-asset,
-element
+async function loadTF(
+  interval
 ){
 
-currentAsset=
-asset;
+  const symbol =
+    ASSETS[currentAsset].symbol;
 
 
-document
-.querySelectorAll(".asset")
-.forEach(
-el=>
-el.classList.remove("active")
-);
+  const url =
+    "https://api.binance.com/api/v3/klines"+
+    "?symbol="+symbol+
+    "&interval="+interval+
+    "&limit=100";
 
 
-element.classList.add(
-"active"
-);
+  const response =
+    await fetch(url);
 
 
-if(asset==="GOLD"){
+  if(!response.ok)
+    throw new Error(
+      "Binance API Error"
+    );
 
-if(chart){
 
-candleSeries.setData([]);
+  const candles =
+    await response.json();
 
-ema20Series.setData([]);
 
-ema50Series.setData([]);
+  return{
+
+    candles:candles,
+
+    data:
+      analyze(candles)
+
+  };
 
 }
 
+
+/* ==========================================
+   MAIN ENGINE
+========================================== */
+
+async function loadEngine(){
+
+  if(currentAsset==="GOLD"){
+
+    document.getElementById(
+      "assetName"
+    ).innerText =
+      "🥇 XAU / USD";
+
+
+    document.getElementById(
+      "price"
+    ).innerText =
+      "به‌زودی";
+
+
+    document.getElementById(
+      "status"
+    ).innerText =
+      "🥇 اتصال داده واقعی طلا در مرحله بعد اضافه می‌شود.";
+
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "status"
+  ).innerText =
+    "⏳ موتور تحلیل در حال دریافت داده بازار...";
+
+
+  try{
+
+    const results =
+      await Promise.all(
+        TIMEFRAMES.map(
+          tf=>loadTF(tf)
+        )
+      );
+
+
+    dataStore={};
+
+
+    TIMEFRAMES.forEach(
+      (tf,index)=>{
+
+        dataStore[tf] =
+          results[index].data;
+
+        renderTF(
+          tf,
+          results[index].data
+        );
+
+      }
+    );
+
+
+    const current =
+      results[0].data;
+
+
+    document.getElementById(
+      "assetName"
+    ).innerText =
+      ASSETS[currentAsset].name;
+
+
+    document.getElementById(
+      "price"
+    ).innerText =
+      priceFormat(
+        current.price
+      );
+
+
+    updateChart(
+      results[0].candles,
+      current
+    );
+
+
+    updateSummary();
+
+
+    document.getElementById(
+      "status"
+    ).innerText =
+      "✅ موتور تحلیل متصل شد • 15M / 1H / 4H";
+
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+
+    document.getElementById(
+      "status"
+    ).innerText =
+      "⚠️ اتصال داده بازار برقرار نشد. چند لحظه بعد دوباره تلاش می‌شود.";
+
+  }
+
 }
 
 
-loadAll();
+/* ==========================================
+   ASSET CHANGE
+========================================== */
+
+function changeAsset(
+  asset,
+  element
+){
+
+  currentAsset =
+    asset;
+
+
+  document
+    .querySelectorAll(".asset")
+    .forEach(
+      el=>
+        el.classList.remove(
+          "active"
+        )
+    );
+
+
+  element.classList.add(
+    "active"
+  );
+
+
+  loadEngine();
 
 }
 
 
-
-/* =================================
+/* ==========================================
    START
-================================= */
+========================================== */
 
-loadAll();
+window.addEventListener(
+  "load",
+  function(){
+
+    createChart();
+
+    loadEngine();
+
+  }
+);
 
 
-/* =================================
+/* ==========================================
    AUTO REFRESH
-================================= */
+========================================== */
 
 setInterval(
-loadAll,
-60000
+  loadEngine,
+  60000
 );
 
 </script>
 
-
 </body>
-
 </html>
