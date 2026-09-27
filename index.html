@@ -1,1 +1,220 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>MayTya AI | بازار هوشمند</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #080808;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 22px 18px;
+      text-align: center;
+      border-bottom: 1px solid #2d2410;
+      background: #0d0d0d;
+    }
+
+    .logo {
+      font-size: 30px;
+      font-weight: 900;
+      color: #d6ad45;
+      letter-spacing: 2px;
+    }
+
+    .subtitle {
+      margin-top: 7px;
+      color: #aaa;
+      font-size: 13px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 25px 15px 40px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 35px 15px;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 span {
+      color: #d6ad45;
+    }
+
+    .hero p {
+      color: #aaa;
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .card {
+      background: linear-gradient(145deg, #151515, #0d0d0d);
+      border: 1px solid #30260f;
+      border-radius: 18px;
+      padding: 22px 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #d6ad45;
+      box-shadow: 0 8px 25px rgba(214,173,69,0.12);
+    }
+
+    .icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .card h2 {
+      font-size: 17px;
+      margin-bottom: 7px;
+    }
+
+    .card p {
+      color: #888;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .status {
+      margin-top: 25px;
+      padding: 15px;
+      background: #101010;
+      border: 1px solid #28200d;
+      border-radius: 14px;
+      text-align: center;
+      color: #aaa;
+      font-size: 13px;
+    }
+
+    .online {
+      color: #55d68a;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      color: #666;
+      font-size: 11px;
+      padding: 25px 10px;
+    }
+
+    @media (max-width: 500px) {
+      .grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero h1 {
+        font-size: 27px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">MAYTYA AI</div>
+  <div class="subtitle">هوش مصنوعی بازارهای مالی</div>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <h1>بازار را <span>هوشمندانه</span> بررسی کن</h1>
+    <p>
+      قیمت‌ها، روند بازار و اطلاعات تحلیلی
+      در یک داشبورد ساده و سریع.
+    </p>
+  </section>
+
+  <section class="grid">
+
+    <div class="card" onclick="showMessage('🥇 طلا')">
+      <div class="icon">🥇</div>
+      <h2>طلا</h2>
+      <p>قیمت و بررسی بازار طلا</p>
+    </div>
+
+    <div class="card" onclick="showMessage('₿ بیت‌کوین')">
+      <div class="icon">₿</div>
+      <h2>بیت‌کوین</h2>
+      <p>قیمت و تحلیل بازار</p>
+    </div>
+
+    <div class="card" onclick="showMessage('Ξ اتریوم')">
+      <div class="icon">Ξ</div>
+      <h2>اتریوم</h2>
+      <p>قیمت و بررسی روند</p>
+    </div>
+
+    <div class="card" onclick="showMessage('📊 تحلیل بازار')">
+      <div class="icon">📊</div>
+      <h2>تحلیل بازار</h2>
+      <p>بررسی چندتایم‌فریمی</p>
+    </div>
+
+    <div class="card" onclick="showMessage('📰 اخبار بازار')">
+      <div class="icon">📰</div>
+      <h2>اخبار بازار</h2>
+      <p>اخبار و رویدادهای مهم</p>
+    </div>
+
+    <div class="card" onclick="showMessage('🔔 هشدار قیمت')">
+      <div class="icon">🔔</div>
+      <h2>هشدار قیمت</h2>
+      <p>پیگیری قیمت‌های موردنظر</p>
+    </div>
+
+  </section>
+
+  <div class="status">
+    وضعیت سیستم:
+    <span class="online">● آماده</span>
+  </div>
+
+</main>
+
+<footer>
+  MAYTYA AI © 2026
+  <br><br>
+  اطلاعات این سایت جنبه آموزشی و اطلاع‌رسانی دارد.
+</footer>
+
+<script>
+  function showMessage(name) {
+    alert(name + "\n\nاین بخش در حال اتصال به موتور MayTya است.");
+  }
+</script>
+
+</body>
+</html>
