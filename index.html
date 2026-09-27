@@ -97,7 +97,6 @@ header{
   margin-top:18px;
   font-size:20px;
   font-weight:bold;
-  color:#fff;
 }
 
 .loading{
@@ -195,57 +194,119 @@ footer{
       <div class="market-icon">₿</div>
       بیت‌کوین
     </div>
-
     <div id="btcPrice" class="price loading">
       در حال دریافت...
     </div>
-
-    <div class="market-label">
-      BTC / USDT
-    </div>
+    <div class="market-label">BTC / USDT</div>
   </div>
-
 
   <div class="market-card">
     <div class="market-title">
       <div class="market-icon">Ξ</div>
       اتریوم
     </div>
-
     <div id="ethPrice" class="price loading">
       در حال دریافت...
     </div>
-
-    <div class="market-label">
-      ETH / USDT
-    </div>
+    <div class="market-label">ETH / USDT</div>
   </div>
-
 
   <div class="market-card">
     <div class="market-title">
       <div class="market-icon">🥇</div>
       طلا
     </div>
-
     <div class="price loading">
       به‌زودی
     </div>
-
-    <div class="market-label">
-      XAU / USD
-    </div>
+    <div class="market-label">XAU / USD</div>
   </div>
-
 
   <div class="market-card">
     <div class="market-title">
       <div class="market-icon">📊</div>
       تحلیل بازار
     </div>
-
     <div class="price">
       15M • 1H • 4H
     </div>
+    <div class="market-label">
+      تحلیل چندتایم‌فریمی
+    </div>
+  </div>
 
-    <div class="market-label
+</section>
+
+<!-- تایم‌فریم‌ها -->
+
+<section class="actions">
+
+  <div class="action" onclick="showTimeframe('15m')">
+    <div class="action-icon">⚡</div>
+    <div class="action-title">15 دقیقه</div>
+  </div>
+
+  <div class="action" onclick="showTimeframe('1h')">
+    <div class="action-icon">📊</div>
+    <div class="action-title">1 ساعت</div>
+  </div>
+
+  <div class="action" onclick="showTimeframe('4h')">
+    <div class="action-icon">📈</div>
+    <div class="action-title">4 ساعت</div>
+  </div>
+
+  <div class="action" onclick="showInfo('📰 اخبار بازار')">
+    <div class="action-icon">📰</div>
+    <div class="action-title">اخبار بازار</div>
+  </div>
+
+</section>
+
+<div class="status">
+  وضعیت سیستم:
+  <span class="online">● آنلاین</span>
+</div>
+
+</main>
+
+<footer>
+  MAYTYA AI © 2026
+  <br>
+  اطلاعات بازار جنبه آموزشی و اطلاع‌رسانی دارد.
+</footer>
+
+<script src="app.js"></script>
+
+<script>
+
+function showTimeframe(timeframe){
+
+  const names = {
+    "15m":"15 دقیقه",
+    "1h":"1 ساعت",
+    "4h":"4 ساعت"
+  };
+
+  alert(
+    "📊 تحلیل MayTya\n\n" +
+    "تایم‌فریم: " +
+    names[timeframe] +
+    "\n\n" +
+    "⏳ موتور تحلیل در حال اتصال است..."
+  );
+}
+
+function showInfo(name){
+
+  alert(
+    name +
+    "\n\nاین بخش در مرحله بعد فعال می‌شود."
+  );
+
+}
+
+</script>
+
+</body>
+</html>
