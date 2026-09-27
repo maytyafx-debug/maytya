@@ -152,3 +152,42 @@ async function getCryptoPrice(symbol) {
 updateMarket();
 
 setInterval(updateMarket, 30000);
+async function getGoldPrice() {
+  try {
+    const response = await fetch(
+      "https://api.goldprice.dev/v1/prices?symbol=XAU-USD-SPOT"
+    );
+
+    if (!response.ok) {
+      throw new Error("Gold API error");
+    }
+
+    const data = await response.json();
+    const gold = data.symbols[0];
+
+    const goldElement = document.getElementById("goldPrice");
+
+    if (goldElement) {
+      goldElement.innerText =
+        "$" + Number(gold.price).toLocaleString(
+          undefined,
+          { maximumFractionDigits: 2 }
+        );
+
+      goldElement.classList.remove("loading");
+    }
+
+  } catch (error) {
+    console.error("Gold:", error);
+
+    const goldElement = document.getElementById("goldPrice");
+
+    if (goldElement) {
+      goldElement.innerText = "خطا";
+    }
+  }
+}
+
+getGoldPrice();
+
+setInterval(getGoldPrice, 60000);
