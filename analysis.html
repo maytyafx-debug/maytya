@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>MayTya AI | تحلیل بازار</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#070707;
+  color:#fff;
+}
+
+header{
+  padding:20px;
+  text-align:center;
+  background:#0d0d0d;
+  border-bottom:1px solid #30260f;
+}
+
+.logo{
+  color:#d6ad45;
+  font-size:28px;
+  font-weight:900;
+}
+
+.container{
+  max-width:850px;
+  margin:auto;
+  padding:20px 15px 40px;
+}
+
+.title{
+  text-align:center;
+  margin:20px 0;
+}
+
+.title h1{
+  font-size:26px;
+}
+
+.title span{
+  color:#d6ad45;
+}
+
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.tab{
+  background:#111;
+  border:1px solid #30260f;
+  color:#fff;
+  padding:14px 5px;
+  border-radius:12px;
+  text-align:center;
+  cursor:pointer;
+}
+
+.tab:hover{
+  border-color:#d6ad45;
+}
+
+.card{
+  background:linear-gradient(145deg,#171717,#0d0d0d);
+  border:1px solid #30260f;
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:15px;
+}
+
+.asset{
+  color:#d6ad45;
+  font-size:20px;
+  font-weight:bold;
+}
+
+.price{
+  font-size:30px;
+  font-weight:bold;
+  margin-top:12px;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:15px;
+}
+
+.box{
+  background:#101010;
+  border:1px solid #29210e;
+  border-radius:12px;
+  padding:15px;
+}
+
+.label{
+  color:#777;
+  font-size:12px;
+  margin-bottom:8px;
+}
+
+.value{
+  font-size:17px;
+  font-weight:bold;
+}
+
+.support{
+  color:#55d68a;
+}
+
+.resistance{
+  color:#ff6262;
+}
+
+.status{
+  margin-top:18px;
+  padding:14px;
+  background:#101010;
+  border-radius:12px;
+  color:#aaa;
+  line-height:1.8;
+}
+
+.note{
+  color:#777;
+  font-size:11px;
+  text-align:center;
+  margin-top:20px;
+  line-height:1.8;
+}
+
+.back{
+  display:block;
+  text-align:center;
+  color:#d6ad45;
+  text-decoration:none;
+  margin-top:25px;
+}
+
+@media(max-width:500px){
+  .row{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">MAYTYA AI</div>
+</header>
+
+<main class="container">
+
+<section class="title">
+  <h1>📊 تحلیل <span>بیت‌کوین</span></h1>
+</section>
+
+<div class="tabs">
+  <div class="tab" onclick="loadAnalysis('15m')">15 دقیقه</div>
+  <div class="tab" onclick="loadAnalysis('1h')">1 ساعت</div>
+  <div class="tab" onclick="loadAnalysis('4h')">4 ساعت</div>
+</div>
+
+<div class="card">
+
+  <div class="asset">₿ BTC / USDT</div>
+
+  <div id="price" class="price">
+    در حال دریافت...
+  </div>
+
+  <div class="row">
+
+    <div class="box">
+      <div class="label">روند</div>
+      <div id="trend" class="value">
+        —
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="label">تایم‌فریم</div>
+      <div id="timeframe" class="value">
+        15m
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="label">حمایت مهم</div>
+      <div id="support" class="value support">
+        —
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="label">مقاومت مهم</div>
+      <div id="resistance" class="value resistance">
+        —
+      </div>
+    </div>
+
+  </div>
+
+  <div id="status" class="status">
+    ⏳ در حال تحلیل بازار...
+  </div>
+
+</div>
+
+<div class="note">
+  این بخش برای نمایش اطلاعات و تحلیل خودکار بازار طراحی شده است.
+  اطلاعات بازار می‌تواند با تأخیر یا خطای API همراه باشد.
+</div>
+
+<a class="back" href="index.html">
+  ← بازگشت به داشبورد
+</a>
+
+</main>
+
+<script>
+
+const API =
+"https://api.binance.com/api/v3/klines";
+
+async function loadAnalysis(interval){
+
+  document.getElementById("timeframe").innerText = interval;
+
+  document.getElementById("status").innerText =
+  "⏳ در حال دریافت داده‌های بازار...";
+
+  try{
+
+    const response = await fetch(
+      `${API}?symbol=BTCUSDT&interval=${interval}&limit=50`
+    );
+
+    if(!response.ok){
+      throw new Error("API Error");
+    }
+
+    const candles = await response.json();
+
+    const closes = candles.map(c => Number(c[4]));
+    const highs = candles.map(c => Number(c[2]));
+    const lows = candles.map(c => Number(c[3]));
+
+    const price = closes[closes.length-1];
+
+    const short =
+      closes.slice(-10)
+      .reduce((a,b)=>a+b,0) / 10;
+
+    const long =
+      closes.slice(-30)
+      .reduce((a,b)=>a+b,0) / 30;
+
+    let trend;
+
+    if(short > long){
+      trend = "🟢 صعودی";
+    }
+    else if(short < long){
+      trend = "🔴 نزولی";
+    }
+    else{
+      trend = "🟡 خنثی";
+    }
+
+    const support =
+      Math.min(...lows.slice(-20));
+
+    const resistance =
+      Math.max(...highs.slice(-20));
+
+    document.getElementById("price").innerText =
+      "$" + price.toLocaleString(
+        undefined,
+        {maximumFractionDigits:2}
+      );
+
+    document.getElementById("trend").innerText =
+      trend;
+
+    document.getElementById("support").innerText =
+      "$" + support.toLocaleString(
+        undefined,
+        {maximumFractionDigits:2}
+      );
+
+    document.getElementById("resistance").innerText =
+      "$" + resistance.toLocaleString(
+        undefined,
+        {maximumFractionDigits:2}
+      );
+
+    document.getElementById("status").innerText =
+      "✅ تحلیل " + interval +
+      " با موفقیت به‌روزرسانی شد.";
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    document.getElementById("status").innerText =
+      "⚠️ دریافت اطلاعات بازار با مشکل مواجه شد.";
+
+  }
+
+}
+
+loadAnalysis("15m");
+
+</script>
+
+</body>
+</html>
