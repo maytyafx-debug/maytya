@@ -1,220 +1,251 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <title>MayTya AI | بازار هوشمند</title>
+<title>MayTya AI | Market Dashboard</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #080808;
-      color: #fff;
-      min-height: 100vh;
-    }
+body{
+  font-family:Arial,sans-serif;
+  background:#070707;
+  color:#fff;
+  min-height:100vh;
+}
 
-    header {
-      padding: 22px 18px;
-      text-align: center;
-      border-bottom: 1px solid #2d2410;
-      background: #0d0d0d;
-    }
+header{
+  padding:22px 16px;
+  text-align:center;
+  background:#0d0d0d;
+  border-bottom:1px solid #2d2410;
+}
 
-    .logo {
-      font-size: 30px;
-      font-weight: 900;
-      color: #d6ad45;
-      letter-spacing: 2px;
-    }
+.logo{
+  color:#d6ad45;
+  font-size:30px;
+  font-weight:900;
+  letter-spacing:2px;
+}
 
-    .subtitle {
-      margin-top: 7px;
-      color: #aaa;
-      font-size: 13px;
-    }
+.subtitle{
+  color:#888;
+  margin-top:7px;
+  font-size:12px;
+}
 
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 25px 15px 40px;
-    }
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:20px 15px 40px;
+}
 
-    .hero {
-      text-align: center;
-      padding: 35px 15px;
-    }
+.hero{
+  text-align:center;
+  padding:25px 10px;
+}
 
-    .hero h1 {
-      font-size: 32px;
-      margin-bottom: 12px;
-    }
+.hero h1{
+  font-size:28px;
+  margin-bottom:10px;
+}
 
-    .hero h1 span {
-      color: #d6ad45;
-    }
+.hero span{
+  color:#d6ad45;
+}
 
-    .hero p {
-      color: #aaa;
-      line-height: 1.8;
-      font-size: 14px;
-    }
+.hero p{
+  color:#999;
+  font-size:13px;
+  line-height:1.8;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-      margin-top: 20px;
-    }
+.market-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+  margin-top:20px;
+}
 
-    .card {
-      background: linear-gradient(145deg, #151515, #0d0d0d);
-      border: 1px solid #30260f;
-      border-radius: 18px;
-      padding: 22px 15px;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.25s;
-    }
+.market-card{
+  background:linear-gradient(145deg,#171717,#0c0c0c);
+  border:1px solid #30260f;
+  border-radius:18px;
+  padding:20px 14px;
+  min-height:170px;
+}
 
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: #d6ad45;
-      box-shadow: 0 8px 25px rgba(214,173,69,0.12);
-    }
+.market-title{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:16px;
+  font-weight:bold;
+}
 
-    .icon {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
+.market-icon{
+  font-size:27px;
+}
 
-    .card h2 {
-      font-size: 17px;
-      margin-bottom: 7px;
-    }
+.price{
+  margin-top:18px;
+  font-size:20px;
+  font-weight:bold;
+  color:#fff;
+}
 
-    .card p {
-      color: #888;
-      font-size: 12px;
-      line-height: 1.7;
-    }
+.loading{
+  color:#777;
+  font-size:14px;
+}
 
-    .status {
-      margin-top: 25px;
-      padding: 15px;
-      background: #101010;
-      border: 1px solid #28200d;
-      border-radius: 14px;
-      text-align: center;
-      color: #aaa;
-      font-size: 13px;
-    }
+.market-label{
+  color:#777;
+  font-size:11px;
+  margin-top:7px;
+}
 
-    .online {
-      color: #55d68a;
-      font-weight: bold;
-    }
+.actions{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-top:20px;
+}
 
-    footer {
-      text-align: center;
-      color: #666;
-      font-size: 11px;
-      padding: 25px 10px;
-    }
+.action{
+  background:#101010;
+  border:1px solid #29210e;
+  border-radius:15px;
+  padding:18px 10px;
+  text-align:center;
+  cursor:pointer;
+}
 
-    @media (max-width: 500px) {
-      .grid {
-        grid-template-columns: 1fr 1fr;
-      }
+.action:hover{
+  border-color:#d6ad45;
+}
 
-      .hero h1 {
-        font-size: 27px;
-      }
-    }
-  </style>
+.action-icon{
+  font-size:25px;
+  margin-bottom:7px;
+}
+
+.action-title{
+  font-size:14px;
+}
+
+.status{
+  margin-top:20px;
+  background:#101010;
+  border:1px solid #28200d;
+  border-radius:14px;
+  padding:14px;
+  text-align:center;
+  color:#888;
+  font-size:12px;
+}
+
+.online{
+  color:#55d68a;
+  font-weight:bold;
+}
+
+footer{
+  text-align:center;
+  color:#555;
+  font-size:10px;
+  padding:25px;
+  line-height:1.8;
+}
+
+@media(max-width:500px){
+  .market-grid{
+    grid-template-columns:1fr;
+  }
+}
+</style>
 </head>
 
 <body>
 
 <header>
   <div class="logo">MAYTYA AI</div>
-  <div class="subtitle">هوش مصنوعی بازارهای مالی</div>
+  <div class="subtitle">SMART MARKET DASHBOARD</div>
 </header>
 
 <main class="container">
 
-  <section class="hero">
-    <h1>بازار را <span>هوشمندانه</span> بررسی کن</h1>
-    <p>
-      قیمت‌ها، روند بازار و اطلاعات تحلیلی
-      در یک داشبورد ساده و سریع.
-    </p>
-  </section>
+<section class="hero">
+  <h1>بازار را <span>هوشمندانه</span> بررسی کن</h1>
+  <p>
+    اطلاعات بازار در یک داشبورد سریع و ساده
+  </p>
+</section>
 
-  <section class="grid">
+<section class="market-grid">
 
-    <div class="card" onclick="showMessage('🥇 طلا')">
-      <div class="icon">🥇</div>
-      <h2>طلا</h2>
-      <p>قیمت و بررسی بازار طلا</p>
+  <div class="market-card">
+    <div class="market-title">
+      <div class="market-icon">₿</div>
+      بیت‌کوین
     </div>
 
-    <div class="card" onclick="showMessage('₿ بیت‌کوین')">
-      <div class="icon">₿</div>
-      <h2>بیت‌کوین</h2>
-      <p>قیمت و تحلیل بازار</p>
+    <div id="btcPrice" class="price loading">
+      در حال دریافت...
     </div>
 
-    <div class="card" onclick="showMessage('Ξ اتریوم')">
-      <div class="icon">Ξ</div>
-      <h2>اتریوم</h2>
-      <p>قیمت و بررسی روند</p>
+    <div class="market-label">
+      BTC / USDT
     </div>
-
-    <div class="card" onclick="showMessage('📊 تحلیل بازار')">
-      <div class="icon">📊</div>
-      <h2>تحلیل بازار</h2>
-      <p>بررسی چندتایم‌فریمی</p>
-    </div>
-
-    <div class="card" onclick="showMessage('📰 اخبار بازار')">
-      <div class="icon">📰</div>
-      <h2>اخبار بازار</h2>
-      <p>اخبار و رویدادهای مهم</p>
-    </div>
-
-    <div class="card" onclick="showMessage('🔔 هشدار قیمت')">
-      <div class="icon">🔔</div>
-      <h2>هشدار قیمت</h2>
-      <p>پیگیری قیمت‌های موردنظر</p>
-    </div>
-
-  </section>
-
-  <div class="status">
-    وضعیت سیستم:
-    <span class="online">● آماده</span>
   </div>
 
-</main>
 
-<footer>
-  MAYTYA AI © 2026
-  <br><br>
-  اطلاعات این سایت جنبه آموزشی و اطلاع‌رسانی دارد.
-</footer>
+  <div class="market-card">
+    <div class="market-title">
+      <div class="market-icon">Ξ</div>
+      اتریوم
+    </div>
 
-<script>
-  function showMessage(name) {
-    alert(name + "\n\nاین بخش در حال اتصال به موتور MayTya است.");
-  }
-</script>
-<script src="app.js"></script>
-</body>
-</html>
+    <div id="ethPrice" class="price loading">
+      در حال دریافت...
+    </div>
+
+    <div class="market-label">
+      ETH / USDT
+    </div>
+  </div>
+
+
+  <div class="market-card">
+    <div class="market-title">
+      <div class="market-icon">🥇</div>
+      طلا
+    </div>
+
+    <div class="price loading">
+      به‌زودی
+    </div>
+
+    <div class="market-label">
+      XAU / USD
+    </div>
+  </div>
+
+
+  <div class="market-card">
+    <div class="market-title">
+      <div class="market-icon">📊</div>
+      تحلیل بازار
+    </div>
+
+    <div class="price">
+      15M • 1H • 4H
+    </div>
+
+    <div class="market-label
