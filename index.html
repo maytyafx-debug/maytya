@@ -3,9 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1F6F63">
-<link rel="apple-touch-icon" href="icon-192.png">
 <title>Metatya — پلتفرم تحلیل و یادگیری</title>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;800&display=swap" rel="stylesheet">
 <style>
@@ -600,7 +597,6 @@ async function initAdmin(){
   membersRef = dbCap.collection('members');
   membersRef.onSnapshot(renderMembers, () => {});
 }
-try{ if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(()=>{}); }catch(e){}
 </script>
 </body>
 </html>
