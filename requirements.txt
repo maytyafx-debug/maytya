@@ -1,5 +1,11 @@
-anthropic
 requests
 pillow
 arabic-reshaper
 python-bidi
+flask
+gunicorn
+python-telegram-bot
+feedparser
+jdatetime
+mistralai
+anthropic
