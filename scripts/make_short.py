@@ -6,7 +6,24 @@ import arabic_reshaper
 from bidi.algorithm import get_display
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
-FONT = os.environ.get("FONT_PATH", "Vazirmatn-Regular.ttf")
+import glob
+
+def find_font():
+    candidates = [
+        os.environ.get("FONT_PATH", ""),
+        "Vazirmatn-Regular.ttf",
+        os.path.join(os.path.dirname(__file__), "fonts", "Vazirmatn-Regular.ttf"),
+    ]
+    # جستجوی خودکار توی سیستم
+    candidates += glob.glob("/usr/share/fonts/**/Vazirmatn-Regular.ttf", recursive=True)
+    candidates += glob.glob("/usr/share/fonts/**/Vazirmatn*.ttf", recursive=True)
+    for c in candidates:
+        if c and os.path.exists(c):
+            print(f"✓ فونت پیدا شد: {c}")
+            return c
+    raise FileNotFoundError("❌ هیچ فونت فارسی پیدا نشد! لطفاً Vazirmatn رو نصب کن")
+
+FONT = find_font()-Regular.ttf")
 W, H = 1080, 1920
 def fa(s): return get_display(arabic_reshaper.reshape(s))
 
