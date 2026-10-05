@@ -10,10 +10,9 @@ ROOT = os.path.join(os.path.dirname(__file__), "..")
 def find_font():
     candidates = [
         os.environ.get("FONT_PATH", ""),
-        "Vazirmatn-Regular.ttf",
         os.path.join(os.path.dirname(__file__), "fonts", "Vazirmatn-Regular.ttf"),
+        "Vazirmatn-Regular.ttf",
     ]
-    # جستجوی خودکار توی سیستم
     candidates += glob.glob("/usr/share/fonts/**/Vazirmatn*.ttf", recursive=True)
     candidates += glob.glob("/usr/share/fonts/**/*Vazir*.ttf", recursive=True)
     for c in candidates:
@@ -23,6 +22,9 @@ def find_font():
     raise FileNotFoundError("❌ هیچ فونت فارسی پیدا نشد! لطفاً Vazirmatn رو نصب کن")
 
 FONT = find_font()
+print(f"📁 فونت انتخابی: {FONT}")
+print(f"📏 حجم فایل: {os.path.getsize(FONT)} bytes")
+
 W, H = 1080, 1920
 
 def fa(s): return get_display(arabic_reshaper.reshape(s))
