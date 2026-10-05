@@ -1,10 +1,32 @@
 {
   "disclosure": "برخی لینک‌ها معرفی هستند و ممکن است برای Metatya کمیسیون داشته باشند؛ هزینه‌ی شما تغییر نمی‌کند. این‌ها توصیه‌ی سرمایه‌گذاری نیستند.",
-  "items": [],
-  "_راهنما": "برای فعال‌کردن درآمد، آیتم‌ها را به آرایه items منتقل کنید. type: affiliate | product | service. sections: all یا کلید حوزه مثل forex, crypto, bourse, income, business, finance. active:false برای خاموش‌کردن موقت.",
-  "_نمونه": [
-    {"type": "product", "title": "دوره‌ی مدیریت ریسک برای معامله‌گران", "description": "مسیر گام‌به‌گام از صفر تا برنامه‌ی معاملاتی مکتوب.", "url": "https://example.com/course", "cta": "ثبت‌نام", "sections": ["forex", "crypto", "bourse"], "active": true},
-    {"type": "affiliate", "title": "صرافی/بروکر مورد اعتماد من", "description": "قوانین، کارمزد و ریسک‌ها را قبل از ثبت‌نام خودتان بررسی کنید.", "url": "https://example.com/ref", "cta": "مشاهده", "sections": ["crypto"], "active": true},
-    {"type": "service", "title": "جلسه‌ی مشاوره‌ی ۳۰ دقیقه‌ای", "description": "بازبینی دفترچه‌ی معاملات و برنامه‌ی ریسک.", "url": "https://t.me/maytya", "cta": "رزرو", "sections": ["all"], "active": true}
+  "items": [
+    {
+      "type": "product",
+      "title": "دفترچه معاملات PRO",
+      "description": "بیش از ۱۰۰۰ فرمول آماده + داشبورد آماری + راهنمای گام‌به‌گام مدیریت ریسک. مناسب معامله‌گران فارکس، کریپتو و بورس. اثر آیت قمری.",
+      "url": "https://t.me/AyatGhamari",
+      "cta": "خرید ۹۹ هزار تومان",
+      "sections": ["forex", "crypto", "bourse", "finance", "psychology"],
+      "active": true
+    },
+    {
+      "type": "service",
+      "title": "مشاوره ۳۰ دقیقه‌ای با آیت قمری",
+      "description": "بازبینی دفترچه معاملات، طراحی برنامه ریسک اختصاصی و پاسخ به سوالات. جلسه‌ی متمرکز ۳۰ دقیقه‌ای با بنیان‌گذار Metatya.",
+      "url": "https://t.me/AyatGhamari",
+      "cta": "رزرو ۲۹۹ هزار تومان",
+      "sections": ["all"],
+      "active": true
+    },
+    {
+      "type": "service",
+      "title": "پکیج کامل: PRO + مشاوره",
+      "description": "دفترچه PRO + جلسه ۳۰ دقیقه‌ای بازبینی با آیت قمری. صرفه‌جویی ۴۹ هزار تومان نسبت به خرید جداگانه.",
+      "url": "https://t.me/AyatGhamari",
+      "cta": "خرید ۳۴۹ هزار تومان",
+      "sections": ["all"],
+      "active": true
+    }
   ]
 }
