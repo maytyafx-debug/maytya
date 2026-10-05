@@ -1,64 +1,49 @@
-"""ساخت ویدیوی ۱۰ ثانیه‌ای عمودی (۱۰۸۰x۱۹۲۰) از short_script هر بازار -> out/*.mp4
-نیاز: pillow arabic-reshaper python-bidi + ffmpeg + فونت فارسی (FONT_PATH)"""
-import os, json, subprocess, textwrap, glob
-from PIL import Image, ImageDraw, ImageFont
-import arabic_reshaper
-from bidi.algorithm import get_display
-
-ROOT = os.path.join(os.path.dirname(__file__), "..")
-
-def find_font():
-    candidates = [
-        os.environ.get("FONT_PATH", ""),
-        os.path.join(os.path.dirname(__file__), "fonts", "Vazirmatn-Regular.ttf"),
-        "Vazirmatn-Regular.ttf",
-    ]
-    candidates += glob.glob("/usr/share/fonts/**/Vazirmatn*.ttf", recursive=True)
-    candidates += glob.glob("/usr/share/fonts/**/*Vazir*.ttf", recursive=True)
-    for c in candidates:
-        if c and os.path.exists(c):
-            print(f"✓ فونت پیدا شد: {c}")
-            return c
-    raise FileNotFoundError("❌ هیچ فونت فارسی پیدا نشد! لطفاً Vazirmatn رو نصب کن")
-
-FONT = find_font()
-print(f"📁 فونت انتخابی: {FONT}")
-print(f"📏 حجم فایل: {os.path.getsize(FONT)} bytes")
-
-W, H = 1080, 1920
-
-def fa(s): return get_display(arabic_reshaper.reshape(s))
-
-def frame(lines, path, brand="Metatya"):
-    im = Image.new("RGB", (W, H), (15, 36, 31))
-    d = ImageDraw.Draw(im)
-    big, small = ImageFont.truetype(FONT, 78), ImageFont.truetype(FONT, 44)
-    y = 560
-    for ln in lines:
-        for part in textwrap.wrap(ln, 22):
-            w = d.textlength(fa(part), font=big)
-            d.text(((W - w) / 2, y), fa(part), font=big, fill=(238, 243, 241)); y += 110
-    bw = d.textlength(brand, font=small)
-    d.text(((W - bw) / 2, H - 200), brand, font=small, fill=(192, 138, 46))
-    im.save(path)
-
-def main():
-    data = json.load(open(os.path.join(ROOT, "docs", "content.json"), encoding="utf-8"))
-    os.makedirs(os.path.join(ROOT, "out"), exist_ok=True)
-    for key in ("forex", "crypto", "bourse"):
-        items = data["sections"].get(key, {}).get("items", [])
-        if not items: continue
-        frames = []
-        for i, ln in enumerate(items[0]["short_script"][:3]):
-            p = os.path.join(ROOT, "out", f"{key}_{i}.png"); frame([ln], p); frames.append(p)
-        lst = os.path.join(ROOT, "out", f"{key}.txt")
-        with open(lst, "w") as f:
-            for p in frames: f.write(f"file '{os.path.abspath(p)}'\nduration 3.3\n")
-            f.write(f"file '{os.path.abspath(frames[-1])}'\n")
-        subprocess.run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", lst, "-t", "10", "-r", "30",
-                        "-pix_fmt", "yuv420p", os.path.join(ROOT, "out", f"{key}_short.mp4")], check=True)
-        it = items[0]; site = os.environ.get("SITE_URL", "")
-        open(os.path.join(ROOT, "out", f"{key}_upload.txt"), "w", encoding="utf-8").write(
-            f"عنوان: {it['title']} | Metatya\n\nتوضیح:\n{it['body'][:300]}\n\nتحلیل کامل و آموزش بیشتر: {site}\nتلگرام: https://t.me/maytya\nاینستاگرام: https://instagram.com/maytyafx\n\n#Metatya #فارکس #کریپتو #بورس #تحلیل_بازار\n⚠️ توصیه سرمایه‌گذاری نیست.\n")
-        print("ساخته شد:", key)
-main()
+name: Metatya daily
+on:
+  schedule: [{cron: "0 4 * * *"}]
+  workflow_dispatch: {}
+permissions: {contents: write}
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+      - name: Download Vazirmatn font
+        run: |
+          mkdir -p scripts/fonts
+          cd scripts/fonts
+          wget -q "https://github.com/rastikerdar/vazirmatn/raw/master/fonts/ttf/Vazirmatn-Regular.ttf" -O Vazirmatn-Regular.ttf
+          ls -la
+          file Vazirmatn-Regular.ttf
+      - run: pip install -r requirements.txt
+      - run: python scripts/generate.py
+        env:
+          GEMINI_API_KEY: "${{ secrets.GEMINI_API_KEY }}"
+          MISTRAL_API_KEY: "${{ secrets.MISTRAL_API_KEY }}"
+          CLOUDFLARE_API_TOKEN: "${{ secrets.CLOUDFLARE_API_TOKEN }}"
+          CLOUDFLARE_ACCOUNT_ID: "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}"
+      - run: python scripts/build_pages.py
+        env: {SITE_URL: "${{ vars.SITE_URL }}"}
+      - run: python scripts/make_short.py
+        env: {FONT_PATH: "scripts/fonts/Vazirmatn-Regular.ttf", SITE_URL: "${{ vars.SITE_URL }}"}
+        continue-on-error: true
+      - run: python scripts/post_telegram.py
+        env:
+          TELEGRAM_BOT_TOKEN: "${{ secrets.TELEGRAM_BOT_TOKEN }}"
+          TELEGRAM_CHAT_ID: "${{ secrets.TELEGRAM_CHAT_ID }}"
+          SITE_URL: "${{ vars.SITE_URL }}"
+        continue-on-error: true
+      - uses: actions/upload-artifact@v4
+        with: {name: shorts, path: "out/*.mp4\nout/*.txt", if-no-files-found: ignore}
+      - name: commit content (backup)
+        run: |
+          git config user.name "metatya-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add docs && git commit -m "daily content $(date -u +%F)" || echo "no changes"
+          git push
