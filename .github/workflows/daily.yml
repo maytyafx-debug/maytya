@@ -19,9 +19,16 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}"
       - run: python scripts/build_pages.py
         env: {SITE_URL: "${{ vars.SITE_URL }}"}
-      - run: python scripts/make_short.py
-        env: {FONT_PATH: "/usr/share/fonts/truetype/vazirmatn/Vazirmatn-Regular.ttf"}
-        continue-on-error: true
+      - name: Install Persian font
+  run: |
+    sudo apt-get update
+    sudo apt-get install -y fonts-vazirmatn
+    echo "=== Font paths ==="
+    find /usr/share/fonts -iname "*vazir*" 2>/dev/null || echo "Not found via find"
+    fc-list | grep -i vazir || echo "Not found via fc-list"
+- run: python scripts/make_short.py
+  env: {FONT_PATH: "/usr/share/fonts/truetype/vazirmatn/Vazirmatn-Regular.ttf"}
+  continue-on-error: true
       - run: python scripts/post_telegram.py
         env:
           TELEGRAM_BOT_TOKEN: "${{ secrets.TELEGRAM_BOT_TOKEN }}"
