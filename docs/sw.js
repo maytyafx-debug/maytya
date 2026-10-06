@@ -1,9 +1,9 @@
-const V='metatya-v1', SHELL=['./','index.html','manifest.json','icon-192.png'];
+const V='metatya-v2', SHELL=['./','index.html','manifest.json','icon-192.png','monetization.json','cta.js'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==V).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{
   const r=e.request; if(r.method!=='GET'||!r.url.startsWith(self.location.origin)) return;
-  const fresh=/content\.json$/.test(r.url);   // محتوای روزانه: اول شبکه، بعد کش
+  const fresh=/content\.json$|monetization\.json$/.test(r.url);   // محتوای پویا: اول شبکه، بعد کش
   e.respondWith(fresh
     ? fetch(r).then(x=>{const c=x.clone();caches.open(V).then(k=>k.put(r,c));return x}).catch(()=>caches.match(r))
     : caches.match(r).then(m=>m||fetch(r).then(x=>{const c=x.clone();caches.open(V).then(k=>k.put(r,c));return x})));
