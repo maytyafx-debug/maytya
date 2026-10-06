@@ -1,11 +1,16 @@
+# --- GitHub Actions (scripts/) ---
 requests
 pillow
 arabic-reshaper
 python-bidi
+
+# --- Render (bot.py) ---
 flask
 gunicorn
 python-telegram-bot
 feedparser
 jdatetime
 mistralai
+
+# --- AI Providers ---
 anthropic
