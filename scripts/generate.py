@@ -103,6 +103,25 @@ def clean(items, tabs, key):
     if not good: raise ValueError("هیچ مطلب سالمی از دروازه کیفیت رد نشد")
     return good
 
+NUM = re.compile(r"[0-9\u06f0-\u06f9\u0660-\u0669][0-9\u06f0-\u06f9\u0660-\u0669.,\u066b\u066c\u060c]*")
+def nums(t): return set(NUM.findall(t))
+
+def polish(fn, items, tabs, key):
+    """ویرایش نگارشی رایگان با همان مدل؛ فقط اگر عدد جدیدی نیامده و دروازه کیفیت را رد شود، نسخه‌ی ویرایش‌شده جایگزین می‌شود."""
+    try:
+        prm = ("متن‌های فارسی زیر را ویرایش کن: غلط املایی و نگارشی را درست کن، جمله‌ها را روان و طبیعی کن (نه ترجمه‌ای). "
+               "معنا، ساختار و هر عدد را دقیقاً حفظ کن و هیچ عدد یا خبر جدیدی اضافه نکن. فقط همان JSON را با همان کلیدها برگردان: "
+               + json.dumps({"items": items}, ensure_ascii=False))
+        txt = fn(prm)
+        new = clean(json.loads(re.search(r"\{.*\}", txt, re.S).group(0))["items"], tabs, key)
+        old_n = set().union(*[nums(i["title"] + i["body"]) for i in items]) if items else set()
+        if len(new) == len(items) and all(nums(i["title"] + i["body"]) <= old_n for i in new):
+            return new
+        print("  polish رد شد (عدد جدید یا تعداد ناهمخوان)")
+    except Exception as e:
+        print("  polish انجام نشد:", str(e)[:60])
+    return items
+
 def ask(key, name, tabs, old_titles, provs):
     if DRY:
         return [{"tab": t, "title": f"نمونه {name} - {t}", "body": "متن نمونه (حالت آزمایشی).",
@@ -113,6 +132,11 @@ def ask(key, name, tabs, old_titles, provs):
         ctx = ("تیتر خبرهای امروز (فقط بر اساس همین‌ها بنویس؛ اگر عدد دقیق نیست بنویس عدد را از منبع ببین):\n- " + "\n- ".join(hl) + "\n") if hl \
               else "خبر امروز در دسترس نیست؛ فقط آموزش و مفهوم بنویس و قیمت یا خبری نساز.\n"
         srcs = [u for u in FEEDS[key] if "news.google" not in u]
+        try:
+            pr = json.load(open(os.path.join(os.path.dirname(__file__), "..", "docs", "data", "latest.json"), encoding="utf-8"))["prices"]
+            keep = [k for k in pr if (key == "crypto" and "USD" in k and k.split("/")[0] in ("BTC", "ETH", "SOL", "XRP")) or (key == "forex" and k in ("EUR/USD", "GBP/USD", "USD/JPY", "AUD/USD"))]
+            if keep: ctx += "قیمت‌های مرجع امروز از API رسمی (فقط همین اعداد مجازند): " + "، ".join(f"{k}={pr[k]['value']}" for k in keep) + "\n"
+        except Exception: pass
     prompt = PROMPT.format(today=datetime.date.today().isoformat(), name=name, tabs="، ".join(tabs), ctx=ctx,
                            old="، ".join(old_titles[:12]) or "ندارد")
     err = []
@@ -122,6 +146,8 @@ def ask(key, name, tabs, old_titles, provs):
             try:
                 txt = fn(prompt)
                 items = clean(json.loads(re.search(r"\{.*\}", txt, re.S).group(0))["items"], tabs, key)
+                if key in ("forex", "crypto", "bourse") and E("POLISH", "1") != "0":
+                    items = polish(fn, items, tabs, key)
                 for it in items: it["sources"] = srcs
                 return items, pname
             except requests.HTTPError as e:
