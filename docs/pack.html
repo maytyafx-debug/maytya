@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>پک Metatya</title>
+<meta name="description" content="پک‌های آموزشی و ابزارهای اکسل Metatya برای ورزش، ذهن و کسب‌وکار؛ بدون وعده‌ی غیرواقعی.">
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#1F6F63">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EEF3F1;--card:#fff;--ink:#0F241F;--sub:#4C635D;--teal:#1F6F63;--gold:#C08A2E;--line:#DCE6E2;--warn:#B3382C;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+@media(prefers-color-scheme:dark){:root{--bg:#0F1A17;--card:#152621;--ink:#EAF2EF;--sub:#9BB0AA;--line:#233631;--warn:#E57C70}}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--ink);line-height:2;padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+.w{max-width:640px;margin:0 auto;padding:16px}a.home{color:var(--teal);font-size:13px;text-decoration:none}
+.hero{background:linear-gradient(160deg,#0F2B26,#1F6F63);color:#fff;border-radius:20px;padding:26px 20px;margin:12px 0}.hero .ic{font-size:34px}.hero h1{font-size:22px;line-height:1.8;font-weight:800}.hero p{font-size:14px;opacity:.92;margin-top:6px}
+.btn{display:inline-block;text-decoration:none;font-family:inherit;font-size:14px;font-weight:600;padding:11px 20px;border-radius:12px;background:var(--gold);color:#1a1405;border:none;cursor:pointer;margin:10px 6px 0 0}.btn.t{background:var(--teal);color:#fff}
+h2{font-size:17px;margin:24px 0 8px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:8px 0;font-size:13.5px;color:var(--sub)}
+.card li{margin:3px 0}.card ul{padding-right:18px}.price{font-size:20px;font-weight:800;color:var(--ink);margin-top:6px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}.two .card{font-size:12.8px}.no h4{color:var(--warn)}.yes h4{color:var(--teal)}
+.warn{font-size:11px;color:var(--sub);border-top:1px solid var(--line);margin-top:24px;padding-top:10px;line-height:1.9}
+.bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;justify-content:center}.bar .btn{margin:0;flex:1;max-width:260px;text-align:center}
+</style></head><body><div class="w"><a class="home" href="index.html">← Metatya | خانه</a><div id="root"><p style="margin-top:30px">در حال بارگذاری…</p></div></div>
+<div class="bar" id="bar" style="display:none"></div>
+<script src="cta.js"></script><script>
+(function(){
+ var id=new URLSearchParams(location.search).get('p')||'fit',root=document.getElementById('root'),E=MetatyaCTA.esc,S=MetatyaCTA.safe;
+ fetch('packs.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(d){
+  var p=d.packs.find(function(x){return x.id===id});
+  if(!p){root.innerHTML='<p style="margin-top:30px">این پک پیدا نشد. <a href="index.html">بازگشت</a></p>';return}
+  document.title=p.title+' | Metatya';
+  var contact=d.contact||'https://t.me/maytya';
+  var h='<div class="hero"><div class="ic">'+E(p.icon)+'</div><h1>'+E(p.title)+'</h1><p>'+E(p.tagline)+'</p>';
+  if(p.free&&p.free.file)h+='<a class="btn" download href="'+E(p.free.file)+'">🎁 '+E(p.free.title)+'</a>';
+  h+='</div>'+(p.preview?'<img src="'+E(p.preview)+'" alt="'+E(p.previewAlt||p.title)+'" style="width:100%;border-radius:16px;border:1px solid var(--line);margin-top:6px" loading="lazy"><div class="card" style="font-size:11.5px">تصویر بالا نمونه با داده‌ی فرضی است، نه پرتفوی واقعی.</div>':'')+'<h2>مشکل واقعی</h2><div class="card">'+E(p.problem)+'</div><h2>داخل پک چیست؟</h2><div class="card"><ul>'+p.bullets.map(function(b){return '<li>'+E(b)+'</li>'}).join('')+'</ul>';
+  h+=(p.price?'<div class="price">'+E(p.price)+'</div>':'<div class="card" style="margin-top:8px">قیمت و روش دریافت در تلگرام اعلام می‌شود.</div>')+'</div>';
+  h+='<div class="two"><div class="card yes"><h4>مناسب توست اگر…</h4>'+E(p.audience)+'</div><div class="card no"><h4>مناسب تو نیست اگر…</h4>'+E(p.notFor)+'</div></div>';
+  h+='<div id="cta"></div><div class="warn">'+E(p.disclaimer)+' Metatya آموزشی است و هیچ نتیجه‌ای را تضمین نمی‌کند.</div>';
+  root.innerHTML=h;
+  var c=document.getElementById('cta');MetatyaCTA.lead(c,'pack-'+p.id);MetatyaCTA.social(c,'pack');
+  var b=document.getElementById('bar');b.style.display='flex';
+  b.innerHTML='<a class="btn t" target="_blank" rel="noopener" href="'+S(contact)+'">سفارش در تلگرام</a>'+(p.bot?'<a class="btn" target="_blank" rel="noopener" href="'+S('https://t.me/'+p.bot.replace(/^@/,''))+'">پرسش از ربات</a>':'');
+ }).catch(function(){root.innerHTML='<p style="margin-top:30px">خطا در بارگذاری.</p>'});
+})();
+</script></body></html>

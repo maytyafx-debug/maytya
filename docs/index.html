@@ -99,6 +99,11 @@ nav.bottom button.active{color:var(--teal); font-weight:600;}
 .tri a b{font-size:14px; display:block;}
 .tri a span{font-size:11.5px; color:var(--sub); line-height:1.6;}
 .tri-flow{font-size:11.5px; color:var(--sub); line-height:1.9; margin:10px 2px 0;}
+.wl{background:var(--card);border:1px solid var(--gold);border-radius:14px;padding:12px 14px;margin:0 0 12px;position:relative;font-size:13px;line-height:1.9}
+.wl b{display:block;font-size:14px;margin-bottom:2px}.wl .x{position:absolute;left:10px;top:6px;background:none;border:none;color:var(--sub);font-size:18px;cursor:pointer}
+.wl a{display:inline-block;margin:6px 0 0 8px;font-size:12.5px;color:var(--teal);font-weight:600;text-decoration:none}
+.pk-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.pk-c{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;text-decoration:none;color:var(--ink);display:block}
+.pk-c .i{font-size:22px}.pk-c b{display:block;font-size:13.5px;margin-top:4px;line-height:1.7}.pk-c span{font-size:11.5px;color:var(--sub);line-height:1.7;display:block;margin-top:2px}
 .legal{max-width:520px;margin:0 auto;padding:6px 16px 96px;font-size:10.5px;line-height:1.9;color:var(--sub);}
 .note{font-size:11.5px; color:var(--sub); text-align:center; margin-top:18px;}
 .triangle-wrap{position:relative; max-width:300px; margin:18px auto 6px; aspect-ratio:300/255;}
@@ -203,6 +208,7 @@ nav.bottom button.active{color:var(--teal); font-weight:600;}
       <div class="card" onclick="openDetail('بورس ایران','بورس ایران')"><div class="icon">📈</div><div class="name">بورس ایران</div><div class="desc">تابلوخوانی، بنیادی، صندوق‌ها، آموزش سهامداری</div></div>
     </div>
 
+    <div id="packs-home"></div>
     <h2 class="section-title">رشد فردی و مالی</h2>
     <div class="grid">
       <div class="card" onclick="openDetail('کسب درآمد','کسب‌درآمد')"><div class="icon">💰</div><div class="name">کسب درآمد</div><div class="desc">درآمد آنلاین و آفلاین</div></div>
@@ -271,6 +277,20 @@ nav.bottom button.active{color:var(--teal); font-weight:600;}
   var CFG={url:'https://megbqtoihsuouiaxpifl.supabase.co',
     key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1lZ2JxdG9paHN1b3VpYXhwaWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA3ODYzNDEsImV4cCI6MjEwNjM2MjM0MX0.x7aDRiSPd6F6XkjdZ7EIQUf5bU8Qf6PKrZUECzNEZzU',
     links:[['✈️','تلگرام','https://t.me/maytya'],['▶️','یوتیوب','https://www.youtube.com/@maytyaFx'],['📸','اینستاگرام','https://instagram.com/maytyafx']]};
+  // منبع ورود (اولین لمس): utm_source/ref یا دامنه‌ی ارجاع‌دهنده؛ در localStorage می‌ماند تا به لید وصل شود. هیچ داده‌ی شخصی ذخیره نمی‌شود.
+  function detect(){
+    try{
+      var q=new URLSearchParams(location.search),src=(q.get('utm_source')||q.get('ref')||'').toLowerCase(),camp=(q.get('utm_campaign')||'').toLowerCase();
+      if(!src&&document.referrer){var h=new URL(document.referrer).hostname.replace(/^www\./,'');
+        if(h===location.hostname)return null;
+        src=/youtube\.com|youtu\.be/.test(h)?'youtube':/instagram\.com/.test(h)?'instagram':/(^|\.)t\.me$|telegram\.(org|me)/.test(h)?'telegram':/google\./.test(h)?'google':/bing\.com/.test(h)?'bing':/(^|\.)(twitter|x)\.com$/.test(h)?'x':h.slice(0,24)}
+      if(!src)return null;return{src:src.slice(0,20),camp:camp.slice(0,20)}
+    }catch(e){return null}}
+  function touch(){var d=detect(),st=null;
+    try{st=JSON.parse(localStorage.getItem('mt_src')||'null')}catch(e){}
+    if(d&&!st){st={src:d.src,camp:d.camp,ts:Date.now()};try{localStorage.setItem('mt_src',JSON.stringify(st))}catch(e){}}
+    return{now:d,first:st}}
+  var TOUCH=touch();
   function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
   function safe(u){return /^https?:\/\//i.test(u||'')?esc(u):'#'}
   function rel(u){return /^[a-z0-9_\-\/]+\.html(#[\w\-]*)?(\?.*)?$/i.test(u||'')}
@@ -288,7 +308,7 @@ nav.bottom button.active{color:var(--teal); font-weight:600;}
       if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)){msg.textContent='ایمیل معتبر وارد کنید.';return}
       if(!ck.checked){msg.textContent='برای عضویت، تیک موافقت را بزنید.';return}
       msg.textContent='در حال ثبت...';
-      fetch(CFG.url+'/rest/v1/leads',{method:'POST',headers:{apikey:CFG.key,Authorization:'Bearer '+CFG.key,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({email:e,source:String(src||'site').slice(0,60),consent:true})})
+      fetch(CFG.url+'/rest/v1/leads',{method:'POST',headers:{apikey:CFG.key,Authorization:'Bearer '+CFG.key,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({email:e,source:((TOUCH.first?TOUCH.first.src+(TOUCH.first.camp?'/'+TOUCH.first.camp:''):'direct')+'|'+String(src||'site')).slice(0,60),consent:true})})
         .then(function(r){msg.textContent=r.ok?'ثبت شد ✅ ممنون!':(r.status===409?'این ایمیل قبلاً ثبت شده است.':'ثبت نشد؛ کمی بعد دوباره امتحان کنید.')})
         .catch(function(){msg.textContent='خطای اتصال؛ دوباره امتحان کنید.'})}}
   function local(u){return rel(u)||/^downloads\/[\w.\-]+$/.test(u||'')}
@@ -307,7 +327,7 @@ nav.bottom button.active{color:var(--teal); font-weight:600;}
       h+='<div class="mt-disc">'+esc(d.disclosure||'برخی لینک‌ها معرفی هستند و ممکن است برای Metatya کمیسیون داشته باشند؛ هزینه‌ی شما تغییر نمی‌کند. این‌ها توصیه‌ی سرمایه‌گذاری نیستند.')+'</div></div>';
       el.insertAdjacentHTML('beforeend',h)}).catch(function(){})}
   function share(btn,title){btn.onclick=function(){var u=location.href;if(navigator.share){navigator.share({title:title||document.title,url:u}).catch(function(){})}else if(navigator.clipboard){navigator.clipboard.writeText(u);btn.textContent='لینک کپی شد ✅'}}}
-  window.MetatyaCTA={social:social,lead:lead,offers:offers,share:share,esc:esc,safe:safe};
+  window.MetatyaCTA={touch:TOUCH,social:social,lead:lead,offers:offers,share:share,esc:esc,safe:safe};
 })();
 
 </script>
@@ -683,6 +703,36 @@ async function initAdmin(){
   membersRef.onSnapshot(renderMembers, () => {});
 }
 try{ if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(()=>{}); }catch(e){}
+
+/* ---- خوش‌آمد بر اساس مبدأ ورود ---- */
+(function(){
+  const MSG={youtube:['از یوتیوب آمدی 👋','تحلیل کامل ویدیوی امروز، توضیح قدم‌به‌قدم و ابزار رایگانش اینجاست.'],
+    instagram:['از اینستاگرام آمدی 👋','نسخه‌ی کامل ریلزها با توضیح و ابزار رایگان اینجاست؛ لازم نیست چیزی را جا بیندازی.'],
+    telegram:['از تلگرام آمدی 👋','مطالب کامل امروز، ابزارها و دفترچه‌ی رایگان اینجاست؛ مثل کانال، هر روز تازه می‌شود.'],
+    google:['از جست‌وجو آمدی 👋','جواب سؤالت را در بخش‌های تخصصی پیدا کن؛ هر مطلب منبع و هشدار ریسک دارد.']};
+  const CAMP={forex:['فارکس','forex'],crypto:['کریپتو','crypto'],bourse:['بورس ایران','bourse'],risk:['پک مدیریت ریسک','services.html'],fit:['پک تمرین','pack.html?p=fit'],mind:['پک ذهن آرام‌تر','pack.html?p=mind'],biz:['پک کسب‌وکار','pack.html?p=biz']};
+  window.addEventListener('load', ()=>{
+    try{
+      const t=window.MetatyaCTA&&MetatyaCTA.touch; const cur=(t&&(t.now||t.first)); if(!cur||sessionStorage.getItem('wl_x')) return;
+      const m=MSG[cur.src]; if(!m) return;
+      const wrap=document.querySelector('#page-home'); const d=document.createElement('div'); d.className='wl';
+      const b=document.createElement('b'); b.textContent=m[0]; const p=document.createElement('div'); p.textContent=m[1];
+      const x=document.createElement('button'); x.className='x'; x.textContent='×'; x.setAttribute('aria-label','بستن'); x.onclick=()=>{ d.remove(); sessionStorage.setItem('wl_x','1'); };
+      d.append(x,b,p);
+      const c=CAMP[cur.camp]; if(c){ const a=document.createElement('a'); a.textContent='برو به '+c[0]+' ←'; a.href='#'; a.onclick=e=>{ e.preventDefault(); if(c[1].includes('.html')) location.href=c[1]; else openDetail(c[0]); }; d.appendChild(a); }
+      const f=document.getElementById('home-cta'); if(f){ const a2=document.createElement('a'); a2.textContent='🎁 هدیه‌ی رایگان'; a2.href='#home-cta'; d.appendChild(a2); }
+      wrap.insertBefore(d, wrap.firstChild);
+    }catch(e){}
+  });
+  fetch('packs.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(d=>{
+    if(!d||!d.packs||!d.packs.length) return; const box=document.getElementById('packs-home'); if(!box) return;
+    const h=document.createElement('h2'); h.className='section-title'; h.textContent='پک‌های Metatya (ابزار + آموزش)'; box.appendChild(h);
+    const row=document.createElement('div'); row.className='pk-row';
+    d.packs.forEach(p=>{ const a=document.createElement('a'); a.className='pk-c'; a.href=p.page||('pack.html?p='+encodeURIComponent(p.id));
+      const i=document.createElement('div'); i.className='i'; i.textContent=p.icon; const b=document.createElement('b'); b.textContent=p.title; const s=document.createElement('span'); s.textContent=p.tagline; a.append(i,b,s); row.appendChild(a); });
+    box.appendChild(row);
+  }).catch(()=>{});
+})();
 </script>
 </body>
 </html>

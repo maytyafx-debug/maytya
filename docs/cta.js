@@ -3,6 +3,20 @@
   var CFG={url:'https://megbqtoihsuouiaxpifl.supabase.co',
     key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1lZ2JxdG9paHN1b3VpYXhwaWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA3ODYzNDEsImV4cCI6MjEwNjM2MjM0MX0.x7aDRiSPd6F6XkjdZ7EIQUf5bU8Qf6PKrZUECzNEZzU',
     links:[['✈️','تلگرام','https://t.me/maytya'],['▶️','یوتیوب','https://www.youtube.com/@maytyaFx'],['📸','اینستاگرام','https://instagram.com/maytyafx']]};
+  // منبع ورود (اولین لمس): utm_source/ref یا دامنه‌ی ارجاع‌دهنده؛ در localStorage می‌ماند تا به لید وصل شود. هیچ داده‌ی شخصی ذخیره نمی‌شود.
+  function detect(){
+    try{
+      var q=new URLSearchParams(location.search),src=(q.get('utm_source')||q.get('ref')||'').toLowerCase(),camp=(q.get('utm_campaign')||'').toLowerCase();
+      if(!src&&document.referrer){var h=new URL(document.referrer).hostname.replace(/^www\./,'');
+        if(h===location.hostname)return null;
+        src=/youtube\.com|youtu\.be/.test(h)?'youtube':/instagram\.com/.test(h)?'instagram':/(^|\.)t\.me$|telegram\.(org|me)/.test(h)?'telegram':/google\./.test(h)?'google':/bing\.com/.test(h)?'bing':/(^|\.)(twitter|x)\.com$/.test(h)?'x':h.slice(0,24)}
+      if(!src)return null;return{src:src.slice(0,20),camp:camp.slice(0,20)}
+    }catch(e){return null}}
+  function touch(){var d=detect(),st=null;
+    try{st=JSON.parse(localStorage.getItem('mt_src')||'null')}catch(e){}
+    if(d&&!st){st={src:d.src,camp:d.camp,ts:Date.now()};try{localStorage.setItem('mt_src',JSON.stringify(st))}catch(e){}}
+    return{now:d,first:st}}
+  var TOUCH=touch();
   function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
   function safe(u){return /^https?:\/\//i.test(u||'')?esc(u):'#'}
   function rel(u){return /^[a-z0-9_\-\/]+\.html(#[\w\-]*)?(\?.*)?$/i.test(u||'')}
@@ -20,7 +34,7 @@
       if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)){msg.textContent='ایمیل معتبر وارد کنید.';return}
       if(!ck.checked){msg.textContent='برای عضویت، تیک موافقت را بزنید.';return}
       msg.textContent='در حال ثبت...';
-      fetch(CFG.url+'/rest/v1/leads',{method:'POST',headers:{apikey:CFG.key,Authorization:'Bearer '+CFG.key,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({email:e,source:String(src||'site').slice(0,60),consent:true})})
+      fetch(CFG.url+'/rest/v1/leads',{method:'POST',headers:{apikey:CFG.key,Authorization:'Bearer '+CFG.key,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({email:e,source:((TOUCH.first?TOUCH.first.src+(TOUCH.first.camp?'/'+TOUCH.first.camp:''):'direct')+'|'+String(src||'site')).slice(0,60),consent:true})})
         .then(function(r){msg.textContent=r.ok?'ثبت شد ✅ ممنون!':(r.status===409?'این ایمیل قبلاً ثبت شده است.':'ثبت نشد؛ کمی بعد دوباره امتحان کنید.')})
         .catch(function(){msg.textContent='خطای اتصال؛ دوباره امتحان کنید.'})}}
   function local(u){return rel(u)||/^downloads\/[\w.\-]+$/.test(u||'')}
@@ -39,5 +53,5 @@
       h+='<div class="mt-disc">'+esc(d.disclosure||'برخی لینک‌ها معرفی هستند و ممکن است برای Metatya کمیسیون داشته باشند؛ هزینه‌ی شما تغییر نمی‌کند. این‌ها توصیه‌ی سرمایه‌گذاری نیستند.')+'</div></div>';
       el.insertAdjacentHTML('beforeend',h)}).catch(function(){})}
   function share(btn,title){btn.onclick=function(){var u=location.href;if(navigator.share){navigator.share({title:title||document.title,url:u}).catch(function(){})}else if(navigator.clipboard){navigator.clipboard.writeText(u);btn.textContent='لینک کپی شد ✅'}}}
-  window.MetatyaCTA={social:social,lead:lead,offers:offers,share:share,esc:esc,safe:safe};
+  window.MetatyaCTA={touch:TOUCH,social:social,lead:lead,offers:offers,share:share,esc:esc,safe:safe};
 })();

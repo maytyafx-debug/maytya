@@ -13,6 +13,18 @@
       "active": true
     },
     {
+      "type": "free",
+      "title": "ابزار رایگان پرتفوی بورس",
+      "description": "فایل اکسل: سود/زیان خالص پس از کارمزد، سهم هر نماد و هشدار تمرکز. نمونه با داده‌ی فرضی.",
+      "url": "downloads/Metatya-Bourse-LITE.xlsx",
+      "cta": "دانلود رایگان",
+      "sections": [
+        "bourse",
+        "finance"
+      ],
+      "active": true
+    },
+    {
       "type": "product",
       "title": "دفترچه‌ی PRO: داشبورد، منحنی سرمایه و تحلیل حالت ذهنی",
       "description": "۲۰۰ معامله، نرخ برد، امید ریاضی، افت از سقف، سقف ضرر هفتگی و مرور هفتگی. قیمت و روش دریافت در تلگرام اعلام می‌شود.",
@@ -39,6 +51,42 @@
         "bourse"
       ],
       "active": false
+    },
+    {
+      "type": "free",
+      "title": "ردیاب رایگان تمرین و عادت",
+      "description": "فایل اکسل: ثبت تمرین با حجم و ۱RM خودکار و ردیاب خواب، آب و قدم.",
+      "url": "downloads/Metatya-Fit-LITE.xlsx",
+      "cta": "دانلود رایگان",
+      "sections": [
+        "sport",
+        "health"
+      ],
+      "active": true
+    },
+    {
+      "type": "free",
+      "title": "برگه‌ی رایگان ثبت فکر و خلق",
+      "description": "فایل اکسل: ثبت فکر به سبک شناختی-رفتاری و تمرین‌های کوتاه آرام‌سازی.",
+      "url": "downloads/Metatya-Mind-LITE.xlsx",
+      "cta": "دانلود رایگان",
+      "sections": [
+        "psychology"
+      ],
+      "active": true
+    },
+    {
+      "type": "free",
+      "title": "ماشین‌حساب رایگان نقطه‌ی سربه‌سر",
+      "description": "فایل اکسل: ببین چند واحد باید بفروشی تا زیان نکنی.",
+      "url": "downloads/Metatya-Biz-LITE.xlsx",
+      "cta": "دانلود رایگان",
+      "sections": [
+        "business",
+        "income",
+        "finance"
+      ],
+      "active": true
     }
   ],
   "_راهنما": "برای فروش، قیمت و روش پرداخت را در کیت مشاوره تکمیل کنید، لینک تلگرام شخصی‌تان را جایگزین https://t.me/maytya کنید، سپس active را برای product و service روی true بگذارید. type: free | affiliate | product | service. sections: all یا کلید حوزه.",
