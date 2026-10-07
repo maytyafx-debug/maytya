@@ -1,0 +1,45 @@
+name: Deploy sales bots (Cloudflare Worker, free)
+on:
+  workflow_dispatch: {}
+  push: {paths: ["worker/**", "docs/packs.json"]}
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: ساخت فایل Secret ها (فقط مواردی که مقدار دارند)
+        env:
+          BOT_RISK: ${{ secrets.BOT_RISK }}
+          BOT_BOURSE: ${{ secrets.BOT_BOURSE }}
+          BOT_FIT: ${{ secrets.BOT_FIT }}
+          BOT_MIND: ${{ secrets.BOT_MIND }}
+          BOT_BIZ: ${{ secrets.BOT_BIZ }}
+          WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
+          OWNER_CHAT_ID: ${{ secrets.TELEGRAM_REVIEW_CHAT_ID }}
+        run: |
+          python3 - <<'PY'
+          import os, json
+          keys = ["BOT_RISK","BOT_BOURSE","BOT_FIT","BOT_MIND","BOT_BIZ","WEBHOOK_SECRET","OWNER_CHAT_ID"]
+          d = {k: os.environ[k] for k in keys if os.environ.get(k)}
+          json.dump(d, open("secrets.json","w")); print("secrets:", sorted(d))
+          PY
+      - name: Deploy worker
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_DEPLOY_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: worker
+          command: deploy
+          postCommands: |
+            npx wrangler secret bulk ../secrets.json
+      - name: ثبت webhook ها در تلگرام
+        env:
+          WORKER_URL: ${{ steps.deploy.outputs.deployment-url }}
+          WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
+          BOT_RISK: ${{ secrets.BOT_RISK }}
+          BOT_BOURSE: ${{ secrets.BOT_BOURSE }}
+          BOT_FIT: ${{ secrets.BOT_FIT }}
+          BOT_MIND: ${{ secrets.BOT_MIND }}
+          BOT_BIZ: ${{ secrets.BOT_BIZ }}
+        run: pip install requests -q && python scripts/set_webhooks.py

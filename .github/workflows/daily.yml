@@ -13,6 +13,12 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install -r requirements.txt && sudo apt-get update && sudo apt-get install -y ffmpeg libraqm0 libfribidi0
+      - name: ربات‌های جمع‌آوری داده (بانک اطلاعاتی روزانه)
+        run: python scripts/collector.py
+        env:
+          SUPABASE_URL: "${{ vars.SUPABASE_URL }}"
+          SUPABASE_SERVICE_KEY: "${{ secrets.SUPABASE_SERVICE_KEY }}"
+        continue-on-error: true
       - run: python scripts/generate.py
         env:
           GEMINI_API_KEY: "${{ secrets.GEMINI_API_KEY }}"
@@ -34,13 +40,21 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: "${{ secrets.TELEGRAM_BOT_TOKEN }}"
           TELEGRAM_CHAT_ID: "${{ secrets.TELEGRAM_CHAT_ID }}"
+          TELEGRAM_REVIEW_CHAT_ID: "${{ secrets.TELEGRAM_REVIEW_CHAT_ID }}"
+          POST_MODE: "${{ vars.POST_MODE }}"
           SITE_URL: "${{ vars.SITE_URL }}"
         continue-on-error: true
+      - name: ربات جستجوگر فرصت (فهرست خصوصی برای پاسخ مفید)
+        run: python scripts/radar.py
+        env:
+          TELEGRAM_BOT_TOKEN: "${{ secrets.TELEGRAM_BOT_TOKEN }}"
+          TELEGRAM_REVIEW_CHAT_ID: "${{ secrets.TELEGRAM_REVIEW_CHAT_ID }}"
+        continue-on-error: true
       - uses: actions/upload-artifact@v4
-        with: {name: shorts, path: "out/*.mp4\nout/*.txt", if-no-files-found: ignore}
+        with: {name: shorts, path: "out/*.mp4\nout/*.png\nout/*.txt", if-no-files-found: ignore}
       - name: commit content (backup)
         run: |
           git config user.name "metatya-bot"; git config user.email "bot@users.noreply.github.com"
-          git add docs && git commit -m "daily content $(date -u +%F)" || echo "no changes"
+          git add docs data && git commit -m "daily content $(date -u +%F)" || echo "no changes"
           git pull --rebase --autostash origin "$(git rev-parse --abbrev-ref HEAD)" || true
           git push
