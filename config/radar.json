@@ -1,0 +1,12 @@
+{
+  "_راهنما": "هر منبع یک آدرس RSS عمومی است. کلیدواژه‌ها را با درد واقعی مخاطبت تنظیم کن. خروجی فقط یک فهرست خصوصی برای توست؛ برای پاسخ‌دادن مفید و صادقانه خودت اقدام کن. ارسال پیام انبوه یا ناخواسته به افراد ممنوع و باعث بن شدن می‌شود.",
+  "sources": [
+    {"name": "اخبار فارسی: ضرر معامله‌گران", "url": "https://news.google.com/rss/search?q=%D8%B6%D8%B1%D8%B1+%D8%A8%D9%88%D8%B1%D8%B3+%D8%B3%D9%87%D8%A7%D9%85%D8%AF%D8%A7%D8%B1+%D9%85%D8%AF%DB%8C%D8%B1%DB%8C%D8%AA+%D8%B1%DB%8C%D8%B3%DA%A9&hl=fa&gl=IR&ceid=IR:fa", "pack": "risk"},
+    {"name": "Reddit r/Forex", "url": "https://www.reddit.com/r/Forex/search.rss?q=risk+management+OR+blew+account&restrict_sr=on&sort=new", "pack": "risk"},
+    {"name": "Reddit r/Daytrading", "url": "https://www.reddit.com/r/Daytrading/search.rss?q=journal+OR+discipline+OR+revenge&restrict_sr=on&sort=new", "pack": "risk"},
+    {"name": "Reddit r/smallbusiness", "url": "https://www.reddit.com/r/smallbusiness/search.rss?q=break+even+OR+pricing+OR+cash+flow&restrict_sr=on&sort=new", "pack": "biz"},
+    {"name": "Reddit r/Fitness", "url": "https://www.reddit.com/r/Fitness/search.rss?q=tracking+OR+consistency+OR+plateau&restrict_sr=on&sort=new", "pack": "fit"},
+    {"name": "Reddit r/CBT", "url": "https://www.reddit.com/r/CBT/search.rss?q=thought+record+OR+worksheet&restrict_sr=on&sort=new", "pack": "mind"}
+  ],
+  "keywords": ["risk", "journal", "discipline", "revenge", "break even", "pricing", "cash flow", "consistency", "plateau", "thought record", "worksheet", "ضرر", "ریسک", "سهامدار", "پرتفوی", "حد ضرر"]
+}
