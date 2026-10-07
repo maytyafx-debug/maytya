@@ -2,3 +2,4 @@ requests
 pillow
 arabic-reshaper
 python-bidi
+edge-tts
