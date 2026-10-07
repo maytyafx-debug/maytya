@@ -1,0 +1,7 @@
+name = "metatya-bots"
+main = "index.js"
+compatibility_date = "2025-09-01"
+[ai]
+binding = "AI"
+[vars]
+SITE_URL = "https://maytyafx-debug.github.io/maytya"
