@@ -3,14 +3,16 @@
   "items": [
     {
       "type": "free",
-      "title": "دفترچه‌ی رایگان معاملات و حجم‌یاب",
-      "description": "فایل اکسل: ثبت ۲۰ معامله، محاسبه‌ی حجم مجاز، چک‌لیست قبل از ورود.",
+      "title": "دفترچه‌ی رایگان معاملات + ردیاب پرتفوی بورس",
+      "description": "فایل اکسل: ثبت ۲۰ معامله، حجم‌یاب، چک‌لیست قبل از ورود، و برگه‌ی پرتفوی بورس (ارزش خالص، سود و زیان، وزن هر سهم و هشدار تمرکز).",
       "url": "downloads/Metatya-Trading-Journal-LITE.xlsx",
       "cta": "دانلود رایگان",
       "sections": [
-        "all"
+        "all",
+        "bourse"
       ],
-      "active": true
+      "active": true,
+      "image": "downloads/free-pack-preview.png"
     },
     {
       "type": "free",

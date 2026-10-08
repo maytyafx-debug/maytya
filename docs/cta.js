@@ -7,6 +7,7 @@
   function detect(){
     try{
       var q=new URLSearchParams(location.search),src=(q.get('utm_source')||q.get('ref')||'').toLowerCase(),camp=(q.get('utm_campaign')||'').toLowerCase();
+      src=({t:'telegram',y:'youtube',i:'instagram',g:'google',w:'whatsapp'})[src]||src;
       if(!src&&document.referrer){var h=new URL(document.referrer).hostname.replace(/^www\./,'');
         if(h===location.hostname)return null;
         src=/youtube\.com|youtu\.be/.test(h)?'youtube':/instagram\.com/.test(h)?'instagram':/(^|\.)t\.me$|telegram\.(org|me)/.test(h)?'telegram':/google\./.test(h)?'google':/bing\.com/.test(h)?'bing':/(^|\.)(twitter|x)\.com$/.test(h)?'x':h.slice(0,24)}
@@ -48,7 +49,8 @@
       L.forEach(function(i){
         var href=local(i.url)?esc((base||'')+i.url):safe(utm(i.url,'offer'));
         var rl=(i.type==='affiliate'?'sponsored ':'')+'noopener';
-        h+='<div class="mt-off"><span class="mt-tag">'+esc(T[i.type]||'پیشنهاد')+'</span><b>'+esc(i.title)+'</b><p>'+esc(i.description||'')+'</p><div class="mt-row"><a class="mt-btn pri"'+(i.type==='free'?' download':'')+' target="_blank" rel="'+rl+'" href="'+href+'">'+esc(i.cta||'مشاهده')+'</a></div></div>';
+        var im=(i.image&&/^downloads\/[\w.\-]+$/.test(i.image))?'<img alt="'+esc(i.title)+'" loading="lazy" src="'+esc((base||'')+i.image)+'" style="width:100%;border-radius:12px;margin:6px 0">':'';
+        h+='<div class="mt-off">'+im+'<span class="mt-tag">'+esc(T[i.type]||'پیشنهاد')+'</span><b>'+esc(i.title)+'</b><p>'+esc(i.description||'')+'</p><div class="mt-row"><a class="mt-btn pri"'+(i.type==='free'?' download':'')+' target="_blank" rel="'+rl+'" href="'+href+'">'+esc(i.cta||'مشاهده')+'</a></div></div>';
       });
       h+='<div class="mt-disc">'+esc(d.disclosure||'برخی لینک‌ها معرفی هستند و ممکن است برای Metatya کمیسیون داشته باشند؛ هزینه‌ی شما تغییر نمی‌کند. این‌ها توصیه‌ی سرمایه‌گذاری نیستند.')+'</div></div>';
       el.insertAdjacentHTML('beforeend',h)}).catch(function(){})}
