@@ -1,54 +1,54 @@
 {
- "updated": "2026-10-07T12:25:07+00:00",
+ "updated": "2026-10-08T04:09:32+00:00",
  "prices": {
   "BTC/USD": {
-   "value": 83525,
-   "change24h_pct": -3.1,
+   "value": 82627,
+   "change24h_pct": -1.75,
    "source": "CoinGecko"
   },
   "ETH/USD": {
-   "value": 2577.51,
-   "change24h_pct": -4.92,
+   "value": 2559.93,
+   "change24h_pct": -1.95,
    "source": "CoinGecko"
   },
   "SOL/USD": {
-   "value": 117.04,
-   "change24h_pct": -2.67,
+   "value": 115.49,
+   "change24h_pct": -2.18,
    "source": "CoinGecko"
   },
   "XRP/USD": {
-   "value": 1.45,
-   "change24h_pct": -4.14,
+   "value": 1.41,
+   "change24h_pct": -3.38,
    "source": "CoinGecko"
   },
   "EUR/USD": {
-   "value": 1.1269,
-   "date": "2026-10-06",
+   "value": 1.11771,
+   "date": "2026-10-07",
    "source": "ECB/Frankfurter"
   },
   "GBP/USD": {
-   "value": 1.32763,
-   "date": "2026-10-06",
+   "value": 1.32046,
+   "date": "2026-10-07",
    "source": "ECB/Frankfurter"
   },
   "AUD/USD": {
-   "value": 0.69823,
-   "date": "2026-10-06",
+   "value": 0.69512,
+   "date": "2026-10-07",
    "source": "ECB/Frankfurter"
   },
   "USD/JPY": {
-   "value": 158.09,
-   "date": "2026-10-06",
+   "value": 158.23,
+   "date": "2026-10-07",
    "source": "ECB/Frankfurter"
   },
   "USD/CHF": {
-   "value": 0.83051,
-   "date": "2026-10-06",
+   "value": 0.83287,
+   "date": "2026-10-07",
    "source": "ECB/Frankfurter"
   },
   "USD/CAD": {
-   "value": 1.425,
-   "date": "2026-10-06",
+   "value": 1.4253,
+   "date": "2026-10-07",
    "source": "ECB/Frankfurter"
   }
  },
@@ -90,21 +90,31 @@
     "published": "Wed, 17 Jun 2026 07:00:00 GMT"
    },
    {
-    "title": "FX Daily: Limited Iran fallout so far; upside dollar risks remain - ing think",
+    "title": "FX Daily: Limited Iran fallout so far; upside dollar risks remain - ING THINK Economic and financial analysis | ING THINK",
     "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNQVpSSS1Tc0VUV09yTlc5eDFlamtob3pob2FWS1NQbm5yRWZwS2tpRjA0M0FkUUlYVndiczU3NTFCVFZuSVRGd1BGWkNLc3cybGtyaUxBT25IMEFGa0J1S1Z3N1dBMk15OTJRSHpNNUlHeGY4V2l2RFJQYXp1cW5nVmxMcWtMSGNUTVpnZVQ0YmZFZw?oc=5",
     "published": "Sun, 01 Mar 2026 08:00:00 GMT"
    }
   ],
   "crypto": [
    {
+    "title": "Morgan Stanley Runs Bitcoin, Ethereum and Solana ETFs at a 0.14% Fee. Which Coin Gets Its Money First? - 24/7 Wall St.",
+    "link": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxPa1V4VnNfMVVJdmltbkVDZ0lhVTBnLS1weW56ZzVqUjBWSjFiYzlpUC1QczFKTW9SNWJUV29RWU9IeWFRTDFZZUlPSnhuZnNxcllQbXhodVNFLVk4MThEWFJ2UFhfaElvQV9MdV9aY05BSmowaDdyVUV6YzZ5d2xMbDF1ZHphQXJ6bnRRUTQybG01YmRHLUZYV2ljN1BDRlh3ckZYd3dnd0thbTlwNUdZY0tweDVGVWRpOGYwLTZJVHpvQ3RwZC1aX1dIWkhDQTFheHdqTDNfZ081d3FhMVpJTnlYZUZOSzBOUGFXb3JB?oc=5",
+    "published": "Wed, 07 Oct 2026 08:51:00 GMT"
+   },
+   {
     "title": "Morgan Stanley Runs Bitcoin, Ethereum and Solana ETFs at a 0.14% Fee. Which Coin Gets Its Money First? - Yahoo Finance",
     "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNOXdPay04ZThYSDV3bWRwa1NpSkVvUW5RUlNuSmxaVEJoVGpUejU3WW1oaTVUSmxUWmFFQWZUWkxqNF9HeDNGOW1KQms4NFcwM2o0R1NWMmR0MDZJSU1yVnR2VmxQTjJiaF8yTVU4VFBuQkRJaTFUSHhyb1BzbDBjR0hZQ3Q2OEs2bS1lbWVnZzRCOXA3RkdEbklEdEw1MDhpbmk0?oc=5",
     "published": "Wed, 07 Oct 2026 08:51:55 GMT"
    },
    {
-    "title": "Morgan Stanley Runs Bitcoin, Ethereum and Solana ETFs at a 0.14% Fee. Which Coin Gets Its Money First? - 24/7 Wall St.",
-    "link": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxPa1V4VnNfMVVJdmltbkVDZ0lhVTBnLS1weW56ZzVqUjBWSjFiYzlpUC1QczFKTW9SNWJUV29RWU9IeWFRTDFZZUlPSnhuZnNxcllQbXhodVNFLVk4MThEWFJ2UFhfaElvQV9MdV9aY05BSmowaDdyVUV6YzZ5d2xMbDF1ZHphQXJ6bnRRUTQybG01YmRHLUZYV2ljN1BDRlh3ckZYd3dnd0thbTlwNUdZY0tweDVGVWRpOGYwLTZJVHpvQ3RwZC1aX1dIWkhDQTFheHdqTDNfZ081d3FhMVpJTnlYZUZOSzBOUGFXb3JB?oc=5",
-    "published": "Wed, 07 Oct 2026 08:51:00 GMT"
+    "title": "Grayscale says crypto ETF market is entering new phase as Zcash ETF tops $1 billion - The Block",
+    "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPSzJ1VDlPRG5wN01BdnUzMXF3OUJ4Ym1oRlBRTDJmdk5yODRudFNITmZWWWl1cUVEZXpZTGxYb0E1clhLWVRkTzV2eW4wRlBjSTBFYk5aYmZxWTBYaC1Db1JTQTRURDVnRi1HcFlQVVRqUk1GLXhiSTVYRVpIU0xMVTN6eXp0bjVUOTF5SUtodHZkM2doVGdGUktuTVhWZDNEUjJxbnRB?oc=5",
+    "published": "Wed, 07 Oct 2026 18:37:00 GMT"
+   },
+   {
+    "title": "Bitcoin Plunges to $83,500, ETH, XRP Lose Over 3%: What Is Going On? - TradingView",
+    "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQVkdTMXJWTmdkUExTaVpMUml1Zy10U2x4dXA2N3JkZW5idnFqTnlKUmU0cXRrRS1xUGJES2pVU1VkZVVERVc2bGswTkp6Y3dGY3lfQTViYktlU2g5bk1zSVl2QUVtZHN4MEdIajVhV1Q3UmJUTFRxUnBiN2pSY1hmdWZyRkpDei1DX0h0N21Rb3N5R2RyOVhSaXJRMzZ6N3A0WE9WOWRTeXdSV29pd0R0eGxsOXo0QzRlMllESEF3?oc=5",
+    "published": "Wed, 07 Oct 2026 12:26:10 GMT"
    },
    {
     "title": "Why are Bitcoin, Ethereum and XRP struggling to extend recovery? - FXStreet",
@@ -112,19 +122,9 @@
     "published": "Tue, 06 Oct 2026 10:34:09 GMT"
    },
    {
-    "title": "The SEC Approves the First 3x Bitcoin and Ether Funds: Understanding the Risks Involved - Yahoo Finance",
-    "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxOTXFhZTRFcFpIb09vVnFQN2o2VW93X1lldF91emFhN3BMQ0F1VXltMkhpNWZHblRVUWlFc1gzb04wb3g4aXNZeXg1V3dKWlYzdlJ4MEFtd0JiSUgySC1IYnV3TWJBMU8ycjRtWFJJeWJmLXZsdHJFZGp4YmdYUG9yYW1sbDN6Z3pOLTZwUzQ0MXZjeFItQ1ZmUjln?oc=5",
-    "published": "Mon, 05 Oct 2026 17:51:03 GMT"
-   },
-   {
     "title": "SEC approves first 3x bitcoin and ether ETFs in the U.S. - CoinDesk",
     "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPNDRVaEZGNWJ3VFVESE1IcDFuREItbVFXRkNlRG1hc003QUxnWE9zU3RNWGdzVGxzRFk0WnpnLVJiWjZIa0NHa2h2RE10ajZVeEl5cVJuX2UxUWJLRlowbzBacmp2YWRrQ1VrdTluYjAxQlE1Z090U0NWTUZZY2RrZFk5clVJellnVzhGRVVsQmUtLTA1NmdHSFJQYXFBdXAtRGxQaWJDbHdtVXNfb3VqTXVjNm4wUVY1SzdsbmxiTE8?oc=5",
     "published": "Mon, 05 Oct 2026 11:14:35 GMT"
-   },
-   {
-    "title": "CLARITY Act Is Dead, but First 3x Bitcoin and Ethereum ETFs Clear US Regulatory Hurdle - CCN.com",
-    "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTE9qRWNwS3ZNbDdsdk5OdWdhdXk3czZuYnJiaWpWanRHVnFWYktqRENYajh0WTlZQlNaQng5ZFp1VWFSQTQtVnNSRHFoVG1WQXBVQkZfRTgxNkJBanAxcGhiTXY3Sk54R1hXejllcTVvT24zU3NlaWw3NEdSZjY2dw?oc=5",
-    "published": "Tue, 06 Oct 2026 14:06:35 GMT"
    },
    {
     "title": "This $15 Trillion Investment Giant Has No Plans to Launch an XRP ETF. That's Why I'm Bearish on XRP Right Now. - The Motley Fool",
@@ -132,17 +132,22 @@
     "published": "Tue, 06 Oct 2026 11:06:00 GMT"
    },
    {
-    "title": "Ethereum ETFs Outpace Bitcoin ETFs in 2026 Inflows - Yahoo Finance",
-    "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNYVhPZEQ4NFNWdmhPYVBzVVpTazZHcU95cUtROGhZOVVuRXlLdFBDbEhrVXlscF9OaGJHZlFNcEcxNzhLM1FhQVQ2R1pDdU80OGljMDRnVXpTSFgwTTQ5dVdDZ2UtTVBwazlJeVBFWEFyak1RUElkUU5sMFpLRmJURk5hWGVuOWtjN1RtcmFQT1ZSMWcyYkNqSTBlZ09JcXpp?oc=5",
-    "published": "Sun, 04 Oct 2026 10:52:51 GMT"
+    "title": "The SEC Approves the First 3x Bitcoin and Ether Funds: Understanding the Risks Involved - Yahoo Finance",
+    "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxOTXFhZTRFcFpIb09vVnFQN2o2VW93X1lldF91emFhN3BMQ0F1VXltMkhpNWZHblRVUWlFc1gzb04wb3g4aXNZeXg1V3dKWlYzdlJ4MEFtd0JiSUgySC1IYnV3TWJBMU8ycjRtWFJJeWJmLXZsdHJFZGp4YmdYUG9yYW1sbDN6Z3pOLTZwUzQ0MXZjeFItQ1ZmUjln?oc=5",
+    "published": "Mon, 05 Oct 2026 17:51:03 GMT"
    }
   ],
   "bourse": [],
   "sport": [
    {
+    "title": "Creatine may help build muscle even without exercise, study suggests - MedicalNewsToday",
+    "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPNFBMZlFSVlFMNlpGQlgtQlNmUnhTcVFIczVxc1l1bE1pS0RGVW9EVUVXd3ZGbEwwb0dpT2VGX2hJZzc5UWsyTm4ya1NmX3BpeFBuckZMZ0xLT0VsQmp0OUJqYTBZY1N6TTNCeDhkS0E2b2pmb1ZFYVZkSGNYVElKUVFFM2hRR3NxajhOZ1JYdDlhMklmMk1FVDFFcXFWdWVmREE?oc=5",
+    "published": "Mon, 05 Oct 2026 16:26:11 GMT"
+   },
+   {
     "title": "Creatine may help build muscle even without exercise, researchers find - ScienceDaily",
     "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1LTWVDOXd6cFF2QkhMSDJnNE5FM2FaQXE1VDdpWk1mN2RobERGY2Z1MlpPNTgxYXR2NkZzbExGdDJOV0w2dU1BTUtaUENrOE5iY3plcE5wQ3B2NlRxQS0xWUdhRGZubm94OGFnenA1NA?oc=5",
-    "published": "Wed, 30 Sep 2026 03:14:17 GMT"
+    "published": "Tue, 29 Sep 2026 07:00:00 GMT"
    },
    {
     "title": "Study finds creatine’s benefits extend beyond the gym - Texas A&M Stories",
@@ -170,17 +175,22 @@
     "published": "Wed, 20 May 2026 07:00:00 GMT"
    },
    {
-    "title": "Strength Training for Longevity: Study Reveals Sweet Spot - Dr. Axe",
-    "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE5MUmQ0UlJ3bC1uZUtFQkFrSnpzeEQ1dkJlQTFQejVKTzEteEtxcjJzSGNYWlVOZlV1WUdDc1NWeExFc1FJYlhnODduaDdNQ09NNHRxdFZIbEd0MkozdDRnbXNFMGJ4elUwYXc?oc=5",
-    "published": "Thu, 09 Jul 2026 07:00:00 GMT"
-   },
-   {
     "title": "Researchers May Have Found the Best Protein and Exercise Combo for Aging Muscles - Health.com",
     "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNcG13cXZaZFFNb21pN1p2MlN5STM2M0VWMGpwSjdONjYxWUJvRk9vcmExSnUtcTd4WFVRUVI2N2hWQzYyUHdvZWpDdFdjZGZyeWx1SF93by1RRWo1RElYeF9Zc1JvRG5BYUJHSDM4Wmx6bFFZLTRkeGRzU1dVaFJsTnZCQXdKLTZBekNHZ1U3aw?oc=5",
     "published": "Fri, 15 May 2026 07:00:00 GMT"
    }
   ],
   "psychology": [
+   {
+    "title": "Gambling Is Sending More People to the ER - Time Magazine",
+    "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9iRm9QYW5nbXU4WHVnSVBfR29RcDFMUVlsOERCRWZ0WHZocnh5NnRtRnNmaVdWNjgzSS1wdHcyUE80VVhBdG1QdGFybnlEeXVvakhsQl8xV0J4VjQ1U3BMSUJMX1hfM1lyLXFueGs4dXFmUkRMZWc?oc=5",
+    "published": "Mon, 05 Oct 2026 10:00:07 GMT"
+   },
+   {
+    "title": "Flourishing alongside psychiatric symptoms: a qualitative study on dual-continuum mental health in university students - Frontiers",
+    "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNd2lYQnpDM0NyM3hINTB6elpqckVhb01KYlA0cFVfVVJ0TjNkb3VXLXczc0lwSkdnT2pfOVdUZGV2cVBueDdsakxTX1YteWc4VjNKSmxMLUVpdVNibWpXM0RHanRsek5wWHJVM0dsZVJoQTkyRVBYcVAySjRIbUVGMWFCMlpaMkZJeDFFWFY2MktHQQ?oc=5",
+    "published": "Sun, 13 Sep 2026 11:45:28 GMT"
+   },
    {
     "title": "Prevalence and severity of mental health problems in early-career researchers: a systematic review and meta-analysis - Nature",
     "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9iZEZWOV9qanJwNHhqRTN3UFBCdFZQNXJnbERrWDN1alJheFJhWXZvSjJ2UGg0bmhTVnNXaXl5M2R0YlE0YnpKb2c3MUstX2FuaGRLZDE1WXJhZlhRcXNj?oc=5",
@@ -207,19 +217,9 @@
     "published": "Tue, 15 Sep 2026 07:00:00 GMT"
    },
    {
-    "title": "Banking apps could help manage mental health, study finds - Phys.org",
-    "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE0xT1U5bzVkN3R2ZlNJR0ZtQTJNRVczX3Z0bGNONThfMUM5cWVRZE5OMHA3OUFoNTRicURKYVQ4VjR1dlNuUlJpWnNxSzNrYXZYSzF2Zl9ZdjI3RmdlQktySTVRUkRtbDNWTEtXWXZn?oc=5",
-    "published": "Tue, 11 Aug 2026 07:00:00 GMT"
-   },
-   {
     "title": "Study finds digital therapy app improves student mental health - WashU",
     "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOVlBqck9FSlhTV2YybXNEN0FEQ1I1WUprQUgwdDVqSExoVmw5eFhucURhV29CX243bUdfWWxuREhjMDhjWlNDaEpqRHUtRlYySF9UVklEcktnVlR2bUIta2RJaEtUN3JMQ3hDVlc5RWR2VVJrUWFwYkxTcEd2aGVFLVRyend2NGxaaUNLQUxTUmZjTGIxN3FibXhyUTc?oc=5",
     "published": "Tue, 12 May 2026 07:00:00 GMT"
-   },
-   {
-    "title": "Why Study Psychology? Benefits, Careers, and Degree Options - Chapman Newsroom",
-    "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQdWx1cllEaGJ0ajZiZjR6UDJlRVR0cklNVktKY1JlT0paZGt4VTJFa1pjZnhuSV9iSHlfX2tkUVBGbmpGbVZUOVVSbEhZUi1GaTdhWWhTVVc2YkpqeUhncmgzcXNxbTVlaURjNjlJLVhvdUFDNWxmX1g0MDB0aHo5OGpxamJ0UFZnelFOcFIzOFJnaTd3Vy12VQ?oc=5",
-    "published": "Thu, 30 Jul 2026 07:00:00 GMT"
    }
   ],
   "business": [
