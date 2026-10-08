@@ -7,8 +7,8 @@ SITE = (os.environ.get("SITE_URL") or "").rstrip("/")
 data = json.load(open(os.path.join(ROOT, "content.json"), encoding="utf-8"))
 E = html.escape
 def slug(key, it):
-    h = hashlib.md5((it["title"] + it.get("date", "")).encode()).hexdigest()[:6]
-    return f"{key}-{it.get('date','')}-{h}.html"
+    d = it.get("date", "0000-00-00"); h = hashlib.md5((it["title"] + d).encode()).hexdigest()[:4]
+    return f"{key[:3]}{d[5:7]}{d[8:10]}{h}.html"   # مثل for1008a1b2.html (کوتاه)
 TPL = """<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>{title} | Metatya</title>
 <meta name="description" content="{desc}"><link rel="canonical" href="{url}">

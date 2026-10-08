@@ -34,7 +34,10 @@ PROMPT = """امروز {today} است. برای بخش «{name}» یک سایت 
 {ctx}قوانین: فارسی روان و دقیق؛ هر body بین ۴۰ تا ۹۰ کلمه؛ بدون وعده سود قطعی؛ عدد و خبر از خودت نساز؛ در سلامت و حقوق توصیه عمومی بده.
 موضوع‌هایی که قبلاً نوشته شده و تکرار نکن: {old}
 برای هر مطلب یک short_script هم بنویس: آرایه دقیقاً ۳ جمله خیلی کوتاه برای ویدیوی ۱۰ ثانیه‌ای. جمله‌ی اول هوک است: حداکثر ۸ کلمه، یک سؤال تیز یا یک تناقض/عدد جالب از همین مطلب (نه کلیشه مثل «آیا می‌دانستید»). جمله‌ی دوم یک نکته‌ی عملی، جمله‌ی سوم جمع‌بندی یا یک سؤال برای کامنت.
-فقط JSON خالص برگردان: {{"items":[{{"tab":"...","title":"...","body":"...","short_script":["...","...","..."]}}]}}"""
+لحن همه‌ی متن‌ها: صمیمی و گرم ولی حرفه‌ای، مثل همکار باتجربه‌ای که برای دوستانش می‌نویسد؛ نه رسمی و خشک، نه شعاری و کلیشه‌ای.
+برای هر مطلب یک tg_post هم بنویس: متن کانال تلگرام، ۳ تا ۵ جمله‌ی کوتاه؛ جمله‌ی اول جذاب (بدون «سلام دوستان»)؛ آخرش یک سؤال ساده برای کامنت؛ حداکثر ۲ ایموجی؛ بدون وعده‌ی سود و بدون عبارت‌هایی مثل «حتماً بخرید» یا «بدون شک». قالب امروز: {style}.
+فقط JSON خالص برگردان: {{"items":[{{"tab":"...","title":"...","body":"...","short_script":["...","...","..."],"tg_post":"..."}}]}}"""
+STYLES = ["سؤال‌محور: با یک سؤال تیز شروع کن", "داستان کوتاه: یک موقعیت آشنا از معامله‌گر یا کاربر", "نکته‌ی عملی: یک کار مشخص که همین امروز می‌شود کرد", "اشتباه رایج: یک اشتباه متداول و راه جلوگیری از آن", "چک‌لیست: ۳ مورد کوتاه", "مقایسه: دو نگاه مختلف به یک خبر"]
 
 # ---------- ارائه‌دهنده‌ها ----------
 def _openai_style(url, key, model, prompt, json_mode):
@@ -91,6 +94,7 @@ def clean(items, tabs, key):
     for it in items if isinstance(items, list) else []:
         try:
             t, b, ss = it["title"].strip(), it["body"].strip(), it["short_script"]
+            tg = (it.get("tg_post") or it.get("tg") or "").strip()
             ok = (it.get("tab") in tabs and 5 <= len(t) <= 140 and 60 <= len(b) <= 900
                   and fa_ratio(t + b) >= 0.6 and isinstance(ss, list) and len(ss) == 3
                   and all(isinstance(x, str) and 3 <= len(x) <= 120 for x in ss)
@@ -99,7 +103,9 @@ def clean(items, tabs, key):
             ok = False
         if ok:
             d = DISCLAIMER.get(KIND.get(key, ""), "")
-            good.append({"tab": it["tab"], "title": t, "body": b + (" " + d if d and d not in b else ""), "short_script": ss})
+            item = {"tab": it["tab"], "title": t, "body": b + (" " + d if d and d not in b else ""), "short_script": ss}
+            if 50 <= len(tg) <= 650 and fa_ratio(tg) >= 0.5 and not any(w in tg for w in BANNED): item["tg"] = tg
+            good.append(item)
     if not good: raise ValueError("هیچ مطلب سالمی از دروازه کیفیت رد نشد")
     return good
 
@@ -115,7 +121,7 @@ def polish(fn, items, tabs, key):
         txt = fn(prm)
         new = clean(json.loads(re.search(r"\{.*\}", txt, re.S).group(0))["items"], tabs, key)
         old_n = set().union(*[nums(i["title"] + i["body"]) for i in items]) if items else set()
-        if len(new) == len(items) and all(nums(i["title"] + i["body"]) <= old_n for i in new):
+        if len(new) == len(items) and all(nums(i["title"] + i["body"] + i.get("tg", "")) <= old_n | nums(" ".join(o.get("tg", "") for o in items)) for i in new):
             return new
         print("  polish رد شد (عدد جدید یا تعداد ناهمخوان)")
     except Exception as e:
@@ -125,7 +131,7 @@ def polish(fn, items, tabs, key):
 def ask(key, name, tabs, old_titles, provs):
     if DRY:
         return [{"tab": t, "title": f"نمونه {name} - {t}", "body": "متن نمونه (حالت آزمایشی).",
-                 "short_script": ["هوک نمونه", "نکته نمونه", "جمع‌بندی نمونه"], "sources": []} for t in tabs], "dry"
+                 "short_script": ["هوک نمونه", "نکته نمونه", "جمع‌بندی نمونه"], "tg": "متن نمونه‌ی تلگرام برای آزمایش و فقط در حالت dry ساخته می‌شود و ارسال نمی‌شود.", "sources": []} for t in tabs], "dry"
     ctx, srcs = "", []
     if key in FEEDS:
         hl = headlines(key)
@@ -137,7 +143,7 @@ def ask(key, name, tabs, old_titles, provs):
             keep = [k for k in pr if (key == "crypto" and "USD" in k and k.split("/")[0] in ("BTC", "ETH", "SOL", "XRP")) or (key == "forex" and k in ("EUR/USD", "GBP/USD", "USD/JPY", "AUD/USD"))]
             if keep: ctx += "قیمت‌های مرجع امروز از API رسمی (فقط همین اعداد مجازند): " + "، ".join(f"{k}={pr[k]['value']}" for k in keep) + "\n"
         except Exception: pass
-    prompt = PROMPT.format(today=datetime.date.today().isoformat(), name=name, tabs="، ".join(tabs), ctx=ctx,
+    prompt = PROMPT.format(today=datetime.date.today().isoformat(), name=name, tabs="، ".join(tabs), ctx=ctx, style=STYLES[datetime.date.today().toordinal() % len(STYLES)],
                            old="، ".join(old_titles[:12]) or "ندارد")
     err = []
     for pname, fn, _ in provs:
