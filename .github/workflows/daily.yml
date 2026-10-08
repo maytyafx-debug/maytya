@@ -42,6 +42,7 @@ jobs:
           TELEGRAM_CHAT_ID: "${{ secrets.TELEGRAM_CHAT_ID }}"
           TELEGRAM_REVIEW_CHAT_ID: "${{ secrets.TELEGRAM_REVIEW_CHAT_ID }}"
           POST_MODE: "${{ vars.POST_MODE }}"
+          POST_KEYS: "${{ vars.POST_KEYS }}"
           SITE_URL: "${{ vars.SITE_URL }}"
         continue-on-error: true
       - name: ربات جستجوگر فرصت (فهرست خصوصی برای پاسخ مفید)
