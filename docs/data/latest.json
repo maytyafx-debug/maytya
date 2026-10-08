@@ -1,24 +1,24 @@
 {
- "updated": "2026-10-08T04:09:32+00:00",
+ "updated": "2026-10-08T10:06:08+00:00",
  "prices": {
   "BTC/USD": {
-   "value": 82627,
-   "change24h_pct": -1.75,
+   "value": 83082,
+   "change24h_pct": -0.79,
    "source": "CoinGecko"
   },
   "ETH/USD": {
-   "value": 2559.93,
-   "change24h_pct": -1.95,
+   "value": 2567.2,
+   "change24h_pct": -1.09,
    "source": "CoinGecko"
   },
   "SOL/USD": {
-   "value": 115.49,
-   "change24h_pct": -2.18,
+   "value": 115.1,
+   "change24h_pct": -2.17,
    "source": "CoinGecko"
   },
   "XRP/USD": {
-   "value": 1.41,
-   "change24h_pct": -3.38,
+   "value": 1.42,
+   "change24h_pct": -2.63,
    "source": "CoinGecko"
   },
   "EUR/USD": {
@@ -75,11 +75,6 @@
     "published": "Wed, 25 Feb 2026 08:00:00 GMT"
    },
    {
-    "title": "EUR/USD Hits 2-Month High Before Fed Minutes and Warsh’s Jackson Hole Debut - Investing.com",
-    "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQVmZaTWxDb3ZGVkxWcmlmVDJGYkg3X081aFQ0T2Z2WDFTeHlWMi1fUy1HOWwyU1FlUHlmSkhRSjNUNUJTVWRxWUllRjJkOHpPS2liSnhlaGlUMUlYUm5keUdIWWJ6cnRVUnpFd21pcWhLNkRsNE1za281YWxqNU9yVWIxTEZlSUZQcE5yazBCNFE1ZUpyU0ZFNmlkZmpLRTNRcWxhNE9XSVNLSGNGRmE5d2I5b3ZxSmdf?oc=5",
-    "published": "Mon, 17 Aug 2026 07:00:00 GMT"
-   },
-   {
     "title": "Dollar rally stalls as Fed hawkishness lifts Treasury yields, pressuring euro, sterling and gold - VT Markets",
     "link": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxQSW1XSUlmY3ZFeWd0YXVGUDRyekRRLTJqdjVlTW1rNUx1bjlhazFLaWpOTzR5UFZaMUN6MUtYUDd0OUx4MjdBdURyT2EybVBQNV9TSXBrVUZjS3l0cnNuUjVOdGFyVnB4UXZ3X3VaZjdjMFVxZ0lMMmZaamhJVUJhNkxQSl9fNy1XR3l4aENvNTN1cE1DbHNNZ0M0anMzdzBrNFNsN1EzLXZKV1BQcGk5ZWQyUE9zUXZRaXJGZ2lsS0hscTAyaUR5c3BXVGFrZTFmNEtaVmEtWQ?oc=5",
     "published": "Fri, 25 Sep 2026 11:09:24 GMT"
@@ -93,28 +88,28 @@
     "title": "FX Daily: Limited Iran fallout so far; upside dollar risks remain - ING THINK Economic and financial analysis | ING THINK",
     "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNQVpSSS1Tc0VUV09yTlc5eDFlamtob3pob2FWS1NQbm5yRWZwS2tpRjA0M0FkUUlYVndiczU3NTFCVFZuSVRGd1BGWkNLc3cybGtyaUxBT25IMEFGa0J1S1Z3N1dBMk15OTJRSHpNNUlHeGY4V2l2RFJQYXp1cW5nVmxMcWtMSGNUTVpnZVQ0YmZFZw?oc=5",
     "published": "Sun, 01 Mar 2026 08:00:00 GMT"
+   },
+   {
+    "title": "Stocks and Treasuries calm after Fed indictment jitters, dollar weakens - Reuters",
+    "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQdjB0SnRLOEpVOWlvenNZYi03VFgzWEZocU41YWx4R3pKT29udDhPdzhqUUUyVnUtTGJhdXRnZldhbGVQYjRVN1A0TTRTdlFSUlRlczZZcUQ4MGFNNTFhSWZRQ2Z5a3B0clQ2YTBWMUVuNFMzSkx4SFFvZ09ZWWNRd2k0dXZjbTZZN3c?oc=5",
+    "published": "Mon, 12 Jan 2026 08:00:00 GMT"
    }
   ],
   "crypto": [
+   {
+    "title": "The SEC Approves the First 3x Bitcoin and Ether Funds: Understanding the Risks Involved - Yahoo Finance",
+    "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxOTXFhZTRFcFpIb09vVnFQN2o2VW93X1lldF91emFhN3BMQ0F1VXltMkhpNWZHblRVUWlFc1gzb04wb3g4aXNZeXg1V3dKWlYzdlJ4MEFtd0JiSUgySC1IYnV3TWJBMU8ycjRtWFJJeWJmLXZsdHJFZGp4YmdYUG9yYW1sbDN6Z3pOLTZwUzQ0MXZjeFItQ1ZmUjln?oc=5",
+    "published": "Mon, 05 Oct 2026 17:51:03 GMT"
+   },
    {
     "title": "Morgan Stanley Runs Bitcoin, Ethereum and Solana ETFs at a 0.14% Fee. Which Coin Gets Its Money First? - 24/7 Wall St.",
     "link": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxPa1V4VnNfMVVJdmltbkVDZ0lhVTBnLS1weW56ZzVqUjBWSjFiYzlpUC1QczFKTW9SNWJUV29RWU9IeWFRTDFZZUlPSnhuZnNxcllQbXhodVNFLVk4MThEWFJ2UFhfaElvQV9MdV9aY05BSmowaDdyVUV6YzZ5d2xMbDF1ZHphQXJ6bnRRUTQybG01YmRHLUZYV2ljN1BDRlh3ckZYd3dnd0thbTlwNUdZY0tweDVGVWRpOGYwLTZJVHpvQ3RwZC1aX1dIWkhDQTFheHdqTDNfZ081d3FhMVpJTnlYZUZOSzBOUGFXb3JB?oc=5",
     "published": "Wed, 07 Oct 2026 08:51:00 GMT"
    },
    {
-    "title": "Morgan Stanley Runs Bitcoin, Ethereum and Solana ETFs at a 0.14% Fee. Which Coin Gets Its Money First? - Yahoo Finance",
-    "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNOXdPay04ZThYSDV3bWRwa1NpSkVvUW5RUlNuSmxaVEJoVGpUejU3WW1oaTVUSmxUWmFFQWZUWkxqNF9HeDNGOW1KQms4NFcwM2o0R1NWMmR0MDZJSU1yVnR2VmxQTjJiaF8yTVU4VFBuQkRJaTFUSHhyb1BzbDBjR0hZQ3Q2OEs2bS1lbWVnZzRCOXA3RkdEbklEdEw1MDhpbmk0?oc=5",
-    "published": "Wed, 07 Oct 2026 08:51:55 GMT"
-   },
-   {
     "title": "Grayscale says crypto ETF market is entering new phase as Zcash ETF tops $1 billion - The Block",
     "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPSzJ1VDlPRG5wN01BdnUzMXF3OUJ4Ym1oRlBRTDJmdk5yODRudFNITmZWWWl1cUVEZXpZTGxYb0E1clhLWVRkTzV2eW4wRlBjSTBFYk5aYmZxWTBYaC1Db1JTQTRURDVnRi1HcFlQVVRqUk1GLXhiSTVYRVpIU0xMVTN6eXp0bjVUOTF5SUtodHZkM2doVGdGUktuTVhWZDNEUjJxbnRB?oc=5",
     "published": "Wed, 07 Oct 2026 18:37:00 GMT"
-   },
-   {
-    "title": "Bitcoin Plunges to $83,500, ETH, XRP Lose Over 3%: What Is Going On? - TradingView",
-    "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQVkdTMXJWTmdkUExTaVpMUml1Zy10U2x4dXA2N3JkZW5idnFqTnlKUmU0cXRrRS1xUGJES2pVU1VkZVVERVc2bGswTkp6Y3dGY3lfQTViYktlU2g5bk1zSVl2QUVtZHN4MEdIajVhV1Q3UmJUTFRxUnBiN2pSY1hmdWZyRkpDei1DX0h0N21Rb3N5R2RyOVhSaXJRMzZ6N3A0WE9WOWRTeXdSV29pd0R0eGxsOXo0QzRlMllESEF3?oc=5",
-    "published": "Wed, 07 Oct 2026 12:26:10 GMT"
    },
    {
     "title": "Why are Bitcoin, Ethereum and XRP struggling to extend recovery? - FXStreet",
@@ -127,14 +122,19 @@
     "published": "Mon, 05 Oct 2026 11:14:35 GMT"
    },
    {
+    "title": "Bitcoin Plunges to $83,500, ETH, XRP Lose Over 3%: What Is Going On? - TradingView",
+    "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQVkdTMXJWTmdkUExTaVpMUml1Zy10U2x4dXA2N3JkZW5idnFqTnlKUmU0cXRrRS1xUGJES2pVU1VkZVVERVc2bGswTkp6Y3dGY3lfQTViYktlU2g5bk1zSVl2QUVtZHN4MEdIajVhV1Q3UmJUTFRxUnBiN2pSY1hmdWZyRkpDei1DX0h0N21Rb3N5R2RyOVhSaXJRMzZ6N3A0WE9WOWRTeXdSV29pd0R0eGxsOXo0QzRlMllESEF3?oc=5",
+    "published": "Wed, 07 Oct 2026 12:26:10 GMT"
+   },
+   {
     "title": "This $15 Trillion Investment Giant Has No Plans to Launch an XRP ETF. That's Why I'm Bearish on XRP Right Now. - The Motley Fool",
     "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPZ2ZDWGhBN0tSNHlMMmpYMmpBNnZoSjduci1tVEx0OXNEaW9sM0k1bGxfS3ZySlMtaXU1UUJXTmpjbHJQRUFENTNxZ2lDUy0zdXNiVHV2WVp2cHpFTzhGUGM0MjlMZUtOOE9FaFZEajA4bXlGN0tiYVc5M3dVNElLNWlHV2UybzdObEpGVEsxajBJMmxOWlVV?oc=5",
     "published": "Tue, 06 Oct 2026 11:06:00 GMT"
    },
    {
-    "title": "The SEC Approves the First 3x Bitcoin and Ether Funds: Understanding the Risks Involved - Yahoo Finance",
-    "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxOTXFhZTRFcFpIb09vVnFQN2o2VW93X1lldF91emFhN3BMQ0F1VXltMkhpNWZHblRVUWlFc1gzb04wb3g4aXNZeXg1V3dKWlYzdlJ4MEFtd0JiSUgySC1IYnV3TWJBMU8ycjRtWFJJeWJmLXZsdHJFZGp4YmdYUG9yYW1sbDN6Z3pOLTZwUzQ0MXZjeFItQ1ZmUjln?oc=5",
-    "published": "Mon, 05 Oct 2026 17:51:03 GMT"
+    "title": "Ethereum ETFs Outpace Bitcoin ETFs in 2026 Inflows - Yahoo Finance",
+    "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNYVhPZEQ4NFNWdmhPYVBzVVpTazZHcU95cUtROGhZOVVuRXlLdFBDbEhrVXlscF9OaGJHZlFNcEcxNzhLM1FhQVQ2R1pDdU80OGljMDRnVXpTSFgwTTQ5dVdDZ2UtTVBwazlJeVBFWEFyak1RUElkUU5sMFpLRmJURk5hWGVuOWtjN1RtcmFQT1ZSMWcyYkNqSTBlZ09JcXpp?oc=5",
+    "published": "Sun, 04 Oct 2026 10:52:51 GMT"
    }
   ],
   "bourse": [],
@@ -182,6 +182,11 @@
   ],
   "psychology": [
    {
+    "title": "Better Work-Life Balance Linked to Stronger Mental Health in Nurses, Study Finds - Bioengineer.org",
+    "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQbWxNY3YwR1RzTk9Nbll5dGlBbUhyaHo1X2dWNlJHd3kxUlJFMnIyN2pBaXMyeWotVm85bnJKZ1ltYmR3cTFUNW9KcGo5MmM5UVpZYXBORF9tSWxqQzhvMlZyTWtFX2NZSENFbGhSeVRkMmZ0Smt6dUpvQzJIRkFMMFh2TlBrUDVxV3VKOTlpOVhuNmVZVXJTTjZPT3lXNzJ6U21BQ2Rycw?oc=5",
+    "published": "Thu, 08 Oct 2026 04:21:05 GMT"
+   },
+   {
     "title": "Gambling Is Sending More People to the ER - Time Magazine",
     "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9iRm9QYW5nbXU4WHVnSVBfR29RcDFMUVlsOERCRWZ0WHZocnh5NnRtRnNmaVdWNjgzSS1wdHcyUE80VVhBdG1QdGFybnlEeXVvakhsQl8xV0J4VjQ1U3BMSUJMX1hfM1lyLXFueGs4dXFmUkRMZWc?oc=5",
     "published": "Mon, 05 Oct 2026 10:00:07 GMT"
@@ -215,11 +220,6 @@
     "title": "Reading and associations with brain health, cognition, well-being, and mental health | Psychological Medicine - Cambridge University Press & Assessment",
     "link": "https://news.google.com/rss/articles/CBMikgJBVV95cUxQdkxkOFFBRmpEY19iZFczOW9MT1lDZnBuMk5jVjVuYlVfS01ZNGZOX2FzT19WVFVmcEdoTmhLZDBoa21Sc1AxMWc3Qm9sSXlnOTV6dmEtMGYwLU1GdmZxZ2JZVUlhLUk4RmRNNU84ZjRUR1dIRGpZeXNlSFlnRjdDU0hjUFhNUW4waFZoRXhodFVGQnFOMjh5LXFiQlRGeDdDY1Qwd0JoOGZrcFg1aDYyemVPRjBsRE1ra3BfV29HQ05aQkRuZTZZLXNjYnFFTnR2Q2dGb194V0gza01KSmxBVVNsZ2Vabkd1elJwLTJxdzlkdlNyd3lKOUx3aGRER09sQlo3SzRnSFpzd2NZR0lRMEdR?oc=5",
     "published": "Tue, 15 Sep 2026 07:00:00 GMT"
-   },
-   {
-    "title": "Study finds digital therapy app improves student mental health - WashU",
-    "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOVlBqck9FSlhTV2YybXNEN0FEQ1I1WUprQUgwdDVqSExoVmw5eFhucURhV29CX243bUdfWWxuREhjMDhjWlNDaEpqRHUtRlYySF9UVklEcktnVlR2bUIta2RJaEtUN3JMQ3hDVlc5RWR2VVJrUWFwYkxTcEd2aGVFLVRyend2NGxaaUNLQUxTUmZjTGIxN3FibXhyUTc?oc=5",
-    "published": "Tue, 12 May 2026 07:00:00 GMT"
    }
   ],
   "business": [
