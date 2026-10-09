@@ -48,7 +48,8 @@ def _openai_style(url, key, model, prompt, json_mode):
     return r.json()["choices"][0]["message"]["content"]
 
 def gemini(prompt):
-    m = E("GEMINI_MODEL", "gemini-2.5-flash")
+    # 👇 اصلاح شد: تغییر مدل پیش‌فرض به gemini-1.5-flash برای رفع خطای 404
+    m = E("GEMINI_MODEL", "gemini-1.5-flash")
     r = requests.post(f"https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent",
         headers={"x-goog-api-key": E("GEMINI_API_KEY")},
         json={"contents": [{"parts": [{"text": prompt}]}],
