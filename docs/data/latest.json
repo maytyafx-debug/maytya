@@ -1,24 +1,24 @@
 {
- "updated": "2026-10-09T04:09:03+00:00",
+ "updated": "2026-10-09T11:18:19+00:00",
  "prices": {
   "BTC/USD": {
-   "value": 82371,
-   "change24h_pct": -0.35,
+   "value": 82435,
+   "change24h_pct": 0.15,
    "source": "CoinGecko"
   },
   "ETH/USD": {
-   "value": 2490.69,
-   "change24h_pct": -2.8,
+   "value": 2488.17,
+   "change24h_pct": -1.69,
    "source": "CoinGecko"
   },
   "SOL/USD": {
-   "value": 110.39,
-   "change24h_pct": -4.46,
+   "value": 109.87,
+   "change24h_pct": -3.02,
    "source": "CoinGecko"
   },
   "XRP/USD": {
-   "value": 1.4,
-   "change24h_pct": -1.24,
+   "value": 1.38,
+   "change24h_pct": -0.66,
    "source": "CoinGecko"
   },
   "EUR/USD": {
@@ -75,14 +75,14 @@
     "published": "Wed, 25 Feb 2026 08:00:00 GMT"
    },
    {
-    "title": "EUR/USD, Gold Forecast: Two trades to watch - FOREX.com",
-    "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOSjRCUXlnQ1IzU2h3blg3WGo3ZXowOUo5U3pxV2xkay1XSlpKdW1UOEs2UkowbElqbVFRaUpQQUFJZHE5QzU2OC1rdjI0bXg3eGs0UWhXeThCVDRrVGVFRHg4Wll2VzFVV0ZWbVBWNTctTmJEQUFoN29lcjFicVdwREdaOEJuY0Zmei1lZVJ0MWQwTXg3TFRRekw2TEc5bDZN0gGsAUFVX3lxTFB4LTZWUFU5ZTV5NGlhQ0NTZmdpZW9IQWJ1b2kyWFlMclZSSkdlQzJQUkhpdkl5MURLR0RqSzhEOHFISG1GYlNfbFkyMVR2bGo3WTFFTGhjckZfY2l2RlZVMHJnMWJpamE2c09VNUZkTXUwVUFvOFZoUDdUU1N1R0theXlsdFBhUXVHSi1SYXd6bnR4cTJJRjFjUVBnX0I1QTRubzdKSnVfM196VWc?oc=5",
-    "published": "Wed, 23 Sep 2026 08:45:16 GMT"
-   },
-   {
     "title": "US Dollar Price Forecast: Fed Minutes Loom, Can GBP/USD and EUR/USD Recover? - FXEmpire",
     "link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOT3NBTWtNckEwb0F5NTRoUjZYRGtWdHlZU0xMM1c4dGRmeHFsdzYtUktnY0JwTVc4akFJTEZhU2JIOEZWbE5hWm9xTm1PTy1uYzhZQU5kMGx2MXZibUZxSHFFMUowRGs2YVVWZnkwRDhub0hrTEJhTGtjdXBkY0NzZU1TVHZSWGtHQ1U3NkpQN21XTndRNEN3aXB3em8zNEZEblNXYk5vb2hJSDJFd2otSGNXcHBGbjVtLU5JeWwtTGRMQQ?oc=5",
     "published": "Wed, 07 Oct 2026 05:46:05 GMT"
+   },
+   {
+    "title": "EUR/USD, Gold Forecast: Two trades to watch - FOREX.com",
+    "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOSjRCUXlnQ1IzU2h3blg3WGo3ZXowOUo5U3pxV2xkay1XSlpKdW1UOEs2UkowbElqbVFRaUpQQUFJZHE5QzU2OC1rdjI0bXg3eGs0UWhXeThCVDRrVGVFRHg4Wll2VzFVV0ZWbVBWNTctTmJEQUFoN29lcjFicVdwREdaOEJuY0Zmei1lZVJ0MWQwTXg3TFRRekw2TEc5bDZN0gGsAUFVX3lxTFB4LTZWUFU5ZTV5NGlhQ0NTZmdpZW9IQWJ1b2kyWFlMclZSSkdlQzJQUkhpdkl5MURLR0RqSzhEOHFISG1GYlNfbFkyMVR2bGo3WTFFTGhjckZfY2l2RlZVMHJnMWJpamE2c09VNUZkTXUwVUFvOFZoUDdUU1N1R0theXlsdFBhUXVHSi1SYXd6bnR4cTJJRjFjUVBnX0I1QTRubzdKSnVfM196VWc?oc=5",
+    "published": "Wed, 23 Sep 2026 08:45:16 GMT"
    },
    {
     "title": "Dollar rally stalls as Fed hawkishness lifts Treasury yields, pressuring euro, sterling and gold - VT Markets",
@@ -97,14 +97,24 @@
   ],
   "crypto": [
    {
+    "title": "The SEC Just Broke the 2x Ceiling on Leveraged Crypto ETFs — and the First 3x Products Are One Form Away From Trading - Yahoo Finance",
+    "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxORWlBQjRKV1ZBR2NTTWRBeVRUTG4yeXVnXzBOUFdJWlNEMnBCT2kxN0RKUVg1M3luV29yNlFGNHVqZlgyTGlqOS1wbUFkYkxuNk5uczl5MkJlVXotc0VwQ0M2OGFZQkF6ZEJpa1M5THlWNGhGVk5qS3c5Z2tTOUIwY3p6T05tNjdUOGNRekN3VTkyRTVj?oc=5",
+    "published": "Fri, 09 Oct 2026 10:42:56 GMT"
+   },
+   {
+    "title": "Thailand SEC issues bitcoin and ether ETF rules set to take effect Oct. 16 - The Block",
+    "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOak1jTDlnVFhLMVM5cVN4QVJvNHFmdEtfMkZ2VTdHT1dSUURZa1ZHRDU1WUFTTjBwZ2dDRHRMR3cwODV5dGtmbEZ3M0xIVkcybXdZWS1lZEF6MlprMDUtMklKcWF1Tk9EZ0lqWUZ6Zm9uSVdWWDd3Zk9BbFZ2b0R0c241NGtubjRpeWxIallhdUlrT2prZ0NNZ3V0X25keXYyTEt5NXYwcHdqeXUxNnB3T2NWWGhxcHcwdjlKZEY5d1ZucDlKcnRvVEpxZw?oc=5",
+    "published": "Fri, 09 Oct 2026 10:40:00 GMT"
+   },
+   {
+    "title": "Thailand to allow Bitcoin and Ethereum ETFs from October 16 - Crypto News",
+    "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1FZWlRUVBPSm9tSXpLZ2RJWE85ZGt2SXkzaFIxTEpUZGlZNGllNGhZX2Z6Q2l2c0xycWZDTnR3WEZleFRGV2hhaWRDeXE2UEwybGFBOUhGVEhaRE5KQUxQenplUHJieHpJOE1mRQ?oc=5",
+    "published": "Fri, 09 Oct 2026 05:39:00 GMT"
+   },
+   {
     "title": "Thailand's SEC finalizes rules for Bitcoin and Ether ETFs - TradingView",
     "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNWXdRdkZwcUczV1k5SzlJSFRLUkNyVWpwTDNPYURaYzQ4QjcyTU1FWXpCdV9XeGZsTUFrZ2lnQVBLNHF0SkIwNVJ1Nk1pczA1ZGRnakRwRUxaTkFlZHNGZnIxRDQyQjJ0M3NNSHdqWHJrOHlpcHJZX0JSN1RzMUdRS2JxZm83OVZ6aVdkbHFGN096ZXZJOUpFZmN5alFJNk45NFpXYzJpLUxTUE9QVzhReUVwRFduUmx0YVFJUFI0MA?oc=5",
     "published": "Fri, 09 Oct 2026 03:22:00 GMT"
-   },
-   {
-    "title": "Bitcoin Slides to $80,000 as Ethereum, XRP, Dogecoin Trigger $1B Liquidation Cascade - Benzinga",
-    "link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxPNWZfc2JWUk1rMGNZXzBlcVZaOEJnVkh2UkJiMVJjT21JbnpwNml2c3NSRVprdWRrMVlabXdZRXFURW9oZ1gwNDc3OFVNMlpfT3NVYTlHVGkyWXdtcnNKRzRybWI5bDdqZnhQaWpoeC1oeGJQLW1xaUdJQUgyNXR1UktMU01XSlItSWdfTzJlSGFhQUJUVlRjYmEtZjN3VXB6MXQ1Y0hUVTMwR2o5N0tRZ0dmc2lsbzBKaU5MTnVpSTdUMjh1RF9Ud0RCT2ViSEFMZ1JMMzJiQlg?oc=5",
-    "published": "Thu, 08 Oct 2026 22:02:14 GMT"
    },
    {
     "title": "Morgan Stanley Runs Bitcoin, Ethereum and Solana ETFs at a 0.14% Fee. Which Coin Gets Its Money First? - 24/7 Wall St.",
@@ -112,29 +122,19 @@
     "published": "Wed, 07 Oct 2026 08:51:00 GMT"
    },
    {
-    "title": "Morgan Stanley Runs Bitcoin, Ethereum and Solana ETFs at a 0.14% Fee. Which Coin Gets Its Money First? - Yahoo Finance",
-    "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNOXdPay04ZThYSDV3bWRwa1NpSkVvUW5RUlNuSmxaVEJoVGpUejU3WW1oaTVUSmxUWmFFQWZUWkxqNF9HeDNGOW1KQms4NFcwM2o0R1NWMmR0MDZJSU1yVnR2VmxQTjJiaF8yTVU4VFBuQkRJaTFUSHhyb1BzbDBjR0hZQ3Q2OEs2bS1lbWVnZzRCOXA3RkdEbklEdEw1MDhpbmk0?oc=5",
-    "published": "Wed, 07 Oct 2026 08:51:55 GMT"
-   },
-   {
-    "title": "Why Is Crypto Down Today? Bitcoin Falls Below $83K as $550M in Bets Get Wiped Out - Bitcoin Foundation",
-    "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQcmYtam5JS2N5QjFNamg0OFIxc2Q2SXI4VGhBN2NYa1lFRlBQb3VBYktWV0oxcGdjZmpZeXpqcnFNRlpGdkx0bDRZMk44S0ZxaE1adDVYaU1iQWJ1RFlSOWJnY2pFLTJ2QjItdkVPVWc2WGwzWlJOTFBZbmlaTHFUQVFMUEJ3YXdxb29mNFRfbUV3b3lqdVl5YUdOcUpQd0RsSUk4V21yRkUtT3htOXNqUzNaejI5Y2VXWUp1Z1RiWGc?oc=5",
-    "published": "Thu, 08 Oct 2026 12:59:25 GMT"
-   },
-   {
-    "title": "Crypto Today: Bitcoin, Ethereum, XRP extend sell-off amid ETF outflows - FXStreet",
-    "link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNQVNpbllfRmZCQzJJYkRsM3hQSUR3UFd1N2JETWFHYmE2OGtkcWN5c1dwenJ2eUxFMy1MTTNFdzZwV2hkZHFXM0tpZlZtWXBpV1dIaG9zWUIzRWwxV2tjVUljbUdQck1yc0hEMXFyZGNNSm9Ib0Z5QkE4dENSU2EySTQ4MzQyZ0liUk5NeGI3eEtMZkNRNmw1ekl6aUphS3V1QTFaRHpUb1hmQVZlYWVWRnJMRGFOeWtTQUg2R242WU9wVzBTb1E?oc=5",
-    "published": "Thu, 08 Oct 2026 11:27:19 GMT"
+    "title": "Bitcoin Slides to $80,000 as Ethereum, XRP, Dogecoin Trigger $1B Liquidation Cascade - Benzinga",
+    "link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxPNWZfc2JWUk1rMGNZXzBlcVZaOEJnVkh2UkJiMVJjT21JbnpwNml2c3NSRVprdWRrMVlabXdZRXFURW9oZ1gwNDc3OFVNMlpfT3NVYTlHVGkyWXdtcnNKRzRybWI5bDdqZnhQaWpoeC1oeGJQLW1xaUdJQUgyNXR1UktMU01XSlItSWdfTzJlSGFhQUJUVlRjYmEtZjN3VXB6MXQ1Y0hUVTMwR2o5N0tRZ0dmc2lsbzBKaU5MTnVpSTdUMjh1RF9Ud0RCT2ViSEFMZ1JMMzJiQlg?oc=5",
+    "published": "Thu, 08 Oct 2026 22:02:14 GMT"
    },
    {
     "title": "Crypto Today: Bitcoin, Ethereum, XRP extend sell-off amid ETF outflows - tmgm.com",
-    "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxNampwV2JSNFNKRGdQRVJGMm5oMEwtZGR4LWY2c2p3OHctbmo2eXlDd25RYTNsX1RtQno3czgzUzFtT3NySkF1ZVI0cFpnbEpHZF9kdG1nSHJfMkhhWmRmWDFaei1FMnJzdXFsN3lNRzc4M1lQNk1hZWlCbFhBS1BhYy13NFRGekltdE9MRlFnTnF2RUJ5bjRWSFV2dXI1dWtsR3BWRHZOZ3FZS3ItN3ZrbGo1RkUycGY1SXhKWjlVeHRhamEyUlFMMFhyd2RTUQ?oc=5",
-    "published": "Thu, 08 Oct 2026 12:06:23 GMT"
+    "link": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxNbnVfbHR1VTJIZzB6RW9UR0dZRDkta2pMbFlqZGtHX0d3a0hGdjE3TEJzbExzMnN1WFdwZVVoUFdWZTF6MlBkSVhlaUZTTVZfUFp4RV9DX0pxX0hiRFNJYldKVHVieEJEbnRQcm9fc1NkakFacllzYWdyZ2t4UV9wUW9XLXVDV0NtODhVa1plNXk1UHp5T2d6Tm0td0p0b2NpNURCTUVaX2VDVjFnZnpJS28tZy1RS2lFSXN5amY2RWlhZ0pZenhvNXg0VHBhSU80YlE?oc=5",
+    "published": "Thu, 08 Oct 2026 15:33:50 GMT"
    },
    {
-    "title": "Grayscale Says Crypto ETFs Moving Past Bitcoin, Ethereum - CoinMarketCap",
-    "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxOeExiajV2WUwzMWtHT0ZObEk3NjVac2lHSXNyVWVQRGNZbDZ0d0RoZHpTTlhBbjk5SjZjQTJOQkp1Z2lIei11Y01EY1hJZzE2U29QOE13U29xc0NkYTJYVkphOFZHWFFRZ0RObE9obFZvaDZIYlk4NzYxVTZDMGlNRDZYdVdZVE8yVG9DYzByaTRIbWVJWERuc2QzUkUyQQ?oc=5",
-    "published": "Thu, 08 Oct 2026 13:28:07 GMT"
+    "title": "Thailand Approves Bitcoin, Ethereum ETF Listings Effective Oct. 16 - BigGo Finance",
+    "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5sTVJ3RzFFS1AyZjd1WGZoUVlXd0pBR2hFTTF5a19nMjIwYTRqMUUxbHYxUzJEQzdRSmo0bTRIM2hhRWROMm5PMjNHUjdkMHQ1WGExbGpCRzY3Wm0zVWRvLVNRdE8yTmZFM05TdkgxYjJGVC1lSnc?oc=5",
+    "published": "Fri, 09 Oct 2026 04:35:00 GMT"
    }
   ],
   "bourse": [],
@@ -155,9 +155,9 @@
     "published": "Fri, 18 Sep 2026 07:00:00 GMT"
    },
    {
-    "title": "How much protein do you need? Nutrition experts say there's a sweet spot - Business Insider",
-    "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNRzRySVNqM0NncjVWQ1VQU25PbHp2RHJhS0x0blBUS0drYWNRel8tQU5tRjhsT2Y3MTFVQmN3dG9rYmdjbVVfNWx0cllGMmx5eGEwS1JHZExuZ25iNDVoeS1hbWs5MjZHX21URGlHZXNPQW9SdWNTbEZuc0FVc2hfS0lpaw?oc=5",
-    "published": "Sat, 08 Aug 2026 07:00:00 GMT"
+    "title": "How much protein should we really be eating? Five things to know - Stanford Medicine",
+    "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBTajNtcVpkNDlzTHV2b2VBY1ZqMVVIeE9tMnhNRE82MzRfeklyTkpkZGFTWkdnVjlBWVhhcUtqaXFGX3RQdEdzejFqbi1YRXVvTmhxQU5ma3R3clVaalg2c2NDWHFQSUZwR1N3aGkzZnVEQWs1ZG9R?oc=5",
+    "published": "Wed, 25 Mar 2026 07:00:00 GMT"
    },
    {
     "title": "Protein yogurt and whey protein produce comparable muscle gains, but divergent microbiome shifts during strength training in older adults - Nature",
@@ -165,9 +165,9 @@
     "published": "Mon, 18 May 2026 07:00:00 GMT"
    },
    {
-    "title": "How much protein should we really be eating? Five things to know - Stanford Medicine",
-    "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBTajNtcVpkNDlzTHV2b2VBY1ZqMVVIeE9tMnhNRE82MzRfeklyTkpkZGFTWkdnVjlBWVhhcUtqaXFGX3RQdEdzejFqbi1YRXVvTmhxQU5ma3R3clVaalg2c2NDWHFQSUZwR1N3aGkzZnVEQWs1ZG9R?oc=5",
-    "published": "Wed, 25 Mar 2026 07:00:00 GMT"
+    "title": "How much protein do you need? Nutrition experts say there's a sweet spot - Business Insider",
+    "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNRzRySVNqM0NncjVWQ1VQU25PbHp2RHJhS0x0blBUS0drYWNRel8tQU5tRjhsT2Y3MTFVQmN3dG9rYmdjbVVfNWx0cllGMmx5eGEwS1JHZExuZ25iNDVoeS1hbWs5MjZHX21URGlHZXNPQW9SdWNTbEZuc0FVc2hfS0lpaw?oc=5",
+    "published": "Sat, 08 Aug 2026 07:00:00 GMT"
    },
    {
     "title": "Exercise beats protein powder for keeping muscles youthful - Futurity",
@@ -207,11 +207,6 @@
     "published": "Fri, 31 Jul 2026 14:17:42 GMT"
    },
    {
-    "title": "Reading and associations with brain health, cognition, well-being, and mental health | Psychological Medicine - Cambridge University Press & Assessment",
-    "link": "https://news.google.com/rss/articles/CBMikgJBVV95cUxQdkxkOFFBRmpEY19iZFczOW9MT1lDZnBuMk5jVjVuYlVfS01ZNGZOX2FzT19WVFVmcEdoTmhLZDBoa21Sc1AxMWc3Qm9sSXlnOTV6dmEtMGYwLU1GdmZxZ2JZVUlhLUk4RmRNNU84ZjRUR1dIRGpZeXNlSFlnRjdDU0hjUFhNUW4waFZoRXhodFVGQnFOMjh5LXFiQlRGeDdDY1Qwd0JoOGZrcFg1aDYyemVPRjBsRE1ra3BfV29HQ05aQkRuZTZZLXNjYnFFTnR2Q2dGb194V0gza01KSmxBVVNsZ2Vabkd1elJwLTJxdzlkdlNyd3lKOUx3aGRER09sQlo3SzRnSFpzd2NZR0lRMEdR?oc=5",
-    "published": "Tue, 15 Sep 2026 07:00:00 GMT"
-   },
-   {
     "title": "Study finds digital therapy app improves student mental health - WashU",
     "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOVlBqck9FSlhTV2YybXNEN0FEQ1I1WUprQUgwdDVqSExoVmw5eFhucURhV29CX243bUdfWWxuREhjMDhjWlNDaEpqRHUtRlYySF9UVklEcktnVlR2bUIta2RJaEtUN3JMQ3hDVlc5RWR2VVJrUWFwYkxTcEd2aGVFLVRyend2NGxaaUNLQUxTUmZjTGIxN3FibXhyUTc?oc=5",
     "published": "Tue, 12 May 2026 07:00:00 GMT"
@@ -220,6 +215,11 @@
     "title": "Psychologists Examine Downside of Social Media Algorithms - The University of Texas at Dallas",
     "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQQWMtZWgwWi10V2ExeUZsLW1Od05JM09fTW9ZWTdULUc2Nnk4ekRqc2VXYy1MUjloNkgwVmZvMm81cWJWMGZyV2lzRzBQel9SWEVfTHVrWXdpaEM3dDY3QUN2R0wzMjJNdFl3Um5OMWdxb0xkdXZpb002eXpseGZxNmdxWk9obXo3SlE?oc=5",
     "published": "Wed, 26 Aug 2026 07:00:00 GMT"
+   },
+   {
+    "title": "Reading and associations with brain health, cognition, well-being, and mental health | Psychological Medicine - Cambridge University Press & Assessment",
+    "link": "https://news.google.com/rss/articles/CBMikgJBVV95cUxQdkxkOFFBRmpEY19iZFczOW9MT1lDZnBuMk5jVjVuYlVfS01ZNGZOX2FzT19WVFVmcEdoTmhLZDBoa21Sc1AxMWc3Qm9sSXlnOTV6dmEtMGYwLU1GdmZxZ2JZVUlhLUk4RmRNNU84ZjRUR1dIRGpZeXNlSFlnRjdDU0hjUFhNUW4waFZoRXhodFVGQnFOMjh5LXFiQlRGeDdDY1Qwd0JoOGZrcFg1aDYyemVPRjBsRE1ra3BfV29HQ05aQkRuZTZZLXNjYnFFTnR2Q2dGb194V0gza01KSmxBVVNsZ2Vabkd1elJwLTJxdzlkdlNyd3lKOUx3aGRER09sQlo3SzRnSFpzd2NZR0lRMEdR?oc=5",
+    "published": "Tue, 15 Sep 2026 07:00:00 GMT"
    }
   ],
   "business": [
