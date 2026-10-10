@@ -1,1 +1,527 @@
 
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#050807">
+<title>جعبه‌ابزار Metatya — ماشین‌حساب‌های معامله‌گری</title>
+<meta name="description" content="ماشین‌حساب حجم پوزیشن، R:R، Expectancy، هزینه احساسات و ریسک ورشکستگی. رایگان و بدون ثبت‌نام.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050807;--card:#0E1D1A;--card2:#122420;
+  --green:#00ff9d;--red:#ff2e4d;--gold:#D4A03E;
+  --white:#EBF4F1;--muted:#8E9C95;
+  --line:rgba(255,255,255,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{background:var(--bg);scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--white);
+  font-family:'Vazirmatn',sans-serif;
+  overflow-x:hidden;min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+::selection{background:var(--green);color:#050807}
+
+.container{max-width:600px;margin:0 auto;padding:0 16px 100px}
+
+/* Header */
+.topbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(5,8,7,.88);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);
+  padding:14px 16px;
+}
+.topbar-inner{max-width:600px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:15px}
+.logo b{
+  width:34px;height:34px;background:var(--green);color:#050807;
+  border-radius:10px;display:grid;place-items:center;font-size:18px;
+}
+.back-link{font-size:12px;color:var(--muted);padding:6px 12px;border:1px solid var(--line);border-radius:20px}
+
+/* Hero */
+.tb-hero{padding:40px 0 32px;text-align:center}
+.kicker{
+  font-size:10px;letter-spacing:.25em;color:var(--green);
+  font-weight:800;direction:ltr;margin-bottom:14px;
+}
+.tb-hero h1{
+  font-size:clamp(30px,7vw,44px);font-weight:900;
+  letter-spacing:-.04em;line-height:1.15;margin-bottom:14px;
+}
+.tb-hero p{color:var(--muted);font-size:14px;line-height:2;max-width:440px;margin:0 auto}
+
+/* Tabs */
+.tabs{
+  display:flex;gap:6px;overflow-x:auto;
+  padding:8px 0 18px;margin:0 -16px;padding-left:16px;padding-right:16px;
+  scrollbar-width:none;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  flex:0 0 auto;padding:9px 16px;border-radius:20px;
+  background:var(--card);border:1px solid var(--line);
+  font-size:12.5px;font-weight:700;color:var(--muted);
+  transition:all .2s;white-space:nowrap;
+}
+.tab.on{background:var(--green);color:#050807;border-color:var(--green)}
+
+/* Calculator card */
+.calc{
+  background:var(--card);border:1px solid var(--line);
+  border-radius:22px;padding:22px;margin-bottom:18px;
+  display:none;
+}
+.calc.on{display:block;animation:fadeUp .4s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.calc h2{font-size:20px;font-weight:900;margin-bottom:6px;letter-spacing:-.02em}
+.calc .sub{font-size:12.5px;color:var(--muted);line-height:1.9;margin-bottom:20px}
+
+.field{margin-bottom:14px}
+.field label{
+  display:block;font-size:11.5px;color:var(--muted);
+  margin-bottom:8px;font-weight:600;
+}
+.field input,.field select{
+  width:100%;padding:14px 16px;background:#ffffff06;
+  border:1.5px solid var(--line);border-radius:12px;
+  color:var(--white);font-family:inherit;font-size:15px;
+  font-weight:600;outline:none;transition:border-color .2s;
+}
+.field input:focus,.field select:focus{border-color:var(--green);background:#00ff9d08}
+.field input::placeholder{color:#5a6862;font-weight:400}
+.field select{cursor:pointer;-webkit-appearance:none;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238E9C95' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:left 16px center;padding-left:42px;
+}
+
+.calc-btn{
+  width:100%;padding:16px;background:var(--green);color:#050807;
+  border-radius:14px;font-weight:900;font-size:15px;
+  margin-top:8px;transition:transform .2s,box-shadow .2s;
+}
+.calc-btn:hover{box-shadow:0 0 30px #00ff9d30}
+.calc-btn:active{transform:scale(.98)}
+
+/* Result */
+.result{
+  margin-top:20px;padding:20px;border-radius:16px;
+  background:linear-gradient(160deg,#00ff9d10,#d4a03e08);
+  border:1px solid #00ff9d30;display:none;
+}
+.result.on{display:block;animation:fadeUp .5s ease}
+.result-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 0;border-bottom:1px dashed #ffffff15;
+}
+.result-row:last-child{border-bottom:none;padding-bottom:0}
+.result-row .lbl{font-size:12.5px;color:var(--muted)}
+.result-row .val{font-size:17px;font-weight:900;color:var(--green)}
+.result-row .val.red{color:var(--red)}
+.result-row .val.gold{color:var(--gold)}
+.result-big{
+  font-size:34px;font-weight:900;color:var(--green);
+  text-align:center;padding:14px 0;letter-spacing:-.03em;
+}
+.result-note{font-size:11.5px;color:var(--muted);text-align:center;margin-top:12px;line-height:1.8}
+
+/* Emotion warning */
+.warning-box{
+  margin-top:18px;padding:16px;background:#ff2e4d10;
+  border:1px solid #ff2e4d40;border-radius:14px;
+  text-align:center;
+}
+.warning-box .big-num{
+  font-size:40px;font-weight:900;color:var(--red);
+  letter-spacing:-.03em;
+}
+.warning-box .cap{font-size:11.5px;color:var(--muted);margin-top:4px}
+
+/* CTA at bottom */
+.bottom-cta{
+  margin-top:36px;padding:26px;border-radius:22px;
+  background:linear-gradient(160deg,#00ff9d10,transparent);
+  border:1px solid #00ff9d30;text-align:center;
+}
+.bottom-cta h3{
+  font-size:19px;font-weight:900;margin-bottom:8px;
+  letter-spacing:-.02em;
+}
+.bottom-cta p{font-size:13px;color:var(--muted);line-height:1.9;margin-bottom:18px}
+.bottom-cta .btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:15px 24px;background:var(--green);color:#050807;
+  border-radius:14px;font-weight:900;font-size:14px;width:100%;
+  transition:transform .2s;
+}
+.bottom-cta .btn:active{transform:scale(.97)}
+.bottom-cta .resp{font-size:11px;color:#667670;margin-top:10px}
+
+.footer{text-align:center;padding:30px 0 10px;font-size:11px;color:var(--muted);line-height:1.9}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="logo"><b>M</b><span>METATYA / TOOLBOX</span></div>
+    <a href="index.html" class="back-link">← خانه</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="tb-hero">
+    <div class="kicker">METATYA TOOLBOX</div>
+    <h1>ماشین‌حساب‌های<br>معامله‌گری</h1>
+    <p>۵ ابزار رایگان که هر معامله‌گر حرفه‌ای هر روز ازشون استفاده می‌کنه. بدون ثبت‌نام، بدون محدودیت.</p>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <button class="tab on" data-tab="position">📐 حجم پوزیشن</button>
+    <button class="tab" data-tab="rr">⚖️ نسبت R:R</button>
+    <button class="tab" data-tab="expectancy">🎯 Expectancy</button>
+    <button class="tab" data-tab="emotion">💸 هزینه احساسات</button>
+    <button class="tab" data-tab="ruin">⚠️ ریسک ورشکستگی</button>
+  </div>
+
+  <!-- ── 1. POSITION SIZE ── -->
+  <div class="calc on" id="calc-position">
+    <h2>📐 ماشین‌حساب حجم پوزیشن</h2>
+    <p class="sub">با این ابزار، حجم دقیق هر معامله رو بر اساس مدیریت ریسک محاسبه کن.</p>
+
+    <div class="field">
+      <label>سرمایه کل (تومان یا دلار)</label>
+      <input type="number" id="ps-capital" placeholder="مثلاً 100000000" value="100000000">
+    </div>
+    <div class="field">
+      <label>درصد ریسک هر معامله</label>
+      <select id="ps-risk">
+        <option value="1">۱٪ (محافظه‌کارانه)</option>
+        <option value="2" selected>۲٪ (استاندارد)</option>
+        <option value="3">۳٪ (تهاجمی)</option>
+        <option value="5">۵٪ (خطرناک)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>قیمت ورود</label>
+      <input type="number" id="ps-entry" placeholder="مثلاً 1300" value="1300" step="any">
+    </div>
+    <div class="field">
+      <label>حد ضرر</label>
+      <input type="number" id="ps-stop" placeholder="مثلاً 1280" value="1280" step="any">
+    </div>
+    <div class="field">
+      <label>ارزش هر واحد حرکت (اختیاری — پیش‌فرض ۱)</label>
+      <input type="number" id="ps-pip" placeholder="پیش‌فرض: 1" value="1" step="any">
+    </div>
+
+    <button class="calc-btn" onclick="calcPosition()">محاسبه کن</button>
+
+    <div class="result" id="ps-result">
+      <div class="result-big" id="ps-size">—</div>
+      <div class="result-note">حجم پیشنهادی پوزیشن</div>
+      <div class="result-row"><span class="lbl">مبلغ ریسک</span><span class="val red" id="ps-risk-amount">—</span></div>
+      <div class="result-row"><span class="lbl">فاصله حد ضرر</span><span class="val gold" id="ps-stop-distance">—</span></div>
+      <div class="result-row"><span class="lbl">درصد ریسک</span><span class="val" id="ps-risk-percent">—</span></div>
+    </div>
+  </div>
+
+  <!-- ── 2. R:R ── -->
+  <div class="calc" id="calc-rr">
+    <h2>⚖️ ماشین‌حساب نسبت ریسک به ریوارد</h2>
+    <p class="sub">قبل از هر معامله، ببین آیا ارزش ریسک کردن داره یا نه.</p>
+
+    <div class="field"><label>قیمت ورود</label><input type="number" id="rr-entry" value="1300" step="any"></div>
+    <div class="field"><label>حد ضرر</label><input type="number" id="rr-stop" value="1280" step="any"></div>
+    <div class="field"><label>حد سود</label><input type="number" id="rr-target" value="1360" step="any"></div>
+
+    <button class="calc-btn" onclick="calcRR()">محاسبه کن</button>
+
+    <div class="result" id="rr-result">
+      <div class="result-big" id="rr-ratio">—</div>
+      <div class="result-note">نسبت ریسک به ریوارد</div>
+      <div class="result-row"><span class="lbl">ریسک (پیپ/دلار)</span><span class="val red" id="rr-risk">—</span></div>
+      <div class="result-row"><span class="lbl">ریوارد (پیپ/دلار)</span><span class="val" id="rr-reward">—</span></div>
+      <div class="result-row"><span class="lbl">وضعیت</span><span class="val" id="rr-status">—</span></div>
+    </div>
+  </div>
+
+  <!-- ── 3. EXPECTANCY ── -->
+  <div class="calc" id="calc-expectancy">
+    <h2>🎯 ماشین‌حساب Expectancy</h2>
+    <p class="sub">مهم‌ترین فرمول معامله‌گری. اگه این عدد منفی باشه، استراتژی‌ت ضررده‌ست.</p>
+
+    <div class="field"><label>نرخ برد (Win Rate) ٪</label><input type="number" id="ex-winrate" value="45" min="0" max="100"></div>
+    <div class="field"><label>میانگین سود هر برد</label><input type="number" id="ex-avgwin" value="300"></div>
+    <div class="field"><label>میانگین ضرر هر باخت</label><input type="number" id="ex-avgloss" value="100"></div>
+
+    <button class="calc-btn" onclick="calcExpectancy()">محاسبه کن</button>
+
+    <div class="result" id="ex-result">
+      <div class="result-big" id="ex-value">—</div>
+      <div class="result-note">امید سود هر معامله</div>
+      <div class="result-row"><span class="lbl">نرخ باخت</span><span class="val gold" id="ex-lossrate">—</span></div>
+      <div class="result-row"><span class="lbl">روی ۱۰۰ معامله</span><span class="val" id="ex-100">—</span></div>
+      <div class="result-row"><span class="lbl">وضعیت استراتژی</span><span class="val" id="ex-status">—</span></div>
+    </div>
+  </div>
+
+  <!-- ── 4. COST OF EMOTION ── -->
+  <div class="calc" id="calc-emotion">
+    <h2>💸 هزینه احساسات</h2>
+    <p class="sub">ببین چقدر پول، فقط به خاطر تصمیم‌های هیجانی از دست دادی.</p>
+
+    <div class="field"><label>تعداد معاملات این ماه</label><input type="number" id="em-total" value="30"></div>
+    <div class="field"><label>چند تاش هیجانی بود؟</label><input type="number" id="em-emotional" value="8"></div>
+    <div class="field"><label>میانگین سود معاملات برنامه‌ریزی‌شده</label><input type="number" id="em-winsize" value="200"></div>
+    <div class="field"><label>میانگین ضرر معاملات هیجانی</label><input type="number" id="em-lossize" value="150"></div>
+
+    <button class="calc-btn" onclick="calcEmotion()">محاسبه کن</button>
+
+    <div class="result" id="em-result">
+      <div class="result-big" id="em-loss">—</div>
+      <div class="result-note">پول از دست رفته به خاطر احساسات</div>
+
+      <div class="warning-box">
+        <div class="big-num" id="em-percent">—</div>
+        <div class="cap">درصد از سود کل ماهت</div>
+      </div>
+
+      <div class="result-row" style="margin-top:16px"><span class="lbl">سود از دست رفته</span><span class="val red" id="em-lost">—</span></div>
+      <div class="result-row"><span class="lbl">تعداد معاملات هیجانی</span><span class="val gold" id="em-count">—</span></div>
+    </div>
+  </div>
+
+  <!-- ── 5. RISK OF RUIN ── -->
+  <div class="calc" id="calc-ruin">
+    <h2>⚠️ ریسک ورشکستگی</h2>
+    <p class="sub">با این ابزار، ببین چقدر احتمال داره کل سرمایه‌ت رو از دست بدی.</p>
+
+    <div class="field">
+      <label>نرخ برد (Win Rate) ٪</label>
+      <input type="number" id="ru-winrate" value="45" min="0" max="100">
+    </div>
+    <div class="field">
+      <label>درصد ریسک هر معامله</label>
+      <select id="ru-risk">
+        <option value="1">۱٪</option>
+        <option value="2" selected>۲٪</option>
+        <option value="5">۵٪</option>
+        <option value="10">۱۰٪</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>تعداد معاملات پیش‌رو</label>
+      <input type="number" id="ru-trades" value="100">
+    </div>
+
+    <button class="calc-btn" onclick="calcRuin()">محاسبه کن</button>
+
+    <div class="result" id="ru-result">
+      <div class="result-big" id="ru-value">—</div>
+      <div class="result-note">احتمال ورشکستگی</div>
+      <div class="result-row"><span class="lbl">سطح ریسک</span><span class="val" id="ru-level">—</span></div>
+      <div class="result-row"><span class="lbl">توصیه</span><span class="val gold" id="ru-tip">—</span></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="bottom-cta">
+    <h3>این ابزارها رو هر روز استفاده می‌کنی؟</h3>
+    <p>دفترچه معاملات PRO، همه‌ی این محاسبات رو خودکار انجام می‌ده — به‌همراه داشبورد آماری و راهنمای مدیریت ریسک.</p>
+    <a href="https://t.me/maytya?direct" target="_blank" rel="noopener" class="btn">📩 استعلام قیمت در تلگرام</a>
+    <p class="resp">💬 پاسخ در کمتر از ۱ ساعت</p>
+  </div>
+
+  <p class="footer">
+    Metatya Toolbox · رایگان و بدون ثبت‌نام<br>
+    این ابزارها آموزشی هستند و توصیه‌ی سرمایه‌گذاری نیستند.
+  </p>
+
+</div>
+
+<script>
+/* ─── TABS ─── */
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+    document.querySelectorAll('.calc').forEach(c => c.classList.remove('on'));
+    tab.classList.add('on');
+    document.getElementById('calc-' + tab.dataset.tab).classList.add('on');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+
+/* ─── HELPERS ─── */
+function fmt(n, decimals = 2){
+  if(!isFinite(n)) return '—';
+  return Number(n).toLocaleString('fa-IR', {maximumFractionDigits: decimals});
+}
+
+/* ─── 1. POSITION SIZE ─── */
+function calcPosition(){
+  const cap = +document.getElementById('ps-capital').value;
+  const risk = +document.getElementById('ps-risk').value;
+  const entry = +document.getElementById('ps-entry').value;
+  const stop = +document.getElementById('ps-stop').value;
+  const pip = +document.getElementById('ps-pip').value || 1;
+
+  if(!cap || !entry || !stop || entry === stop){ alert('همه‌ی فیلدها رو درست پر کن'); return; }
+
+  const riskAmount = cap * risk / 100;
+  const stopDist = Math.abs(entry - stop);
+  const size = riskAmount / (stopDist * pip);
+
+  document.getElementById('ps-size').textContent = fmt(size, 4);
+  document.getElementById('ps-risk-amount').textContent = fmt(riskAmount) + ' واحد';
+  document.getElementById('ps-stop-distance').textContent = fmt(stopDist, 4);
+  document.getElementById('ps-risk-percent').textContent = risk + '٪';
+  document.getElementById('ps-result').classList.add('on');
+}
+
+/* ─── 2. R:R ─── */
+function calcRR(){
+  const entry = +document.getElementById('rr-entry').value;
+  const stop = +document.getElementById('rr-stop').value;
+  const target = +document.getElementById('rr-target').value;
+
+  if(!entry || !stop || !target){ alert('همه‌ی فیلدها رو پر کن'); return; }
+
+  const risk = Math.abs(entry - stop);
+  const reward = Math.abs(target - entry);
+  const ratio = reward / risk;
+
+  let status = '', cls = '';
+  if(ratio < 1.5){ status = '❌ ضعیف — وارد نشو'; cls = 'red'; }
+  else if(ratio < 2){ status = '⚠️ مرزی — قابل قبول'; cls = 'gold'; }
+  else if(ratio < 3){ status = '✅ خوب'; cls = ''; }
+  else { status = '🔥 عالی'; cls = ''; }
+
+  document.getElementById('rr-ratio').textContent = '1 : ' + fmt(ratio, 2);
+  document.getElementById('rr-risk').textContent = fmt(risk, 4);
+  document.getElementById('rr-reward').textContent = fmt(reward, 4);
+  const statusEl = document.getElementById('rr-status');
+  statusEl.textContent = status;
+  statusEl.className = 'val ' + cls;
+  document.getElementById('rr-result').classList.add('on');
+}
+
+/* ─── 3. EXPECTANCY ─── */
+function calcExpectancy(){
+  const winrate = +document.getElementById('ex-winrate').value / 100;
+  const avgwin = +document.getElementById('ex-avgwin').value;
+  const avgloss = +document.getElementById('ex-avgloss').value;
+
+  if(winrate < 0 || winrate > 1){ alert('نرخ برد باید بین ۰ تا ۱۰۰ باشه'); return; }
+
+  const lossrate = 1 - winrate;
+  const exp = (winrate * avgwin) - (lossrate * avgloss);
+  const on100 = exp * 100;
+
+  let status = '', cls = '';
+  if(exp > 0){ status = '✅ استراتژی سودده'; cls = ''; }
+  else if(exp === 0){ status = '⚠️ سر به سر'; cls = 'gold'; }
+  else { status = '❌ استراتژی ضررده'; cls = 'red'; }
+
+  const el = document.getElementById('ex-value');
+  el.textContent = (exp >= 0 ? '+' : '') + fmt(exp);
+  el.className = 'result-big';
+  if(exp < 0) el.style.color = 'var(--red)';
+  else el.style.color = 'var(--green)';
+
+  document.getElementById('ex-lossrate').textContent = fmt(lossrate * 100, 1) + '٪';
+  document.getElementById('ex-100').textContent = (on100 >= 0 ? '+' : '') + fmt(on100);
+  const statusEl = document.getElementById('ex-status');
+  statusEl.textContent = status;
+  statusEl.className = 'val ' + cls;
+  document.getElementById('ex-result').classList.add('on');
+}
+
+/* ─── 4. COST OF EMOTION ─── */
+function calcEmotion(){
+  const total = +document.getElementById('em-total').value;
+  const emotional = +document.getElementById('em-emotional').value;
+  const winsize = +document.getElementById('em-winsize').value;
+  const lossize = +document.getElementById('em-lossize').value;
+
+  if(!total || !emotional || !winsize || !lossize){ alert('همه‌ی فیلدها رو پر کن'); return; }
+
+  const lostProfit = emotional * winsize;
+  const realLoss = emotional * lossize;
+  const totalLoss = lostProfit + realLoss;
+  const emotionalPercent = (emotional / total) * 100;
+
+  const el = document.getElementById('em-loss');
+  el.textContent = fmt(totalLoss);
+  el.style.color = 'var(--red)';
+
+  document.getElementById('em-percent').textContent = fmt(emotionalPercent, 0) + '٪';
+  document.getElementById('em-lost').textContent = fmt(lostProfit);
+  document.getElementById('em-count').textContent = fmt(emotional, 0) + ' از ' + fmt(total, 0);
+  document.getElementById('em-result').classList.add('on');
+}
+
+/* ─── 5. RISK OF RUIN ─── */
+function calcRuin(){
+  const winrate = +document.getElementById('ru-winrate').value / 100;
+  const risk = +document.getElementById('ru-risk').value / 100;
+  const trades = +document.getElementById('ru-trades').value;
+
+  if(winrate < 0 || winrate > 1){ alert('نرخ برد باید بین ۰ تا ۱۰۰ باشه'); return; }
+
+  // Approximation: RoR based on Kelly-like formula
+  const edge = (2 * winrate) - 1;
+  let ror;
+  if(edge <= 0){
+    ror = 100;
+  } else {
+    const r = (1 - edge) / (1 + edge);
+    ror = Math.pow(r, trades / 10) * 100;
+    ror = Math.min(ror, 100);
+  }
+
+  let level = '', cls = '', tip = '';
+  if(ror < 1){ level = '✅ خیلی کم'; cls = ''; tip = 'مدیریت ریسکت عالیه'; }
+  else if(ror < 10){ level = '✅ قابل قبول'; cls = ''; tip = 'استراتژی رو ادامه بده'; }
+  else if(ror < 30){ level = '⚠️ خطرناک'; cls = 'gold'; tip = 'ریسک رو کم کن'; }
+  else { level = '🔥 بحرانی'; cls = 'red'; tip = 'فوری استراتژی رو عوض کن'; }
+
+  const el = document.getElementById('ru-value');
+  el.textContent = fmt(ror, 2) + '٪';
+  el.style.color = ror < 10 ? 'var(--green)' : 'var(--red)';
+
+  const levelEl = document.getElementById('ru-level');
+  levelEl.textContent = level;
+  levelEl.className = 'val ' + cls;
+
+  document.getElementById('ru-tip').textContent = tip;
+  document.getElementById('ru-result').classList.add('on');
+}
+
+/* ─── ENTER KEYS ─── */
+document.querySelectorAll('input').forEach(inp => {
+  inp.addEventListener('keypress', e => {
+    if(e.key === 'Enter'){
+      const parent = inp.closest('.calc');
+      const btn = parent.querySelector('.calc-btn');
+      if(btn) btn.click();
+    }
+  });
+});
+</script>
+</body>
+</html>
