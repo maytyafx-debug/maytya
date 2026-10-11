@@ -69,7 +69,7 @@ def gemini(prompt):
 
 def cloudflare(prompt):
     """endpoint قدیمی /ai/run/ که پایدارتر از /ai/v1/chat/ هست و 404 نمی‌ده."""
-    acc = E("CLOUDFLARE_ACCOUNT_ID")
+    acc = "f2d2e42babfb50b69a5c5bef6ecddf0e"  # hardcoded for test
     tok = E("CLOUDFLARE_API_TOKEN")
     model = E("CF_MODEL", "@cf/meta/llama-3.3-70b-instruct-fp8-fast")
     url = f"https://api.cloudflare.com/client/v4/accounts/{acc}/ai/run/{model}"
