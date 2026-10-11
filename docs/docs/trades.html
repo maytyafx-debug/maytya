@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#050807">
+<title>Metatya — پرونده‌های واقعی معاملات</title>
+<meta name="description" content="پرونده‌های واقعی معاملات بورس ایران. تاریخ، اعداد، دلیل ورود و خروج، درس هر معامله.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050807;--card:#0E1D1A;
+  --green:#00ff9d;--red:#ff2e4d;--gold:#D4A03E;
+  --white:#EBF4F1;--muted:#8E9C95;
+  --line:rgba(255,255,255,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{background:var(--bg);scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--white);
+  font-family:'Vazirmatn',sans-serif;
+  overflow-x:hidden;min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  padding-top:env(safe-area-inset-top,0px);
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+::selection{background:var(--green);color:#050807}
+
+.topbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(5,8,7,.88);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);padding:14px 16px;
+}
+.topbar-inner{max-width:640px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:15px}
+.logo b{width:34px;height:34px;background:var(--green);color:#050807;border-radius:10px;display:grid;place-items:center;font-size:18px}
+.back-link{font-size:12px;color:var(--muted);padding:6px 12px;border:1px solid var(--line);border-radius:20px}
+
+.container{max-width:640px;margin:0 auto;padding:0 16px 100px}
+
+/* Hero */
+.hero{padding:44px 0 32px;text-align:center}
+.kicker{font-size:10px;letter-spacing:.25em;color:var(--green);font-weight:800;direction:ltr;margin-bottom:14px}
+.hero h1{font-size:clamp(32px,7.5vw,48px);font-weight:900;letter-spacing:-.04em;line-height:1.15;margin-bottom:14px}
+.hero h1 span{color:var(--gold)}
+.hero p{color:var(--muted);font-size:14px;line-height:2;max-width:480px;margin:0 auto 20px}
+.stats-row{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  margin-top:24px;
+}
+.stat-box{
+  background:var(--card);border:1px solid var(--line);
+  border-radius:16px;padding:16px;text-align:center;
+}
+.stat-box b{font-size:22px;font-weight:900;color:var(--green);display:block;direction:ltr}
+.stat-box span{font-size:10.5px;color:var(--muted);display:block;margin-top:4px}
+
+/* Filters */
+.filters{
+  display:flex;gap:8px;overflow-x:auto;padding:8px 0 20px;
+  scrollbar-width:none;
+}
+.filters::-webkit-scrollbar{display:none}
+.filter{
+  flex:0 0 auto;padding:9px 16px;border-radius:20px;
+  background:var(--card);border:1px solid var(--line);
+  font-size:12.5px;font-weight:700;color:var(--muted);
+  transition:all .2s;
+}
+.filter.on{background:var(--green);color:#050807;border-color:var(--green)}
+
+/* Trade file card */
+.trade{
+  position:relative;
+  background:linear-gradient(150deg,var(--card) 0%,#0B1815 100%);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:16px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:transform .25s,border-color .25s;
+}
+.trade:hover{border-color:rgba(0,255,157,.3)}
+.trade:active{transform:scale(.99)}
+.trade::before{
+  content:"";position:absolute;inset:8px;
+  border:1px dashed rgba(212,160,62,.12);border-radius:12px;
+  pointer-events:none;
+}
+.trade-head{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line);
+  margin-bottom:14px;position:relative;
+}
+.trade-id{
+  font-size:10px;color:var(--gold);letter-spacing:.15em;
+  direction:ltr;font-weight:800;margin-bottom:6px;
+}
+.trade-head h3{
+  font-size:20px;font-weight:900;letter-spacing:-.02em;line-height:1.3;
+}
+.trade-head .symbol{
+  font-size:11px;color:var(--muted);margin-top:4px;
+  direction:ltr;letter-spacing:.1em;
+}
+.trade-status{
+  flex-shrink:0;
+  padding:6px 12px;border-radius:20px;
+  font-size:10.5px;font-weight:800;
+  border:1.5px solid;
+  direction:ltr;letter-spacing:.05em;
+}
+.trade-status.win{color:var(--green);border-color:var(--green);background:rgba(0,255,157,.08)}
+.trade-status.loss{color:var(--red);border-color:var(--red);background:rgba(255,46,77,.08)}
+
+.trade-profit{
+  display:flex;align-items:baseline;justify-content:space-between;
+  margin-bottom:16px;flex-wrap:wrap;gap:8px;
+}
+.trade-profit .value{
+  font-size:28px;font-weight:900;letter-spacing:-.03em;
+  direction:ltr;
+}
+.trade-profit .value.win{color:var(--green)}
+.trade-profit .value.loss{color:var(--red)}
+.trade-profit .label{font-size:11px;color:var(--muted)}
+
+.trade-meta{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+  padding-top:14px;border-top:1px dashed var(--line);
+}
+.trade-meta-item{font-size:12px}
+.trade-meta-item .lbl{color:var(--muted);font-size:10.5px;display:block;margin-bottom:3px}
+.trade-meta-item .val{font-weight:700;color:var(--white)}
+
+.trade-footer{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:14px;padding-top:14px;border-top:1px solid var(--line);
+  font-size:11px;color:var(--muted);
+}
+.trade-footer .stamp{
+  border:1.5px solid var(--gold);color:var(--gold);
+  padding:4px 10px;border-radius:4px;
+  font-size:10px;font-weight:900;letter-spacing:.1em;
+  transform:rotate(-3deg);direction:ltr;
+}
+
+/* Modal */
+.modal-bg{
+  position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);
+  z-index:200;display:none;align-items:flex-end;justify-content:center;
+  animation:fadeIn .3s;
+}
+.modal-bg.on{display:flex}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{
+  background:var(--card);border-radius:24px 24px 0 0;
+  width:100%;max-width:640px;max-height:92vh;
+  display:flex;flex-direction:column;
+  animation:slideUp .4s cubic-bezier(.25,.8,.4,1);
+}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.modal-head{
+  padding:20px 20px 16px;border-bottom:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;
+  position:sticky;top:0;background:var(--card);border-radius:24px 24px 0 0;
+  z-index:10;
+}
+.modal-head h2{font-size:19px;font-weight:900;letter-spacing:-.02em;direction:ltr}
+.modal-close{
+  width:36px;height:36px;border-radius:50%;border:1px solid var(--line);
+  display:grid;place-items:center;font-size:18px;color:var(--muted);
+}
+.modal-body{flex:1;overflow-y:auto;padding:20px;-webkit-overflow-scrolling:touch}
+
+.modal-section{margin-bottom:22px}
+.modal-section h4{
+  font-size:11px;color:var(--gold);letter-spacing:.2em;font-weight:800;
+  direction:ltr;margin-bottom:10px;text-transform:uppercase;
+}
+.modal-section p{font-size:14px;line-height:2.1;color:var(--white);opacity:.9}
+.modal-section p b{color:var(--green);font-weight:800}
+
+.modal-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;
+}
+.modal-grid-item{
+  background:#ffffff05;border:1px solid var(--line);
+  border-radius:12px;padding:14px;
+}
+.modal-grid-item .lbl{font-size:10.5px;color:var(--muted);margin-bottom:6px}
+.modal-grid-item .val{font-size:17px;font-weight:900;letter-spacing:-.02em}
+.modal-grid-item .val.win{color:var(--green)}
+.modal-grid-item .val.loss{color:var(--red)}
+.modal-grid-item .val.gold{color:var(--gold)}
+
+.lesson-box{
+  background:linear-gradient(150deg,rgba(0,255,157,.08),rgba(212,160,62,.05));
+  border:1px solid rgba(0,255,157,.25);
+  border-radius:16px;padding:18px;margin-top:10px;
+}
+.lesson-box .lbl{
+  font-size:10.5px;color:var(--green);font-weight:800;
+  letter-spacing:.15em;direction:ltr;margin-bottom:8px;
+}
+.lesson-box p{font-size:14.5px;line-height:2;font-weight:600}
+
+.cta-in-modal{
+  margin-top:24px;padding-top:20px;border-top:1px solid var(--line);
+  text-align:center;
+}
+.cta-in-modal h4{
+  font-size:15px;font-weight:800;margin-bottom:8px;
+  letter-spacing:-.01em;
+}
+.cta-in-modal p{font-size:12px;color:var(--muted);line-height:1.9;margin-bottom:16px}
+.cta-in-modal a{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:15px;background:var(--green);color:#050807;
+  border-radius:14px;font-weight:900;font-size:14px;
+  transition:transform .2s;
+}
+.cta-in-modal a:active{transform:scale(.97)}
+.cta-in-modal .resp{font-size:10.5px;color:#667670;margin-top:10px}
+
+/* Bottom CTA */
+.bottom-cta{
+  margin-top:36px;padding:26px;border-radius:22px;
+  background:linear-gradient(160deg,rgba(0,255,157,.08),transparent);
+  border:1px solid rgba(0,255,157,.3);text-align:center;
+}
+.bottom-cta h3{font-size:18px;font-weight:900;margin-bottom:8px;letter-spacing:-.02em}
+.bottom-cta p{font-size:13px;color:var(--muted);line-height:1.9;margin-bottom:18px}
+.bottom-cta a{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:15px;background:var(--green);color:#050807;
+  border-radius:14px;font-weight:900;font-size:14px;
+}
+.bottom-cta .resp{font-size:11px;color:#667670;margin-top:10px}
+
+.footer{text-align:center;padding:30px 0 10px;font-size:11px;color:var(--muted);line-height:1.9}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="logo"><b>M</b><span>METATYA / FILES</span></div>
+    <a href="index.html" class="back-link">← خانه</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="hero">
+    <div class="kicker">CASE FILES / REAL TRADES</div>
+    <h1>پرونده‌های <span>واقعی</span><br>معاملات من</h1>
+    <p>این‌ها پز نیستن. هر کدوم یه درس داره. حتی ضررها. چون معامله‌گر واقعی، از اشتباهاتش درس می‌گیره.</p>
+    
+    <div class="stats-row">
+      <div class="stat-box"><b>+۱۰۰</b><span>معامله</span></div>
+      <div class="stat-box"><b>۳۰۵M</b><span>سود خالص</span></div>
+      <div class="stat-box"><b>۱۰۲</b><span>نماد</span></div>
+    </div>
+  </div>
+
+  <div class="filters" id="filters">
+    <button class="filter on" data-filter="all">همه</button>
+    <button class="filter" data-filter="win">سودآور</button>
+    <button class="filter" data-filter="loss">درس‌آموز</button>
+    <button class="filter" data-filter="recent">اخیر</button>
+  </div>
+
+  <div id="tradesList"></div>
+
+  <div class="bottom-cta">
+    <h3>دفترچه‌ای که این پرونده‌ها رو ساخت</h3>
+    <p>بیش از ۱۰۰۰ فرمول + داشبورد آماری + راهنمای مدیریت ریسک. دقیقاً همون چیزی که این معاملات رو قابل بررسی کرد.</p>
+    <a href="https://t.me/maytya?direct" target="_blank" rel="noopener">📩 استعلام قیمت در تلگرام</a>
+    <p class="resp">💬 پاسخ در کمتر از ۱ ساعت</p>
+  </div>
+
+  <p class="footer">
+    Metatya Files · نمونه‌های واقعی از حساب بورس ایران<br>
+    این محتوا آموزشی است و توصیه‌ی خرید یا فروش نیست.
+  </p>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="modalTitle">—</h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+/* ══════ TRADE DATA ══════ */
+const TRADES = [
+  {
+    id: 'PTL-001',
+    symbol: 'پترول',
+    symbol_en: 'PETROL',
+    date: '۱۴۰۵/۰۴/۱۷',
+    status: 'win',
+    profit: '+۱۶۶,۱۶۸,۷۸۶',
+    profitFormatted: '+۱۶۶ میلیون',
+    percent: '+۵۱.۵٪',
+    entry: '۳,۲۰۰ ریال',
+    exit: '۴,۸۵۰ ریال',
+    duration: '~۲ ماه',
+    risk: '۷.۸٪',
+    rr: '۱:۳',
+    why: 'پترول بعد از ۳ ماه مقاومت رو با حجم بالا شکست. گزارش ۳ ماهه بهتر از انتظار بود. بورس بعد از اصلاح ۳ ماهه وارد فاز صعودی شده بود.',
+    exit_reason: 'به هدف دوم رسیدم. حجم خریداران کم شده بود. RSI وارد اشباع خرید شد.',
+    lesson: 'وقتی تحلیل قویه، کمی ریسک بیشتر هم قابل قبوله. ولی همیشه حد ضرر داشته باش.',
+    filter: ['win', 'recent']
+  },
+  {
+    id: 'SHP-001',
+    symbol: 'شپنا',
+    symbol_en: 'SHAPNA',
+    date: '۱۴۰۵/۰۴/۱۷',
+    status: 'win',
+    profit: '+۱۶,۹۷۷,۴۸۷',
+    profitFormatted: '+۱۶.۹ میلیون',
+    percent: '+۱۹٪',
+    entry: '—',
+    exit: '—',
+    duration: '~۲ هفته',
+    risk: '۴٪',
+    rr: '۱:۲',
+    why: 'شپنا به یه حمایت قوی رسیده بود و RSI واگرایی مثبت نشون می‌داد. همون روزی که پترول رو فروختم، شپنا هم به هدفم رسید.',
+    exit_reason: 'به هدف کوتاه‌مدت (۱۵٪ سود) رسیدم. پوزیشن رو بستم تا سرمایه‌ی جدید آزاد کنم.',
+    lesson: 'نوسان‌گیری به انضباط نیاز داره. اگه به هدفت رسیدی، ببند. طمع نکن.',
+    filter: ['win', 'recent']
+  },
+  {
+    id: 'BRK-001',
+    symbol: 'برکت',
+    symbol_en: 'BARAKAT',
+    date: '۱۴۰۵/۰۵/۲۴',
+    status: 'win',
+    profit: '+۴۹,۲۴۳,۶۶۴',
+    profitFormatted: '+۴۹ میلیون',
+    percent: '+۳۰٪',
+    entry: '—',
+    exit: '—',
+    duration: '~۳ ماه',
+    risk: '۵٪',
+    rr: '۱:۲.۵',
+    why: 'برکت یه سهم بنیادی قوی با P/E پایین بود. محصولات صادراتی داشت و گزارش‌های مالی رشد پیوسته نشون می‌داد.',
+    exit_reason: 'به هدف قیمتی رسیدم و بازار داشت کم‌حجم می‌شد.',
+    lesson: 'سهم‌های دارویی، توی بازارهای منفی، مقاوم‌ترن. برای تنوع پورتفوی، عالی‌ان.',
+    filter: ['win', 'recent']
+  },
+  {
+    id: 'SHT-001',
+    symbol: 'شستا',
+    symbol_en: 'SHASTA',
+    date: '۱۴۰۲/۰۶/۲۹',
+    status: 'win',
+    profit: '+۶۵,۰۹۱,۰۸۶',
+    profitFormatted: '+۶۵ میلیون',
+    percent: '+۴۰٪',
+    entry: '—',
+    exit: '—',
+    duration: '~۴ ماه',
+    risk: '۶٪',
+    rr: '۱:۲',
+    why: 'شستا یکی از بزرگ‌ترین هلدینگ‌های ایرانه. پورتفوی متنوع از شرکت‌های بورسی داشت و بنیادی قوی بود.',
+    exit_reason: 'استراتژی خرید پله‌ای در ۳ مرحله جواب داد. بعد از رسیدن به هدف خارج شدم.',
+    lesson: 'سهم‌های هلدینگی، ریسک کمتری دارن. برای سرمایه‌گذاری بلندمدت، عالی‌ان.',
+    filter: ['win']
+  },
+  {
+    id: 'DR1-001',
+    symbol: 'دارا یکم',
+    symbol_en: 'DARA 1',
+    date: '۱۳۹۹/۰۸/۱۷',
+    status: 'win',
+    profit: '+۲۵,۱۸۵,۶۹۸',
+    profitFormatted: '+۲۵ میلیون',
+    percent: '+۳۰٪',
+    entry: '—',
+    exit: '—',
+    duration: '~۴ ماه',
+    risk: '—',
+    rr: '—',
+    why: 'دارا یکم اولین ETF دولتی ایران بود. توی مرداد ۱۳۹۹ عرضه شد و من توی عرضه‌ی اولیه شرکت کردم.',
+    exit_reason: 'به سودم رسیدم. بازار داشت فروکش می‌کرد. تصمیم گرفتم خارج بشم.',
+    lesson: 'عرضه‌های اولیه فرصت‌های طلایی هستن. ولی سریع سود کن، طمع نکن.',
+    filter: ['win']
+  },
+  {
+    id: 'BJH-001',
+    symbol: 'بجهرم',
+    symbol_en: 'BOJAHROM',
+    date: '۱۳۹۹/۰۸/۱۷',
+    status: 'win',
+    profit: '+۲۳,۷۷۸,۹۲۹',
+    profitFormatted: '+۲۳.۷ میلیون',
+    percent: '+۲۸٪',
+    entry: '—',
+    exit: '—',
+    duration: '—',
+    risk: '—',
+    rr: '—',
+    why: 'بجهرم توی موج صعودی بازار ۱۳۹۹ بود. تحلیل تکنیکال نشون می‌داد سهم توی مسیر صعودی قرار داره.',
+    exit_reason: 'به هدف رسیدم.',
+    lesson: 'موج‌های صعودی رو باید شناخت، ولی طمع نکرد.',
+    filter: ['win']
+  },
+  {
+    id: 'SBA-001',
+    symbol: 'صبا',
+    symbol_en: 'SABA',
+    date: '۱۳۹۹/۰۴/۱۵',
+    status: 'win',
+    profit: '+۲۰,۰۷۰,۲۸۶',
+    profitFormatted: '+۲۰ میلیون',
+    percent: '+۲۵٪',
+    entry: '—',
+    exit: '—',
+    duration: '—',
+    risk: '—',
+    rr: '—',
+    why: 'صبا توی موج اول بازار ۱۳۹۹ انتخاب شد. بنیادی قوی و تحلیل تکنیکال مناسب داشت.',
+    exit_reason: 'به هدف رسیدم.',
+    lesson: 'وقتی بازار داغه، انضباط مهم‌تر از تحلیل می‌شه.',
+    filter: ['win']
+  },
+  {
+    id: 'KRK-001',
+    symbol: 'خریخت',
+    symbol_en: 'KHARIKHT',
+    date: '۱۳۹۹/۰۱/۱۷',
+    status: 'win',
+    profit: '+۱۹,۹۰۲,۰۵۹',
+    profitFormatted: '+۱۹.۹ میلیون',
+    percent: '+۲۲٪',
+    entry: '—',
+    exit: '—',
+    duration: '—',
+    risk: '—',
+    rr: '—',
+    why: 'خریخت اوایل سال ۱۳۹۹ انتخاب شد. بازار تازه در حال رشد بود.',
+    exit_reason: 'به هدف رسیدم.',
+    lesson: 'ابتدای روند، بهترین زمان ورود است. انتهای روند، بدترین.',
+    filter: ['win']
+  },
+  {
+    id: 'KHS-001',
+    symbol: 'خساپا',
+    symbol_en: 'KHESAPA',
+    date: '۱۳۹۹/۰۸/۱۷',
+    status: 'win',
+    profit: '+۱۷,۹۳۱,۰۸۲',
+    profitFormatted: '+۱۷.۹ میلیون',
+    percent: '+۲۰٪',
+    entry: '—',
+    exit: '—',
+    duration: '—',
+    risk: '—',
+    rr: '—',
+    why: 'خساپا توی موج دوم بازار ۱۳۹۹ انتخاب شد.',
+    exit_reason: 'به هدف رسیدم.',
+    lesson: 'سهم‌های پرنوسان، نیاز به مدیریت ریسک دقیق‌تر دارن.',
+    filter: ['win']
+  },
+  {
+    id: 'PTL-002',
+    symbol: 'پترول',
+    symbol_en: 'PETROL — LOSS',
+    date: '۱۳۹۹/۰۹/۲۶',
+    status: 'loss',
+    profit: '−۴۱,۸۷۱,۲۶۲',
+    profitFormatted: '−۴۱.۸ میلیون',
+    percent: '−۱۵٪',
+    entry: '—',
+    exit: '—',
+    duration: '—',
+    risk: '—',
+    rr: '—',
+    why: 'توی ۱۳۹۹ بازار بورس ایران داغ بود. همه سود می‌کردن. من هیجان‌زده شدم و بدون تحلیل، پترول خریدم. این معامله یه اشتباه بود. صادقانه می‌گم.',
+    exit_reason: 'حد ضرر نداشتم. فکر کردم قیمت برمی‌گرده. برنگشت.',
+    lesson: 'ورود بدون تحلیل، نداشتن حد ضرر، و معامله‌ی هیجانی — سه اشتباه مرگبار. این معامله بهترین معلمم بود. بعدش قانون گذاشتم: هر معامله باید حداقل ۳ دلیل داشته باشه، وگرنه وارد نشو.',
+    filter: ['loss']
+  }
+];
+
+/* ══════ RENDER ══════ */
+function renderTrades(filter = 'all'){
+  const list = document.getElementById('tradesList');
+  let filtered = TRADES;
+  if(filter !== 'all'){
+    filtered = TRADES.filter(t => t.filter.includes(filter));
+  }
+  
+  if(!filtered.length){
+    list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);font-size:13px">موردی یافت نشد.</div>';
+    return;
+  }
+  
+  list.innerHTML = filtered.map(t => {
+    const statusClass = t.status;
+    const statusText = t.status === 'win' ? 'PROFITABLE' : 'LOSS / LESSON';
+    const valueClass = t.status === 'win' ? 'win' : 'loss';
+    
+    return `
+      <div class="trade" onclick="openTrade('${t.id}')">
+        <div class="trade-head">
+          <div>
+            <div class="trade-id">${t.id} / METATYA FILE</div>
+            <h3>${t.symbol}</h3>
+            <div class="symbol">${t.symbol_en}</div>
+          </div>
+          <div class="trade-status ${statusClass}">${statusText}</div>
+        </div>
+        
+        <div class="trade-profit">
+          <div>
+            <div class="value ${valueClass}">${t.profitFormatted}</div>
+            <div class="label">سود / زیان نهایی</div>
+          </div>
+          <div style="text-align:left">
+            <div class="value ${valueClass}" style="font-size:20px">${t.percent}</div>
+            <div class="label">بازدهی</div>
+          </div>
+        </div>
+        
+        <div class="trade-meta">
+          <div class="trade-meta-item">
+            <span class="lbl">تاریخ خروج</span>
+            <span class="val">${t.date}</span>
+          </div>
+          <div class="trade-meta-item">
+            <span class="lbl">مدت نگهداری</span>
+            <span class="val">${t.duration}</span>
+          </div>
+        </div>
+        
+        <div class="trade-footer">
+          <span>👆 برای دیدن جزئیات کلیک کن</span>
+          <span class="stamp">${t.status === 'win' ? 'VERIFIED' : 'CASE STUDY'}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ══════ FILTERS ══════ */
+document.querySelectorAll('.filter').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter').forEach(f => f.classList.remove('on'));
+    btn.classList.add('on');
+    renderTrades(btn.dataset.filter);
+  });
+});
+
+/* ══════ MODAL ══════ */
+function openTrade(id){
+  const t = TRADES.find(x => x.id === id);
+  if(!t) return;
+  
+  document.getElementById('modalTitle').textContent = t.symbol + ' — ' + t.id;
+  
+  const statusText = t.status === 'win' ? 'PROFITABLE' : 'LOSS';
+  const valueClass = t.status === 'win' ? 'win' : 'loss';
+  
+  const html = `
+    <div class="modal-grid">
+      <div class="modal-grid-item">
+        <div class="lbl">سود / زیان</div>
+        <div class="val ${valueClass}">${t.profitFormatted}</div>
+      </div>
+      <div class="modal-grid-item">
+        <div class="lbl">بازدهی</div>
+        <div class="val ${valueClass}">${t.percent}</div>
+      </div>
+      <div class="modal-grid-item">
+        <div class="lbl">تاریخ خروج</div>
+        <div class="val gold">${t.date}</div>
+      </div>
+      <div class="modal-grid-item">
+        <div class="lbl">مدت نگهداری</div>
+        <div class="val">${t.duration}</div>
+      </div>
+      <div class="modal-grid-item">
+        <div class="lbl">ریسک برنامه‌ریزی‌شده</div>
+        <div class="val">${t.risk}</div>
+      </div>
+      <div class="modal-grid-item">
+        <div class="lbl">نسبت R:R</div>
+        <div class="val">${t.rr}</div>
+      </div>
+    </div>
+    
+    <div class="modal-section">
+      <h4>WHY I ENTERED</h4>
+      <p>${t.why}</p>
+    </div>
+    
+    <div class="modal-section">
+      <h4>WHY I EXITED</h4>
+      <p>${t.exit_reason}</p>
+    </div>
+    
+    <div class="lesson-box">
+      <div class="lbl">📘 THE LESSON</div>
+      <p>${t.lesson}</p>
+    </div>
+    
+    <div class="cta-in-modal">
+      <h4>این پرونده رو داری می‌بینی؟</h4>
+      <p>دفترچه معاملات PRO، دقیقاً همین ساختار رو برای هر معامله‌ت آماده می‌کنه — با محاسبات خودکار و داشبورد آماری.</p>
+      <a href="https://t.me/maytya?direct" target="_blank" rel="noopener">📩 استعلام قیمت در تلگرام</a>
+      <p class="resp">💬 پاسخ در کمتر از ۱ ساعت</p>
+    </div>
+  `;
+  
+  document.getElementById('modalBody').innerHTML = html;
+  document.getElementById('modalBg').classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(){
+  document.getElementById('modalBg').classList.remove('on');
+  document.body.style.overflow = '';
+}
+
+/* ══════ INIT ══════ */
+renderTrades('all');
+</script>
+</body>
+</html>
