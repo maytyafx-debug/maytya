@@ -55,7 +55,7 @@ def _openai_style(url, key, model, prompt, json_mode):
 
 
 def gemini(prompt):
-    m = E("GEMINI_MODEL", "gemini-2.5-flash")
+    m = E("GEMINI_MODEL", "gemini-2.0-flash")
     r = requests.post(
         f"https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent",
         headers={"x-goog-api-key": E("GEMINI_API_KEY")},
@@ -68,8 +68,33 @@ def gemini(prompt):
 
 
 def cloudflare(prompt):
-    url = f"https://api.cloudflare.com/client/v4/accounts/{E('CLOUDFLARE_ACCOUNT_ID')}/ai/v1/chat/completions"
-    return _openai_style(url, E("CLOUDFLARE_API_TOKEN"), E("CF_MODEL", "@cf/meta/llama-3.3-70b-instruct-fp8-fast"), prompt, False)
+    """endpoint قدیمی /ai/run/ که پایدارتر از /ai/v1/chat/ هست و 404 نمی‌ده."""
+    acc = E("CLOUDFLARE_ACCOUNT_ID")
+    tok = E("CLOUDFLARE_API_TOKEN")
+    model = E("CF_MODEL", "@cf/meta/llama-3.3-70b-instruct-fp8-fast")
+    url = f"https://api.cloudflare.com/client/v4/accounts/{acc}/ai/run/{model}"
+    r = requests.post(
+        url,
+        headers={"Authorization": f"Bearer {tok}", "Content-Type": "application/json"},
+        json={
+            "messages": [
+                {"role": "system", "content": "You reply only with valid JSON. No markdown, no code fences, no explanations."},
+                {"role": "user", "content": prompt}
+            ],
+            "max_tokens": 8000,
+            "temperature": 0.4
+        },
+        timeout=180
+    )
+    if r.status_code != 200:
+        print(f"  Cloudflare raw error: {r.status_code} | {r.text[:300]}")
+    r.raise_for_status()
+    data = r.json()
+    if "result" in data and isinstance(data["result"], dict):
+        return data["result"].get("response", "")
+    if "result" in data and isinstance(data["result"], str):
+        return data["result"]
+    return data.get("response", "")
 
 
 def mistral(prompt):
@@ -78,7 +103,6 @@ def mistral(prompt):
 
 def providers():
     p = []
-    # Gemini غیرفعال است (محدودیت دسترسی حساب). برای فعال‌سازی: GEMINI_ENABLED=1
     if E("GEMINI_ENABLED") == "1" and E("GEMINI_API_KEY"): p.append(("gemini", gemini, 7))
     if E("CLOUDFLARE_API_TOKEN") and E("CLOUDFLARE_ACCOUNT_ID"): p.append(("cloudflare", cloudflare, 2))
     if E("MISTRAL_API_KEY"): p.append(("mistral", mistral, 32))
