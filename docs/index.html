@@ -13,11 +13,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#050807; --card:#0E1D1A;
-  --green:#00ff9d; --red:#ff2e4d; --gold:#D4A03E;
-  --white:#EBF4F1; --muted:#8E9C95;
+  --bg:#050807;--card:#0E1D1A;
+  --green:#00ff9d;--red:#ff2e4d;--gold:#D4A03E;
+  --white:#EBF4F1;--muted:#8E9C95;
   --line:rgba(255,255,255,.08);
-  --teal:#12685B; --teal2:#1E9A85;
+  --teal:#12685B;--teal2:#1E9A85;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth;background:var(--bg);scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -43,13 +43,10 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
 /* ══════ AUTOPSY ══════ */
 .autopsy{position:relative;background:var(--bg)}
 .screen{
-  min-height:100vh;
-  min-height:100dvh;
-  display:none;
-  flex-direction:column;
+  min-height:100vh;min-height:100dvh;
+  display:none;flex-direction:column;
   padding:env(safe-area-inset-top,20px) 20px calc(20px + env(safe-area-inset-bottom,0px));
-  position:relative;
-  overflow-x:hidden;
+  position:relative;overflow-x:hidden;
 }
 .screen.active{display:flex}
 .glow{position:absolute;width:70vw;height:70vw;max-width:700px;max-height:700px;border-radius:50%;filter:blur(100px);pointer-events:none}
@@ -198,6 +195,55 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
   .product-row{grid-template-columns:1fr 1fr}
   .grid{grid-template-columns:1fr 1fr 1fr}
 }
+
+/* ══════ MODAL ══════ */
+.modal-bg{
+  position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);
+  z-index:200;display:none;align-items:flex-end;justify-content:center;
+  animation:fadeIn .3s;
+}
+.modal-bg.on{display:flex}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{
+  background:var(--card);border-radius:24px 24px 0 0;
+  width:100%;max-width:560px;max-height:90vh;
+  display:flex;flex-direction:column;
+  animation:slideUp .4s cubic-bezier(.25,.8,.4,1);
+}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.modal-head{
+  padding:20px 20px 16px;border-bottom:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;
+  position:sticky;top:0;background:var(--card);border-radius:24px 24px 0 0;
+}
+.modal-head h2{font-size:19px;font-weight:900;letter-spacing:-.02em}
+.modal-close{
+  width:36px;height:36px;border-radius:50%;border:1px solid var(--line);
+  display:grid;place-items:center;font-size:18px;color:var(--muted);
+}
+.modal-body{flex:1;overflow-y:auto;padding:20px;-webkit-overflow-scrolling:touch}
+.modal-tabs{
+  display:flex;gap:8px;overflow-x:auto;padding-bottom:14px;
+  margin-bottom:16px;border-bottom:1px solid var(--line);
+  scrollbar-width:none;
+}
+.modal-tabs::-webkit-scrollbar{display:none}
+.modal-tab{
+  flex:0 0 auto;padding:8px 16px;border-radius:20px;
+  background:#ffffff06;border:1px solid var(--line);
+  font-size:12.5px;font-weight:700;color:var(--muted);
+}
+.modal-tab.on{background:var(--green);color:#050807;border-color:var(--green)}
+.modal-item{
+  background:#ffffff04;border:1px solid var(--line);
+  border-radius:16px;padding:18px;margin-bottom:14px;
+}
+.modal-item h3{font-size:16px;font-weight:900;margin-bottom:10px;line-height:1.6}
+.modal-item p{font-size:13.5px;line-height:2.1;color:var(--muted);margin-bottom:12px}
+.modal-item .meta{font-size:11px;color:#667670;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.modal-item .src{font-size:11.5px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.modal-item .src a{color:var(--green);margin-left:12px;text-decoration:none}
+.modal-loading{text-align:center;padding:40px 20px;color:var(--muted);font-size:13px}
 </style>
 </head>
 <body>
@@ -305,9 +351,9 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
   <div class="container">
     <h2 class="section-head">بازارها</h2>
     <div class="grid markets">
-      <div class="card"><div class="icon">💱</div><div class="name">فارکس</div><div class="desc">تکنیکال، فاندامنتال، روان‌شناسی</div></div>
-      <div class="card"><div class="icon">₿</div><div class="name">کریپتوکارنسی</div><div class="desc">آنچین، آموزش کیف‌پول</div></div>
-      <div class="card"><div class="icon">📈</div><div class="name">بورس ایران</div><div class="desc">تابلوخوانی، بنیادی</div></div>
+      <div class="card" onclick="openSection('فارکس')"><div class="icon">💱</div><div class="name">فارکس</div><div class="desc">تکنیکال، فاندامنتال، روان‌شناسی</div></div>
+      <div class="card" onclick="openSection('کریپتوکارنسی')"><div class="icon">₿</div><div class="name">کریپتوکارنسی</div><div class="desc">آنچین، آموزش کیف‌پول</div></div>
+      <div class="card" onclick="openSection('بورس ایران')"><div class="icon">📈</div><div class="name">بورس ایران</div><div class="desc">تابلوخوانی، بنیادی</div></div>
     </div>
   </div>
 </section>
@@ -316,10 +362,10 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
   <div class="container">
     <h2 class="section-head">رشد فردی و مالی</h2>
     <div class="grid">
-      <div class="card"><div class="icon">💰</div><div class="name">کسب درآمد</div><div class="desc">آنلاین و آفلاین</div></div>
-      <div class="card"><div class="icon">🧩</div><div class="name">کسب‌وکار</div><div class="desc">راه‌اندازی و مدیریت</div></div>
-      <div class="card"><div class="icon">🏦</div><div class="name">مالی شخصی</div><div class="desc">بودجه، پس‌انداز</div></div>
-      <div class="card"><div class="icon">🎓</div><div class="name">تحصیل و پژوهش</div><div class="desc">مهارت تحقیق</div></div>
+      <div class="card" onclick="openSection('کسب درآمد')"><div class="icon">💰</div><div class="name">کسب درآمد</div><div class="desc">آنلاین و آفلاین</div></div>
+      <div class="card" onclick="openSection('کسب‌وکار')"><div class="icon">🧩</div><div class="name">کسب‌وکار</div><div class="desc">راه‌اندازی و مدیریت</div></div>
+      <div class="card" onclick="openSection('مالی شخصی')"><div class="icon">🏦</div><div class="name">مالی شخصی</div><div class="desc">بودجه، پس‌انداز</div></div>
+      <div class="card" onclick="openSection('تحصیل و پژوهش')"><div class="icon">🎓</div><div class="name">تحصیل و پژوهش</div><div class="desc">مهارت تحقیق</div></div>
     </div>
   </div>
 </section>
@@ -328,11 +374,24 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
   <div class="container">
     <h2 class="section-head">سلامت جسم و ذهن</h2>
     <div class="grid">
-      <div class="card"><div class="icon">🏋️</div><div class="name">ورزشی</div><div class="desc">تمرین، تغذیه</div></div>
-      <div class="card"><div class="icon">🧠</div><div class="name">روان‌شناسی</div><div class="desc">ذهنی، معامله‌گری</div></div>
-      <div class="card"><div class="icon">➕</div><div class="name">سلامت</div><div class="desc">سبک زندگی</div></div>
-      <div class="card"><div class="icon">⚖️</div><div class="name">حقوق</div><div class="desc">حقوق کاربردی</div></div>
+      <div class="card" onclick="openSection('ورزشی')"><div class="icon">🏋️</div><div class="name">ورزشی</div><div class="desc">تمرین، تغذیه</div></div>
+      <div class="card" onclick="openSection('روان‌شناسی')"><div class="icon">🧠</div><div class="name">روان‌شناسی</div><div class="desc">ذهنی، معامله‌گری</div></div>
+      <div class="card" onclick="openSection('سلامت')"><div class="icon">➕</div><div class="name">سلامت</div><div class="desc">سبک زندگی</div></div>
+      <div class="card" onclick="openSection('حقوق')"><div class="icon">⚖️</div><div class="name">حقوق</div><div class="desc">حقوق کاربردی</div></div>
     </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="section-head">ابزارهای رایگان</h2>
+    <a href="toolbox.html" style="display:block;text-decoration:none;background:linear-gradient(160deg,var(--card),rgba(212,160,62,.1));border:1px solid rgba(212,160,62,.4);border-radius:20px;padding:22px;color:var(--white)">
+      <div style="font-size:28px;margin-bottom:10px">🧰</div>
+      <div style="font-size:10.5px;color:var(--gold);font-weight:800;letter-spacing:.06em;margin-bottom:6px">جعبه‌ابزار Metatya</div>
+      <h3 style="font-size:18px;font-weight:900;margin-bottom:6px">۵ ماشین‌حساب معامله‌گری</h3>
+      <p style="font-size:13px;color:var(--muted);line-height:1.9;margin-bottom:12px">حجم پوزیشن، R:R، Expectancy، هزینه احساسات، و ریسک ورشکستگی. کاملاً رایگان.</p>
+      <div style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:var(--green);color:#050807;border-radius:12px;font-weight:900;font-size:14px">باز کن ← </div>
+    </a>
   </div>
 </section>
 
@@ -418,9 +477,22 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
   <a href="https://t.me/maytya?direct" target="_blank" rel="noopener"><span>💬</span>تلگرام</a>
 </nav>
 
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="modalTitle">—</h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
 <script>
+/* ══════ STATE ══════ */
 const state = { symbol:'', result:'', feeling:'', why:'', stop:'', rr:'', size:'' };
 
+/* ══════ NAVIGATION ══════ */
 function goTo(id){
   if(id === 's3'){
     state.symbol = document.getElementById('f-symbol').value.trim() || '—';
@@ -432,7 +504,6 @@ function goTo(id){
   const num = parseInt(id.replace('s',''));
   document.getElementById('pbarFill').style.width = (num / 4 * 100) + '%';
 }
-
 function skipToMain(){
   document.getElementById('autopsy').style.display = 'none';
   document.getElementById('mainSite').style.display = 'block';
@@ -440,16 +511,15 @@ function skipToMain(){
   document.getElementById('pbarFill').style.width = '100%';
   window.scrollTo(0,0);
 }
-
 function showMainSite(){
   document.getElementById('autopsy').style.display = 'none';
   document.getElementById('mainSite').style.display = 'block';
   document.getElementById('bottomNav').style.display = 'flex';
   window.scrollTo(0,0);
 }
-
 function scrollToTop(){ window.scrollTo({top:0, behavior:'smooth'}); }
 
+/* ══════ FEELING CHIPS ══════ */
 document.querySelectorAll('#feelingChips .chip').forEach(chip => {
   chip.addEventListener('click', () => {
     document.querySelectorAll('#feelingChips .chip').forEach(c => c.classList.remove('on'));
@@ -458,6 +528,7 @@ document.querySelectorAll('#feelingChips .chip').forEach(chip => {
   });
 });
 
+/* ══════ ANALYSIS ══════ */
 function runAnalysis(){
   state.why = document.getElementById('f-why').value.trim();
   state.stop = document.getElementById('f-stop').value.trim();
@@ -559,6 +630,7 @@ function resetAll(){
   goTo('s1');
 }
 
+/* ══════ NEWSLETTER ══════ */
 function submitNewsletter(){
   const email = document.getElementById('nl-email').value.trim();
   const consent = document.getElementById('nl-consent').checked;
@@ -567,6 +639,104 @@ function submitNewsletter(){
   if(!consent){ msg.style.color='#ff2e4d'; msg.textContent='تیک موافقت رو بزن.'; return; }
   msg.style.color='var(--green)';
   msg.textContent='ثبت شد ✅ ممنون!';
+}
+
+/* ══════ MODAL DETAIL ══════ */
+let CONTENT_DATA = null;
+
+async function loadContent(){
+  if(CONTENT_DATA) return CONTENT_DATA;
+  try{
+    const r = await fetch('content.json');
+    if(r.ok) CONTENT_DATA = await r.json();
+  }catch(e){}
+  return CONTENT_DATA;
+}
+
+const SECTION_MAP = {
+  'فارکس': 'forex',
+  'کریپتوکارنسی': 'crypto',
+  'بورس ایران': 'bourse',
+  'کسب درآمد': 'income',
+  'کسب‌وکار': 'business',
+  'مالی شخصی': 'finance',
+  'تحصیل و پژوهش': 'education',
+  'ورزشی': 'sport',
+  'روان‌شناسی': 'psychology',
+  'سلامت': 'health',
+  'حقوق': 'law'
+};
+
+async function openSection(name){
+  const modal = document.getElementById('modalBg');
+  const title = document.getElementById('modalTitle');
+  const body = document.getElementById('modalBody');
+  title.textContent = name;
+  body.innerHTML = '<div class="modal-loading">در حال بارگذاری...</div>';
+  modal.classList.add('on');
+  document.body.style.overflow = 'hidden';
+
+  const data = await loadContent();
+  const key = SECTION_MAP[name];
+
+  if(!data || !data.sections || !data.sections[key]){
+    body.innerHTML = '<div class="modal-loading">محتوایی برای این بخش در دسترس نیست.</div>';
+    return;
+  }
+
+  const sec = data.sections[key];
+  const items = sec.items || [];
+  const tabs = [...new Set(items.map(i => i.tab))];
+
+  let html = '';
+  if(tabs.length > 0){
+    html += '<div class="modal-tabs">';
+    tabs.forEach((t, i) => {
+      html += `<button class="modal-tab${i===0?' on':''}" onclick="filterTab(this,'${t.replace(/'/g,"\\'")}')">${t}</button>`;
+    });
+    html += '</div>';
+  }
+
+  html += '<div id="modalItems">';
+  html += renderItems(items, tabs[0]);
+  html += '</div>';
+  body.innerHTML = html;
+}
+
+function renderItems(items, tab){
+  const filtered = items.filter(i => i.tab === tab).slice(0, 10);
+  if(!filtered.length) return '<div class="modal-loading">محتوایی برای این تب نیست.</div>';
+  return filtered.map(i => {
+    const srcs = (i.sources || []).slice(0, 3).map((u, n) =>
+      `<a href="${u}" target="_blank" rel="noopener">منبع ${n+1}</a>`
+    ).join('');
+    return `
+      <div class="modal-item">
+        <h3>${i.title}</h3>
+        <p>${i.body}</p>
+        <div class="meta">
+          <span>📅 ${i.date || ''}</span>
+          <span>🏷️ ${i.tab || ''}</span>
+        </div>
+        ${srcs ? `<div class="src">${srcs}</div>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+function filterTab(btn, tab){
+  document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('on'));
+  btn.classList.add('on');
+  const data = CONTENT_DATA;
+  const name = document.getElementById('modalTitle').textContent;
+  const key = SECTION_MAP[name];
+  const items = data.sections[key].items || [];
+  document.getElementById('modalItems').innerHTML = renderItems(items, tab);
+}
+
+function closeModal(){
+  document.getElementById('modalBg').classList.remove('on');
+  document.body.style.overflow = '';
 }
 </script>
 </body>
