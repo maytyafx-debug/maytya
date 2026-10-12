@@ -1,6 +1,8 @@
 """تولید روزانه محتوای همه حوزه‌ها -> docs/content.json   (فقط سرویس‌های رایگان)
-ارائه‌دهنده فعال: Mistral  (MISTRAL_API_KEY)
-Gemini و Cloudflare غیرفعال هستند چون از GitHub Actions بلاک می‌شوند.
+زنجیره ارائه‌دهنده (اولین کلید موجود اول، در صورت خطا یا خروجی بی‌کیفیت نفر بعدی):
+  1) Google Gemini  GEMINI_API_KEY   (بهترین فارسی)
+  2) Cloudflare     CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID
+  3) Mistral        MISTRAL_API_KEY
 بازارها: تیتر خبرهای روز از RSS رایگان؛ مدل فقط بر پایه همان‌ها می‌نویسد.
 دروازه کیفیت: ساختار، زبان فارسی، طول، عبارت‌های ممنوع؛ هشدار ریسک همیشه با کد اضافه می‌شود."""
 import os, sys, json, re, time, datetime
@@ -43,27 +45,43 @@ PROMPT = """امروز {today} است. برای بخش «{name}» یک سایت 
 فقط JSON خالص برگردان: {{"items":[{{"tab":"...","title":"...","body":"...","short_script":["...","...","..."]}}]}}"""
 
 
-# ---------- ارائه‌دهنده ----------
-def mistral(prompt):
-    url = "https://api.mistral.ai/v1/chat/completions"
-    body = {
-        "model": E("MISTRAL_MODEL", "mistral-small-latest"),
-        "temperature": 0.4,
-        "max_tokens": 8000,
-        "response_format": {"type": "json_object"},
-        "messages": [{"role": "user", "content": prompt}]
-    }
-    r = requests.post(url, headers={"Authorization": "Bearer " + E("MISTRAL_API_KEY"), "Content-Type": "application/json"}, json=body, timeout=180)
-    if r.status_code != 200:
-        print(f"  Mistral raw error: {r.status_code} | {r.text[:300]}")
+# ---------- ارائه‌دهنده‌ها ----------
+def _openai_style(url, key, model, prompt, json_mode):
+    body = {"model": model, "temperature": 0.4, "max_tokens": 8000, "messages": [{"role": "user", "content": prompt}]}
+    if json_mode: body["response_format"] = {"type": "json_object"}
+    r = requests.post(url, headers={"Authorization": "Bearer " + key}, json=body, timeout=120)
     r.raise_for_status()
     return r.json()["choices"][0]["message"]["content"]
 
 
+def gemini(prompt):
+    m = E("GEMINI_MODEL", "gemini-2.5-flash")
+    r = requests.post(
+        f"https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent",
+        headers={"x-goog-api-key": E("GEMINI_API_KEY")},
+        json={"contents": [{"parts": [{"text": prompt}]}],
+              "generationConfig": {"temperature": 0.4, "responseMimeType": "application/json"}},
+        timeout=120
+    )
+    r.raise_for_status()
+    return "".join(p.get("text", "") for p in r.json()["candidates"][0]["content"]["parts"])
+
+
+def cloudflare(prompt):
+    url = f"https://api.cloudflare.com/client/v4/accounts/{E('CLOUDFLARE_ACCOUNT_ID')}/ai/v1/chat/completions"
+    return _openai_style(url, E("CLOUDFLARE_API_TOKEN"), E("CF_MODEL", "@cf/meta/llama-3.3-70b-instruct-fp8-fast"), prompt, False)
+
+
+def mistral(prompt):
+    return _openai_style("https://api.mistral.ai/v1/chat/completions", E("MISTRAL_API_KEY"), E("MISTRAL_MODEL", "mistral-small-latest"), prompt, True)
+
+
 def providers():
     p = []
-    if E("MISTRAL_API_KEY"):
-        p.append(("mistral", mistral, 32))  # ۳۲ ثانیه بین درخواست‌ها (سهمیه رایگان)
+    # Gemini غیرفعال است (محدودیت دسترسی حساب). برای فعال‌سازی: GEMINI_ENABLED=1
+    if E("GEMINI_ENABLED") == "1" and E("GEMINI_API_KEY"): p.append(("gemini", gemini, 7))
+    if E("CLOUDFLARE_API_TOKEN") and E("CLOUDFLARE_ACCOUNT_ID"): p.append(("cloudflare", cloudflare, 2))
+    if E("MISTRAL_API_KEY"): p.append(("mistral", mistral, 32))
     return p
 
 
@@ -120,38 +138,29 @@ def ask(key, name, tabs, old_titles, provs):
     err = []
     for pname, fn, _ in provs:
         if pname in DEAD: continue
-        for attempt in range(3):
+        for attempt in range(2):
             try:
                 txt = fn(prompt)
-                m = re.search(r"\{.*\}", txt, re.S)
-                if not m: raise ValueError("JSON در پاسخ پیدا نشد")
-                items = clean(json.loads(m.group(0))["items"], tabs, key)
+                items = clean(json.loads(re.search(r"\{.*\}", txt, re.S).group(0))["items"], tabs, key)
                 for it in items: it["sources"] = srcs
                 return items, pname
             except requests.HTTPError as e:
                 err.append(f"{pname}:{e.response.status_code}")
-                if e.response.status_code == 429:
-                    wait = 30 * (attempt + 1)
-                    print(f"  Mistral rate limit — صبر {wait} ثانیه...")
-                    time.sleep(wait)
-                    continue
-                if e.response.status_code in (401, 403):
-                    FAILS[pname] = FAILS.get(pname, 0) + 1
-                    if FAILS.get(pname, 0) >= 1:
-                        DEAD.add(pname)
-                        print(f"  {pname} غیرفعال شد (کلید اشتباه)")
-                    break
-                time.sleep(5)
+                if e.response.status_code in (401, 403, 429): FAILS[pname] = FAILS.get(pname, 0) + 1
+                if FAILS.get(pname, 0) >= 2:
+                    DEAD.add(pname)
+                    print(f"  {pname} در این اجرا کنار گذاشته شد (سهمیه/کلید)")
+                time.sleep(20 if e.response.status_code == 429 else 1)
+                if e.response.status_code != 429: break
             except Exception as e:
-                err.append(f"{pname}:{str(e)[:60]}")
-                time.sleep(5)
+                err.append(f"{pname}:{str(e)[:40]}")
     raise RuntimeError("همه ارائه‌دهنده‌ها شکست خوردند: " + " | ".join(err))
 
 
 def main():
     provs = providers()
     if not DRY and not provs:
-        sys.exit("MISTRAL_API_KEY تنظیم نشده")
+        sys.exit("هیچ کلیدی تنظیم نشده: GEMINI_API_KEY یا CLOUDFLARE_* یا MISTRAL_API_KEY")
     pause = min((p[2] for p in provs), default=0)
     old = {}
     if os.path.exists(OUT):
