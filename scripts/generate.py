@@ -45,7 +45,7 @@ PROMPT = """امروز {today} است. برای بخش «{name}» یک سایت 
 # ---------- ارائه‌دهنده: OpenRouter ----------
 def openrouter(prompt):
     key = E("OPENROUTER_API_KEY")
-    model = E("OR_MODEL", "meta-llama/llama-3.3-70b-instruct:free")
+    model = E("OR_MODEL", "nvidia/nemotron-3.5-super-vl:free")
     url = "https://openrouter.ai/api/v1/chat/completions"
     body = {
         "model": model,
@@ -71,7 +71,7 @@ def openrouter(prompt):
     if r.status_code != 200:
         print(f"  OpenRouter raw error: {r.status_code} | {r.text[:300]}")
     r.raise_for_status()
-    return r.json()["choices"][0]["message"]["content"]
+    return r.json()["choices"][0]["message"].get("content") or ""
 
 
 def providers():
