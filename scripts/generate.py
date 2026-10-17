@@ -42,36 +42,61 @@ PROMPT = """امروز {today} است. برای بخش «{name}» یک سایت 
 فقط JSON خالص برگردان: {{"items":[{{"tab":"...","title":"...","body":"...","short_script":["...","...","..."]}}]}}"""
 
 
-# ---------- ارائه‌دهنده: OpenRouter ----------
+# ---------- ارائه‌دهنده: OpenRouter (با جایگزینی خودکار مدل) ----------
+# لیست مدل‌های رایگان به ترتیب اولویت. اگر یکی خطا داد یا پولی/ناموجود شد، مدل بعدی امتحان می‌شود.
+# می‌توانی با متغیر OR_MODELS (جداشده با ویرگول) این لیست را از بیرون عوض کنی.
+OR_MODELS_DEFAULT = "nvidia/nemotron-3.5-super-vl:free,google/gemma-3-27b-it:free,openai/gpt-oss-20b:free"
+
+
+def or_models():
+    return [m.strip() for m in E("OR_MODELS", OR_MODELS_DEFAULT).split(",") if m.strip()]
+
+
 def openrouter(prompt):
     key = E("OPENROUTER_API_KEY")
-    model = E("OR_MODEL", "nvidia/nemotron-3.5-super-vl:free")
     url = "https://openrouter.ai/api/v1/chat/completions"
-    body = {
-        "model": model,
-        "temperature": 0.4,
-        "max_tokens": 8000,
-        "response_format": {"type": "json_object"},
-        "messages": [
-            {"role": "system", "content": "You reply only with valid JSON. No markdown, no code fences."},
-            {"role": "user", "content": prompt}
-        ]
-    }
-    r = requests.post(
-        url,
-        headers={
-            "Authorization": f"Bearer {key}",
-            "Content-Type": "application/json",
-            "HTTP-Referer": "https://maytyafx-debug.github.io/maytya/",
-            "X-Title": "Metatya"
-        },
-        json=body,
-        timeout=180
-    )
-    if r.status_code != 200:
-        print(f"  OpenRouter raw error: {r.status_code} | {r.text[:300]}")
-    r.raise_for_status()
-    return r.json()["choices"][0]["message"].get("content") or ""
+    last = ""
+    for model in or_models():
+        body = {
+            "model": model,
+            "temperature": 0.4,
+            "max_tokens": 8000,
+            "response_format": {"type": "json_object"},
+            "messages": [
+                {"role": "system", "content": "You reply only with valid JSON. No markdown, no code fences."},
+                {"role": "user", "content": prompt}
+            ]
+        }
+        try:
+            r = requests.post(
+                url,
+                headers={
+                    "Authorization": f"Bearer {key}",
+                    "Content-Type": "application/json",
+                    "HTTP-Referer": "https://maytyafx-debug.github.io/maytya/",
+                    "X-Title": "Metatya"
+                },
+                json=body,
+                timeout=180
+            )
+        except requests.RequestException as e:
+            last = f"{model}:{str(e)[:60]}"
+            print(f"  {model} ارتباط ناموفق — مدل بعدی")
+            continue
+        if r.status_code in (401, 403):
+            # مشکل از کلید است؛ با تغییر مدل حل نمی‌شود
+            r.raise_for_status()
+        if r.status_code != 200:
+            last = f"{model}:{r.status_code}"
+            print(f"  {model} خطای {r.status_code} — مدل بعدی | {r.text[:120]}")
+            continue
+        content = r.json()["choices"][0]["message"].get("content") or ""
+        if not content.strip():
+            last = f"{model}:empty"
+            print(f"  {model} پاسخ خالی — مدل بعدی")
+            continue
+        return content
+    raise RuntimeError(f"همه مدل‌های رایگان شکست خوردند ({last})")
 
 
 def providers():
