@@ -21,8 +21,8 @@
     "title": "دفترچه‌ی رایگان (۲۰ معامله + حجم‌یاب + ردیاب پرتفوی بورس)",
     "file": "downloads/Metatya-Trading-Journal-LITE.xlsx"
    },
-   "price": "",
-   "bot": "",
+   "price": "۱۴۹ هزار تومان",
+   "bot": "MetatyaRisk_bot",
    "page": "services.html",
    "disclaimer": "آموزشی است؛ توصیه‌ی سرمایه‌گذاری یا وعده‌ی سود نیست. معامله ریسک زیان دارد."
   },
@@ -47,8 +47,8 @@
    },
    "preview": "downloads/portfolio-preview.png",
    "previewAlt": "نمونه‌ی ابزار پرتفوی بورس با داده‌ی فرضی",
-   "price": "",
-   "bot": "",
+   "price": "رایگان",
+   "bot": "MetatyaBurse_bot",
    "page": "pack.html?p=bourse",
    "disclaimer": "ابزار ثبت و آموزش است، نه توصیه‌ی خرید، فروش یا نگهداری هیچ نماد. اعداد و نمادهای نمونه فرضی‌اند و قیمت‌ها به‌صورت دستی وارد می‌شوند."
   },
@@ -71,8 +71,8 @@
     "title": "ردیاب رایگان یک هفته‌ای",
     "file": "downloads/Metatya-Fit-LITE.xlsx"
    },
-   "price": "",
-   "bot": "",
+   "price": "۹۹ هزار تومان",
+   "bot": "MetatyaFit_bot",
    "page": "pack.html?p=fit",
    "disclaimer": "اطلاعات عمومی ورزشی است و جایگزین پزشک یا مربی حضوری نیست؛ با بیماری یا مصدومیت قبل از شروع با پزشک مشورت کنید."
   },
@@ -95,8 +95,8 @@
     "title": "برگه‌ی رایگان ثبت فکر",
     "file": "downloads/Metatya-Mind-LITE.xlsx"
    },
-   "price": "",
-   "bot": "",
+   "price": "۹۹ هزار تومان",
+   "bot": "MetatyaMind_bot",
    "page": "pack.html?p=mind",
    "disclaimer": "این پک روان‌درمانی یا تشخیص نیست. در بحران یا افکار آسیب به خود، فوراً با اورژانس یا یک فرد مورد اعتماد و متخصص تماس بگیرید."
   },
@@ -119,10 +119,33 @@
     "title": "ماشین‌حساب رایگان سربه‌سر",
     "file": "downloads/Metatya-Biz-LITE.xlsx"
    },
-   "price": "",
-   "bot": "",
+   "price": "۱۴۹ هزار تومان",
+   "bot": "MetatyaBiz_bot",
    "page": "pack.html?p=biz",
    "disclaimer": "آموزشی است و مشاوره‌ی مالی، حقوقی یا مالیاتی نیست؛ اعداد مدل بر اساس ورودی‌های شما هستند و نتیجه تضمین نمی‌شود."
   }
- ]
+ ],
+ "prices": {
+  "risk": {
+   "pack": "۱۴۹ هزار تومان",
+   "session": "۲۴۹ هزار تومان",
+   "coach": "۳۹۹ هزار تومان"
+  },
+  "bourse": {
+   "session": "۱۹۹ هزار تومان"
+  },
+  "fit": {
+   "pack": "۹۹ هزار تومان"
+  },
+  "mind": {
+   "pack": "۹۹ هزار تومان",
+   "coach": "۱۹۹ هزار تومان",
+   "elite": "۷۹۰ هزار تومان هر جلسه"
+  },
+  "biz": {
+   "pack": "۱۴۹ هزار تومان",
+   "session": "۱۴۹ هزار تومان",
+   "coach": "۲۴۹ هزار تومان"
+  }
+ }
 }
