@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Metatya | ذهن ورزشی حرفه‌ای</title>
+<meta name="description" content="مشاوره‌ی ذهن ورزشی برای ورزشکاران ملی و آماده‌سازی المپیک: تمرکز، فشار مسابقه و بازگشت پس از شکست. با مشاور دارای پروانه و رضایت آگاهانه. این خدمت جایگزین درمان روانی یا روان‌پزشکی نیست.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#05060a; --bg-2:#0b0e17;
+  --surface:rgba(255,255,255,.045); --surface-hi:rgba(255,255,255,.085);
+  --line:rgba(255,255,255,.10); --fg:#f5f6f9; --muted:#9aa3b2;
+  --accent:#ff7a2f; --accent-2:#c6ff3d; --cool:#66d9ff;
+  --glow:rgba(255,122,47,.30);
+  --shadow:0 24px 60px rgba(0,0,0,.5);
+  --radius:26px; --ease:cubic-bezier(.2,.8,.2,1);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    color-scheme: light;
+    --bg:#f6f5f2; --bg-2:#ffffff; --surface:rgba(255,255,255,.82); --surface-hi:#ffffff;
+    --line:rgba(20,20,30,.10); --fg:#15110d; --muted:#67605a;
+    --accent:#e8581c; --accent-2:#5c9e00; --cool:#0c7fa8; --glow:rgba(232,88,28,.2);
+    --shadow:0 20px 50px rgba(40,30,20,.12);
+  }
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --bg:#f6f5f2; --bg-2:#ffffff; --surface:rgba(255,255,255,.82); --surface-hi:#ffffff;
+  --line:rgba(20,20,30,.10); --fg:#15110d; --muted:#67605a;
+  --accent:#e8581c; --accent-2:#5c9e00; --cool:#0c7fa8; --glow:rgba(232,88,28,.2);
+  --shadow:0 20px 50px rgba(40,30,20,.12);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:'Vazirmatn',system-ui,sans-serif;font-size:15px;line-height:1.75;overflow-x:hidden;min-height:100vh;padding-bottom:calc(112px + env(safe-area-inset-bottom,0px))}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+svg{display:block}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:12px}
+.wrap{max-width:1040px;margin-inline:auto;position:relative;z-index:1;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+
+/* لایه‌ی عمق */
+.scene{position:fixed;inset:-40px;z-index:-1;overflow:hidden;pointer-events:none;transform:translate3d(calc(var(--px,0)*-16px),calc(var(--py,0)*-16px),0);transition:transform .6s var(--ease)}
+.scene .glow{position:absolute;inset:-25%;background:radial-gradient(40% 35% at 80% 12%,var(--glow),transparent 70%),radial-gradient(35% 30% at 12% 70%,color-mix(in srgb,var(--cool) 18%,transparent),transparent 70%);filter:blur(40px);animation:drift 22s var(--ease) infinite alternate}
+.scene .rings{position:absolute;left:50%;top:-20%;width:140vmax;height:140vmax;margin-left:-70vmax;border-radius:50%;background:repeating-radial-gradient(circle at 50% 50%,transparent 0 58px,var(--line) 59px 60px);opacity:.55;transform:rotateX(68deg);animation:spin 60s linear infinite;-webkit-mask-image:radial-gradient(circle,#000 0%,transparent 60%);mask-image:radial-gradient(circle,#000 0%,transparent 60%)}
+.scene .spark{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--cool);box-shadow:0 0 12px var(--cool);animation:float linear infinite;opacity:.6}
+@keyframes drift{to{transform:translate3d(4%,-3%,0) rotate(4deg)}}
+@keyframes spin{to{transform:rotateX(68deg) rotateZ(360deg)}}
+@keyframes float{from{transform:translateY(0)}to{transform:translateY(-110vh)}}
+
+.progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:200;transform-origin:0 50%;transform:scaleX(var(--scroll,0));background:linear-gradient(90deg,var(--cool),var(--accent),var(--accent-2))}
+
+/* هدر */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;margin-top:8px}
+header .bar{display:flex;align-items:center;justify-content:space-between;height:62px;padding:0 14px;border-radius:999px;background:color-mix(in srgb,var(--bg-2) 75%,transparent);border:1px solid var(--line);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.logo{font-weight:900;font-size:1.05rem;display:flex;align-items:center;gap:8px}
+.logo i{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--accent)}
+.logo b{color:var(--accent)}
+.chip{font-size:.8rem;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+
+/* هیرو */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:20px;align-items:center;padding:40px 0 20px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted);border:1px solid var(--line);background:var(--surface);padding:6px 14px;border-radius:999px}
+.eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--cool);box-shadow:0 0 12px var(--cool);animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.3}}
+h1{font-size:clamp(1.9rem,5.6vw,3.4rem);font-weight:900;line-height:1.25;letter-spacing:-.6px;margin:18px 0 14px;text-wrap:balance}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--cool),var(--accent),var(--cool));background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}
+@keyframes shine{to{background-position:200% center}}
+.lead{color:var(--muted);max-width:58ch}
+.ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.cta{display:inline-flex;padding:14px 22px;border-radius:16px;background:linear-gradient(135deg,var(--accent),#ffb36b);color:#1a0b02;font-weight:900;box-shadow:0 16px 40px var(--glow);transition:transform .25s var(--ease)}
+.cta:hover{transform:translateY(-3px)}
+.cta.ghost{background:var(--surface);color:var(--fg);border:1px solid var(--line);box-shadow:none;font-weight:800}
+
+/* هدف سه‌بعدی */
+.stage{position:relative;height:340px;perspective:1100px;display:grid;place-items:center}
+.target{position:relative;width:300px;height:300px;transform-style:preserve-3d;transform:rotateX(58deg) rotateZ(-6deg) translate3d(calc(var(--px,0)*10px),calc(var(--py,0)*-8px),0);transition:transform .5s var(--ease)}
+.target .ring{position:absolute;inset:0;margin:auto;border-radius:50%;border:2px solid color-mix(in srgb,var(--cool) 60%,transparent);box-shadow:0 0 22px color-mix(in srgb,var(--cool) 25%,transparent),inset 0 0 18px color-mix(in srgb,var(--cool) 15%,transparent)}
+.target .ring:nth-child(1){width:100%;height:100%;opacity:.45}
+.target .ring:nth-child(2){width:76%;height:76%;opacity:.6;border-color:color-mix(in srgb,var(--accent) 60%,transparent)}
+.target .ring:nth-child(3){width:52%;height:52%;opacity:.8}
+.target .ring:nth-child(4){width:28%;height:28%;background:radial-gradient(circle,var(--accent),color-mix(in srgb,var(--accent) 30%,transparent));border-color:transparent;box-shadow:0 0 30px var(--glow)}
+.target .cross{position:absolute;inset:0;margin:auto;width:100%;height:100%;pointer-events:none}
+.target .cross::before,.target .cross::after{content:"";position:absolute;background:color-mix(in srgb,var(--fg) 40%,transparent)}
+.target .cross::before{left:50%;top:-8%;bottom:-8%;width:1px}
+.target .cross::after{top:50%;left:-8%;right:-8%;height:1px}
+.reticle{position:absolute;width:44px;height:44px;border-radius:50%;border:2px solid var(--accent-2);box-shadow:0 0 18px var(--accent-2);transform:translate3d(calc(var(--px,0)*60px),calc(var(--py,0)*40px),0);transition:transform .3s var(--ease);animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 6px var(--accent-2),0 0 28px var(--accent-2)}}
+.stage .label{position:absolute;bottom:-6px;font-size:.7rem;color:var(--muted);background:var(--bg-2);padding:2px 10px;border-radius:999px;border:1px solid var(--line)}
+.stage .tag-float{position:absolute;font-size:.74rem;font-weight:800;padding:6px 12px;border-radius:999px;background:var(--surface-hi);border:1px solid var(--line);backdrop-filter:blur(10px);box-shadow:var(--shadow);transform:translate3d(calc(var(--px,0)*var(--d,20px)),calc(var(--py,0)*var(--d,20px)),0);transition:transform .5s var(--ease);white-space:nowrap}
+.stage .tag-float.t1{top:10%;right:-2%;--d:30px;color:var(--cool)}
+.stage .tag-float.t2{bottom:16%;left:-4%;--d:22px;color:var(--accent-2)}
+
+/* بخش‌ها */
+.section{margin-top:56px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.section-head h2{font-size:clamp(1.3rem,3.6vw,1.8rem);font-weight:900}
+.section-head span{font-size:.82rem;color:var(--muted)}
+
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;perspective:1000px}
+.card{position:relative;min-width:0;border-radius:var(--radius);padding:22px;background:var(--surface);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;flex-direction:column;gap:10px;overflow:hidden;transform:rotateX(calc(var(--ry,0)*1deg)) rotateY(calc(var(--rx,0)*1deg));transform-style:preserve-3d;transition:transform .5s var(--ease),box-shadow .4s,border-color .4s}
+.card::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(320px circle at var(--mx,50%) var(--my,0%),color-mix(in srgb,var(--cool) 18%,transparent),transparent 45%);opacity:0;transition:opacity .4s}
+.card:hover{box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--cool) 40%,transparent)}
+.card:hover::before{opacity:1}
+.card .num{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-weight:900;color:#1a0b02;background:linear-gradient(135deg,var(--cool),var(--accent-2));transform:translateZ(30px);box-shadow:0 10px 24px color-mix(in srgb,var(--cool) 35%,transparent)}
+.card h3{font-size:1.05rem;font-weight:900;transform:translateZ(16px)}
+.card p{font-size:.86rem;color:var(--muted);line-height:1.8}
+.card ul{list-style:none;display:grid;gap:6px;font-size:.84rem;color:var(--muted)}
+.card li::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--cool);margin-inline-end:10px;vertical-align:middle}
+
+/* مسیر کار */
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;position:relative}
+.step{border-radius:20px;padding:16px 14px;background:var(--surface);border:1px solid var(--line);font-size:.84rem;color:var(--muted);display:flex;flex-direction:column;gap:6px;min-width:0}
+.step b{font-size:.92rem;color:var(--fg);font-weight:800}
+.step .k{font-size:.7rem;color:var(--cool);font-weight:800;letter-spacing:.5px}
+
+/* داریم / نداریم */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.two .box{border-radius:20px;padding:18px;background:var(--surface);border:1px solid var(--line);font-size:.86rem;color:var(--muted)}
+.two h3{font-size:1rem;margin-bottom:8px;font-weight:900}
+.two ul{list-style:none;display:grid;gap:8px}
+.two li::before{margin-inline-end:8px}
+.yes h3{color:var(--accent-2)} .yes li::before{content:"✓";color:var(--accent-2);font-weight:900}
+.no h3{color:var(--accent)} .no li::before{content:"✕";color:var(--accent);font-weight:900}
+
+/* حریم خصوصی */
+.privacy{border-radius:var(--radius);padding:22px;background:linear-gradient(135deg,color-mix(in srgb,var(--cool) 12%,var(--surface)),var(--surface));border:1px solid var(--line);display:grid;gap:10px;font-size:.88rem;color:var(--muted)}
+.privacy h3{font-size:1.05rem;color:var(--fg);font-weight:900}
+.privacy li{list-style:none}
+.privacy li::before{content:"🔒 ";}
+
+/* هشدار و ارجاع */
+.notice{margin-top:44px;padding:20px;border-radius:20px;border:1px solid color-mix(in srgb,var(--accent) 40%,transparent);background:var(--surface);color:var(--muted);font-size:.86rem;line-height:1.9}
+.notice b{color:var(--fg)}
+
+/* سؤال‌ها */
+details{border-radius:16px;background:var(--surface);border:1px solid var(--line);padding:0 16px;margin:8px 0;color:var(--muted);font-size:.88rem}
+summary{cursor:pointer;color:var(--fg);font-weight:800;padding:14px 0}
+details[open] summary{margin-bottom:2px}
+details p{padding-bottom:14px}
+
+/* CTA پایانی */
+.final{margin-top:44px;padding:28px 22px;border-radius:var(--radius);text-align:center;background:linear-gradient(160deg,color-mix(in srgb,var(--accent) 16%,var(--surface)),var(--surface));border:1px solid var(--line)}
+.final h2{font-size:1.35rem;font-weight:900}
+.final p{color:var(--muted);font-size:.9rem;margin:8px auto 0;max-width:52ch}
+.final .ctas{justify-content:center}
+footer{margin-top:40px;padding:20px 0 8px;border-top:1px solid var(--line);font-size:.8rem;color:var(--muted);line-height:1.85}
+
+/* منوی شناور */
+.dock{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));width:min(92%,440px);z-index:100;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:8px;border-radius:26px;background:color-mix(in srgb,var(--bg-2) 82%,transparent);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.dock a{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.7rem;font-weight:700;color:var(--muted);padding:9px 4px;border-radius:18px}
+.dock a svg{width:22px;height:22px}
+.dock a.active{color:var(--fg);background:var(--surface-hi)}
+.dock a.active svg{color:var(--accent)}
+
+/* ورود */
+.js .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.js .reveal.in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .reveal{opacity:1;transform:none}
+  .card,.scene,.target,.reticle{transform:none!important}
+  .spark{display:none}
+}
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr}
+  .stage{height:270px;transform:scale(.88)}
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .two{grid-template-columns:1fr}
+  .chip{display:none}
+}
+@media (hover:none){ .card{transform:none!important} }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="s-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z" fill="currentColor"/></symbol>
+    <symbol id="s-bar" viewBox="0 0 24 24"><path d="M4 18V10h3v8zm6 0V6h3v12zm6 0v-5h3v5z" fill="currentColor"/></symbol>
+    <symbol id="s-file" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z" fill="currentColor" opacity=".9"/></symbol>
+    <symbol id="s-spark" viewBox="0 0 24 24"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<div class="progress" aria-hidden="true"></div>
+<div class="scene" aria-hidden="true"><div class="glow"></div><div class="rings"></div></div>
+
+<div class="wrap">
+  <header>
+    <div class="bar">
+      <a class="logo" href="index.html" dir="ltr"><i></i>Meta<b>tya</b></a>
+      <a class="chip" href="sport.html">← ورزش و انضباط</a>
+    </div>
+  </header>
+
+  <section class="hero" id="top">
+    <div>
+      <span class="eyebrow"><span class="dot"></span>ذهن ورزشی · سطح ملی و المپیک</span>
+      <h1>در لحظه‌ی مسابقه، <em>تمرین ذهنت</em> هم باید آماده باشد</h1>
+      <p class="lead">برای ورزشکارانی که در تمرین عملکرد خوبی دارند، اما زیر فشار مسابقه تمرکز، تصمیم‌گیری یا آرامششان را از دست می‌دهند. جلسات فردی با مشاور ذهن ورزشی دارای پروانه برگزار می‌شود و روی رفتار و عملکرد کار می‌کند.</p>
+      <div class="ctas">
+        <a class="cta" data-order="elite" href="#steps">درخواست ویزیت</a>
+        <a class="cta ghost" href="#for">برای چه کسی است؟</a>
+      </div>
+    </div>
+
+    <div class="stage" aria-label="هدف سه‌بعدی نمادین">
+      <div class="target">
+        <span class="ring"></span><span class="ring"></span><span class="ring"></span><span class="ring"></span>
+        <span class="cross"></span>
+      </div>
+      <div class="reticle" aria-hidden="true"></div>
+      <span class="tag-float t1" data-depth="1">تمرکز</span>
+      <span class="tag-float t2">روتین قبل از مسابقه</span>
+      <span class="label">تصویر نمادین است؛ نه نمایش نتیجه</span>
+    </div>
+  </section>
+
+  <!-- برای چه کسی -->
+  <section class="section reveal" id="for">
+    <div class="section-head"><h2>این خدمت برای چه کسی است؟</h2><span>وقتی تمرین جواب می‌دهد، ولی ذهن در مسابقه کم می‌آورد</span></div>
+    <div class="grid" id="fors">
+      <article class="card tilt reveal">
+        <span class="num">۱</span>
+        <h3>تمرین خوب، مسابقه‌ی افت‌دار</h3>
+        <p>در تمرین نتیجه‌ی خوبی داری، ولی در مسابقه دست‌لرز، عجله‌ای یا فکر مزاحم می‌آید و تمرکز می‌ریزد.</p>
+        <ul><li>نیاز به روتین ثابت قبل از شروع</li><li>کنترل توجه در لحظه‌های حساس</li></ul>
+      </article>
+      <article class="card tilt reveal">
+        <span class="num">۲</span>
+        <h3>فشار انتظارات</h3>
+        <p>انتظار مربی، فدراسیون، خانواده یا خودت آن‌قدر سنگین شده که تمرین لذت ندارد و مسابقه ترس‌آور است.</p>
+        <ul><li>تنظیم هدف واقع‌بینانه برای هر مسابقه</li><li>جدا کردن ارزش شخصی از نتیجه</li></ul>
+      </article>
+      <article class="card tilt reveal">
+        <span class="num">۳</span>
+        <h3>بعد از یک شکست یا آسیب</h3>
+        <p>بعد از نتیجه‌ی بد یا بازگشت از آسیب، ترس از تکرار باعث می‌شود بدن و ذهن محتاط بمانند.</p>
+        <ul><li>بازسازی اعتماد به نفس قدم‌به‌قدم</li><li>تحلیل بدون سرزنش خود</li></ul>
+      </article>
+      <article class="card tilt reveal">
+        <span class="num">۴</span>
+        <h3>آماده‌سازی برای سطح بالاتر</h3>
+        <p>برای مسابقات ملی یا آماده‌سازی المپیک، آمادگی ذهنی باید کنار آمادگی فنی و بدنی برنامه‌ریزی شود.</p>
+        <ul><li>برنامه‌ی ذهنی همراه با دوره‌بندی تمرین</li><li>تمرین‌های بازیابی بین مسابقه‌ها</li></ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- مسیر کار -->
+  <section class="section reveal" id="steps">
+    <div class="section-head"><h2>مسیر کار</h2><span>چهار مرحله، از ارزیابی تا گزارش</span></div>
+    <div class="steps">
+      <div class="step"><span class="k">مرحله ۱</span><b>فرم و رضایت آگاهانه</b>اطلاعات پایه و هدف مسابقه را می‌دهی و موافقت آگاهانه‌ات را ثبت می‌کنی.</div>
+      <div class="step"><span class="k">مرحله ۲</span><b>ارزیابی و جلسه‌ی اول</b>مشاور با تو وضعیت فعلی و چالش اصلی را بررسی می‌کند؛ حضوری یا آنلاین.</div>
+      <div class="step"><span class="k">مرحله ۳</span><b>تمرین‌های آماده‌سازی</b>تنفس، روتین قبل از مسابقه، تصویرسازی مسیر و کنترل فکرهای مزاحم، با جلسات مرتب.</div>
+      <div class="step"><span class="k">مرحله ۴</span><b>مرور و گزارش</b>پیشرفت مرور می‌شود. گزارش فقط با رضایت کتبی تو و برای مربی یا فدراسیون ارسال می‌شود.</div>
+    </div>
+    <p class="notice" style="margin-top:12px;font-size:.8rem">هزینه‌ی ویزیت پس از ارزیابی اولیه و همان‌جا در ربات اعلام می‌شود. درخواست شما بعد از پرداخت و تأیید مسئول، با مشاور هماهنگ می‌شود.</p>
+  </section>
+
+  <!-- داریم / نداریم -->
+  <section class="section reveal">
+    <div class="section-head"><h2>دقیقاً چه چیزی داریم؟</h2><span>شفاف، بدون وعده‌ی نتیجه</span></div>
+    <div class="two">
+      <div class="box yes">
+        <h3>داریم</h3>
+        <ul>
+          <li>جلسات فردی با مشاور ذهن ورزشی دارای پروانه</li>
+          <li>تمرین‌های تنفس، توجه و روتین پیش از مسابقه</li>
+          <li>برنامه‌ی بازگشت بعد از شکست یا آسیب (همراه با پزشک)</li>
+          <li>هماهنگی با مربی فقط با رضایت کتبی تو</li>
+          <li>ارجاع به روان‌شناس بالینی یا روان‌پزشک وقتی لازم باشد</li>
+        </ul>
+      </div>
+      <div class="box no">
+        <h3>نداریم</h3>
+        <ul>
+          <li>تشخیص یا درمان بیماری روانی</li>
+          <li>تجویز یا تغییر دارو</li>
+          <li>تضمین مدال، رکورد یا انتخاب در تیم ملی</li>
+          <li>جایگزینی برای پزشک، روان‌پزشک یا مربی تمرینی</li>
+          <li>مداخله‌ی بحران؛ در بحران، اورژانس و فرد مورد اعتماد</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- حریم خصوصی -->
+  <section class="section reveal">
+    <div class="privacy">
+      <h3>حریم خصوصی و رضایت</h3>
+      <ul style="display:grid;gap:8px">
+        <li>هیچ اطلاعاتی بدون رضایت کتبی تو به مربی، فدراسیون یا هر فرد دیگری داده نمی‌شود.</li>
+        <li>می‌توانی رضایتت را در هر زمان پس بگیری؛ گزارش‌ها به عملکرد و برنامه محدود است، نه جزئیات خصوصی.</li>
+        <li>اطلاعات حساس فقط برای مشاور پرونده‌ات قابل دسترسی است و با رمز و دسترسی محدود نگهداری می‌شود.</li>
+        <li>پیش از شروع، پروانه‌ی مشاور بررسی می‌شود. اگر نیاز به هماهنگی با فدراسیون باشد، طبق مقررات آن انجام می‌شود.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ارجاع و هشدار -->
+  <div class="notice reveal">
+    <b>اگر نشانه‌های جدی‌تری داری، این مسیر کافی نیست.</b> اضطراب یا افسردگی شدید و مداوم، بی‌خوابی یا تغییر اشتها، مصرف مواد یا دارو، یا افکار آسیب به خود، نیاز به ارزیابی روان‌پزشک یا روان‌شناس بالینی دارد و این موارد به آن‌ها ارجاع داده می‌شود. اگر همین الان خطر وجود دارد، فوراً با اورژانس ۱۱۵ تماس بگیر یا به یک فرد نزدیک و مورد اعتمادت بگو. این صفحه جایگزین درمان روانی نیست.
+  </div>
+
+  <!-- سؤال‌ها -->
+  <section class="section reveal">
+    <div class="section-head"><h2>پرسش‌های پرتکرار</h2></div>
+    <details><summary>آیا مدال یا قهرمانی تضمین می‌شود؟</summary><p>خیر. این خدمت آمادگی ذهنی را بهتر می‌کند، ولی نتیجه به عوامل زیادی بستگی دارد و هیچ نتیجه‌ای تضمین نمی‌شود.</p></details>
+    <details><summary>آیا فدراسیون یا مربی از جلسات خبردار می‌شود؟</summary><p>فقط با رضایت کتبی تو و در حدی که خودت تأیید کرده‌ای. بدون رضایت، اطلاعاتی منتقل نمی‌شود.</p></details>
+    <details><summary>آیا جلسه‌ی آنلاین هم دارید؟</summary><p>بسته به مشاور و امکان هماهنگی، جلسه‌ی آنلاین ممکن است. این موضوع در مرحله‌ی فرم پرسیده می‌شود.</p></details>
+    <details><summary>اگر مشکل روانی جدی داشته باشم چه می‌شود؟</summary><p>در این صورت مشاور تو را به روان‌پزشک یا روان‌شناس بالینی ارجاع می‌دهد. این خدمت جایگزین درمان نیست.</p></details>
+  </section>
+
+  <!-- CTA پایانی -->
+  <section class="final reveal" id="order">
+    <h2>اگر می‌خواهی ذهنت کنار بدنت آماده شود</h2>
+    <p>فرم را در ربات پر کن؛ مسئول پس از بررسی و پرداخت، مشاور و زمان را با تو هماهنگ می‌کند.</p>
+    <div class="ctas">
+      <a class="cta" data-order="elite" href="https://t.me/maytya" target="_blank" rel="noopener">درخواست ویزیت در ربات</a>
+    </div>
+  </section>
+
+  <footer>
+    Metatya · محتوای آموزشی و معرفی خدمت است و جایگزین تشخیص، درمان روانی، پزشکی یا مشاوره‌ی حقوقی نیست. نتیجه‌ی ورزشی تضمین نمی‌شود.
+  </footer>
+</div>
+
+<nav class="dock" aria-label="منوی اصلی">
+  <a href="index.html"><svg><use href="#s-home"/></svg>خانه</a>
+  <a href="sport.html"><svg><use href="#s-bar"/></svg>ورزش</a>
+  <a href="trades.html"><svg><use href="#s-file"/></svg>پرونده‌ها</a>
+  <a href="mirror.html"><svg><use href="#s-spark"/></svg>آینه</a>
+</nav>
+
+<script>
+(function(){
+  const root = document.documentElement;
+  root.classList.add('js');
+  try { const s = localStorage.getItem('metatya-theme'); if (s) root.setAttribute('data-theme', s); } catch(e) {}
+
+  /* یوزرنیم ربات ذهن (بدون @). خالی = دکمه‌ها به تماس مستقیم می‌روند */
+  const ORDER_BOT = '';
+  const ob = ORDER_BOT.replace(/^@/, '');
+  if (ob) document.querySelectorAll('a[data-order]').forEach(a => { a.href = 'https://t.me/' + ob + '?start=order_elite'; });
+
+  /* ذرات */
+  const scene = document.querySelector('.scene');
+  if (scene) for (let i = 0; i < 12; i++) {
+    const p = document.createElement('span');
+    p.className = 'spark';
+    p.style.left = (Math.random() * 100) + '%';
+    p.style.bottom = (-10 - Math.random() * 20) + '%';
+    p.style.animationDuration = (10 + Math.random() * 10) + 's';
+    p.style.animationDelay = (-Math.random() * 12) + 's';
+    scene.appendChild(p);
+  }
+
+  /* نمایش تدریجی */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* پیشرفت اسکرول */
+  const onScroll = () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    root.style.setProperty('--scroll', (max > 0 ? scrollY / max : 0).toFixed(4));
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* حرکت با ماوس: عمق پس‌زمینه، هدف و نشانگر */
+  const fine = matchMedia('(hover: hover)').matches;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (fine && !reduce) {
+    addEventListener('pointermove', e => {
+      root.style.setProperty('--px', ((e.clientX / innerWidth) * 2 - 1).toFixed(3));
+      root.style.setProperty('--py', ((e.clientY / innerHeight) * 2 - 1).toFixed(3));
+    }, { passive: true });
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('pointermove', e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        card.style.setProperty('--mx', (x * 100) + '%');
+        card.style.setProperty('--my', (y * 100) + '%');
+        card.style.setProperty('--rx', ((x - .5) * 8).toFixed(2));
+        card.style.setProperty('--ry', ((.5 - y) * 8).toFixed(2));
+      });
+      card.addEventListener('pointerleave', () => { card.style.setProperty('--rx', 0); card.style.setProperty('--ry', 0); });
+    });
+  }
+
+  /* منوی فعال */
+  const here = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.dock a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === here));
+})();
+</script>
+</body>
+</html>
