@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Metatya | رشد مالی و ذهنی</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+/* ---------- توکن‌های رنگ: تیره پیش‌فرض، روشن با تنظیم سیستم یا انتخاب دستی ---------- */
+:root{
+  color-scheme: dark;
+  --bg:#07080c;
+  --surface:rgba(255,255,255,.045);
+  --surface-hi:rgba(255,255,255,.085);
+  --line:rgba(255,255,255,.10);
+  --fg:#f2f4f7;
+  --muted:#9aa3b2;
+  --accent:#2ee59d;
+  --gold:#f5c542;
+  --glow:rgba(46,229,157,.22);
+  --shadow:0 18px 50px rgba(0,0,0,.45);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    color-scheme: light;
+    --bg:#f5f6fa; --surface:rgba(255,255,255,.72); --surface-hi:#fff;
+    --line:rgba(12,20,40,.10); --fg:#0d1220; --muted:#5b6474;
+    --accent:#0a8f62; --gold:#b07d0a; --glow:rgba(10,143,98,.16);
+    --shadow:0 18px 44px rgba(20,30,60,.12);
+  }
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --bg:#f5f6fa; --surface:rgba(255,255,255,.72); --surface-hi:#fff;
+  --line:rgba(12,20,40,.10); --fg:#0d1220; --muted:#5b6474;
+  --accent:#0a8f62; --gold:#b07d0a; --glow:rgba(10,143,98,.16);
+  --shadow:0 18px 44px rgba(20,30,60,.12);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--fg);
+  font-family:'Vazirmatn',system-ui,sans-serif;font-size:15px;line-height:1.7;
+  overflow-x:hidden;min-height:100vh;
+  padding-bottom:calc(104px + env(safe-area-inset-bottom,0px));
+}
+/* نور پس‌زمینه */
+body::before{
+  content:"";position:fixed;inset:-20% -10% auto auto;width:70vmax;height:70vmax;
+  background:radial-gradient(circle,var(--glow),transparent 62%);
+  pointer-events:none;z-index:-1;filter:blur(20px);
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+
+.wrap{
+  max-width:960px;margin-inline:auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+
+/* ---------- هدر ---------- */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:color-mix(in srgb,var(--bg) 70%,transparent)}
+.nav-top{display:flex;align-items:center;justify-content:space-between;height:62px}
+.logo{font-weight:900;font-size:1.15rem;letter-spacing:-.3px}
+.logo b{color:var(--accent)}
+.nav-top .pill{font-size:.8rem;padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+
+/* ---------- هیرو ---------- */
+.hero{padding:44px 0 28px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;color:var(--muted);border:1px solid var(--line);background:var(--surface);padding:6px 12px;border-radius:999px}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+h1{font-size:clamp(1.9rem,6vw,3.2rem);font-weight:900;line-height:1.25;margin:16px 0 12px;letter-spacing:-.6px;text-wrap:balance}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);font-size:1rem;max-width:58ch}
+.cta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 20px;border-radius:14px;font-weight:700;font-size:.92rem;border:1px solid transparent;transition:transform .2s,box-shadow .2s}
+.btn-main{background:var(--accent);color:#04110b;box-shadow:0 10px 30px var(--glow)}
+.btn-ghost{border-color:var(--line);background:var(--surface)}
+.btn:hover{transform:translateY(-2px)}
+
+/* ---------- عنوان بخش ---------- */
+.section{margin-top:40px}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:14px}
+.section-head h2{font-size:1.25rem;font-weight:800;letter-spacing:-.3px}
+.section-head span{font-size:.8rem;color:var(--muted)}
+
+/* ---------- بنتو ---------- */
+.bento{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{
+  position:relative;overflow:hidden;min-width:0;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px;display:flex;flex-direction:column;gap:10px;min-height:150px;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .35s,box-shadow .35s;
+}
+.card:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--accent) 45%,transparent);box-shadow:var(--shadow)}
+.card.wide{grid-column:span 2;flex-direction:row;align-items:center;justify-content:space-between;min-height:120px}
+.card .ico{width:56px;height:56px;flex:none}
+.card h3{font-size:1rem;font-weight:800}
+.card p{font-size:.8rem;color:var(--muted);line-height:1.6}
+.card .go{font-size:.78rem;color:var(--accent);margin-top:auto;font-weight:700}
+.card .body{min-width:0}
+
+/* ---------- کارت‌های پیشنهادی ---------- */
+.offers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.offer{position:relative;border-radius:var(--radius);padding:20px;background:var(--surface-hi);border:1px solid var(--line);min-width:0;display:flex;flex-direction:column;gap:8px;overflow:hidden}
+.offer.free{border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.offer.gold{border-color:color-mix(in srgb,var(--gold) 45%,transparent)}
+.tag{align-self:flex-start;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
+.offer.free .tag{color:var(--accent)}
+.offer.gold .tag{color:var(--gold)}
+.offer h3{font-size:1.02rem;font-weight:800}
+.offer p{font-size:.82rem;color:var(--muted)}
+.offer .btn{margin-top:auto;width:100%}
+
+/* ---------- بنیان‌گذار ---------- */
+.founder{display:flex;gap:18px;align-items:center;padding:22px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--line)}
+.avatar{width:84px;height:84px;border-radius:50%;flex:none;position:relative;overflow:hidden;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,var(--gold),var(--accent) 70%);box-shadow:0 12px 30px var(--glow);font-weight:900;color:#04110b;font-size:1.3rem}
+.avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.founder h3{font-size:1.05rem;font-weight:800}
+.founder .role{font-size:.8rem;color:var(--gold);margin-bottom:6px}
+.founder p{font-size:.86rem;color:var(--muted);line-height:1.8}
+
+/* ---------- فوتر ---------- */
+footer{margin-top:44px;padding:20px 0;border-top:1px solid var(--line);font-size:.78rem;color:var(--muted);line-height:1.8}
+
+/* ---------- منوی شناور پایین ---------- */
+.dock{
+  position:fixed;left:50%;transform:translateX(-50%);
+  bottom:calc(16px + env(safe-area-inset-bottom,0px));
+  width:min(92%,420px);z-index:100;
+  display:flex;justify-content:space-around;padding:10px 8px;
+  border-radius:24px;background:color-mix(in srgb,var(--surface-hi) 85%,transparent);
+  border:1px solid var(--line);box-shadow:var(--shadow);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+}
+.dock a{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.7rem;color:var(--muted);padding:4px 6px;min-width:0}
+.dock a svg{width:22px;height:22px}
+.dock a.active{color:var(--accent)}
+
+/* ---------- حرکت ---------- */
+.js .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.js .reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important;animation:none!important}
+  .js .reveal{opacity:1;transform:none}
+}
+
+/* ---------- موبایل ---------- */
+@media (max-width:640px){
+  .bento,.offers{grid-template-columns:minmax(0,1fr)}
+  .card.wide{grid-column:auto;flex-direction:column;align-items:flex-start}
+  .founder{flex-direction:column;text-align:center}
+  .founder p{text-align:start}
+}
+@media (min-width:768px){
+  .bento{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .card.wide{grid-column:span 2}
+}
+</style>
+</head>
+<body>
+
+<!-- نمادهای سه‌بعدی‌نما (SVG). اگر بعداً PNG از 3dicons گرفتی، <img> جایگزین کن. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="gA" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#8dffd0"/><stop offset=".55" stop-color="#2ee59d"/><stop offset="1" stop-color="#0b7a52"/></radialGradient>
+    <radialGradient id="gG" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#fff3b0"/><stop offset=".55" stop-color="#f5c542"/><stop offset="1" stop-color="#9a6b00"/></radialGradient>
+    <radialGradient id="gB" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#c8d8ff"/><stop offset=".55" stop-color="#6d8cff"/><stop offset="1" stop-color="#2a3f9e"/></radialGradient>
+    <radialGradient id="gP" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#ffd0ea"/><stop offset=".55" stop-color="#ff6fb1"/><stop offset="1" stop-color="#9a1f5c"/></radialGradient>
+  </defs>
+  <symbol id="i-chart" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="url(#gA)"/><rect x="16" y="34" width="8" height="14" rx="2" fill="#04110b" opacity=".85"/><rect x="28" y="26" width="8" height="22" rx="2" fill="#04110b" opacity=".85"/><rect x="40" y="18" width="8" height="30" rx="2" fill="#04110b" opacity=".85"/></symbol>
+  <symbol id="i-coin" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="url(#gG)"/><circle cx="32" cy="32" r="16" fill="none" stroke="#6b4a00" stroke-width="4" opacity=".7"/><path d="M26 32h12" stroke="#6b4a00" stroke-width="4" stroke-linecap="round" opacity=".7"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="url(#gB)"/><rect x="14" y="22" width="36" height="24" rx="6" fill="#0c1640" opacity=".85"/><circle cx="42" cy="34" r="3" fill="#c8d8ff"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="url(#gP)"/><path d="M32 46 18 32a7 7 0 0 1 14-6 7 7 0 0 1 14 6z" fill="#fff" opacity=".9"/></symbol>
+  <symbol id="i-tool" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="url(#gA)"/><path d="M22 42l18-18m-4-4 8 8" stroke="#04110b" stroke-width="5" stroke-linecap="round" opacity=".85"/></symbol>
+  <symbol id="i-file" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="url(#gG)"/><rect x="20" y="16" width="24" height="32" rx="4" fill="#6b4a00" opacity=".75"/><path d="M25 26h14M25 33h14M25 40h9" stroke="#fff3b0" stroke-width="3" stroke-linecap="round"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z" fill="currentColor"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z" fill="currentColor"/></symbol>
+</svg>
+
+<div class="wrap">
+  <header>
+    <div class="nav-top">
+      <a class="logo" href="index.html">Meta<b>tya</b></a>
+      <a class="pill" href="services.html">خدمات</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <span class="eyebrow">رایگان شروع کن · بدون سیگنال</span>
+    <h1>رشد مالی و ذهنی، <em>با داده</em>، نه با هیجان</h1>
+    <p class="lead">ابزار رایگان، آموزش و پرونده‌های معاملاتی واقعی برای بازارها، درآمد، سلامت و ذهن. هیچ‌جا وعده‌ی سود تضمینی نمی‌دهیم.</p>
+    <div class="cta-row">
+      <a class="btn btn-main" href="toolbox.html">شروع از ابزارهای رایگان</a>
+      <a class="btn btn-ghost" href="trades.html">پرونده‌های واقعی</a>
+    </div>
+  </section>
+
+  <section class="section reveal" id="start">
+    <div class="section-head"><h2>از کجا شروع کنم</h2><span>انتخاب کن چه می‌خواهی یاد بگیری</span></div>
+    <div class="bento">
+      <a class="card reveal" href="toolbox.html">
+        <svg class="ico"><use href="#i-chart"/></svg>
+        <div class="body"><h3>بازارها</h3><p>فارکس، کریپتو و بورس ایران با تحلیل تکنیکال و مدیریت ریسک.</p></div>
+        <span class="go">ابزارها ←</span>
+      </a>
+      <a class="card reveal" href="toolbox.html">
+        <svg class="ico"><use href="#i-coin"/></svg>
+        <div class="body"><h3>رشد مالی</h3><p>کسب درآمد، مالی شخصی و کسب‌وکار، با قدم‌های کوچک.</p></div>
+        <span class="go">ابزارها ←</span>
+      </a>
+      <a class="card reveal wide" href="trades.html">
+        <div class="body"><h3>سلامت جسم و ذهن</h3><p>روان‌شناسی معامله‌گری، ورزش و سبک زندگی. درس‌هایی از پرونده‌های واقعی، از جمله ضررها.</p><span class="go">پرونده‌ها ←</span></div>
+        <svg class="ico"><use href="#i-heart"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="section-head"><h2>شروع رایگان</h2><span>بدون ثبت‌نام اجباری</span></div>
+    <div class="offers">
+      <div class="offer free">
+        <span class="tag">رایگان</span>
+        <h3>دفترچه‌ی معاملات + ردیاب پرتفوی بورس</h3>
+        <p>ثبت معامله، حجم‌یاب، چک‌لیست قبل از ورود و تحلیل پرتفوی. فایل اکسل.</p>
+        <a class="btn btn-ghost" href="downloads/Metatya-Trading-Journal-LITE.xlsx">دانلود رایگان</a>
+      </div>
+      <div class="offer free">
+        <span class="tag">رایگان</span>
+        <h3>آینه معاملاتی</h3>
+        <p>فایل معاملاتت را بده تا الگوهای رفتاری‌ات را ببینی. کاملاً روی دستگاه خودت اجرا می‌شود.</p>
+        <a class="btn btn-ghost" href="mirror.html">باز کردن آینه</a>
+      </div>
+      <div class="offer gold">
+        <span class="tag">خدمات</span>
+        <h3>مشاوره‌ی مدیریت ریسک</h3>
+        <p>بازبینی دفترچه‌ی معاملات و طراحی قانون ریسک با جلسه‌ی ۳۰ دقیقه‌ای.</p>
+        <a class="btn btn-ghost" href="services.html">جزئیات و قیمت</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="section-head"><h2>بنیان‌گذار</h2></div>
+    <div class="founder">
+      <div class="avatar">
+        <span>آ.ق</span>
+        <!-- عکس خودت را اینجا بگذار: فایل founder.jpg کنار این صفحه -->
+        <img src="founder.jpg" alt="آیت قمری" onerror="this.remove()">
+      </div>
+      <div>
+        <h3>آیت قمری</h3>
+        <div class="role">بنیان‌گذار Metatya</div>
+        <p>Metatya را ساختم تا معامله‌گری را از حدس و هیجان به یادگیری مرحله‌به‌مرحله تبدیل کنم. ابزارها و محتوای رایگان را بدون وعده‌ی سود و بدون سیگنال می‌سازم؛ هر چیزی که بسازم باید قابل فهم و قابل بررسی باشد.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    محتوای Metatya آموزشی است و توصیه‌ی سرمایه‌گذاری، خرید یا فروش نیست. بازارها ریسک دارند و ممکن است کل سرمایه‌ات را از دست بدهی.
+  </footer>
+</div>
+
+<nav class="dock" aria-label="منوی اصلی">
+  <a class="active" href="index.html"><svg><use href="#i-home"/></svg>خانه</a>
+  <a href="toolbox.html"><svg><use href="#i-tool"/></svg>ابزارها</a>
+  <a href="trades.html"><svg><use href="#i-file"/></svg>پرونده‌ها</a>
+  <a href="mirror.html"><svg><use href="#i-spark"/></svg>آینه</a>
+</nav>
+
+<script>
+  document.documentElement.classList.add('js');
+  // تم دستی: انتخاب کاربر را در حافظه‌ی مرورگر نگه می‌داریم؛ اگر کار نکرد، تم سیستم بماند.
+  try {
+    const saved = localStorage.getItem('metatya-theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  } catch (e) {}
+  // نمایش تدریجی بخش‌ها؛ بدون JS همه چیز قابل دیدن است.
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
