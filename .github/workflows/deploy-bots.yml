@@ -16,10 +16,11 @@ jobs:
           BOT_BIZ: ${{ secrets.BOT_BIZ }}
           WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
           OWNER_CHAT_ID: ${{ secrets.TELEGRAM_REVIEW_CHAT_ID }}
+          PAY_INFO: ${{ secrets.PAY_INFO }}
         run: |
           python3 - <<'PY'
           import os, json
-          keys = ["BOT_RISK","BOT_BOURSE","BOT_FIT","BOT_MIND","BOT_BIZ","WEBHOOK_SECRET","OWNER_CHAT_ID"]
+          keys = ["BOT_RISK","BOT_BOURSE","BOT_FIT","BOT_MIND","BOT_BIZ","WEBHOOK_SECRET","OWNER_CHAT_ID","PAY_INFO"]
           d = {k: os.environ[k] for k in keys if os.environ.get(k)}
           json.dump(d, open("secrets.json","w")); print("secrets:", sorted(d))
           PY
