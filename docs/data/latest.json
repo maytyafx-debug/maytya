@@ -1,73 +1,63 @@
 {
- "updated": "2026-10-21T05:02:03+00:00",
+ "updated": "2026-10-19T05:04:41+00:00",
  "prices": {
   "BTC/USD": {
-   "value": 82719,
-   "change24h_pct": 0.86,
+   "value": 82543,
+   "change24h_pct": 1.03,
    "source": "CoinGecko"
   },
   "ETH/USD": {
-   "value": 2442.24,
-   "change24h_pct": 1.33,
+   "value": 2420.83,
+   "change24h_pct": 0.36,
    "source": "CoinGecko"
   },
   "SOL/USD": {
-   "value": 105.76,
-   "change24h_pct": 0.58,
+   "value": 105.28,
+   "change24h_pct": 1.59,
    "source": "CoinGecko"
   },
   "XRP/USD": {
-   "value": 1.33,
-   "change24h_pct": 2.14,
+   "value": 1.31,
+   "change24h_pct": 1.16,
    "source": "CoinGecko"
   },
   "EUR/USD": {
-   "value": 1.1215,
-   "date": "2026-10-20",
+   "value": 1.1253,
+   "date": "2026-10-16",
    "source": "ECB/Frankfurter"
   },
   "GBP/USD": {
-   "value": 1.33467,
-   "date": "2026-10-20",
+   "value": 1.33353,
+   "date": "2026-10-16",
    "source": "ECB/Frankfurter"
   },
   "AUD/USD": {
-   "value": 0.69847,
-   "date": "2026-10-20",
+   "value": 0.69589,
+   "date": "2026-10-16",
    "source": "ECB/Frankfurter"
   },
   "USD/JPY": {
-   "value": 158.13,
-   "date": "2026-10-20",
+   "value": 158.02,
+   "date": "2026-10-16",
    "source": "ECB/Frankfurter"
   },
   "USD/CHF": {
-   "value": 0.82363,
-   "date": "2026-10-20",
+   "value": 0.82396,
+   "date": "2026-10-16",
    "source": "ECB/Frankfurter"
   },
   "USD/CAD": {
-   "value": 1.4051,
-   "date": "2026-10-20",
+   "value": 1.4161,
+   "date": "2026-10-16",
    "source": "ECB/Frankfurter"
   }
  },
  "news": {
   "forex": [
    {
-    "title": "US Dollar Price Forecast: Fed Hike Bets Fade, DXY Tests 102.18 as EUR/USD, GBP/USD Slip - FXEmpire",
-    "link": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxNSXNwODViSWkwUXB1Tk9tbUh5N3R0TU1EeWIxc3RiemM5cXNjQ3laYjV4aWpwMl9nT3lZOVpXV0lRM3ludi1yVmRNS2dVOTVidnlLNU55b0gwam54dEpVNTNnYk5Sa0J4U3NrNTFTeGFLbk5IUGZJSWIwRGdZMjRyUkJpRjgxdzVoc2tVLWlBbjV1ZUlpcnQ4VlJ6VjNoYkt6WFJ0UFp0bldxRUgxUUFySHhHU3M3UXFHTmFnVnNlWlRUSE01NDFmUGIxM0ZHUGtJ?oc=5",
-    "published": "Mon, 19 Oct 2026 08:27:44 GMT"
-   },
-   {
-    "title": "Gold Analysis: Fed Minutes Keep Pressure on XAU/USD - FOREX.com",
-    "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxOQ3l1dFI5SnhTajdHcERjeG0yOGRfblI4SjctTkp3ejBHOFlvdWtsbTQwcEk0VmJDMDEtb2xfM3NNRzRPSUptNUIzNlVsUkxzX2UtN0xMYW10dEtPcWVaR3lQeVlEanRkYzg0dlhpajljVW9VZkRVcFpmYTgtM2FVQm1DSkdBSXV5ZFlRZ1pzQVNmMWIxQnVDZ2V3?oc=5",
-    "published": "Thu, 08 Oct 2026 13:55:56 GMT"
-   },
-   {
-    "title": "Euro finds relief from softer US Dollar ahead of Fed minutes - www.tmgm.com",
-    "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxQVDYzTlhxd1lrSEl3Z05xemZzRUhyVnVfdjBQQVBVTUZ5Vjh1WGxTb3pMcVpCZGJfZE1ScS1XYi0xMVZPaENjWWhNMWJSRmxSOUxkNUxROTAtSDQ2M2FWUGxPMjlxRV9vcXZIZDJLU2N2WmxCdGNfLWpVSmpucjhza0pjZ18zRUdiRkRZNU5oakdIRXVlTkZsQVhhdThVckQ5OGRvLWlaaV9rc0RNRm1Ed1pmbjFuT2hDRENPZ202M1p2X3BwTWpjOQ?oc=5",
-    "published": "Tue, 06 Oct 2026 07:00:00 GMT"
+    "title": "EUR/USD, Gold Forecast: Two trades to watch - FOREX.com",
+    "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOSjRCUXlnQ1IzU2h3blg3WGo3ZXowOUo5U3pxV2xkay1XSlpKdW1UOEs2UkowbElqbVFRaUpQQUFJZHE5QzU2OC1rdjI0bXg3eGs0UWhXeThCVDRrVGVFRHg4Wll2VzFVV0ZWbVBWNTctTmJEQUFoN29lcjFicVdwREdaOEJuY0Zmei1lZVJ0MWQwTXg3TFRRekw2TEc5bDZN0gGsAUFVX3lxTFB4LTZWUFU5ZTV5NGlhQ0NTZmdpZW9IQWJ1b2kyWFlMclZSSkdlQzJQUkhpdkl5MURLR0RqSzhEOHFISG1GYlNfbFkyMVR2bGo3WTFFTGhjckZfY2l2RlZVMHJnMWJpamE2c09VNUZkTXUwVUFvOFZoUDdUU1N1R0theXlsdFBhUXVHSi1SYXd6bnR4cTJJRjFjUVBnX0I1QTRubzdKSnVfM196VWc?oc=5",
+    "published": "Wed, 23 Sep 2026 07:00:00 GMT"
    },
    {
     "title": "The U.S. Dollar’s Role as a Reserve Currency - Federal Reserve Bank of St. Louis",
@@ -75,66 +65,76 @@
     "published": "Wed, 25 Feb 2026 08:00:00 GMT"
    },
    {
+    "title": "Euro finds relief from softer US Dollar ahead of Fed minutes - www.tmgm.com",
+    "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxQVDYzTlhxd1lrSEl3Z05xemZzRUhyVnVfdjBQQVBVTUZ5Vjh1WGxTb3pMcVpCZGJfZE1ScS1XYi0xMVZPaENjWWhNMWJSRmxSOUxkNUxROTAtSDQ2M2FWUGxPMjlxRV9vcXZIZDJLU2N2WmxCdGNfLWpVSmpucjhza0pjZ18zRUdiRkRZNU5oakdIRXVlTkZsQVhhdThVckQ5OGRvLWlaaV9rc0RNRm1Ed1pmbjFuT2hDRENPZ202M1p2X3BwTWpjOQ?oc=5",
+    "published": "Tue, 06 Oct 2026 07:00:00 GMT"
+   },
+   {
     "title": "Euro weakens below 1.1400 as Fed rate hike expectations reinforce US Dollar strength - Mitrade",
     "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNd0Jhb3dCMVVoSjR2N0s0dGlnQU0ybXJobEhLY2ZURGtFcy1rV1N6VUNlUll5OEc2clhyTmJVSWZCVlhuQUNub0VQOUhURzZueHU4VzFuNm52M290WEJHRG5ZdGxLbGg2MzBHeXVNYTdTX2h6Wm96cnpkUWRmWV80dGpCdjVhRXNKbktRN3UzVUVXSTZ2QlFiUTRNaw?oc=5",
     "published": "Wed, 23 Sep 2026 07:00:00 GMT"
    },
    {
-    "title": "EUR/USD Hits 2-Month High Before Fed Minutes and Warsh’s Jackson Hole Debut - Investing.com",
-    "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQVmZaTWxDb3ZGVkxWcmlmVDJGYkg3X081aFQ0T2Z2WDFTeHlWMi1fUy1HOWwyU1FlUHlmSkhRSjNUNUJTVWRxWUllRjJkOHpPS2liSnhlaGlUMUlYUm5keUdIWWJ6cnRVUnpFd21pcWhLNkRsNE1za281YWxqNU9yVWIxTEZlSUZQcE5yazBCNFE1ZUpyU0ZFNmlkZmpLRTNRcWxhNE9XSVNLSGNGRmE5d2I5b3ZxSmdf?oc=5",
-    "published": "Mon, 17 Aug 2026 07:00:00 GMT"
-   },
-   {
-    "title": "EUR/USD, Gold Forecast: Two trades to watch - FOREX.com",
-    "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOSjRCUXlnQ1IzU2h3blg3WGo3ZXowOUo5U3pxV2xkay1XSlpKdW1UOEs2UkowbElqbVFRaUpQQUFJZHE5QzU2OC1rdjI0bXg3eGs0UWhXeThCVDRrVGVFRHg4Wll2VzFVV0ZWbVBWNTctTmJEQUFoN29lcjFicVdwREdaOEJuY0Zmei1lZVJ0MWQwTXg3TFRRekw2TEc5bDZN0gGsAUFVX3lxTFB4LTZWUFU5ZTV5NGlhQ0NTZmdpZW9IQWJ1b2kyWFlMclZSSkdlQzJQUkhpdkl5MURLR0RqSzhEOHFISG1GYlNfbFkyMVR2bGo3WTFFTGhjckZfY2l2RlZVMHJnMWJpamE2c09VNUZkTXUwVUFvOFZoUDdUU1N1R0theXlsdFBhUXVHSi1SYXd6bnR4cTJJRjFjUVBnX0I1QTRubzdKSnVfM196VWc?oc=5",
-    "published": "Wed, 23 Sep 2026 07:00:00 GMT"
+    "title": "US Dollar Price Forecast: Dollar Holds Firm as Fed Bets Ease, EUR/USD and GBP/USD Struggle - FXEmpire",
+    "link": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxNS2I1cUt0dEZITmRHWnYyemFvLUE0ekcwLVJVaFZ3c2VWaWd1MDUtS3ctSDFFQnl6emNPaUVld0g4MW1oNmpDMmtyd2FWSEtPXzZQODJYc2xDeUJBWERzVzl1ZVFHZ2RpcjFqQlZSLXZueWFoblptWlJxcmdRMzJUbFlvc0VlQ1JvRWJhd3pBUmRKcksxNmZaV1RReGcyRHBtYjh5MjNZSV9UMkZCWmRtN0NaRmFPX1RoNWowYnZ0d0RQcGw0V09GOGI5ZkxjX19rdVdNbXJB?oc=5",
+    "published": "Wed, 30 Sep 2026 07:00:00 GMT"
    },
    {
     "title": "FOMC trading playbook: How a hawkish Fed could impact Nasdaq 100, Gold, EUR/USD and AUD/USD - marketpulse.com",
     "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPc2NlYVlhbWY2SExxbUZRNXkzSFR2aUc3bVVzazdNU0dnR19EeFBxalpJNGhIaHpVZndjR2hzanFNa2xJaDdURkJHWlpNZ285dXl2WXctSGtQVFZJVmR2MDR6eVMxMEYwUU5SZlllR3JzTmY3R1huM01uRTZldmhnS1VZWkxGMS1aODNDd2g3SHNJTHVuSUN5Sk9oTUZYM1A5dlhOX0RfdE5JczJaMkZRWVBSczBkTFowdklJT2hfUGg?oc=5",
     "published": "Wed, 17 Jun 2026 07:00:00 GMT"
+   },
+   {
+    "title": "Dollar rally stalls as Fed hawkishness lifts Treasury yields, pressuring euro, sterling and gold - VT Markets",
+    "link": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxQSW1XSUlmY3ZFeWd0YXVGUDRyekRRLTJqdjVlTW1rNUx1bjlhazFLaWpOTzR5UFZaMUN6MUtYUDd0OUx4MjdBdURyT2EybVBQNV9TSXBrVUZjS3l0cnNuUjVOdGFyVnB4UXZ3X3VaZjdjMFVxZ0lMMmZaamhJVUJhNkxQSl9fNy1XR3l4aENvNTN1cE1DbHNNZ0M0anMzdzBrNFNsN1EzLXZKV1BQcGk5ZWQyUE9zUXZRaXJGZ2lsS0hscTAyaUR5c3BXVGFrZTFmNEtaVmEtWQ?oc=5",
+    "published": "Fri, 25 Sep 2026 11:09:24 GMT"
+   },
+   {
+    "title": "EUR/USD Q4 2026 Outlook: Euro at a Crossroads as Fed, ECB Tighten - FOREX.com",
+    "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNdzV2eXJoVHpYZHFvZW9KWW9SVGFiUTc4RFJrdTZpY1hqWlB6dVA1bF9Ib0t0R2tpMGs2eTVMakw3bldCNkdBY1hqakNhaHZKU0ZUeURSMnlmaTcxYmdUVXpqaVowZkRfVkdrSzF2VnZVYV92VTRySTFnUTlJdUlDTENmZUlBMGk4UDAya3d0WGNkUlZaREdXZGx1cE0weEphcjJKdF9SRE45VU4tWnpPOFc2X2tUdXo4RWx4Yw?oc=5",
+    "published": "Fri, 25 Sep 2026 07:00:00 GMT"
    }
   ],
   "crypto": [
    {
-    "title": "Crypto Today: Bitcoin, Ethereum, XRP tick lower amid mixed ETF flows - FXStreet",
-    "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOX0VZSmFWMEswNk1jTmZyNFNpZ3BjOEZ1SWh5ZHNESzd6QldMZTAzSmFHQjJQSVlrU3h0M2VvN2xRanBMRmR5MmVFVkZNdU1ibWpHMHlTRmZwdDZPQ3NuSURESTdEYnQ1VEtmZTJQcGVjajB0Q0dCZURFa0NLQTc0dWdXaVIwaHJ3TC1wME43S2RzYlp5WlJPRlJlWlZ2YzIySnFSWWRRWDNKa1FyQTFfVDBQOHN2a0xGMlNDeVROVVoxRHM?oc=5",
-    "published": "Tue, 20 Oct 2026 10:28:48 GMT"
+    "title": "Ethereum Price Prediction: Can ETH Get Back to $3,000 Before the End of 2026? - 24/7 Wall St.",
+    "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOYXlIam5YSmgxbjF6dnRHSndYTmEwYXVHTjgza0RFT1Bxc1pGTHJnVkNYd1NiS2xwQWZVaTgxN2RTVlE4am9XQUFPWTZNNnpJZUZESTdBNWZzTWt3ME9SV2JnM0NmMWJfbUNPVWM0QUlPcTFDVTF3Q0xpc1p6b09XdFJUaGJuX3dLOC11ZUhYdXRlTzczOHVYRl9YTDFFU1BLOGdGcU5jZ3ZBSTNuV21QMzFVSjIwdTVLclk5UXNJb0haLTRSUVc5bTY5QmI?oc=5",
+    "published": "Sun, 18 Oct 2026 19:52:00 GMT"
    },
    {
-    "title": "Bitcoin at $82,000, ETH, XRP, Dogecoin Jump 3% on Growing ETF Flows - Benzinga",
-    "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNblpYZklYcWFRbjdEWno5V2d3VXBmMG5JY2x3Xy1wSm13eU5PeDVZRlVXRnZXUDBjUm5NM0xmeHY3X05hR2tBbEVoc3JVanFIMTZJYTlHejdrRjB2NG0xemZCVHRqOExnblJHQUR4T3J4aHM1ZlpnU2dRM0dnWlVpVGZXRGdXbTRXc0UxN29nYUl2bUZuQ25pbjhPd1R1NTBrUVBUVFJkbmNXVlJwZWtOc3RyLWRoU1hfZXBCb05pNkQ?oc=5",
-    "published": "Tue, 20 Oct 2026 19:54:52 GMT"
+    "title": "XRP ETFs Just Ended a 13-Week Inflow Streak. What Broke It? - Yahoo Finance",
+    "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOV1NQTzNwQjlvVlp4VGwxbnkzVG93Ty1FRVBseEp3MU5URy1DMENDaFliT0ZIYXRKN2JPMUN0VUhkX0VnMHRjWmlaeHNCMEZ0VDZ0Wk55alpoUldUQnkwQ0NlQVUzcTZUaURtT3NudlFvZllSOEI0bUpRbzdPY0t3N041VUpJR0dWMERVNmNQcXQ?oc=5",
+    "published": "Sun, 18 Oct 2026 18:17:17 GMT"
    },
    {
-    "title": "Equity weakness could damp demand for bitcoin after biggest ETF inflows in a month - CoinDesk",
-    "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOSFZrdWRNLWM3SjEwY2JadFgwMEtiaFYtQks3c1BUTlFlbVFld2lCNWpsVnljeTBWcUdITUxoS3dQOXgtWXE5SktFSERjbTZqS1ZCUmM3TFpwZHk4Uzdodk5IcXUwZk1OOGtPQVdiT2JZdnN4eUFyTmQxSmpvT3liR0JneVRlclJXbllVTW5adFczQ2o3QjItYzBwSnRHczY5QlNubFpkc2UyRFVpanljMVNJWUdPXzNBaTNKRWtMSXpadDd5SGxubQ?oc=5",
-    "published": "Tue, 20 Oct 2026 11:19:06 GMT"
+    "title": "Ethereum ETFs lose more money than Bitcoin ETFs last week - Crypto News",
+    "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBFQnBtSGNlbHVpeVlRdm8xdmRIU19YbzZzLXlHMVR5M3BXRkJfQ3plZUpkZE5UTmF2bXJtVHpxRHZWSE9oM0x1SXVzWU1DN3gyakU3eGZHZmVuWTdIQVBtQUN2VlhMaDVNSlJoMHFtajFLa0thMjlv?oc=5",
+    "published": "Sun, 18 Oct 2026 15:05:53 GMT"
    },
    {
-    "title": "Crypto Today: Bitcoin, Ethereum, XRP edge lower as ETF flows show a mixed picture - www.tmgm.com",
-    "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNeTFaQ2sza3F5VV9GWHhNYTE4Z3ozYnEyVVd4MVZBRGR0V1Z3VURCc0NRc0xHOWRGQkRjcVI3bzU2enFWUWRtSnljZmdCOXVFamY2c0M3VkZwM29UbmUtdDJ2OEZJMU9PVTE4RTA4aEJfRTl5XzZDbWQzdEpQSHdmOEZ2MmY3ZXQyYzJTOW9pZEpXa0pROUVKaTI1NklaRW1ZbWwwUTM2cW5QWEZOU2VNNXZodWlwMThnMndzRUU1R1J3eXFMV3FPNDlpZGNTUDA?oc=5",
-    "published": "Tue, 20 Oct 2026 14:02:13 GMT"
+    "title": "Top 3 Price Predictions: Bitcoin, Ethereum, Ripple – BTC rebounds to $82,500 as ETH and XRP hold support - FXStreet",
+    "link": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxPQjJNZUllRlVybnJmbmMyRHlMbm40YjUzZEVnMnM3dHE2VHBadU9KdmVaY2xFY1lUaEUzZUZqUjNhMFdTdHpIM0lyU1l1eF85QUZwRVJXXzh1WERXaks4V2ZfS1FTUDlBVTN2a3lGTTNIMHRhUVlLUkRxbEVCcnJ6NWhYallvdFZic2pLQzd4Z094YXBpenZDdF9nSk1lSkJTSDQ4ak5lZUp0SWVFYVByVzZSaEVhN2xscV9kZWFkZFoxV1h4VE5QLXNtaW9YQWNrSHYzV2IwQjJ4b3oyUllIS21rQlRnSHd0LUZkSEJkMA?oc=5",
+    "published": "Mon, 19 Oct 2026 03:18:24 GMT"
    },
    {
-    "title": "BlackRock’s Bitcoin ETF Just Had Its Biggest Day in a Year. So Why Is Crypto Still Falling? - 24/7 Wall St.",
-    "link": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxPNTNheTJPOUo0Y2I3S29FbW9UeTdpT24xQVQ5WENUdEM1SlJ3X0pzd0hBMlNmNWY0QlJna0FTV0sxOEp4MEFzNDV3NWJoNlV2X3NnSWdPZTJaamtsNmFaMWVGdmRuUkpDaGg1RnBNOWJNU0lWUEhXTFlLR0VwZWNJRVVqT1lVSlBmMWpoUlJJWnFjX0FFQmxvTWl2Vl8tSFNRY1BDcFpFZVlCT3lGM0czd3dyU3Z3VGJxdnpyNDkxZEtpNFRUUmxpZDdfUF9SNWQ3ZnYwcmk4QmRzWi1KR0JWdw?oc=5",
-    "published": "Tue, 20 Oct 2026 11:59:00 GMT"
+    "title": "Bitcoin ETFs vs Ethereum ETFs: Which Bled More Last Week? - CryptoPotato",
+    "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPMUx3R3IxbGdzaTdzNWVEaUJ6X0V2LUlTbkJOT1J1cG92cDJFWnVtM1kzaXI4TERJOC1fVVljQ0Eyb2hrS19QNjItU2c5UktsZjk2OW5hUnItWFJROTNPYlZmN2tEdnp1WHJteTlWRlF4OEtSN0lodXc5Wkt4dEhxZTc1ZkhBalk1?oc=5",
+    "published": "Sun, 18 Oct 2026 13:58:00 GMT"
    },
    {
-    "title": "Bitcoin at $82,000, ETH, XRP, Dogecoin Jump 3% on Growing ETF Flows - TradingView",
-    "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQcng5LVBfckJHb3NDRFUyb3NfUXkxRWhkR3BrMk9PaHFxQk96dzVnTEd6MlJyeXFzT2JhdkxEazNiVTJHcnJuLXlkVnFEWTNVSVRLaC1lZVEtejdsekNpR00yNjMxc0RaT3N2WFNqVjZ2U1N2Zy1Samo0c0FGUVNYRS1TS0VRZ2hkWGZtOWxrOHNubUZDVUdYMWM3SWpzQVNfMEpOZEZ4N2VyMGJILV82RzgzMm9rLU5wYVl6cEdn?oc=5",
-    "published": "Tue, 20 Oct 2026 19:54:52 GMT"
+    "title": "Ethereum ETFs: $320m outflow, $299m at BlackRock - CryptoTicker",
+    "link": "https://news.google.com/rss/articles/CBMickFVX3lxTE1jV1hHeFl3TmV5TE5mck9iTHRBTnc0ei1aZ0wzTi1GdkJQeWkxdUpkcnY1eHVydHRPY3JnbUNpRWpuV0N1VnZra0VZRkszWHpnRlo0V0JaclNpanNOdVpwOUYzMUdGWE9XMDlBNlBoQmFwdw?oc=5",
+    "published": "Sun, 18 Oct 2026 15:18:49 GMT"
    },
    {
-    "title": "Ether ETFs Have Given Back 62% of This Year’s Inflows. Is Wall Street Giving Up on Ethereum? - Yahoo Finance",
-    "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQbVlwUGRNTE1BSGpfZjF3bEZIcDdoUUFsNm9TUENfYkRNRHpVNEJlOUh4dDRmS2NITFhsS2hEUDhSaXZQUjFWQ3Y3eDhkWV9mZ2IzRUF2QXhSbHpsZm5qdEIyQldhR1Vid1A1TWhsQTZ1VFBicjljOTNIYnhNUV9zUGZtUkhOcjE3RGxkU3JmblRfekU?oc=5",
-    "published": "Mon, 19 Oct 2026 14:30:35 GMT"
+    "title": "XRP ETFs Keep Pulling In Cash While Bitcoin and Ethereum Funds Bleed - Startup Fortune",
+    "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOaUp4Y1p1MEtwY2xMdDlPS0xWQzZpQjdrdm9KcHk3UmRQdzRpT0ZLa1JwZXk3NUNXMGhsQUowU2ZBbl9XLV9fb3JUMlNQdGxfelVpQjdLYVpSb3dCS3R1eDhHNmt2ZGoyUTZaQmhMZElON3ZCTVBhV181Y1Z6SUZJQ1RzVHNRVEk5b1lITnVUQ1BLQ0djbU5FR19YRkM?oc=5",
+    "published": "Sun, 18 Oct 2026 11:32:28 GMT"
    },
    {
-    "title": "XRP’s 13-week ETF inflow streak ends as Bitcoin and Ethereum withdrawals continue - CryptoSlate",
-    "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQMUtqLXNhY1c4bFA0MmR0NlFwTTM0Q2F4LTV1TzEwNkJWRjFuN2pIM0xJY1ZlMTJjdkRocWRVcWFtdTg2Y2JpTVRhTnhNVlEwdzRPeU5hT3hnWkwwZExlemEtMmlhMlRaU3lKNzJ2cHUxM2xlT0lRZVU0VXhaRjhwMmh3TGl3aVJTSzZNOUttb0hHN19mY1VPcQ?oc=5",
-    "published": "Mon, 19 Oct 2026 10:30:55 GMT"
+    "title": "Bitcoin, Ethereum ETFs Face Outflows but Altcoins Could Lead the Next Rally, Grayscale Predicts - Benzinga",
+    "link": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxQb2dLQ0R1SWxBTzdCMjJaNXExaWlmT1kwa25mTUx5UEFXTEJjX0tqcFVJa01YTHNVYVNzejBPZXczSW4xX2VBWktqdHI1OVpFeU84UTB1TncwejFxczdGNVp4R01IT0IycWJMY2pYMkowSmdXVEZBdFNTZFJOekhCd1FqSTJHbVkyRVZ3ZkllOGVlWnFCcDJCd21FQ3k2VmU5T3dhampKbWNVLXBlWnZnckxnMFJ2MEFiZ3R6b3AxV1hLUVAtRXVHRmtHSVRGQktjNFRxM2d5Y194Wi1EME13T1R5NzM1V0NiUG1r?oc=5",
+    "published": "Thu, 15 Oct 2026 14:31:19 GMT"
    }
   ],
   "bourse": [],
@@ -187,9 +187,9 @@
     "published": "Thu, 08 Oct 2026 07:00:00 GMT"
    },
    {
-    "title": "Mental health problems are more likely to persist among adults now than a decade ago, study finds - Medical Xpress",
-    "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQVFNCY01NVV8yajJHcXRCY3QwV0pQdWJOTE5tYlhOYWlUSTVNVVVXVXBLenRJQWNibGxwUE9HU1R5cjhydmVOMUs2R1kyZUltb1VEZ1VSX3JPX1hGWmxkT0ZCcXhpZ1ZmN0I2Rm9zZVdLVzJ3bmlxbktyRm9jbVdfZE50UWlFV0Ut?oc=5",
-    "published": "Mon, 28 Sep 2026 07:00:00 GMT"
+    "title": "Social media detox research leaves youth mental health questions unresolved, review finds - Medical Xpress",
+    "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNTlZSZ0RQS1pxeHNvd29ZN0JXbWNpZUtoN3BaeGI3dWo3S1pUZ2FoaDJTTkdyS2ltY0FIUWNadnFZVXFlaFF3QW5NY1hWMWVkd0tyMjZpNi1HZnhQZF84eTk5aXVjM0RYcEVvWTQ5dXBZdWF0amtFT1pHOXFjcHZXbg?oc=5",
+    "published": "Thu, 15 Oct 2026 12:20:09 GMT"
    },
    {
     "title": "One mission, many paths: George Mason senior advances youth mental health through research and outreach - George Mason University",
@@ -249,14 +249,14 @@
     "published": "Tue, 11 Aug 2026 07:00:00 GMT"
    },
    {
-    "title": "Top small business ideas for 2026: Start & succeed - Wolters Kluwer",
-    "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBRcTk2b3V5M1NfdHF2WEVnZFEzOEp0NldtMWZVTG9Zc05nRHB1c3V1bE8wZjNTbU5CRlhQREp1dXRnTkN3OWdlRDM3UlVHLXJZZWRjcVd5bURTcUJVSkhnMGhFbGgwSUZCcGVmb3BQSzBvUExnRmQxWkZoOElQalU?oc=5",
-    "published": "Tue, 06 Jan 2026 15:41:19 GMT"
-   },
-   {
     "title": "50 Business Ideas Positioned for Growth in 2026 and Beyond - U.S. Chamber of Commerce",
     "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQei1NOUxoNVNqX2xta0lhUHRBTnV0eWozSGFOY01jNl9SMk50UHNwUkFqZ3pQVUVKMkQ4T2VmUWhRSFNGcmZ5c3ZsRjFxaHBlM2g2aFFOZk1lY0Y5QXFQNF83b2hFdzVKNTRxc1pEcEZ5OWJ1Z2lndUdyNlFzek1LdWhhZw?oc=5",
     "published": "Wed, 15 Apr 2026 07:00:00 GMT"
+   },
+   {
+    "title": "Top small business ideas for 2026: Start & succeed - Wolters Kluwer",
+    "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBRcTk2b3V5M1NfdHF2WEVnZFEzOEp0NldtMWZVTG9Zc05nRHB1c3V1bE8wZjNTbU5CRlhQREp1dXRnTkN3OWdlRDM3UlVHLXJZZWRjcVd5bURTcUJVSkhnMGhFbGgwSUZCcGVmb3BQSzBvUExnRmQxWkZoOElQalU?oc=5",
+    "published": "Tue, 06 Jan 2026 15:41:19 GMT"
    },
    {
     "title": "RIEVA: How Your Startup or Small Business Can Succeed in 2026 - Small Business & Entrepreneurship Council",
