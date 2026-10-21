@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Metatya | ورزش و انضباط</title>
+<meta name="description" content="برنامه‌ی ساده‌ی قدرت، هوازی و ریکاوری با مربی تعاملی. آموزشی است و جایگزین مشاوره‌ی پزشک یا مربی نیست.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#05060a; --bg-2:#0b0e17;
+  --surface:rgba(255,255,255,.045); --surface-hi:rgba(255,255,255,.085);
+  --line:rgba(255,255,255,.10); --fg:#f5f6f9; --muted:#9aa3b2;
+  --accent:#ff7a2f; --accent-2:#c6ff3d; --cool:#66d9ff;
+  --glow:rgba(255,122,47,.30);
+  --shadow:0 24px 60px rgba(0,0,0,.5);
+  --radius:26px; --ease:cubic-bezier(.2,.8,.2,1);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    color-scheme: light;
+    --bg:#f6f5f2; --bg-2:#ffffff; --surface:rgba(255,255,255,.82); --surface-hi:#ffffff;
+    --line:rgba(20,20,30,.10); --fg:#15110d; --muted:#67605a;
+    --accent:#e8581c; --accent-2:#5c9e00; --cool:#0c7fa8; --glow:rgba(232,88,28,.2);
+    --shadow:0 20px 50px rgba(40,30,20,.12);
+  }
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --bg:#f6f5f2; --bg-2:#ffffff; --surface:rgba(255,255,255,.82); --surface-hi:#ffffff;
+  --line:rgba(20,20,30,.10); --fg:#15110d; --muted:#67605a;
+  --accent:#e8581c; --accent-2:#5c9e00; --cool:#0c7fa8; --glow:rgba(232,88,28,.2);
+  --shadow:0 20px 50px rgba(40,30,20,.12);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:'Vazirmatn',system-ui,sans-serif;font-size:15px;line-height:1.75;overflow-x:hidden;min-height:100vh;padding-bottom:calc(112px + env(safe-area-inset-bottom,0px))}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+svg{display:block}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:12px}
+.wrap{max-width:1040px;margin-inline:auto;position:relative;z-index:1;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+
+/* ---- لایه‌ی ۱: پس‌زمینه‌ی عمقی (با حرکت ماوس موازی می‌شود) ---- */
+.scene{position:fixed;inset:-40px;z-index:-1;overflow:hidden;pointer-events:none;transform:translate3d(calc(var(--px,0)*-18px),calc(var(--py,0)*-18px),0);transition:transform .6s var(--ease)}
+.scene .glow{position:absolute;inset:-25%;background:radial-gradient(40% 35% at 18% 15%,var(--glow),transparent 70%),radial-gradient(35% 30% at 85% 35%,color-mix(in srgb,var(--accent-2) 20%,transparent),transparent 70%);filter:blur(40px);animation:drift 20s var(--ease) infinite alternate}
+.scene .lanes{position:absolute;left:-40%;right:-40%;bottom:-6%;height:65vh;background:repeating-linear-gradient(90deg,var(--line) 0 2px,transparent 2px 120px),repeating-linear-gradient(0deg,var(--line) 0 2px,transparent 2px 46px);transform:perspective(600px) rotateX(64deg);transform-origin:50% 100%;mask-image:linear-gradient(to top,#000 5%,transparent 70%);-webkit-mask-image:linear-gradient(to top,#000 5%,transparent 70%);animation:lanemove 10s linear infinite}
+.scene .spark{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--accent);animation:float linear infinite;opacity:.7}
+@keyframes drift{to{transform:translate3d(5%,-3%,0) rotate(5deg)}}
+@keyframes lanemove{to{background-position:0 0,0 46px}}
+@keyframes float{from{transform:translateY(0)}to{transform:translateY(-110vh)}}
+
+/* نوار پیشرفت اسکرول */
+.progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:200;transform-origin:0 50%;transform:scaleX(var(--scroll,0));background:linear-gradient(90deg,var(--accent),var(--accent-2),var(--cool))}
+
+/* هدر */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;margin-top:8px}
+header .bar{display:flex;align-items:center;justify-content:space-between;height:62px;padding:0 14px;border-radius:999px;background:color-mix(in srgb,var(--bg-2) 75%,transparent);border:1px solid var(--line);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.logo{font-weight:900;font-size:1.05rem;display:flex;align-items:center;gap:8px}
+.logo i{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--accent)}
+.logo b{color:var(--accent)}
+.chip{font-size:.8rem;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+
+/* ---- هیرو: متن + دمبل سه‌بعدی ---- */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:20px;align-items:center;padding:40px 0 20px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted);border:1px solid var(--line);background:var(--surface);padding:6px 14px;border-radius:999px}
+.eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 12px var(--accent-2);animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.3}}
+h1{font-size:clamp(2rem,6.2vw,3.8rem);font-weight:900;line-height:1.2;letter-spacing:-.8px;margin:18px 0 14px;text-wrap:balance}
+h1 .w{display:inline-block;opacity:0;transform:translateY(.35em) rotateX(-40deg);transform-origin:50% 100%;animation:wordin .9s var(--ease) forwards;animation-delay:calc(var(--i) * 90ms + 100ms)}
+@keyframes wordin{to{opacity:1;transform:none}}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--accent-2),var(--accent));background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}
+@keyframes shine{to{background-position:200% center}}
+.lead{color:var(--muted);max-width:56ch}
+.cta{display:inline-flex;margin-top:22px;padding:14px 22px;border-radius:16px;background:linear-gradient(135deg,var(--accent),#ffb36b);color:#1a0b02;font-weight:900;box-shadow:0 16px 40px var(--glow);transition:transform .25s var(--ease)}
+.cta:hover{transform:translateY(-3px)}
+
+.stage{position:relative;height:340px;perspective:1100px;display:grid;place-items:center}
+.stage .orbit{position:absolute;width:300px;height:300px;border-radius:50%;border:1px dashed color-mix(in srgb,var(--accent) 35%,transparent);animation:spinz 18s linear infinite;transform:rotateX(70deg)}
+.stage .orbit.o2{width:240px;height:240px;border-color:color-mix(in srgb,var(--cool) 40%,transparent);animation-duration:12s;animation-direction:reverse}
+@keyframes spinz{to{transform:rotateX(70deg) rotateZ(360deg)}}
+.db{position:relative;width:340px;height:200px;transform-style:preserve-3d;animation:db 14s linear infinite;transform:rotateX(-14deg) rotateY(0deg) translate3d(calc(var(--px,0)*14px),calc(var(--py,0)*-10px),0)}
+@keyframes db{to{transform:rotateX(-14deg) rotateY(360deg)}}
+.db .bar{position:absolute;left:50%;top:50%;width:250px;height:14px;margin:-7px 0 0 -125px;border-radius:8px;background:linear-gradient(90deg,#8a8f9c,#f2f4f8 50%,#8a8f9c);transform:translateZ(0);box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.db .plate{position:absolute;top:50%;width:104px;height:104px;margin-top:-52px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffd2b0,var(--accent) 55%,#7a2a00);box-shadow:inset 0 0 0 10px rgba(0,0,0,.18),0 18px 30px rgba(0,0,0,.45)}
+.db .plate.l{left:-40px}
+.db .plate.r{right:-40px}
+.db .plate.l2{left:-74px;width:90px;margin-top:-45px;background:radial-gradient(circle at 35% 30%,#eaffb8,var(--accent-2) 55%,#3e6500);transform:translateZ(14px)}
+.db .plate.r2{right:-74px;width:90px;margin-top:-45px;background:radial-gradient(circle at 35% 30%,#eaffb8,var(--accent-2) 55%,#3e6500);transform:translateZ(14px)}
+.db .plate::after{content:"";position:absolute;inset:38%;border-radius:50%;background:rgba(0,0,0,.35)}
+.stage .tag-float{position:absolute;font-size:.74rem;font-weight:800;padding:6px 12px;border-radius:999px;background:var(--surface-hi);border:1px solid var(--line);backdrop-filter:blur(10px);box-shadow:var(--shadow);transform:translate3d(calc(var(--px,0)*var(--d,20px)),calc(var(--py,0)*var(--d,20px)),0);transition:transform .5s var(--ease);white-space:nowrap}
+.stage .tag-float.t1{top:14%;right:-2%;--d:34px}
+.stage .tag-float.t2{bottom:14%;left:-4%;--d:26px;color:var(--accent-2)}
+.stage .tag-float.t3{top:46%;left:-10%;--d:18px;color:var(--cool)}
+.stage .label{position:absolute;bottom:-6px;font-size:.7rem;color:var(--muted);background:var(--bg-2);padding:2px 10px;border-radius:999px;border:1px solid var(--line)}
+
+/* نوار ضربان */
+.pulse{margin-top:18px;border-radius:var(--radius);border:1px solid var(--line);background:var(--surface);backdrop-filter:blur(12px);padding:14px 18px;overflow:hidden}
+.pulse svg{width:100%;height:auto}
+.pulse path{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1400;stroke-dashoffset:1400;animation:beat 3.2s var(--ease) infinite}
+.pulse path.g{stroke:var(--accent-2);opacity:.5;stroke-width:2;animation-delay:.2s}
+@keyframes beat{0%{stroke-dashoffset:1400}60%,100%{stroke-dashoffset:0}}
+
+/* عنوان بخش */
+.section{margin-top:56px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.section-head h2{font-size:clamp(1.3rem,3.6vw,1.8rem);font-weight:900}
+.section-head span{font-size:.82rem;color:var(--muted)}
+
+/* ---- لایه‌ی ۲: مربی هوشمند (قواعد ساده، نه هوش مصنوعی واقعی) ---- */
+.coach{border-radius:var(--radius);background:var(--surface);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:22px;display:grid;gap:18px;position:relative;overflow:hidden}
+.coach::before{content:"";position:absolute;inset:-40% -20% auto auto;width:60%;aspect-ratio:1;background:radial-gradient(circle,var(--glow),transparent 65%);pointer-events:none}
+.q{display:grid;gap:8px}
+.q > span{font-size:.82rem;font-weight:800;color:var(--muted)}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface-hi);font-weight:700;font-size:.88rem;transition:transform .2s var(--ease),background .2s,border-color .2s}
+.opt:hover{transform:translateY(-2px)}
+.opt[aria-pressed="true"]{background:linear-gradient(135deg,var(--accent),#ffb36b);color:#1a0b02;border-color:transparent;box-shadow:0 10px 26px var(--glow)}
+.plan-out{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.day{border-radius:18px;padding:12px 8px;background:var(--surface-hi);border:1px solid var(--line);text-align:center;min-width:0;font-size:.74rem;color:var(--muted);display:flex;flex-direction:column;gap:6px;min-height:118px;transition:transform .35s var(--ease),border-color .35s}
+.day:hover{transform:translateY(-4px) rotateX(4deg)}
+.day b{color:var(--fg);font-size:.8rem;font-weight:800}
+.day.on{border-color:color-mix(in srgb,var(--accent) 55%,transparent);background:color-mix(in srgb,var(--accent) 12%,var(--surface-hi))}
+.day .bar{height:4px;border-radius:4px;background:var(--line);margin-top:auto;overflow:hidden}
+.day.on .bar{background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+.tips{display:grid;gap:8px;list-style:none;font-size:.88rem;color:var(--muted)}
+.tips li::before{content:"✦";color:var(--accent);margin-inline-end:8px}
+.honest{font-size:.76rem;color:var(--muted)}
+
+/* ---- کارت‌های ستون‌ها با نور و سه‌بعدی ---- */
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;perspective:1000px}
+.card{position:relative;min-width:0;border-radius:var(--radius);padding:22px;background:var(--surface);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;flex-direction:column;gap:10px;overflow:hidden;transform:rotateX(calc(var(--ry,0)*1deg)) rotateY(calc(var(--rx,0)*1deg));transform-style:preserve-3d;transition:transform .5s var(--ease),box-shadow .4s,border-color .4s}
+.card::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(320px circle at var(--mx,50%) var(--my,0%),color-mix(in srgb,var(--accent) 20%,transparent),transparent 45%);opacity:0;transition:opacity .4s}
+.card:hover{box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+.card:hover::before{opacity:1}
+.card .ico{width:58px;height:58px;flex:none;transform:translateZ(36px);filter:drop-shadow(0 12px 16px rgba(0,0,0,.35))}
+.card h3{font-size:1.08rem;font-weight:900;transform:translateZ(18px)}
+.card p{font-size:.86rem;color:var(--muted);line-height:1.75}
+.card ul{list-style:none;display:grid;gap:6px;font-size:.84rem;color:var(--muted)}
+.card li::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-inline-end:10px;vertical-align:middle}
+.tag{align-self:flex-start;font-size:.72rem;font-weight:800;padding:4px 11px;border-radius:999px;border:1px solid var(--line);color:var(--accent-2)}
+
+/* انضباط ذهنی */
+.mind{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;padding:24px;border-radius:var(--radius);background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 16%,var(--surface)),var(--surface));border:1px solid var(--line)}
+.mind .ico{width:72px;height:72px;animation:bob 4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px) rotate(4deg)}}
+.mind h3{font-size:1.1rem;font-weight:900}
+.mind p{color:var(--muted);font-size:.9rem;margin-top:4px}
+.mind a{display:inline-flex;margin-top:10px;font-weight:800;color:var(--accent)}
+
+.notice{margin-top:44px;padding:18px 20px;border-radius:20px;border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);background:var(--surface);color:var(--muted);font-size:.84rem;line-height:1.85}
+.notice b{color:var(--fg)}
+footer{margin-top:40px;padding:20px 0 8px;border-top:1px solid var(--line);font-size:.8rem;color:var(--muted);line-height:1.85}
+
+/* منوی شناور */
+.dock{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));width:min(92%,440px);z-index:100;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:8px;border-radius:26px;background:color-mix(in srgb,var(--bg-2) 82%,transparent);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.dock a{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.7rem;font-weight:700;color:var(--muted);padding:9px 4px;border-radius:18px}
+.dock a svg{width:22px;height:22px}
+.dock a.active{color:var(--fg);background:var(--surface-hi)}
+.dock a.active svg{color:var(--accent)}
+
+/* حرکت ورود */
+.js .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.js .reveal.in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .reveal{opacity:1;transform:none}
+  h1 .w{opacity:1;transform:none}
+  .pulse path{stroke-dashoffset:0}
+  .card{transform:none!important}
+  .scene{transform:none!important}
+  .spark{display:none}
+}
+
+/* موبایل */
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr}
+  .stage{height:280px;transform:scale(.85)}
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .plan-out{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .mind{grid-template-columns:1fr;text-align:start}
+  .chip{display:none}
+}
+@media (hover:none){ .card{transform:none!important} }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="gO" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#ffd2b0"/><stop offset=".55" stop-color="#ff7a2f"/><stop offset="1" stop-color="#8a2e00"/></radialGradient>
+    <radialGradient id="gL" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#eaffb8"/><stop offset=".55" stop-color="#c6ff3d"/><stop offset="1" stop-color="#4a7a00"/></radialGradient>
+    <radialGradient id="gC" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#d4f4ff"/><stop offset=".55" stop-color="#66d9ff"/><stop offset="1" stop-color="#14608a"/></radialGradient>
+    <symbol id="s-bar" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="url(#gO)"/><rect x="12" y="29" width="40" height="6" rx="3" fill="#2a1005" opacity=".85"/><rect x="16" y="22" width="6" height="20" rx="2" fill="#2a1005" opacity=".85"/><rect x="42" y="22" width="6" height="20" rx="2" fill="#2a1005" opacity=".85"/></symbol>
+    <symbol id="s-run" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="url(#gL)"/><path d="M22 46l8-12 6 4 6-10" stroke="#1d3300" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="40" cy="18" r="4" fill="#1d3300"/></symbol>
+    <symbol id="s-leaf" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="url(#gC)"/><path d="M20 40c0-12 12-20 24-20 0 12-10 22-24 20z" fill="#e8fbff" opacity=".9"/><path d="M22 42l14-14" stroke="#14608a" stroke-width="3" stroke-linecap="round"/></symbol>
+    <symbol id="s-moon" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="url(#gC)"/><path d="M38 16a16 16 0 1 0 10 22A12 12 0 0 1 38 16z" fill="#eaf9ff"/></symbol>
+    <symbol id="s-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z" fill="currentColor"/></symbol>
+    <symbol id="s-tool" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0 5 5L14 16l-4 4-2-2 4-4 5.7-5.7z" fill="currentColor"/></symbol>
+    <symbol id="s-file" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z" fill="currentColor" opacity=".9"/></symbol>
+    <symbol id="s-spark" viewBox="0 0 24 24"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<div class="progress" aria-hidden="true"></div>
+<div class="scene" aria-hidden="true"><div class="glow"></div><div class="lanes"></div></div>
+
+<div class="wrap">
+  <header>
+    <div class="bar">
+      <a class="logo" href="index.html" dir="ltr"><i></i>Meta<b>tya</b></a>
+      <a class="chip" href="index.html">← صفحه‌ی اصلی</a>
+    </div>
+  </header>
+
+  <section class="hero" id="top">
+    <div>
+      <span class="eyebrow"><span class="dot"></span>ورزش · قدرت · ریکاوری</span>
+      <h1>
+        <span class="w" style="--i:0">بدن</span>
+        <span class="w" style="--i:1">قوی،</span>
+        <em><span class="w" style="--i:2">ذهن</span> <span class="w" style="--i:3">آرام</span></em>
+        <span class="w" style="--i:4">؛</span>
+        <span class="w" style="--i:5">با</span>
+        <span class="w" style="--i:6">انضباط</span>
+        <span class="w" style="--i:7">نه</span>
+        <span class="w" style="--i:8">عجله</span>
+      </h1>
+      <p class="lead">برنامه‌ی ساده‌ی قدرت و هوازی، ریکاوری و تغذیه‌ی پایه. با مربی تعاملی پایین صفحه، برنامه‌ی هفتگی خودت را بساز.</p>
+      <a class="cta" href="#coach">ساختن برنامه‌ی هفتگی</a>
+    </div>
+
+    <div class="stage" aria-label="دمبل سه‌بعدی نمونه">
+      <div class="orbit"></div>
+      <div class="orbit o2"></div>
+      <div class="db">
+        <div class="bar"></div>
+        <div class="plate l"></div><div class="plate r"></div>
+        <div class="plate l2"></div><div class="plate r2"></div>
+      </div>
+      <span class="tag-float t1" data-depth="1">قدرت</span>
+      <span class="tag-float t2" data-depth="1">ریکاوری</span>
+      <span class="tag-float t3" data-depth="1">هوازی</span>
+      <span class="label">نمونه‌ی تصویری</span>
+    </div>
+  </section>
+
+  <div class="pulse" aria-hidden="true">
+    <svg viewBox="0 0 1000 120" preserveAspectRatio="none">
+      <path d="M0 60 H180 l18-28 18 56 18-40 18 12 H380 l18-30 16 58 18-38 18 10 H600 l18-26 18 52 18-42 18 16 H820 l18-24 16 50 18-36 18 10 H1000" />
+      <path class="g" d="M0 70 H220 l14-14 12 26 12-18 H520 l14-12 12 22 12-16 H760 l12-10 12 18 H1000" />
+    </svg>
+  </div>
+
+  <!-- مربی هوشمند -->
+  <section class="section reveal" id="coach">
+    <div class="section-head"><h2>مربی هوشمند</h2><span>سه انتخاب، یک برنامه‌ی هفتگی</span></div>
+    <div class="coach">
+      <div class="q">
+        <span>هدفت چیست؟</span>
+        <div class="opts" data-group="goal">
+          <button class="opt" aria-pressed="true" data-v="strength">قدرت و عضله</button>
+          <button class="opt" aria-pressed="false" data-v="cardio">هوازی و استقامت</button>
+          <button class="opt" aria-pressed="false" data-v="stress">آرامش و کم‌کردن استرس</button>
+        </div>
+      </div>
+      <div class="q">
+        <span>چند روز در هفته وقت داری؟</span>
+        <div class="opts" data-group="days">
+          <button class="opt" aria-pressed="false" data-v="2">۲ روز</button>
+          <button class="opt" aria-pressed="true" data-v="3">۳ روز</button>
+          <button class="opt" aria-pressed="false" data-v="4">۴ روز</button>
+        </div>
+      </div>
+      <div class="q">
+        <span>سطحت چقدر است؟</span>
+        <div class="opts" data-group="level">
+          <button class="opt" aria-pressed="true" data-v="beginner">تازه‌کار</button>
+          <button class="opt" aria-pressed="false" data-v="mid">متوسط</button>
+        </div>
+      </div>
+
+      <div class="plan-out" id="planOut" aria-live="polite"></div>
+      <ul class="tips" id="tipsOut"></ul>
+      <p class="honest">این مربی با قواعد ساده و از پیش نوشته‌شده کار می‌کند؛ هوش مصنوعی واقعی نیست و جایگزین مربی یا پزشک نیست. قبل از شروع، بدنت را با متخصص چک کن.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><h2>چهار ستون</h2><span>هر کدام به اندازه‌ی خودش مهم است</span></div>
+    <div class="grid" id="pillars">
+      <article class="card tilt reveal">
+        <svg class="ico"><use href="#s-bar"/></svg>
+        <span class="tag">قدرت</span>
+        <h3>تمرین‌های پایه و پیشرفت تدریجی</h3>
+        <p>حرکت‌های ترکیبی مثل اسکات، ددلیفت و پرس را با وزنه‌ی کم شروع کن. هر هفته فقط کمی وزنه یا تکرار را اضافه کن.</p>
+        <ul><li>فرم درست بر وزنه‌ی زیاد اولویت دارد</li><li>سه جلسه در هفته برای شروع کافی است</li></ul>
+      </article>
+      <article class="card tilt reveal">
+        <svg class="ico"><use href="#s-run"/></svg>
+        <span class="tag">هوازی</span>
+        <h3>دویدن، دوچرخه یا پیاده‌روی تند</h3>
+        <p>سازمان جهانی بهداشت حدود ۱۵۰ دقیقه فعالیت متوسط در هفته را توصیه می‌کند. می‌توانی آن را در چند روز تقسیم کنی.</p>
+        <ul><li>با سرعتی شروع کن که هنوز بتوانی حرف بزنی</li><li>هر هفته کمی طولانی‌تر کن</li></ul>
+      </article>
+      <article class="card tilt reveal">
+        <svg class="ico"><use href="#s-moon"/></svg>
+        <span class="tag">ریکاوری</span>
+        <h3>خواب و استراحت، بخشی از تمرین</h3>
+        <p>عضله در استراحت رشد می‌کند، نه فقط در حین تمرین. خواب کافی و روزهای سبک، پیشرفت را پایدار می‌کنند.</p>
+        <ul><li>درد شدید یا مداوم را جدی بگیر</li><li>روزهای استراحت را حذف نکن</li></ul>
+      </article>
+      <article class="card tilt reveal">
+        <svg class="ico"><use href="#s-leaf"/></svg>
+        <span class="tag">تغذیه‌ی پایه</span>
+        <h3>غذای کامل، آب کافی، برنامه‌ی ساده</h3>
+        <p>پروتئین، سبزی، میوه، غلات کامل و آب کافی پایه‌ی هر برنامه‌ی ورزشی است. نیاز دقیق هر نفر به سن، وزن و شرایط بدنی‌اش بستگی دارد.</p>
+        <ul><li>برای نیاز دقیق، با متخصص تغذیه مشورت کن</li><li>ورزش شدید بدون تغذیه‌ی کافی نتیجه نمی‌دهد</li></ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="mind">
+      <svg class="ico"><use href="#s-spark"/></svg>
+      <div>
+        <h3>انضباط ورزشی و انضباط معاملاتی یک چیزند</h3>
+        <p>تکرار بدون هیجان، ثبت کردن و نگاه به داده، هر دو را می‌سازد. اگر دوست داری این را در بازار هم ببینی، پرونده‌های معاملاتی واقعی را بخوان.</p>
+        <a href="trades.html">پرونده‌های واقعی ←</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="mind">
+      <svg class="ico"><use href="#s-spark"/></svg>
+      <div>
+        <h3>ذهن ورزشی حرفه‌ای؛ برای ورزشکاران ملی و المپیک</h3>
+        <p>اگر تمرین‌هایت خوب است ولی زیر فشار مسابقه تمرکزت می‌ریزد، مشاوره‌ی تخصصی با مشاور دارای پروانه کمک می‌کند. این خدمت جایگزین درمان روانی نیست.</p>
+        <a href="sport-elite-mind.html">ببین این مسیر چطور کار می‌کند ←</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="notice">
+    <b>این صفحه آموزشی است.</b> برای تمرین، تغذیه یا شرایطی مثل بیماری قلبی، فشار خون، بارداری، آسیب یا درد مزمن، پیش از شروع با پزشک یا مربی حرفه‌ای مشورت کن. اگر در تمرین یا تغذیه نشانه‌ی خطر (درد قفسه‌ی سینه، سرگیجه‌ی شدید، تنگی نفس غیرعادی) داشتی، فوراً تمرین را متوقف کن و به پزشک مراجعه کن.
+  </div>
+
+  <footer>Metatya · محتوای آموزشی است و جایگزین مشاوره‌ی پزشکی یا تخصصی نیست.</footer>
+</div>
+
+<nav class="dock" aria-label="منوی اصلی">
+  <a href="index.html"><svg><use href="#s-home"/></svg>خانه</a>
+  <a href="toolbox.html"><svg><use href="#s-tool"/></svg>ابزارها</a>
+  <a href="trades.html"><svg><use href="#s-file"/></svg>پرونده‌ها</a>
+  <a href="services.html"><svg><use href="#s-spark"/></svg>خدمات</a>
+</nav>
+
+<script>
+(function(){
+  const root = document.documentElement;
+  root.classList.add('js');
+
+  /* تم ذخیره‌شده (اختیاری) */
+  try { const s = localStorage.getItem('metatya-theme'); if (s) root.setAttribute('data-theme', s); } catch(e) {}
+
+  /* ذرات شناور در پس‌زمینه */
+  const scene = document.querySelector('.scene');
+  if (scene) {
+    for (let i = 0; i < 14; i++) {
+      const p = document.createElement('span');
+      p.className = 'spark';
+      p.style.left = (Math.random() * 100) + '%';
+      p.style.bottom = (-10 - Math.random() * 20) + '%';
+      p.style.animationDuration = (9 + Math.random() * 10) + 's';
+      p.style.animationDelay = (-Math.random() * 12) + 's';
+      p.style.transform = 'scale(' + (0.5 + Math.random()) + ')';
+      scene.appendChild(p);
+    }
+  }
+
+  /* نمایش تدریجی بخش‌ها */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* پیشرفت اسکرول */
+  const bar = document.querySelector('.progress');
+  const onScroll = () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const p = max > 0 ? scrollY / max : 0;
+    root.style.setProperty('--scroll', p.toFixed(4));
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* حرکت موازی با ماوس/انگشت (لایه‌های عمق) */
+  const fine = matchMedia('(hover: hover)').matches;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (fine && !reduce) {
+    addEventListener('pointermove', e => {
+      const x = (e.clientX / innerWidth) * 2 - 1;
+      const y = (e.clientY / innerHeight) * 2 - 1;
+      root.style.setProperty('--px', x.toFixed(3));
+      root.style.setProperty('--py', y.toFixed(3));
+    }, { passive: true });
+    /* نور و چرخش کارت‌ها */
+    document.querySelectorAll('.tilt').forEach(card => {
+      card.addEventListener('pointermove', e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width;
+        const y = (e.clientY - r.top) / r.height;
+        card.style.setProperty('--mx', (x * 100) + '%');
+        card.style.setProperty('--my', (y * 100) + '%');
+        card.style.setProperty('--rx', (x - .5) * 8);
+        card.style.setProperty('--ry', (.5 - y) * 8);
+      });
+      card.addEventListener('pointerleave', () => { card.style.setProperty('--rx', 0); card.style.setProperty('--ry', 0); });
+    });
+  }
+
+  /* ---- مربی هوشمند: قواعد ساده برای ساختن برنامه ---- */
+  const state = { goal: 'strength', days: '3', level: 'beginner' };
+  const TEMPLATES = {
+    strength: {
+      2: ['قدرت: کل بدن','استراحت','هوازی سبک','استراحت','قدرت: کل بدن','استراحت','خواب منظم'],
+      3: ['قدرت: بالاتنه','هوازی سبک','قدرت: پایین‌تنه','استراحت فعال','قدرت: کل بدن','هوازی تند','خواب منظم'],
+      4: ['قدرت: بالاتنه','هوازی سبک','قدرت: پایین‌تنه','قدرت: کل بدن','استراحت فعال','هوازی تند','خواب منظم']
+    },
+    cardio: {
+      2: ['هوازی متوسط','استراحت','هوازی بلند','استراحت','هوازی سبک','استراحت','خواب منظم'],
+      3: ['هوازی متوسط','هوازی سبک','استراحت فعال','هوازی متوسط','استراحت','هوازی بلند','خواب منظم'],
+      4: ['هوازی متوسط','هوازی سبک','قدرت سبک','هوازی متوسط','استراحت','هوازی بلند','خواب منظم']
+    },
+    stress: {
+      2: ['پیاده‌روی آرام','استراحت','تنفس و کشش','استراحت','پیاده‌روی آرام','استراحت','خواب منظم'],
+      3: ['پیاده‌روی آرام','تنفس و کشش','پیاده‌روی آرام','کشش و یوگا','استراحت','پیاده‌روی بلند','خواب منظم'],
+      4: ['پیاده‌روی آرام','تنفس و کشش','پیاده‌روی آرام','کشش و یوگا','پیاده‌روی بلند','استراحت','خواب منظم']
+    }
+  };
+  const TIPS = {
+    strength: ['با وزنه‌ای شروع کن که آخرین تکرار هر ست سخت باشد ولی فرمت خراب نشود.','هر هفته یک تکرار یا کمی وزنه اضافه کن، نه همه‌چیز را یک‌جا.','روز استراحت را جدی بگیر؛ عضله آنجا رشد می‌کند.'],
+    cardio: ['سرعتی انتخاب کن که هنوز بتوانی جمله‌ی کامل بگویی.','طول جلسه را هفته‌ای کمی بیشتر کن.','اگر خستگی یا درد غیرعادی داشتی، شدت را کم کن.'],
+    stress: ['تنفس آرام و بازدم طولانی را روزانه تمرین کن.','پیاده‌روی بدون گوشی را امتحان کن.','اگر اضطراب شدید یا مداوم داری، با متخصص صحبت کن.']
+  };
+  const LABEL = { 'قدرت': 'قدرت', 'هوازی': 'هوازی' };
+
+  function render(){
+    const days = TEMPLATES[state.goal][state.days];
+    const out = document.getElementById('planOut');
+    out.innerHTML = '';
+    days.forEach((label, i) => {
+      const names = ['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'];
+      const on = !label.startsWith('استراحت') && !label.startsWith('خواب');
+      const d = document.createElement('div');
+      d.className = 'day' + (on ? ' on' : '');
+      const b = document.createElement('b'); b.textContent = names[i];
+      const t = document.createElement('span'); t.textContent = label;
+      const bar = document.createElement('div'); bar.className = 'bar';
+      d.append(b, t, bar);
+      out.appendChild(d);
+    });
+    const tips = document.getElementById('tipsOut');
+    tips.innerHTML = '';
+    const extra = state.level === 'mid'
+      ? 'سطح متوسط: تعداد ست را ۳ تا ۴ کن و وزنه را کمی سنگین‌تر.'
+      : 'سطح تازه‌کار: ۲ تا ۳ ست با وزنه‌ی سبک و استراحت کافی بین ست‌ها.';
+    [extra, ...TIPS[state.goal]].forEach(text => {
+      const li = document.createElement('li'); li.textContent = text; tips.appendChild(li);
+    });
+  }
+
+  document.querySelectorAll('.opts').forEach(group => {
+    group.querySelectorAll('.opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        group.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed', 'false'));
+        btn.setAttribute('aria-pressed', 'true');
+        const key = group.dataset.group;
+        state[key === 'goal' ? 'goal' : key === 'days' ? 'days' : 'level'] = btn.dataset.v;
+        render();
+      });
+    });
+  });
+  render();
+
+  /* منوی شناور فعال */
+  const here = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.dock a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === here));
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Metatya | حوزه</title>
+<meta name="description" content="">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#05060a; --bg-2:#0b0e17;
+  --surface:rgba(255,255,255,.045); --surface-hi:rgba(255,255,255,.085);
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.22);
+  --fg:#f5f6f9; --muted:#9aa3b2;
+  --accent:#ff7a2f; --accent-2:#c6ff3d; --cool:#66d9ff;
+  --glow:rgba(255,122,47,.28);
+  --shadow:0 24px 60px rgba(0,0,0,.5);
+  --radius:26px; --ease:cubic-bezier(.2,.8,.2,1);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    color-scheme: light;
+    --bg:#f6f5f2; --bg-2:#ffffff; --surface:rgba(255,255,255,.82); --surface-hi:#ffffff;
+    --line:rgba(20,20,30,.10); --line-strong:rgba(20,20,30,.25); --fg:#15110d; --muted:#67605a;
+    --accent:#e8581c; --accent-2:#5c9e00; --cool:#0c7fa8; --glow:rgba(232,88,28,.2);
+    --shadow:0 20px 50px rgba(40,30,20,.12);
+  }
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --bg:#f6f5f2; --bg-2:#ffffff; --surface:rgba(255,255,255,.82); --surface-hi:#ffffff;
+  --line:rgba(20,20,30,.10); --line-strong:rgba(20,20,30,.25); --fg:#15110d; --muted:#67605a;
+  --accent:#e8581c; --accent-2:#5c9e00; --cool:#0c7fa8; --glow:rgba(232,88,28,.2);
+  --shadow:0 20px 50px rgba(40,30,20,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:'Vazirmatn',system-ui,sans-serif;font-size:15px;line-height:1.75;overflow-x:hidden;min-height:100vh;padding-bottom:calc(112px + env(safe-area-inset-bottom,0px))}
+a{color:inherit;text-decoration:none}
+svg{display:block}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:12px}
+.wrap{max-width:1040px;margin-inline:auto;position:relative;z-index:1;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+
+/* پس‌زمینه‌ی عمقی */
+.scene{position:fixed;inset:-40px;z-index:-1;overflow:hidden;pointer-events:none;transform:translate3d(calc(var(--px,0)*-16px),calc(var(--py,0)*-16px),0);transition:transform .6s var(--ease)}
+.scene .glow{position:absolute;inset:-25%;background:radial-gradient(40% 35% at 80% 12%,var(--glow),transparent 70%),radial-gradient(35% 30% at 12% 70%,color-mix(in srgb,var(--cool) 16%,transparent),transparent 70%);filter:blur(40px);animation:drift 22s var(--ease) infinite alternate}
+.scene .grid{position:absolute;left:-40%;right:-40%;bottom:-6%;height:65vh;background:repeating-linear-gradient(90deg,var(--line) 0 2px,transparent 2px 120px),repeating-linear-gradient(0deg,var(--line) 0 2px,transparent 2px 46px);transform:perspective(600px) rotateX(64deg);transform-origin:50% 100%;-webkit-mask-image:linear-gradient(to top,#000 5%,transparent 70%);mask-image:linear-gradient(to top,#000 5%,transparent 70%);animation:lanemove 10s linear infinite}
+@keyframes drift{to{transform:translate3d(4%,-3%,0) rotate(4deg)}}
+@keyframes lanemove{to{background-position:0 0,0 46px}}
+.progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:200;transform-origin:0 50%;transform:scaleX(var(--scroll,0));background:linear-gradient(90deg,var(--cool),var(--accent),var(--accent-2))}
+
+/* هدر */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;margin-top:8px}
+header .bar{display:flex;align-items:center;justify-content:space-between;gap:10px;height:62px;padding:0 14px;border-radius:999px;background:color-mix(in srgb,var(--bg-2) 75%,transparent);border:1px solid var(--line);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.logo{font-weight:900;font-size:1.05rem;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.logo i{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--accent)}
+.logo b{color:var(--accent)}
+.chip{font-size:.8rem;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);white-space:nowrap}
+
+/* هیرو */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:20px;align-items:center;padding:36px 0 16px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted);border:1px solid var(--line);background:var(--surface);padding:6px 14px;border-radius:999px}
+.eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 12px var(--accent-2);animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.3}}
+h1{font-size:clamp(1.9rem,5.6vw,3.3rem);font-weight:900;line-height:1.3;letter-spacing:-.6px;margin:18px 0 12px;text-wrap:balance}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--cool),var(--accent),var(--cool));background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}
+@keyframes shine{to{background-position:200% center}}
+.lead{color:var(--muted);max-width:58ch}
+.ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.cta{display:inline-flex;align-items:center;padding:13px 20px;border-radius:16px;background:linear-gradient(135deg,var(--accent),#ffb36b);color:#1a0b02;font-weight:900;box-shadow:0 16px 40px var(--glow);transition:transform .25s var(--ease)}
+.cta:hover{transform:translateY(-3px)}
+.cta.ghost{background:var(--surface);color:var(--fg);border:1px solid var(--line);box-shadow:none;font-weight:800}
+
+/* صحنه‌ی سه‌بعدی */
+.stage3d{position:relative;width:min(340px,86vw);height:300px;margin-inline:auto;perspective:900px;transform-style:preserve-3d;--acc:var(--accent)}
+.stage3d > *{position:absolute;pointer-events:none}
+.stage3d .label{left:50%;bottom:-6px;transform:translateX(-50%);font-size:.7rem;color:var(--muted);background:var(--bg-2);padding:2px 10px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
+
+/* candles */
+.candle{bottom:30px;width:16px;margin-left:-8px;transform-style:preserve-3d;animation:candle 4.5s ease-in-out infinite;animation-delay:var(--d,0s)}
+.candle .wick{position:absolute;left:50%;bottom:-6px;width:2px;margin-left:-1px;height:calc(var(--h) + 24px);background:var(--up);opacity:.55}
+.candle .body{position:absolute;left:0;right:0;bottom:0;height:var(--h);border-radius:4px;background:linear-gradient(180deg,var(--up),color-mix(in srgb,var(--up) 35%,transparent));box-shadow:0 0 16px var(--up)}
+@keyframes candle{50%{transform:translateY(-12px)}}
+/* network */
+.tilt3d{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(68deg)}
+.ring3d{position:absolute;inset:0;transform-style:preserve-3d;animation:spinY 16s linear infinite}
+.ring3d .node{position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px;border-radius:50%;background:var(--acc);box-shadow:0 0 22px var(--acc),0 0 4px #fff inset}
+.guide{position:absolute;left:50%;top:50%;width:256px;height:256px;margin:-128px 0 0 -128px;border-radius:50%;border:1.5px dashed var(--acc);opacity:.45;box-shadow:0 0 24px color-mix(in srgb,var(--acc) 35%,transparent)}
+@keyframes spinY{to{transform:rotateY(360deg)}}
+/* coins */
+.coins{position:absolute;left:50%;top:50%;width:180px;height:180px;margin:-90px 0 0 -90px;transform-style:preserve-3d;transform:rotateX(64deg);animation:spinZ 14s linear infinite}
+.coin{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff3c4,var(--acc) 48%,color-mix(in srgb,var(--acc) 30%,#000));box-shadow:inset 0 0 0 6px rgba(0,0,0,.14)}
+@keyframes spinZ{to{transform:rotateX(64deg) rotateZ(360deg)}}
+/* blocks */
+.block{bottom:30px;width:34px;height:var(--h);border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,color-mix(in srgb,var(--acc) 70%,#fff),var(--acc) 45%,color-mix(in srgb,var(--acc) 40%,#000));box-shadow:0 12px 24px rgba(0,0,0,.35);transform-origin:50% 100%;animation:rise 5s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes rise{50%{transform:translateY(-10px) rotateY(-10deg)}}
+/* orbs */
+.orb{width:var(--s);height:var(--s);border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--acc) 35%,transparent 70%);box-shadow:0 0 30px var(--acc);transform:translateZ(var(--z));animation:bob 6s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes bob{50%{transform:translateZ(var(--z)) translateY(-14px)}}
+/* rings */
+.rg{left:50%;top:50%;border-radius:50%;border:2px dashed var(--line-strong);box-shadow:0 0 18px color-mix(in srgb,var(--acc) 25%,transparent);animation:spinRing linear infinite}
+@keyframes spinRing{from{transform:translate(-50%,-50%) rotateX(70deg) rotateZ(0)}to{transform:translate(-50%,-50%) rotateX(70deg) rotateZ(360deg)}}
+
+/* بخش‌ها */
+.section{margin-top:52px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.section-head h2{font-size:clamp(1.3rem,3.6vw,1.8rem);font-weight:900}
+.section-head span{font-size:.82rem;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{position:relative;min-width:0;border-radius:var(--radius);padding:20px;background:var(--surface);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;flex-direction:column;gap:10px;overflow:hidden;transition:transform .5s var(--ease),box-shadow .4s,border-color .4s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--acc) 40%,transparent)}
+.card .yr{align-self:flex-start;font-size:.74rem;font-weight:800;padding:4px 11px;border-radius:999px;border:1px solid var(--line);color:var(--acc)}
+.card h3{font-size:1.02rem;font-weight:900;line-height:1.6}
+.card p{font-size:.86rem;color:var(--muted);line-height:1.8}
+.card .mean{color:var(--fg);border-top:1px dashed var(--line);padding-top:8px}
+.note{font-size:.78rem;color:var(--muted);margin-top:10px}
+
+/* اخبار و مطالب */
+.news{display:grid;gap:10px}
+details.item{border-radius:18px;background:var(--surface);border:1px solid var(--line);padding:0 16px}
+details.item summary{cursor:pointer;padding:14px 0;font-weight:800;line-height:1.7;list-style:none;display:flex;justify-content:space-between;gap:10px;align-items:center}
+details.item summary::-webkit-details-marker{display:none}
+details.item summary::after{content:"+";font-weight:900;color:var(--acc);font-size:1.2rem;flex:none}
+details.item[open] summary::after{content:"−"}
+details.item .body{padding:0 0 16px;color:var(--muted);font-size:.9rem;line-height:1.9}
+details.item .date{font-size:.72rem;color:var(--muted);margin-inline-start:8px;font-weight:600}
+.empty{border-radius:18px;padding:18px;background:var(--surface);border:1px dashed var(--line-strong);color:var(--muted);font-size:.88rem}
+
+/* خدمات */
+.offer{border-color:color-mix(in srgb,var(--acc) 25%,var(--line))}
+.offer .price{font-size:1.05rem;font-weight:900;color:var(--acc)}
+.offer ul{list-style:none;display:grid;gap:6px;font-size:.86rem;color:var(--muted)}
+.offer li::before{content:"✦";color:var(--acc);margin-inline-end:8px}
+.offer .cta{justify-content:center;margin-top:auto}
+.offer a.ghost{justify-content:center;font-size:.85rem;padding:10px 14px;border-radius:14px;background:transparent;border:1px solid var(--line);color:var(--fg);font-weight:700;display:inline-flex}
+
+/* حوزه‌های دیگر */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips a{font-size:.84rem;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg)}
+.chips a.cur{background:var(--surface-hi);border-color:color-mix(in srgb,var(--acc) 50%,transparent)}
+
+#cta .mt-box{background:var(--surface);backdrop-filter:blur(14px);border-radius:var(--radius)}
+.warn{margin-top:40px;padding:18px 20px;border-radius:20px;border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);background:var(--surface);color:var(--muted);font-size:.84rem;line-height:1.9}
+.warn b{color:var(--fg)}
+footer{margin-top:28px;padding:18px 0 8px;border-top:1px solid var(--line);font-size:.78rem;color:var(--muted);line-height:1.85}
+
+/* منوی شناور */
+.dock{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));width:min(92%,440px);z-index:100;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:8px;border-radius:26px;background:color-mix(in srgb,var(--bg-2) 82%,transparent);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.dock a{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.7rem;font-weight:700;color:var(--muted);padding:9px 4px;border-radius:18px}
+.dock a svg{width:22px;height:22px}
+.dock a.active{color:var(--fg);background:var(--surface-hi)}
+
+.js .reveal{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.js .reveal.in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .reveal{opacity:1;transform:none}
+  .card:hover{transform:none}
+}
+@media (max-width:860px){ .grid{grid-template-columns:minmax(0,1fr)} }
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr}
+  .stage3d{height:260px}
+  .chip{display:none}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="s-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z" fill="currentColor"/></symbol>
+    <symbol id="s-grid" viewBox="0 0 24 24"><path d="M4 4h7v7H4zm9 0h7v7h-7zM4 13h7v7H4zm9 0h7v7h-7z" fill="currentColor"/></symbol>
+    <symbol id="s-file" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z" fill="currentColor" opacity=".9"/></symbol>
+    <symbol id="s-spark" viewBox="0 0 24 24"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<div class="progress" aria-hidden="true"></div>
+<div class="scene" aria-hidden="true"><div class="glow"></div><div class="grid"></div></div>
+
+<div class="wrap">
+  <header>
+    <div class="bar">
+      <a class="logo" href="index.html" dir="ltr"><i></i>Meta<b>tya</b></a>
+      <a class="chip" href="index.html">← همه‌ی حوزه‌ها</a>
+    </div>
+  </header>
+
+  <section class="hero" id="top">
+    <div>
+      <span class="eyebrow" id="cat"><span class="dot"></span>حوزه</span>
+      <h1 id="title">…</h1>
+      <p class="lead" id="lead"></p>
+      <div class="ctas">
+        <a class="cta" href="#future">آینده‌ی این حوزه</a>
+        <a class="cta ghost" href="#offers">خدمت Metatya</a>
+      </div>
+    </div>
+    <div class="stage3d" id="stage" aria-label="صحنه‌ی سه‌بعدی حوزه">
+      <span class="label">تصویر نمادین</span>
+    </div>
+  </section>
+
+  <section class="section reveal" id="future">
+    <div class="section-head"><h2>آینده‌ی این حوزه</h2><span>سناریوهای ۲۰۲۷ تا ۲۰۳۰</span></div>
+    <div class="grid" id="futureGrid"></div>
+    <p class="note">این‌ها احتمال‌های محتمل بر اساس روندهای فعلی‌اند، نه پیش‌بینی قطعی و نه توصیه‌ی سرمایه‌گذاری.</p>
+  </section>
+
+  <section class="section reveal" id="news">
+    <div class="section-head"><h2>آخرین مطالب</h2><span>روزانه بررسی و منتشر می‌شود</span></div>
+    <div class="news" id="newsList"></div>
+  </section>
+
+  <section class="section reveal" id="offers">
+    <div class="section-head"><h2>خدمت Metatya</h2><span>کمک آموزشی؛ بدون وعده‌ی نتیجه</span></div>
+    <div class="grid" id="offerGrid"></div>
+    <p class="note">پرداخت و ارسال نتیجه از طریق ربات تلگرام انجام می‌شود؛ قیمت‌ها پیش از پرداخت در ربات اعلام می‌شوند.</p>
+  </section>
+
+  <section class="section reveal">
+    <div class="section-head"><h2>حوزه‌های دیگر</h2></div>
+    <div class="chips" id="chips"></div>
+  </section>
+
+  <div id="cta" class="reveal" style="margin-top:44px"></div>
+
+  <div class="warn" id="disc"></div>
+  <footer>Metatya · محتوای آموزشی و معرفی خدمت است؛ جایگزین مشاوره‌ی مالی، حقوقی، پزشکی یا روانی نیست. نتیجه‌ی مالی یا ورزشی تضمین نمی‌شود.</footer>
+</div>
+
+<nav class="dock" aria-label="منوی اصلی">
+  <a href="index.html"><svg><use href="#s-home"/></svg>خانه</a>
+  <a href="topic.html?t=forex"><svg><use href="#s-grid"/></svg>حوزه‌ها</a>
+  <a href="trades.html"><svg><use href="#s-file"/></svg>پرونده‌ها</a>
+  <a href="services.html"><svg><use href="#s-spark"/></svg>خدمات</a>
+</nav>
+
+<script src="cta.js"></script>
+<script>
+(function(){
+  const root = document.documentElement;
+  root.classList.add('js');
+  try { const s = localStorage.getItem('metatya-theme'); if (s) root.setAttribute('data-theme', s); } catch(e) {}
+
+  const $ = id => document.getElementById(id);
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const ACC = { accent: 'var(--accent)', cool: 'var(--cool)', lime: 'var(--accent-2)' };
+
+  /* ---------- صحنه‌های سه‌بعدی ---------- */
+  function buildScene(type, stage, accent) {
+    stage.style.setProperty('--acc', ACC[accent] || 'var(--accent)');
+    const N = (n, fn) => { for (let i = 0; i < n; i++) fn(i); };
+    if (type === 'candles') {
+      N(9, i => {
+        const c = el('div', 'candle'); c.style.left = (7 + i * 10.4) + '%';
+        const h = 50 + Math.round(Math.abs(Math.sin(i * 1.7)) * 130);
+        c.style.setProperty('--h', h + 'px'); c.style.setProperty('--d', (i * .18) + 's');
+        c.style.setProperty('--up', i % 3 === 1 ? 'var(--acc)' : 'var(--cool)');
+        c.append(el('i', 'wick'), el('b', 'body'));
+        stage.appendChild(c);
+      });
+    } else if (type === 'network') {
+      const tilt = el('div', 'tilt3d'); const ring = el('div', 'ring3d');
+      const guide = el('i', 'guide'); tilt.appendChild(guide);
+      N(12, i => { const n = el('i', 'node'); n.style.transform = `rotateY(${i * 30}deg) translateZ(128px)`; ring.appendChild(n); });
+      tilt.appendChild(ring); stage.appendChild(tilt);
+      const tilt2 = el('div', 'tilt3d'); tilt2.style.transform = 'rotateX(20deg) rotateZ(50deg)';
+      const ring2 = el('div', 'ring3d'); ring2.style.animationDuration = '24s';
+      N(8, i => { const n = el('i', 'node'); n.style.transform = `rotateY(${i * 45}deg) translateZ(92px)`; n.style.opacity = '.7'; ring2.appendChild(n); });
+      tilt2.appendChild(ring2); stage.appendChild(tilt2);
+    } else if (type === 'coins') {
+      const wrap = el('div', 'coins');
+      N(9, i => { const c = el('i', 'coin'); c.style.transform = `translateY(${-i * 9}px)`; wrap.appendChild(c); });
+      stage.appendChild(wrap);
+    } else if (type === 'blocks') {
+      N(6, i => {
+        const b = el('i', 'block'); b.style.left = (9 + i * 14.5) + '%';
+        b.style.setProperty('--h', (80 + ((i * 47) % 130)) + 'px'); b.style.setProperty('--d', (i * .3) + 's');
+        stage.appendChild(b);
+      });
+    } else if (type === 'orbs') {
+      N(7, i => {
+        const o = el('i', 'orb'); o.style.left = (8 + (i * 17) % 70) + '%'; o.style.top = (10 + (i * 29) % 68) + '%';
+        o.style.setProperty('--z', (i % 2 ? 70 : -50) + 'px'); o.style.setProperty('--s', (36 + (i * 13) % 44) + 'px');
+        o.style.setProperty('--d', (-i * 1.2) + 's'); stage.appendChild(o);
+      });
+    } else if (type === 'rings') {
+      N(4, i => {
+        const r = el('i', 'rg'); const size = 280 - i * 62;
+        r.style.width = size + 'px'; r.style.height = size + 'px';
+        r.style.animationDuration = (10 + i * 4) + 's';
+        r.style.animationDirection = i % 2 ? 'reverse' : 'normal';
+        stage.appendChild(r);
+      });
+    }
+  }
+
+  /* ---------- رندر محتوا ---------- */
+  function renderTopic(cfg, T) {
+    document.title = T.name + ' | Metatya';
+    const md = document.querySelector('meta[name="description"]'); if (md) md.setAttribute('content', T.tagline + ' ' + T.lead);
+    $('cat').lastChild.textContent = T.category;
+    $('title').innerHTML = '';
+    const parts = T.tagline.split(' ');
+    const half = Math.max(1, Math.ceil(parts.length / 2));
+    $('title').append(document.createTextNode(parts.slice(0, half).join(' ') + ' '), (() => { const e = el('em', '', parts.slice(half).join(' ') || T.name); return e; })());
+    $('lead').textContent = T.lead;
+    buildScene(T.scene, $('stage'), T.accent);
+    root.style.setProperty('--acc', ACC[T.accent] || 'var(--accent)');
+    document.querySelectorAll('.card, .offer').forEach(c => c.style.setProperty('--acc', ACC[T.accent] || 'var(--accent)'));
+
+    const fg = $('futureGrid');
+    (T.future || []).forEach(f => {
+      const c = el('article', 'card reveal');
+      c.append(el('span', 'yr', f.years), el('h3', '', f.title), el('p', '', f.why), el('p', 'mean', '← ' + f.meaning));
+      fg.appendChild(c);
+    });
+
+    const og = $('offerGrid');
+    (T.offers || []).forEach(o => {
+      const c = el('article', 'card offer reveal');
+      c.append(el('h3', '', o.title), el('div', 'price', o.price || 'قیمت در ربات اعلام می‌شود'));
+      const ul = el('ul'); (o.bullets || []).forEach(b => ul.appendChild(el('li', '', b))); c.appendChild(ul);
+      if (o.note) c.appendChild(el('p', 'note', o.note));
+      const bot = o.persona && cfg.bots && cfg.bots[o.persona];
+      const a = el('a', 'cta', bot ? 'سفارش و پرداخت در ربات' : 'درخواست از طریق تلگرام');
+      if (bot) a.href = 'https://t.me/' + bot.replace(/^@/, '') + '?start=order_' + o.kind;
+      else a.href = cfg.contact;
+      a.target = '_blank'; a.rel = 'noopener';
+      c.appendChild(a);
+      if (o.link) { const g = el('a', 'ghost', o.linkLabel || 'جزئیات بیشتر'); g.href = o.link; c.appendChild(g); }
+      og.appendChild(c);
+    });
+
+    const chips = $('chips');
+    (cfg.topics || []).forEach(x => {
+      const a = el('a', x.slug === T.slug ? 'cur' : '', x.name); a.href = 'topic.html?t=' + x.slug; chips.appendChild(a);
+    });
+    const sp = el('a', '', 'ورزش'); sp.href = 'sport.html'; chips.appendChild(sp);
+
+    $('disc').append(el('b', '', 'هشدار: '), document.createTextNode(T.disclaimer));
+
+    if (window.MetatyaCTA) {
+      const c = $('cta');
+      MetatyaCTA.lead(c, 'topic-' + T.slug);
+      MetatyaCTA.social(c, 'topic');
+    }
+  }
+
+  function renderNews(T) {
+    const list = $('newsList');
+    fetch('content.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : null).then(d => {
+      const items = (d && d.sections && T.tab && d.sections[T.tab] && d.sections[T.tab].items) || [];
+      if (!items.length) {
+        list.appendChild(el('div', 'empty', T.tab ? 'برای این حوزه هنوز مطلب تازه‌ای ثبت نشده است؛ به‌زودی.' : 'این موضوع هنوز به تولید روزانه متصل نشده است؛ به‌زودی.'));
+        return;
+      }
+      items.slice(0, 4).forEach(it => {
+        const d2 = el('details', 'item');
+        const s = el('summary', '', it.title || 'مطلب');
+        if (it.date) s.appendChild(el('span', 'date', it.date));
+        d2.append(s, el('div', 'body', (it.body || '').slice(0, 900)));
+        list.appendChild(d2);
+      });
+    }).catch(() => list.appendChild(el('div', 'empty', 'بارگذاری مطالب ممکن نشد؛ دوباره تلاش کن.')));
+  }
+
+  /* ---------- شروع ---------- */
+  const slug = new URLSearchParams(location.search).get('t') || 'forex';
+  fetch('topics.json', { cache: 'no-cache' }).then(r => r.json()).then(cfg => {
+    const T = cfg.topics.find(x => x.slug === slug) || cfg.topics[0];
+    renderTopic(cfg, T);
+    renderNews(T);
+    /* حرکت ها */
+    const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(x => io.observe(x));
+  }).catch(() => { $('title').textContent = 'این حوزه پیدا نشد'; });
+
+  const onScroll = () => { const max = document.documentElement.scrollHeight - innerHeight; root.style.setProperty('--scroll', (max > 0 ? scrollY / max : 0).toFixed(4)); };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  const fine = matchMedia('(hover: hover)').matches, reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (fine && !reduce) addEventListener('pointermove', e => {
+    root.style.setProperty('--px', ((e.clientX / innerWidth) * 2 - 1).toFixed(3));
+    root.style.setProperty('--py', ((e.clientY / innerHeight) * 2 - 1).toFixed(3));
+  }, { passive: true });
+
+  const here = location.pathname.split('/').pop();
+  document.querySelectorAll('.dock a').forEach(a => { if (a.getAttribute('href') === here) a.classList.add('active'); });
+})();
+</script>
+</body>
+</html>

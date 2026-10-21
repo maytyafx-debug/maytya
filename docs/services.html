@@ -41,15 +41,15 @@ details{background:var(--card);border:1px solid var(--line);border-radius:12px;p
 <div class="pk hot" id="pack"><div class="t">پرفروش‌ترین · محصول دیجیتال</div><h3>پک مدیریت ریسک Metatya</h3>
 <ul><li>دفترچه‌ی هوشمند اکسل: حجم‌یاب، ثبت ۲۰۰ معامله، نرخ برد، امید ریاضی، افت از سقف، منحنی سرمایه</li><li>تحلیل «حالت ذهنی»: ببین انتقام و FOMO دقیقاً چقدر برایت هزینه داشته</li><li>چک‌لیست قبل از ورود + سقف ضرر هفتگی که خودش هشدار می‌دهد</li><li>راهنمای ۹ بخشی و برنامه‌ی ۳۰ روزه</li></ul>
 <div class="fit">مناسب: مبتدی تا متوسطی که می‌خواهد بی‌نظمی را تمام کند. تحویل: فایل پس از تأیید پرداخت.</div><div class="price" data-p="pack"></div>
-<a class="btn" href="https://t.me/maytya" target="_blank" rel="noopener">دریافت قیمت و سفارش در تلگرام</a></div>
+<a class="btn" data-order="pack" href="https://t.me/maytya" target="_blank" rel="noopener">دریافت قیمت و سفارش در تلگرام</a></div>
 <div class="pk" id="session"><div class="t">مشاوره‌ی آموزشی</div><h3>جلسه‌ی بازبینی ۳۰ دقیقه‌ای</h3>
 <ul><li>دفترچه‌ات را با هم مرور می‌کنیم و یک الگوی رفتاری مشخص پیدا می‌شود</li><li>یک قانون اصلاحی قابل‌اندازه‌گیری برای هفته‌ی بعد</li><li>گزارش یک‌صفحه‌ای مکتوب که می‌ماند</li></ul>
 <div class="fit">مناسب: کسی که دفترچه یا چند ماه سابقه دارد و می‌خواهد نگاه بیرونی. ظرفیت هفتگی محدود است (واقعاً؛ چون هر جلسه آماده‌سازی دارد).</div><div class="price" data-p="session"></div>
-<a class="btn" href="https://t.me/maytya" target="_blank" rel="noopener">رزرو در تلگرام</a></div>
+<a class="btn" data-order="session" href="https://t.me/maytya" target="_blank" rel="noopener">رزرو در تلگرام</a></div>
 <div class="pk" id="coach"><div class="t">همراهی</div><h3>برنامه‌ی ۴ هفته‌ای انضباط معاملاتی</h3>
 <ul><li>۴ جلسه‌ی ۳۰ دقیقه‌ای + برنامه‌ی ۳۰ روزه</li><li>پاسخ‌گویی پیامی در ساعات مشخص</li><li>مرور هفتگی آمار با هم</li></ul>
 <div class="fit">برای بررسی مناسب‌بودن، اول یک پیام بدهید؛ اگر برایتان مفید نباشد صادقانه می‌گویم.</div><div class="price" data-p="coach"></div>
-<a class="btn" href="https://t.me/maytya" target="_blank" rel="noopener">پرسش درباره‌ی همراهی</a></div>
+<a class="btn" data-order="coach" href="https://t.me/maytya" target="_blank" rel="noopener">پرسش درباره‌ی همراهی</a></div>
 
 <h2>۷ روز اول با پک چه می‌شود؟</h2>
 <div class="days"><div><b>روز ۱:</b> تنظیمات و درصد ریسک را می‌نویسی (۱۰ دقیقه).</div><div><b>روز ۲–۳:</b> هر ورود با حجم‌یاب و چک‌لیست؛ ورودهای «حسی» خودبه‌خود کم می‌شود.</div><div><b>روز ۴–۶:</b> همه‌ی معاملات با R ثبت می‌شود.</div><div><b>روز ۷:</b> مرور هفتگی؛ اولین بار می‌بینی ضررت از کجا آمد.</div></div>
@@ -71,9 +71,13 @@ details{background:var(--card);border:1px solid var(--line);border-radius:12px;p
 <div class="bar"><a class="btn" href="#offers">مشاهده‌ی پک‌ها</a><a class="btn" style="background:var(--teal);color:#fff" href="https://t.me/maytya" target="_blank" rel="noopener">پیام در تلگرام</a></div>
 <script src="cta.js"></script><script>
 /* تنظیمات فروش: قیمت‌ها و سیاست بازپرداخت را اینجا بنویسید؛ خالی = نمایش داده نمی‌شود */
-var CONFIG={prices:{pack:"",session:"",coach:""},refund:""};
+/* یوزرنیم ربات فروش ریسک (بدون @). خالی = دکمه‌ها به تلگرام مستقیم می‌روند */
+var ORDER_BOT="MetatyaRisk_bot";
+var CONFIG={prices:{pack:"۱۴۹ هزار تومان",session:"۲۴۹ هزار تومان",coach:"۳۹۹ هزار تومان"},refund:""};
 document.querySelectorAll('.price').forEach(function(e){var p=CONFIG.prices[e.dataset.p];if(p)e.textContent=p;else e.style.display='none'});
 if(CONFIG.refund)document.getElementById('refund').textContent=CONFIG.refund;
+var ob=(ORDER_BOT||'').replace(/^@/,'');
+if(ob)document.querySelectorAll('a[data-order]').forEach(function(a){a.href='https://t.me/'+ob+'?start=order_'+a.dataset.order;a.textContent='سفارش و پرداخت در ربات'});
 fetch('testimonials.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[]}).then(function(a){
   if(!a||!a.length)return;var b=document.getElementById('tms');var h=document.createElement('h2');h.textContent='تجربه‌ی دیگران';b.appendChild(h);
   a.slice(0,4).forEach(function(t){var d=document.createElement('div');d.className='tm';var q=document.createElement('div');q.textContent='«'+t.text+'»';var s=document.createElement('small');s.textContent='— '+(t.name||'مشتری Metatya');d.append(q,s);b.appendChild(d)})}).catch(function(){});

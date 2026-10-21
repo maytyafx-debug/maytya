@@ -28,13 +28,16 @@ h2{font-size:17px;margin:24px 0 8px}.card{background:var(--card);border:1px soli
   var h='<div class="hero"><div class="ic">'+E(p.icon)+'</div><h1>'+E(p.title)+'</h1><p>'+E(p.tagline)+'</p>';
   if(p.free&&p.free.file)h+='<a class="btn" download href="'+E(p.free.file)+'">🎁 '+E(p.free.title)+'</a>';
   h+='</div>'+(p.preview?'<img src="'+E(p.preview)+'" alt="'+E(p.previewAlt||p.title)+'" style="width:100%;border-radius:16px;border:1px solid var(--line);margin-top:6px" loading="lazy"><div class="card" style="font-size:11.5px">تصویر بالا نمونه با داده‌ی فرضی است، نه پرتفوی واقعی.</div>':'')+'<h2>مشکل واقعی</h2><div class="card">'+E(p.problem)+'</div><h2>داخل پک چیست؟</h2><div class="card"><ul>'+p.bullets.map(function(b){return '<li>'+E(b)+'</li>'}).join('')+'</ul>';
-  h+=(p.price?'<div class="price">'+E(p.price)+'</div>':'<div class="card" style="margin-top:8px">قیمت و روش دریافت در تلگرام اعلام می‌شود.</div>')+'</div>';
+  h+=(p.price?'<div class="price">'+E(p.price)+'</div>':'<div class="card" style="margin-top:8px">قیمت و روش پرداخت در ربات اعلام می‌شود.</div>')+'</div>';
   h+='<div class="two"><div class="card yes"><h4>مناسب توست اگر…</h4>'+E(p.audience)+'</div><div class="card no"><h4>مناسب تو نیست اگر…</h4>'+E(p.notFor)+'</div></div>';
   h+='<div id="cta"></div><div class="warn">'+E(p.disclaimer)+' Metatya آموزشی است و هیچ نتیجه‌ای را تضمین نمی‌کند.</div>';
   root.innerHTML=h;
   var c=document.getElementById('cta');MetatyaCTA.lead(c,'pack-'+p.id);MetatyaCTA.social(c,'pack');
+  // سفارش همیشه از ربات می‌گذرد (با پیوند start=order)؛ اگر ربات تنظیم نشده، به تماس مستقیم برمی‌گردد
+  var bot=(p.bot||'').replace(/^@/,'');
+  var orderHref=bot?'https://t.me/'+bot+'?start=order':contact;
   var b=document.getElementById('bar');b.style.display='flex';
-  b.innerHTML='<a class="btn t" target="_blank" rel="noopener" href="'+S(contact)+'">سفارش در تلگرام</a>'+(p.bot?'<a class="btn" target="_blank" rel="noopener" href="'+S('https://t.me/'+p.bot.replace(/^@/,''))+'">پرسش از ربات</a>':'');
+  b.innerHTML='<a class="btn t" target="_blank" rel="noopener" href="'+S(orderHref)+'">'+(bot?'سفارش و پرداخت در ربات':'سفارش در تلگرام')+'</a>'+(bot?'<a class="btn" target="_blank" rel="noopener" href="'+S('https://t.me/'+bot)+'">پرسش از ربات</a>':'');
  }).catch(function(){root.innerHTML='<p style="margin-top:30px">خطا در بارگذاری.</p>'});
 })();
 </script></body></html>
