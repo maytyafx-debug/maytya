@@ -4,245 +4,109 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Metatya | پنل ادمین</title>
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
-<script src="site-config.js"></script>
+<title>Metatya | مدیریت</title>
 <style>
-:root{color-scheme:light dark;--bg:#f4f6fb;--fg:#0c1222;--muted:#5a6477;--line:rgba(12,20,40,.14);--card:#ffffff;--accent:#08a878;--danger:#c0392b}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#05060a;--fg:#f3f5f9;--muted:#98a2b3;--line:rgba(255,255,255,.14);--card:#0a0d16;--accent:#34f5a6}}
+:root{color-scheme:dark;--bg:#05060a;--card:#11151f;--line:#262d3d;--fg:#f3f5f9;--mut:#98a2b3;--ac:#34f5a6;--bad:#ff7a7a}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:'Vazirmatn',system-ui,sans-serif;line-height:1.7;font-size:15px;padding:20px 16px 60px;min-height:100vh}
-.wrap{max-width:860px;margin:0 auto}
-h1{font-size:1.4rem;margin:8px 0 4px}
-h2{font-size:1.05rem;margin:0}
-.small{color:var(--muted);font-size:.86rem}
-.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-top:14px}
-.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-label{display:block;font-weight:700;margin:8px 0 6px}
-input,textarea{width:100%;font:inherit;font-size:.92rem;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--fg)}
-textarea{min-height:300px;direction:ltr;text-align:left;font-family:ui-monospace,Consolas,monospace;font-size:.8rem;margin-top:10px}
-button{font:inherit;font-weight:800;padding:10px 16px;border-radius:12px;border:0;background:var(--accent);color:#03130c;cursor:pointer;margin:10px 8px 0 0}
-button.ghost{background:transparent;color:var(--fg);border:1px solid var(--line)}
-button.danger{background:var(--danger);color:#fff}
-button:disabled{opacity:.5;cursor:default}
-.status{margin-top:10px;font-size:.9rem;min-height:1.4em}
-.ok{color:var(--accent)}
-.bad{color:var(--danger)}
-.badge{display:inline-block;font-size:.8rem;padding:4px 12px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
-.hidden{display:none}
-a{color:var(--accent)}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.8 Vazirmatn,system-ui,sans-serif;padding:16px;max-width:860px;margin-inline:auto}
+h1{font-size:1.3rem}h2{font-size:1.05rem;margin:0 0 10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:14px 0}
+label{display:block;color:var(--mut);font-size:.85rem;margin:8px 0 4px}
+input,select,textarea{width:100%;background:#0a0d16;color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit}
+textarea{min-height:46vh;direction:ltr;text-align:left;font:13px/1.6 ui-monospace,Menlo,monospace}
+button{background:var(--ac);color:#03130c;border:0;border-radius:12px;padding:11px 18px;font:inherit;font-weight:800;cursor:pointer;margin:8px 8px 0 0}
+button.g{background:#1b2232;color:var(--fg)}
+#msg{min-height:1.6em;margin-top:8px}.ok{color:var(--ac)}.err{color:var(--bad)}
+small{color:var(--mut)}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>پنل ادمین Metatya</h1>
-  <p class="small">فقط حسابی که در جدول <code>admins</code> ثبت شده می‌تواند ذخیره کند. ورود با لینک یک‌بار مصرف که به ایمیل می‌آید انجام می‌شود. این صفحه در موتورهای جستجو نمایه نمی‌شود.</p>
+<h1>پنل مدیریت Metatya</h1>
+<small>این صفحه عمومی است ولی بدون توکن شما هیچ کاری نمی‌کند. توکن فقط در همین مرورگر و فقط تا بستن تب می‌ماند.</small>
 
-  <section id="loginBox" class="card">
-    <label for="email">ایمیل ادمین</label>
-    <input id="email" type="email" autocomplete="email" placeholder="ایمیل ثبت‌شده در Supabase">
-    <button id="sendLink" type="button">ارسال لینک ورود</button>
-    <div id="loginStatus" class="status"></div>
-  </section>
-
-  <section id="editorBox" class="hidden">
-    <div class="card row">
-      <span id="who" class="badge"></span>
-      <button id="logout" type="button" class="ghost">خروج</button>
-    </div>
-
-    <div class="card">
-      <div class="row"><h2>حوزه‌ها و پیشنهادها (topics)</h2><a href="topic.html?t=crypto" target="_blank" rel="noopener">پیش‌نمایش</a></div>
-      <p id="topicsSource" class="small">در حال خواندن...</p>
-      <textarea id="topicsText" spellcheck="false"></textarea>
-      <div>
-        <button type="button" class="ghost" data-key="topics" data-act="validate">اعتبارسنجی</button>
-        <button type="button" data-key="topics" data-act="save">ذخیره در سایت</button>
-        <button type="button" class="danger" data-key="topics" data-act="reset">برگشت به نسخه‌ی GitHub</button>
-      </div>
-      <div id="topicsStatus" class="status"></div>
-    </div>
-
-    <div class="card">
-      <div class="row"><h2>پک‌ها و قیمت‌ها (packs)</h2><a href="pack.html?p=fit" target="_blank" rel="noopener">پیش‌نمایش</a></div>
-      <p id="packsSource" class="small">در حال خواندن...</p>
-      <textarea id="packsText" spellcheck="false"></textarea>
-      <div>
-        <button type="button" class="ghost" data-key="packs" data-act="validate">اعتبارسنجی</button>
-        <button type="button" data-key="packs" data-act="save">ذخیره در سایت</button>
-        <button type="button" class="danger" data-key="packs" data-act="reset">برگشت به نسخه‌ی GitHub</button>
-      </div>
-      <div id="packsStatus" class="status"></div>
-    </div>
-
-    <div class="card small">
-      <strong>یادداشت:</strong> ذخیره در سایت، نسخه‌ی فعال را در Supabase نگه می‌دارد و صفحات همان را نشان می‌دهند. تغییرات فایل‌های GitHub روی آن اثر ندارند تا وقتی با «برگشت به نسخه‌ی GitHub» پاکش کنی. هر تغییر دائمی را هم در فایل‌های <code>docs/topics.json</code> و <code>docs/packs.json</code> ریپو بنویس تا منبع اصلی یکی بماند.
-    </div>
-  </section>
+<div class="card" id="login">
+  <h2>ورود</h2>
+  <label>مخزن (کاربر/ریپو)</label><input id="repo" dir="ltr">
+  <label>شاخه</label><input id="branch" dir="ltr" value="main">
+  <label>توکن GitHub (Fine-grained، فقط همین ریپو، دسترسی Contents: Read and write)</label>
+  <input id="token" type="password" dir="ltr" autocomplete="off">
+  <button id="enter">ورود</button>
 </div>
 
+<div class="card" id="editor" hidden>
+  <h2>ویرایش فایل</h2>
+  <label>فایل</label>
+  <select id="file">
+    <option>topics.json</option><option>packs.json</option><option>monetization.json</option><option>testimonials.json</option>
+  </select>
+  <button class="g" id="load">بارگذاری</button>
+  <textarea id="text" spellcheck="false"></textarea>
+  <button id="save">ذخیره و انتشار</button>
+  <button class="g" id="fmt">مرتب‌سازی JSON</button>
+</div>
+
+<div class="card" id="photo" hidden>
+  <h2>عکس بنیان‌گذار</h2>
+  <input id="img" type="file" accept="image/*">
+  <button id="up">آپلود به‌عنوان founder.jpg</button>
+  <br><small>عکس خودکار به ۴۸۰×۴۸۰ برش و فشرده می‌شود.</small>
+</div>
+
+<div id="msg"></div>
+
 <script>
-(function () {
-  var DB = window.METATYA_DB || {};
-  var BASE = (DB.url || '').replace(/\/$/, '');
-  var KEY = DB.anon || '';
-  var TOKEN = null;
-  var USER = null;
-  var KEYS = ['topics', 'packs'];
-  var FILES = { topics: 'topics.json', packs: 'packs.json' };
+(function(){
+  const $=id=>document.getElementById(id);
+  const m=(t,c)=>{$('msg').textContent=t;$('msg').className=c||''};
+  const host=location.hostname.split('.')[0], seg=location.pathname.split('/')[1];
+  $('repo').value=(host&&seg&&location.hostname.endsWith('github.io'))?host+'/'+seg:'';
+  let sha=null,T='',R='',B='';
+  const api=(p,o)=>fetch('https://api.github.com/repos/'+R+'/contents/'+p,Object.assign({headers:{Authorization:'Bearer '+T,Accept:'application/vnd.github+json'}},o||{}));
+  const b64=s=>btoa(String.fromCharCode(...new TextEncoder().encode(s)));
+  const unb64=s=>new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\n/g,'')),c=>c.charCodeAt(0)));
+  try{T=sessionStorage.getItem('mt')||'';R=sessionStorage.getItem('mr')||''}catch(e){}
+  if(T&&R){$('token').value=T;$('repo').value=R}
 
-  function $(id) { return document.getElementById(id); }
-  function show(id, on) { $(id).classList.toggle('hidden', !on); }
-  function say(id, msg, ok) { var el = $(id); el.textContent = msg; el.className = 'status ' + (ok ? 'ok' : 'bad'); }
-
-  function headers(extra) {
-    var h = { apikey: KEY, Authorization: 'Bearer ' + (TOKEN || KEY) };
-    if (extra) for (var k in extra) h[k] = extra[k];
-    return h;
-  }
-  function api(path, opts) {
-    opts = opts || {};
-    return fetch(BASE + path, { method: opts.method || 'GET', headers: headers(opts.headers), body: opts.body })
-      .then(function (r) { if (r.status === 401) throw new Error('expired'); return r; });
-  }
-
-  /* ۱) ارسال لینک ورود. create_user=false یعنی هیچ حساب تازه‌ای با این فرم ساخته نمی‌شود. */
-  $('sendLink').onclick = function () {
-    var e = ($('email').value || '').trim();
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)) return say('loginStatus', 'ایمیل معتبر وارد کن.', false);
-    if (!BASE || !KEY) return say('loginStatus', 'تنظیمات Supabase در site-config.js نیست.', false);
-    var back = location.origin + location.pathname;
-    say('loginStatus', 'در حال ارسال...', true);
-    fetch(BASE + '/auth/v1/otp?redirect_to=' + encodeURIComponent(back), {
-      method: 'POST',
-      headers: { apikey: KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: e, create_user: false })
-    }).then(function (r) {
-      if (r.ok) say('loginStatus', 'لینک ورود به ایمیلت فرستاده شد. روی لینک بزن.', true);
-      else say('loginStatus', 'ارسال نشد. این ایمیل باید در Supabase به‌عنوان کاربر ثبت شده باشد.', false);
-    }).catch(function () { say('loginStatus', 'خطای اتصال.', false); });
+  $('enter').onclick=async()=>{
+    T=$('token').value.trim();R=$('repo').value.trim();B=$('branch').value.trim()||'main';
+    if(!T||!/^[\w.-]+\/[\w.-]+$/.test(R)){m('مخزن یا توکن درست نیست.','err');return}
+    const r=await fetch('https://api.github.com/repos/'+R,{headers:{Authorization:'Bearer '+T}});
+    if(!r.ok){m('ورود ناموفق ('+r.status+'). توکن و دسترسی را بررسی کن.','err');return}
+    const j=await r.json();
+    if(!(j.permissions&&j.permissions.push)){m('این توکن اجازه‌ی نوشتن ندارد.','err');return}
+    try{sessionStorage.setItem('mt',T);sessionStorage.setItem('mr',R)}catch(e){}
+    $('login').hidden=true;$('editor').hidden=false;$('photo').hidden=false;m('وارد شدی ✅','ok');load();
   };
-
-  /* ۲) برگشت از لینک ایمیل: توکن در هش آدرس است. هش بلافاصله پاک می‌شود. */
-  function tokenFromHash() {
-    var h = location.hash.replace(/^#/, '');
-    if (!h) return null;
-    var t = new URLSearchParams(h).get('access_token');
-    history.replaceState(null, '', location.pathname + location.search);
-    return t;
+  async function load(){
+    m('در حال بارگذاری...');
+    const r=await api('docs/'+$('file').value+'?ref='+B);
+    if(!r.ok){m('بارگذاری نشد ('+r.status+')','err');return}
+    const j=await r.json();sha=j.sha;$('text').value=unb64(j.content);m('بارگذاری شد.','ok');
   }
-  function start() {
-    api('/auth/v1/user').then(function (r) { return r.json(); }).then(function (u) {
-      USER = u;
-      return api('/rest/v1/admins?select=user_id&user_id=eq.' + encodeURIComponent(u.id)).then(function (r) { return r.json(); });
-    }).then(function (rows) {
-      if (!rows || !rows.length) {
-        TOKEN = null;
-        return say('loginStatus', 'این حساب ادمین نیست.', false);
-      }
-      show('loginBox', false);
-      show('editorBox', true);
-      $('who').textContent = 'وارد شده با: ' + (USER.email || 'ادمین');
-      loadAll();
-    }).catch(function (e) {
-      TOKEN = null;
-      say('loginStatus', e.message === 'expired' ? 'نشست تمام شد. دوباره لینک ورود بگیر.' : 'ورود ناموفق بود.', false);
-    });
-  }
-
-  /* ۳) خواندن نسخه‌ی فعال: اگر در Supabase ذخیره شده همان، وگرنه فایل GitHub */
-  function loadAll() {
-    api('/rest/v1/site_content?select=key,value&key=in.(topics,packs)')
-      .then(function (r) { return r.json(); })
-      .then(function (rows) {
-        var saved = {};
-        (rows || []).forEach(function (row) { saved[row.key] = row.value; });
-        KEYS.forEach(function (k) {
-          var ta = $(k + 'Text');
-          var src = $(k + 'Source');
-          if (saved[k]) {
-            ta.value = JSON.stringify(saved[k], null, 2);
-            src.textContent = 'نسخه‌ی فعال: ذخیره‌شده در Supabase';
-          } else {
-            fetch(FILES[k], { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) {
-              ta.value = JSON.stringify(d, null, 2);
-              src.textContent = 'نسخه‌ی فعال: فایل GitHub (هنوز چیزی در Supabase ذخیره نشده)';
-            });
-          }
-        });
-      })
-      .catch(function (e) { say('topicsStatus', e.message === 'expired' ? 'نشست تمام شد.' : 'خواندن محتوا ناموفق بود.', false); });
-  }
-
-  /* ۴) اعتبارسنجی ساختار قبل از ذخیره */
-  function validate(k, obj) {
-    if (k === 'topics') {
-      if (!obj || !Array.isArray(obj.topics)) return 'باید شیء‌ای با فیلد topics (آرایه) باشد.';
-      for (var i = 0; i < obj.topics.length; i++) {
-        if (!obj.topics[i] || !obj.topics[i].slug) return 'حوزه‌ی شماره ' + (i + 1) + ' فیلد slug ندارد.';
-      }
-    }
-    if (k === 'packs') {
-      if (!obj || !Array.isArray(obj.packs)) return 'باید شیء‌ای با فیلد packs (آرایه) باشد.';
-      for (var j = 0; j < obj.packs.length; j++) {
-        if (!obj.packs[j] || !obj.packs[j].id) return 'پک شماره ' + (j + 1) + ' فیلد id ندارد.';
-      }
-    }
-    return null;
-  }
-  function parse(k) {
-    var obj;
-    try { obj = JSON.parse($(k + 'Text').value); }
-    catch (e) { return { error: 'JSON معتبر نیست: ' + e.message }; }
-    var err = validate(k, obj);
-    return err ? { error: err } : { obj: obj };
-  }
-
-  /* ۵) دکمه‌ها */
-  document.addEventListener('click', function (ev) {
-    var b = ev.target.closest('button[data-key]');
-    if (!b) return;
-    var k = b.getAttribute('data-key');
-    var act = b.getAttribute('data-act');
-    var st = k + 'Status';
-
-    if (act === 'validate') {
-      var v = parse(k);
-      return v.error ? say(st, v.error, false) : say(st, 'ساختار درست است ✔', true);
-    }
-    if (act === 'save') {
-      var p = parse(k);
-      if (p.error) return say(st, p.error, false);
-      if (!confirm('این نسخه روی سایت زنده منتشر شود؟')) return;
-      say(st, 'در حال ذخیره...', true);
-      api('/rest/v1/site_content?on_conflict=key', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Prefer: 'resolution=merge-duplicates,return=minimal' },
-        body: JSON.stringify([{ key: k, value: p.obj, updated_at: new Date().toISOString() }])
-      }).then(function (r) {
-        say(st, r.ok ? 'ذخیره شد. چند ثانیه بعد صفحات این نسخه را نشان می‌دهند.' : 'ذخیره نشد (کد ' + r.status + '). دسترسی و SQL را بررسی کن.', r.ok);
-      }).catch(function (e) {
-        say(st, e.message === 'expired' ? 'نشست تمام شد؛ دوباره وارد شو.' : 'خطای اتصال.', false);
-      });
-      return;
-    }
-    if (act === 'reset') {
-      if (!confirm('نسخه‌ی ذخیره‌شده در Supabase حذف شود و سایت دوباره فایل GitHub را نشان دهد؟')) return;
-      api('/rest/v1/site_content?key=eq.' + encodeURIComponent(k), {
-        method: 'DELETE',
-        headers: { Prefer: 'return=minimal' }
-      }).then(function (r) {
-        say(st, r.ok ? 'برگشت انجام شد.' : 'انجام نشد (کد ' + r.status + ').', r.ok);
-        if (r.ok) loadAll();
-      }).catch(function () { say(st, 'خطای اتصال.', false); });
-    }
-  });
-
-  $('logout').onclick = function () { TOKEN = null; location.reload(); };
-
-  /* شروع */
-  var t = tokenFromHash();
-  if (t) { TOKEN = t; start(); }
+  $('load').onclick=load;
+  $('fmt').onclick=()=>{try{$('text').value=JSON.stringify(JSON.parse($('text').value),null,2);m('مرتب شد.','ok')}catch(e){m('JSON نامعتبر: '+e.message,'err')}};
+  $('save').onclick=async()=>{
+    let t=$('text').value;
+    try{JSON.parse(t)}catch(e){m('JSON نامعتبر است؛ ذخیره نشد: '+e.message,'err');return}
+    if(!confirm('تغییر در سایت منتشر شود؟'))return;
+    const f=$('file').value;
+    const r=await api('docs/'+f,{method:'PUT',body:JSON.stringify({message:'admin: edit '+f,content:b64(t),sha:sha,branch:B})});
+    if(r.ok){sha=(await r.json()).content.sha;m('ذخیره شد. سایت تا چند دقیقه‌ی دیگر به‌روز می‌شود ✅','ok')}
+    else m('ذخیره نشد ('+r.status+'). اگر ۴۰۹ بود، دوباره «بارگذاری» بزن.','err');
+  };
+  $('up').onclick=async()=>{
+    const file=$('img').files[0];if(!file){m('اول یک عکس انتخاب کن.','err');return}
+    const im=new Image();im.src=URL.createObjectURL(file);
+    await new Promise(r=>im.onload=r);
+    const c=document.createElement('canvas');c.width=c.height=480;
+    const s=Math.min(im.width,im.height);
+    c.getContext('2d').drawImage(im,(im.width-s)/2,(im.height-s)/3>0?(im.height-s)/3:0,s,s,0,0,480,480);
+    const data=c.toDataURL('image/jpeg',.85).split(',')[1];
+    let cur=await api('docs/founder.jpg?ref='+B),body={message:'admin: founder photo',content:data,branch:B};
+    if(cur.ok)body.sha=(await cur.json()).sha;
+    const r=await api('docs/founder.jpg',{method:'PUT',body:JSON.stringify(body)});
+    m(r.ok?'عکس آپلود شد ✅ (چند دقیقه بعد در سایت دیده می‌شود)':'آپلود نشد ('+r.status+')',r.ok?'ok':'err');
+  };
 })();
 </script>
 </body>
