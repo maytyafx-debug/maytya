@@ -74,7 +74,10 @@ details{background:var(--card);border:1px solid var(--line);border-radius:12px;p
 /* یوزرنیم ربات فروش ریسک (بدون @). خالی = دکمه‌ها به تلگرام مستقیم می‌روند */
 var ORDER_BOT="MetatyaRisk_bot";
 var CONFIG={prices:{pack:"۱۴۹ هزار تومان",session:"۲۴۹ هزار تومان",coach:"۳۹۹ هزار تومان"},refund:""};
-document.querySelectorAll('.price').forEach(function(e){var p=CONFIG.prices[e.dataset.p];if(p)e.textContent=p;else e.style.display='none'});
+function showPrices(){document.querySelectorAll('.price').forEach(function(e){var p=CONFIG.prices[e.dataset.p];if(p){e.textContent=p;e.style.display=''}else e.style.display='none'})}
+showPrices();
+/* منبع اصلی قیمت: packs.json (همان فایلی که ربات و صفحه‌ی ادمین می‌خوانند)؛ اگر نشد، همین مقدارهای بالا می‌مانند */
+fetch('packs.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():null}).then(function(j){var r=j&&j.prices&&j.prices.risk;if(r&&typeof r==='object'){['pack','session','coach'].forEach(function(k){if(typeof r[k]==='string'&&r[k].trim())CONFIG.prices[k]=r[k].trim().slice(0,80)});showPrices()}}).catch(function(){});
 if(CONFIG.refund)document.getElementById('refund').textContent=CONFIG.refund;
 var ob=(ORDER_BOT||'').replace(/^@/,'');
 if(ob)document.querySelectorAll('a[data-order]').forEach(function(a){a.href='https://t.me/'+ob+'?start=order_'+a.dataset.order;a.textContent='سفارش و پرداخت در ربات'});
