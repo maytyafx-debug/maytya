@@ -2,112 +2,118 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>آینه‌ی معاملاتی | Metatya</title>
-<meta name="description" content="فایل CSV معاملاتت را بده و الگوهای رفتاری‌ات را ببین. همه‌چیز فقط داخل مرورگر خودت پردازش می‌شود.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Metatya | آینه‌ی معاملاتی</title>
+<meta name="description" content="فایل معاملاتت را روی دستگاه خودت تحلیل کن و الگوهای رفتاری‌ات را ببین. هیچ داده‌ای ارسال نمی‌شود.">
 <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
 <style>
-:root{--bg:#05060a;--card:#101521;--line:#252c3d;--fg:#f3f5f9;--mut:#98a2b3;--ac:#34f5a6;--bad:#ff7ab8;--gold:#ffd166}
-@media(prefers-color-scheme:light){:root{--bg:#f4f6fb;--card:#fff;--line:#dde2ee;--fg:#0c1222;--mut:#5a6477;--ac:#08a878;--bad:#d6408c;--gold:#b07d0a}}
-*{box-sizing:border-box;margin:0}
-body{background:var(--bg);color:var(--fg);font:15px/1.8 Vazirmatn,system-ui,sans-serif;padding:16px 18px 40px;max-width:900px;margin-inline:auto}
+:root{--bg:#05060a;--card:#0e121c;--line:#232a3a;--fg:#f3f5f9;--mut:#98a2b3;--ac:#34f5a6;--bad:#ff7ab8;--gold:#ffd166}
+@media (prefers-color-scheme:light){:root{--bg:#f4f6fb;--card:#fff;--line:#dde2ee;--fg:#0c1222;--mut:#5a6477;--ac:#08a878;--bad:#d6408c;--gold:#b07d0a}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.8 Vazirmatn,system-ui,sans-serif;padding:16px 18px 40px;max-width:860px;margin-inline:auto}
 a{color:var(--ac);text-decoration:none}
 h1{font-size:1.6rem;font-weight:900;margin:14px 0 6px}
 h2{font-size:1.05rem;margin-bottom:8px}
+p,li{color:var(--mut);font-size:.9rem}
 .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0}
-.mut{color:var(--mut);font-size:.88rem}
-button,.btn{background:var(--ac);color:#03130c;border:0;border-radius:12px;padding:11px 18px;font:inherit;font-weight:800;cursor:pointer;display:inline-block;margin:6px 0 0 8px}
-.g{background:transparent;color:var(--fg);border:1px solid var(--line)}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+textarea{width:100%;min-height:130px;background:transparent;color:var(--fg);border:1px dashed var(--line);border-radius:12px;padding:10px;font:12px/1.6 ui-monospace,monospace;direction:ltr;text-align:left}
+button,.btn{background:var(--ac);color:#03130c;border:0;border-radius:12px;padding:11px 18px;font:inherit;font-weight:800;cursor:pointer;margin:8px 8px 0 0;display:inline-block}
+button.g{background:transparent;color:var(--fg);border:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}
 .k{border:1px solid var(--line);border-radius:14px;padding:12px}
 .k b{display:block;font-size:1.25rem}.k span{font-size:.78rem;color:var(--mut)}
-.pos{color:var(--ac)}.neg{color:var(--bad)}
-.bars{display:flex;align-items:flex-end;gap:4px;height:110px;direction:ltr;margin-top:10px}
-.bars i{flex:1;min-width:3px;border-radius:4px 4px 2px 2px;background:var(--ac)}
-.bars i.l{background:var(--bad)}
-ul{padding-inline-start:20px}li{margin:6px 0}
+.neg{color:var(--bad)}.pos{color:var(--ac)}
+.bars{display:flex;align-items:end;gap:3px;height:110px;direction:ltr;margin-top:10px}
+.bars i{flex:1;background:var(--ac);border-radius:4px 4px 0 0;min-height:2px;position:relative}
+.bars i.n{background:var(--bad)}
+.lbl{display:flex;gap:3px;direction:ltr;font-size:.62rem;color:var(--mut)}.lbl span{flex:1;text-align:center}
 #err{color:var(--bad);margin-top:8px}
-code{background:var(--line);padding:1px 6px;border-radius:6px;direction:ltr;display:inline-block}
+footer{color:var(--mut);font-size:.78rem;margin-top:24px}
 </style>
 </head>
 <body>
 <a href="index.html">← خانه</a>
 <h1>آینه‌ی معاملاتی</h1>
-<p class="mut">فایل معاملاتت را بده تا الگوهای رفتاری‌ات را ببینی. فایل <b>هیچ‌جا ارسال نمی‌شود</b>؛ تحلیل فقط داخل همین مرورگر انجام می‌شود. این ابزار آموزشی است، نه توصیه‌ی معاملاتی و نه پیش‌بینی.</p>
+<p>فایل معاملات خودت را بده تا الگوهای رفتاری‌ات را ببینی. همه‌چیز فقط داخل مرورگر خودت محاسبه می‌شود و هیچ داده‌ای به جایی ارسال نمی‌شود.</p>
 
 <div class="card">
-  <h2>۱. فایل را انتخاب کن</h2>
-  <p class="mut">فایل CSV با این ستون‌ها (نام انگلیسی یا فارسی، ترتیب مهم نیست): <code>time</code> (زمان باز شدن، مثل 2026-03-01 14:30)، <code>pnl</code> (سود/زیان هر معامله، عدد). اختیاری: <code>symbol</code>. خروجی تاریخچه‌ی بیشتر پلتفرم‌ها را می‌توان به این شکل درآورد.</p>
-  <input type="file" id="f" accept=".csv,text/csv">
-  <br>
-  <button id="demo" class="g">امتحان با داده‌ی نمونه (فرضی)</button>
-  <a class="btn g" id="dl" download="sample-trades.csv">دانلود فایل نمونه</a>
+  <h2>۱. فایل را وارد کن</h2>
+  <p>فایل CSV با سطر عنوان. ستون‌های لازم: <b>زمان</b> (date/time) و <b>نتیجه‌ی معامله</b> (profit/pnl). ستون نماد (symbol) اختیاری است. اگر دفترچه‌ی ما یا اکسل داری، آن را با Save as به CSV تبدیل کن.</p>
+  <input type="file" id="f" accept=".csv,.txt">
+  <textarea id="t" placeholder="time,symbol,profit&#10;2026-10-01 09:15,EURUSD,-12.5&#10;2026-10-01 09:30,EURUSD,-20"></textarea>
+  <button id="go">تحلیل کن</button>
+  <button class="g" id="demo">نمونه‌ی فرضی</button>
   <div id="err"></div>
 </div>
 
 <div id="out" hidden>
-  <div class="card"><h2>خلاصه</h2><div class="kpis" id="kpis"></div>
-    <p class="mut" style="margin-top:12px">منحنی تجمعی سود/زیان (هر ستون یک معامله):</p><div class="bars" id="bars"></div></div>
-  <div class="card"><h2>الگوهای رفتاری</h2><ul id="pat"></ul></div>
-  <p class="mut">نمونه‌ی کم، نتایج را بی‌اعتبار می‌کند: برای نتیجه‌گیری معنادار حداقل ۳۰ معامله لازم است. این گزارش تشخیص نیست و هیچ سودی را تضمین نمی‌کند.</p>
+  <div class="card"><h2>خلاصه</h2><div class="grid" id="sum"></div></div>
+  <div class="card"><h2>نتیجه بر اساس ساعت روز</h2><p>مجموع نتیجه‌ی معاملات هر ساعت. ستون قرمز یعنی آن ساعت در مجموع ضرر داشته است.</p><div class="bars" id="hb"></div><div class="lbl" id="hl"></div></div>
+  <div class="card"><h2>رفتارهایی که شاید ارزش بررسی دارند</h2><ul id="ins" style="padding-inline-start:20px"></ul></div>
 </div>
+
+<footer>این ابزار آموزشی است و توصیه‌ی سرمایه‌گذاری یا پیش‌بینی نیست. الگوها فقط از داده‌ی خودت استخراج می‌شوند و تضمینی برای آینده نیستند.</footer>
 
 <script>
 (function(){
   const $=id=>document.getElementById(id);
-  const fa=s=>s.replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/٫/g,'.').replace(/٬/g,'');
-  const fmt=n=>(Math.round(n*100)/100).toLocaleString('en-US');
-  const SAMPLE='time,symbol,pnl\n'+(()=>{let r=[],d=new Date('2026-02-02T09:00:00'),seed=7;const rnd=()=>(seed=(seed*9301+49297)%233280)/233280;let lastL=false;
-    for(let i=0;i<48;i++){d=new Date(d.getTime()+(lastL?8:90)*60000+rnd()*3600000);const w=rnd()<(lastL?.35:.52);const p=w?Math.round(30+rnd()*60):-Math.round(25+rnd()*(lastL?120:50));lastL=p<0;
-      r.push(d.toISOString().slice(0,16).replace('T',' ')+',EURUSD,'+p)}return r.join('\n')})();
-  $('dl').href='data:text/csv;charset=utf-8,'+encodeURIComponent(SAMPLE);
-  const key={time:['time','date','open_time','opentime','datetime','زمان','تاریخ'],pnl:['pnl','profit','p/l','result','سود','سود/زیان','نتیجه']};
-  function parse(text){
-    text=fa(text).replace(/^﻿/,'');
-    const L=text.split(/\r?\n/).filter(x=>x.trim());if(L.length<2)throw 'فایل خالی است.';
-    const sep=(L[0].match(/;/g)||[]).length>(L[0].match(/,/g)||[]).length?';':',';
-    const H=L[0].split(sep).map(h=>h.trim().toLowerCase().replace(/^"|"$/g,''));
-    const find=a=>H.findIndex(h=>a.includes(h));
-    const ti=find(key.time),pi=find(key.pnl);
-    if(ti<0||pi<0)throw 'ستون‌های زمان (time) و سود/زیان (pnl) پیدا نشد. ردیف اول باید عنوان ستون‌ها باشد.';
+  const fa=s=>String(s).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/٫/g,'.').replace(/٬/g,'');
+  const fmt=n=>(Math.round(n*100)/100).toLocaleString('en');
+  function parse(txt){
+    const lines=fa(txt).split(/\r?\n/).filter(l=>l.trim());
+    if(lines.length<3)throw new Error('حداقل یک سطر عنوان و دو معامله لازم است.');
+    const sep=(lines[0].match(/;/g)||[]).length>(lines[0].match(/,/g)||[]).length?';':',';
+    const head=lines[0].split(sep).map(h=>h.trim().toLowerCase());
+    const find=re=>head.findIndex(h=>re.test(h));
+    const it=find(/time|date|open|زمان|تاریخ/), ip=find(/profit|pnl|p&l|result|net|سود|نتیجه/);
+    if(it<0||ip<0)throw new Error('ستون زمان یا نتیجه پیدا نشد. نام ستون‌ها را مثل time و profit بگذار.');
+    const is=find(/symbol|pair|instrument|نماد/);
     const rows=[];
-    for(const l of L.slice(1)){const c=l.split(sep).map(x=>x.trim().replace(/^"|"$/g,''));
-      const t=new Date(c[ti].replace(' ','T'));const p=parseFloat(c[pi].replace(/[, ]/g,''));
-      if(!isNaN(t)&&!isNaN(p))rows.push({t,p});}
-    if(rows.length<5)throw 'کمتر از ۵ معامله‌ی معتبر پیدا شد. فرمت زمان (مثل 2026-03-01 14:30) و عدد pnl را بررسی کن.';
-    return rows.sort((a,b)=>a.t-b.t);
+    for(const l of lines.slice(1)){
+      const c=l.split(sep);const d=new Date((c[it]||'').trim().replace(' ','T'));const p=parseFloat((c[ip]||'').replace(/[^\d.\-]/g,''));
+      if(!isNaN(d)&&!isNaN(p))rows.push({d,p,s:is>=0?(c[is]||'').trim():''});
+    }
+    if(rows.length<2)throw new Error('معامله‌ی معتبر کافی پیدا نشد. قالب تاریخ مثل 2026-10-01 09:15 باشد.');
+    return rows.sort((a,b)=>a.d-b.d);
   }
-  const avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:0;
-  function run(rows){
-    const P=rows.map(r=>r.p),W=P.filter(x=>x>0),Ls=P.filter(x=>x<0);
-    const tot=P.reduce((a,b)=>a+b,0),wr=W.length/P.length,aw=avg(W),al=avg(Ls);
-    const exp=wr*aw+(1-wr)*al;
-    let c=0,pk=0,dd=0;const cum=P.map(p=>(c+=p));cum.forEach(v=>{pk=Math.max(pk,v);dd=Math.max(dd,pk-v)});
-    const K=[['تعداد معامله',P.length],['درصد برد',(wr*100).toFixed(0)+'٪'],['جمع سود/زیان',fmt(tot),tot],['میانگین برد',fmt(aw)],['میانگین باخت',fmt(al)],['امید ریاضی هر معامله',fmt(exp),exp],['بیشینه افت از سقف',fmt(dd)]];
-    $('kpis').innerHTML=K.map(k=>'<div class="k"><b class="'+(k[2]===undefined?'':k[2]>=0?'pos':'neg')+'">'+k[1]+'</b><span>'+k[0]+'</span></div>').join('');
-    const mx=Math.max(...cum.map(Math.abs),1);
-    $('bars').innerHTML=cum.map(v=>'<i class="'+(v<0?'l':'')+'" style="height:'+Math.max(4,Math.abs(v)/mx*100)+'%"></i>').join('');
-    const pat=[];
-    // معامله‌ی انتقامی: بازشدن ظرف ۱۵ دقیقه بعد از یک باخت
-    const after=[],other=[];
-    for(let i=1;i<rows.length;i++){(rows[i-1].p<0&&(rows[i].t-rows[i-1].t)<=15*60000?after:other).push(rows[i].p)}
-    if(after.length>=3)pat.push('بعد از باخت، <b>'+after.length+'</b> بار ظرف ۱۵ دقیقه وارد معامله‌ی بعدی شدی. میانگین این معامله‌ها '+fmt(avg(after))+' و بقیه '+fmt(avg(other))+(avg(after)<avg(other)?' است؛ نشانه‌ی احتمالی معامله‌ی انتقامی.':' است؛ در این داده الگوی انتقامی دیده نمی‌شود.'));
-    else pat.push('در این داده، معامله‌ی سریع بعد از باخت (ظرف ۱۵ دقیقه) کمتر از ۳ بار بوده است؛ الگوی انتقامی قابل سنجش نیست.');
-    // ساعت‌ها
-    const H={};rows.forEach(r=>{const h=r.t.getHours();(H[h]=H[h]||[]).push(r.p)});
-    const hs=Object.entries(H).filter(e=>e[1].length>=3).map(e=>[+e[0],e[1].length,avg(e[1])]).sort((a,b)=>a[2]-b[2]);
-    if(hs.length>1){const w=hs[0],b=hs[hs.length-1];pat.push('ضعیف‌ترین ساعت: <b>'+w[0]+':00</b> ('+w[1]+' معامله، میانگین '+fmt(w[2])+'). قوی‌ترین: <b>'+b[0]+':00</b> ('+b[1]+' معامله، میانگین '+fmt(b[2])+'). با نمونه‌ی کم، این را قطعی نگیر.')}
-    // رشته‌ی باخت
-    let s=0,ms=0;P.forEach(p=>{s=p<0?s+1:0;ms=Math.max(ms,s)});pat.push('طولانی‌ترین رشته‌ی باخت پشت‌سرهم: <b>'+ms+'</b> معامله.');
-    // نسبت باخت به برد
-    if(Ls.length&&W.length&&Math.abs(al)>aw*1.5)pat.push('میانگین باخت‌هایت ('+fmt(Math.abs(al))+') بزرگ‌تر از میانگین بردهایت ('+fmt(aw)+') است؛ ببین حد ضرر را جابه‌جا نکرده باشی.');
-    if(P.length<30)pat.push('هشدار: فقط '+P.length+' معامله داری؛ نتایج بالا به‌شدت نامطمئن‌اند.');
-    $('pat').innerHTML=pat.map(x=>'<li>'+x+'</li>').join('');
+  function analyze(r){
+    const n=r.length,w=r.filter(x=>x.p>0),l=r.filter(x=>x.p<0),tot=r.reduce((a,x)=>a+x.p,0);
+    const aw=w.length?w.reduce((a,x)=>a+x.p,0)/w.length:0, al=l.length?l.reduce((a,x)=>a+x.p,0)/l.length:0;
+    let eq=0,pk=0,dd=0,streak=0,ms=0;
+    for(const x of r){eq+=x.p;pk=Math.max(pk,eq);dd=Math.max(dd,pk-eq);if(x.p<0){streak++;ms=Math.max(ms,streak)}else streak=0}
+    const hours=Array(24).fill(0),hc=Array(24).fill(0);r.forEach(x=>{hours[x.d.getHours()]+=x.p;hc[x.d.getHours()]++});
+    let rev=0,revLoss=0;
+    for(let i=1;i<n;i++){if(r[i-1].p<0&&(r[i].d-r[i-1].d)<=15*60000){rev++;if(r[i].p<0)revLoss++}}
+    return{n,wr:w.length/n*100,aw,al,tot,exp:tot/n,dd,ms,hours,hc,rev,revLoss,w:w.length,l:l.length,
+      rr:al?Math.abs(aw/al):0};
+  }
+  function show(a){
+    const k=(v,s,c)=>'<div class="k"><b class="'+(c||'')+'">'+v+'</b><span>'+s+'</span></div>';
+    $('sum').innerHTML=k(a.n,'تعداد معاملات')+k(fmt(a.wr)+'٪','نرخ برد')+k(fmt(a.tot),'مجموع نتیجه',a.tot>=0?'pos':'neg')+
+      k(fmt(a.exp),'میانگین هر معامله (امید ریاضی)',a.exp>=0?'pos':'neg')+k(fmt(a.aw),'میانگین معامله‌ی سودده','pos')+k(fmt(a.al),'میانگین معامله‌ی ضررده','neg')+
+      k(fmt(a.rr),'نسبت سود به ضرر')+k(fmt(a.dd),'بیشترین افت از سقف','neg')+k(a.ms,'بیشترین ضرر پشت‌سرهم');
+    const mx=Math.max(...a.hours.map(Math.abs),1);
+    $('hb').innerHTML=a.hours.map((v,h)=>'<i class="'+(v<0?'n':'')+'" style="height:'+Math.max(2,Math.abs(v)/mx*100)+'%" title="ساعت '+h+': '+fmt(v)+' ('+a.hc[h]+' معامله)"></i>').join('');
+    $('hl').innerHTML=a.hours.map((v,h)=>'<span>'+(h%3?'':h)+'</span>').join('');
+    const ins=[];
+    const worst=a.hours.map((v,h)=>({v,h,c:a.hc[h]})).filter(x=>x.c>=3&&x.v<0).sort((x,y)=>x.v-y.v)[0];
+    if(worst)ins.push('بیشترین ضرر تجمعی در ساعت '+worst.h+' بوده ('+fmt(worst.v)+' در '+worst.c+' معامله). بررسی کن آن ساعت چه شرایطی داشته‌ای.');
+    if(a.rev>=3)ins.push(a.rev+' بار ظرف ۱۵ دقیقه بعد از یک ضرر معامله‌ی تازه باز کرده‌ای و '+a.revLoss+' تای آن‌ها هم ضرر بوده. این الگو معمولاً به «معامله‌ی انتقامی» معروف است.');
+    if(a.ms>=4)ins.push('بیشترین ضرر پشت‌سرهم '+a.ms+' معامله بوده. شاید یک قانون «توقف بعد از چند ضرر» به کارت بیاید.');
+    if(a.wr>50&&a.exp<0)ins.push('نرخ بردت بالای ۵۰٪ است ولی میانگین هر معامله منفی است؛ یعنی ضررهایت بزرگ‌تر از سودهایت هستند.');
+    if(a.rr&&a.rr<1&&a.wr<60)ins.push('نسبت سود به ضرر کمتر از ۱ است و نرخ برد هم بالا نیست؛ این ترکیب معمولاً در بلندمدت فشار می‌آورد.');
+    if(!ins.length)ins.push('الگوی پررنگ و واضحی در این داده پیدا نشد. با داده‌ی بیشتر (چند ده معامله) نتیجه قابل‌اعتمادتر می‌شود.');
+    if(a.n<30)ins.push('تعداد معاملات کم است ('+a.n+')؛ نتیجه‌ها فقط نشانه‌اند و نباید از آن‌ها قطعیت گرفت.');
+    $('ins').innerHTML=ins.map(t=>'<li>'+t+'</li>').join('');
     $('out').hidden=false;$('out').scrollIntoView({behavior:'smooth'});
   }
-  function go(text){$('err').textContent='';try{run(parse(text))}catch(e){$('err').textContent=String(e)}}
-  $('f').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>go(r.result);r.readAsText(f,'utf-8')};
-  $('demo').onclick=()=>go(SAMPLE);
+  function run(){$('err').textContent='';try{show(analyze(parse($('t').value)))}catch(e){$('err').textContent=e.message;$('out').hidden=true}}
+  $('go').onclick=run;
+  $('f').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{$('t').value=r.result;run()};r.readAsText(f)};
+  $('demo').onclick=()=>{let s='time,symbol,profit\n',t=new Date(2026,8,1,9,0);
+    const p=[20,-15,-18,-30,25,-12,40,-22,-25,-28,35,18,-14,-20,50,-10,-16,-35,22,30,-12,-18,45,-9,-26,15,-11,-19,38,-14];
+    p.forEach((v,i)=>{s+=t.toISOString().slice(0,16).replace('T',' ')+',EURUSD,'+v+'\n';t=new Date(t.getTime()+(i%3==0?3.2:0.2)*3600000)});
+    $('t').value=s;run()};
 })();
 </script>
 </body>
