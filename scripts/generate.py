@@ -45,7 +45,7 @@ PROMPT = """امروز {today} است. برای بخش «{name}» یک سایت 
 # ---------- ارائه‌دهنده: OpenRouter (با جایگزینی خودکار مدل) ----------
 # لیست مدل‌های رایگان به ترتیب اولویت. اگر یکی خطا داد یا پولی/ناموجود شد، مدل بعدی امتحان می‌شود.
 # می‌توانی با متغیر OR_MODELS (جداشده با ویرگول) این لیست را از بیرون عوض کنی.
-OR_MODELS_DEFAULT = "nvidia/nemotron-3.5-super-vl:free,google/gemma-3-27b-it:free,openai/gpt-oss-20b:free"
+OR_MODELS_DEFAULT = "nvidia/nemotron-3.5-super-vl:free,recursive/flint-v1.0:free,xingchen-agi/xing4.0-29b-a4b:free"
 
 
 def or_models():
