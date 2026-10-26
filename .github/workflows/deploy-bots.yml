@@ -5,6 +5,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_DEPLOY_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
     steps:
       - uses: actions/checkout@v4
       - name: ساخت فایل Secret ها (فقط مواردی که مقدار دارند)
@@ -22,22 +25,32 @@ jobs:
           import os, json
           keys = ["BOT_RISK","BOT_BOURSE","BOT_FIT","BOT_MIND","BOT_BIZ","WEBHOOK_SECRET","OWNER_CHAT_ID","PAY_INFO"]
           d = {k: os.environ[k] for k in keys if os.environ.get(k)}
-          json.dump(d, open("secrets.json","w")); print("secrets:", sorted(d))
+          json.dump(d, open("secrets.json","w"), ensure_ascii=False)
+          print("secrets:", sorted(d), "| تعداد:", len(d))
           PY
-      - name: Deploy worker
+      - name: بررسی توکن و حساب Cloudflare
+        run: |
+          set -euo pipefail
+          [ -n "$CLOUDFLARE_API_TOKEN" ] || { echo "::error::Secret با نام CLOUDFLARE_DEPLOY_TOKEN خالی یا نامعتبر است"; exit 1; }
+          [ -n "$CLOUDFLARE_ACCOUNT_ID" ] || { echo "::error::Secret با نام CLOUDFLARE_ACCOUNT_ID خالی است"; exit 1; }
+          cd worker && npx --yes wrangler@4 whoami
+      - name: دیپلوی Worker
         id: deploy
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_DEPLOY_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          workingDirectory: worker
-          command: deploy
-          wranglerVersion: "4"
-          postCommands: |
-            npx wrangler secret bulk ../secrets.json
+        run: |
+          set -euo pipefail
+          cd worker
+          npx --yes wrangler@4 deploy 2>&1 | tee ../deploy.log
+          URL=$(grep -oE 'https://[a-zA-Z0-9.-]+\.workers\.dev' ../deploy.log | head -1)
+          [ -n "$URL" ] || { echo "::error::آدرس Worker در خروجی deploy پیدا نشد"; exit 1; }
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+          echo "Worker: $URL"
+      - name: ارسال Secret ها به Worker
+        run: |
+          set -euo pipefail
+          cd worker && npx --yes wrangler@4 secret bulk ../secrets.json
       - name: ثبت webhook ها در تلگرام
         env:
-          WORKER_URL: ${{ steps.deploy.outputs.deployment-url }}
+          WORKER_URL: ${{ steps.deploy.outputs.url }}
           WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
           BOT_RISK: ${{ secrets.BOT_RISK }}
           BOT_BOURSE: ${{ secrets.BOT_BOURSE }}
