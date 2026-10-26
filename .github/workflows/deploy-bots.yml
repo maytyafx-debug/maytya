@@ -28,12 +28,14 @@ jobs:
           json.dump(d, open("secrets.json","w"), ensure_ascii=False)
           print("secrets:", sorted(d), "| تعداد:", len(d))
           PY
-      - name: بررسی توکن و حساب Cloudflare
+      - name: بررسی توکن Cloudflare
         run: |
           set -euo pipefail
           [ -n "$CLOUDFLARE_API_TOKEN" ] || { echo "::error::Secret با نام CLOUDFLARE_DEPLOY_TOKEN خالی یا نامعتبر است"; exit 1; }
           [ -n "$CLOUDFLARE_ACCOUNT_ID" ] || { echo "::error::Secret با نام CLOUDFLARE_ACCOUNT_ID خالی است"; exit 1; }
-          cd worker && npx --yes wrangler@4 whoami
+          curl -fsS -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" https://api.cloudflare.com/client/v4/user/tokens/verify > /dev/null \
+            || { echo "::error::توکن CLOUDFLARE_DEPLOY_TOKEN معتبر نیست"; exit 1; }
+          echo "توکن معتبر است"
       - name: دیپلوی Worker
         id: deploy
         run: |
