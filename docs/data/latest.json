@@ -1,24 +1,24 @@
 {
- "updated": "2026-10-26T05:06:44+00:00",
+ "updated": "2026-10-26T07:08:00+00:00",
  "prices": {
   "BTC/USD": {
-   "value": 80050,
-   "change24h_pct": -0.98,
+   "value": 80082,
+   "change24h_pct": -0.54,
    "source": "CoinGecko"
   },
   "ETH/USD": {
-   "value": 2321.61,
-   "change24h_pct": -1.83,
+   "value": 2319.73,
+   "change24h_pct": -1.05,
    "source": "CoinGecko"
   },
   "SOL/USD": {
-   "value": 101.3,
-   "change24h_pct": -1.16,
+   "value": 101.01,
+   "change24h_pct": -0.42,
    "source": "CoinGecko"
   },
   "XRP/USD": {
    "value": 1.29,
-   "change24h_pct": -1.72,
+   "change24h_pct": -0.76,
    "source": "CoinGecko"
   },
   "EUR/USD": {
@@ -122,62 +122,62 @@
     "published": "Sun, 25 Oct 2026 09:32:00 GMT"
    },
    {
-    "title": "Which Crypto Could Be the Second to Reach a $1 Trillion Market Value? - 24/7 Wall St.",
-    "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxOby1qdDgzeFRaVnpKMTZBMGNqR1ZUdDRVQ1lqT2FGMnppcWd5anpKQ2dZM01pcERJZlRSVnVKdGlrZ3FZQ3M5VFpsaUQ4cnptM2lFbGlWT3E4RGNsWmNSdU04UEJpN01OX05jbWV0M2NkejFHUDZ1cHZNcHlKZV8tNmhtRXlXNEFqYk5GakNKWDhwb3lidUR1RERfLTdsN3B6Tl8teVh1dC11MkRaZk1ITHNlcmMtanQ5MkY5QmVqc0FncmNk?oc=5",
-    "published": "Sun, 25 Oct 2026 23:30:00 GMT"
-   },
-   {
-    "title": "XRP ETFs buck Bitcoin and Ethereum outflows – Can price follow? - AMBCrypto",
-    "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQVUtveG9xbFR5YTY0aEtwa0E3eDNoeDMyWm1HcXF6RVJDRGhWaU9UVHBRU1hiQ3NTOXVoakxJRDZPWFV4YXg4ajdSN21ZU3NDVm1LSEQ4ajNaNHZKRVVXaEJJajNaczNOZWR1V3hYZHpTYWs0aVJVMWx4ZVV2MVVwdkIxb013RHRfZjVr?oc=5",
-    "published": "Sun, 25 Oct 2026 11:00:32 GMT"
-   },
-   {
     "title": "Altcoins Are Crypto’s Stock Market & Bitcoin Is Its Gold - ETF Database",
     "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOUmlpa21RcURlV09HTnNDdU1seFE1czY1TjNpRU4xT3FvM1JST1daQWxJaVBmWlo5Q0xDNjJTOVdkZHpKaWVwdnpkY3RxUWlOcUFaSWpxbW05aFo5dmNPbF9VSlFQbkUwa1lGMTdveEJmU3NRalhmVGdhVzFpZFpRUWh4V0FsTnRDN2lnUk9PTm5aY0t1X0NkeXgxdVNsUm5OR1QxaTA5eXlNWC1yMENwZQ?oc=5",
     "published": "Thu, 22 Oct 2026 20:32:45 GMT"
+   },
+   {
+    "title": "Crypto Today: Why are Bitcoin, Ethereum and XRP falling despite net ETF inflows? - www.tmgm.com",
+    "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPckhDdWg5Q3p3c3dHMXdMSlVIaGhiZkZ0ZlpHYmh3MVk4Y3JrZEdHOW5zSGJXdVc0VjN1Ui1jSlRoQkxDYnJEcVFPc0tCNU53WTBHZXpkYktKc1NHanJ3SW5IT0VZREJGOGk1TG9qR0JqUHpUdG9aQjhSNGN2SEVKSU5HUkc1dzIwblhTdUtNa1kxcE00T2Z4eEJBcmsteTU4dWs0RlROZVdUZlBlUXFCdTNvSDFHU1ZPb3BibUZfUFBSeXJrVTF1UUdyTQ?oc=5",
+    "published": "Thu, 22 Oct 2026 17:16:23 GMT"
+   },
+   {
+    "title": "Which Crypto Could Be the Second to Reach a $1 Trillion Market Value? - 24/7 Wall St.",
+    "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxOby1qdDgzeFRaVnpKMTZBMGNqR1ZUdDRVQ1lqT2FGMnppcWd5anpKQ2dZM01pcERJZlRSVnVKdGlrZ3FZQ3M5VFpsaUQ4cnptM2lFbGlWT3E4RGNsWmNSdU04UEJpN01OX05jbWV0M2NkejFHUDZ1cHZNcHlKZV8tNmhtRXlXNEFqYk5GakNKWDhwb3lidUR1RERfLTdsN3B6Tl8teVh1dC11MkRaZk1ITHNlcmMtanQ5MkY5QmVqc0FncmNk?oc=5",
+    "published": "Sun, 25 Oct 2026 23:30:00 GMT"
    }
   ],
   "bourse": [],
   "sport": [
    {
-    "title": "Researchers Found Protein Worked Differently Across These Exercises - MindBodyGreen",
-    "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNckFZVFU3V0tHWG9pdTdfNTVVczZqMm9oM055bDdxNzFRYlRhRUNIV0hiQ1pqZVN1VFZBc29rN0RYUmN3bXJrNGpBSW1EM1daUDJzZEhHRS1DREZfY1dlSkRtUGZ1ZjRwaUJvd3VQODZCRXRPd3NxMDBRM21maTFBc2NYVTdhdEs1RXJsZTRhcjM4NWJHZ1FwYWJKNFI5WG0xazhzSGxR?oc=5",
-    "published": "Fri, 16 Oct 2026 07:00:00 GMT"
+    "title": "Proteinmaxxing: How to Choose Protein Foods That Fit Your Goals - Men's Fitness",
+    "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQUWtSblA2N3pWRHo4UkprZ0FNZ1BSUEp1dDFfWmstUHU2dXJNbzloNEJuRW5xRktfb0RfVU5mbEx0WUtvTnNPdzRneEFrNWRFRDdsNjcwaUJHWEM0cEdWUGhCYnUwNXhaNkpjQ2pab3p6Vm9rYXNCUTkwSFV2WEVybWNDU05xak1FX2JoY2loUUQtS2VzVC1WYURkSWk?oc=5",
+    "published": "Fri, 23 Oct 2026 13:00:00 GMT"
    },
    {
-    "title": "New StrengthenHER study aims to help women 50–75 build strength and preserve independence - The University of Rhode Island",
-    "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNRkVTYkZobEhKOElXWkp5TnYydGRJQ09qRVJQaWZiTUJOOXFGR3RfRlFQRDBGcGhYOXpnczJObzl1cTBDQWdFMUZOaXlQVFFEckRvWkVYUkpYU3Y4enZQRU16RGhUQm11cTQ5ZlRuWW10aDE0bHdXaEVTc3RtT0FzSkZKbXhQQTh6MFl4U2d0alFaMG5YTkFmdGlvMWY0eEJGWjJZWVhZTFctNkFPX2lWVnpaRFFXUWw2WXBzSXRjY3U?oc=5",
-    "published": "Fri, 18 Sep 2026 07:00:00 GMT"
+    "title": "25 High-Protein Foods Dietitians Say Can Help You Reach Your Protein Goals - Good Housekeeping",
+    "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOOF94WEIxUjgxdmpFRXY0aWNtUUdlUGNDejV3b093N096RFVTYy1fNWVKRGVHbEF4RzFuZ3VBOE5tdUNXRENwQ3JSRS00a013ZzJKUDZXMXc3Z0RRU3Y0NkMwRzkzZy0yZ0R4ZkVFWjFyTDR4Qzg0d3ZaVld1SkthV2VKS1RXNlRBU0FCTlVaaDduSV9rV3NjZEt1UWo1TjBKVGctMHp3?oc=5",
+    "published": "Thu, 22 Oct 2026 07:00:00 GMT"
    },
    {
-    "title": "Creatine may help build muscle even without exercise, researchers find - Science Daily",
-    "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1LTWVDOXd6cFF2QkhMSDJnNE5FM2FaQXE1VDdpWk1mN2RobERGY2Z1MlpPNTgxYXR2NkZzbExGdDJOV0w2dU1BTUtaUENrOE5iY3plcE5wQ3B2NlRxQS0xWUdhRGZubm94OGFnenA1NA?oc=5",
-    "published": "Tue, 29 Sep 2026 07:00:00 GMT"
+    "title": "Breast Cancer and Strength Training: Carbon Performance Examines Promising Research and Offers Expert Exercise Guidance - EIN News",
+    "link": "https://news.google.com/rss/articles/CBMi8gFBVV95cUxQdkVqZmtTelVGSWc0ZC1FcU1pMXMwRGlMOTIwUVExLWlHSWFpd1V6SGx6UlBzY1VQXzJBUVpYWS1aYl9PZjhpNHNmN25KMUVyVXFsWXBmZ2pfam83YWF1c01NYlZMQjY4MTN1NFFXazd4UE92bXJFYTdrSWNJZF83M0V2aUZ0aHhxUzFDX0pVbXJobVU4SDZNMmpQaU1wV0w0anROV2VWUi01bEZTVmFtclhmTnZjdWlFMWZLYlU3MzBXNkdFcS16ejNHWEpmbm1scHNjNzc2MS1OektFLUo4YUxEMjJmWUNNR0JPWDMzQm9pUQ?oc=5",
+    "published": "Sat, 24 Oct 2026 19:34:00 GMT"
    },
    {
-    "title": "Study finds creatine’s benefits extend beyond the gym - Texas A&M Stories",
-    "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPa2JPQ05FaWJDTTVyajJjMEpucDItYmdIZXNXSVNhd1Z5Z19KX0pxOGFPa2hlQ0tYM0FGQThtQkJCZ25jWEJxUkwxbmpWOW1tdi0td09hV0pTaHhGaXlQeThQNDBWaEFYMS1iU0pWbGlDR3NVMWpEU3BuMVlpX3BWemhxVEp5b3kyRFBFaTVQR3RaVDFYRHc0blN3?oc=5",
-    "published": "Fri, 18 Sep 2026 07:00:00 GMT"
+    "title": "Strength training over decades linked to longer life - Harvard Health",
+    "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOczJqTVIzMFViOFd0V0JWTWJDWmswanJGbGVNV2RCUEU0SHJFVmx0VHZhYWxBUnBITmc0TXpyNlcyZVNTRGtvd2ZTVzBWWm14dHRqTC1NcHFqWW5KamJBZTRELWxKdmxpNDJYMk9uQ1ZxNWpKel9YcllfZVM0WnRld2dteXJQa240LTNEdlZvemJ3dUdtbEFnM0ZMaDlSNElWcjcwZkF5TQ?oc=5",
+    "published": "Thu, 16 Jul 2026 07:00:00 GMT"
    },
    {
-    "title": "Creatine without exercise: Can it still help build muscle? - Medical News Today",
-    "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPNFBMZlFSVlFMNlpGQlgtQlNmUnhTcVFIczVxc1l1bE1pS0RGVW9EVUVXd3ZGbEwwb0dpT2VGX2hJZzc5UWsyTm4ya1NmX3BpeFBuckZMZ0xLT0VsQmp0OUJqYTBZY1N6TTNCeDhkS0E2b2pmb1ZFYVZkSGNYVElKUVFFM2hRR3NxajhOZ1JYdDlhMklmMk1FVDFFcXFWdWVmREE?oc=5",
-    "published": "Mon, 05 Oct 2026 07:00:00 GMT"
+    "title": "Moderate amount of strength training each week could boost longevity - Harvard T.H. Chan School of Public Health",
+    "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNSG5BbHdreHM3ZjNiaXItN3BybU5PR0pYcmtLWk9vMF9CejBCNU5NR2Q1ZWRmOUZUUm9RYllaeEpMSlBpTUszUHJ1Y0JSZTR1TWFwa2lXR2NSOG5JYXF3em03M3IyTGtkcm10cHFPQXNEVTNJQW5sZ3liLTlSSTE4QlA4c0diY3NDbWMxR2V4TG5lUkhVLVlsdV9BTGhkclJB?oc=5",
+    "published": "Tue, 09 Jun 2026 07:00:00 GMT"
    },
    {
-    "title": "How much protein do you need? Nutrition experts say there's a sweet spot - Business Insider",
-    "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNRzRySVNqM0NncjVWQ1VQU25PbHp2RHJhS0x0blBUS0drYWNRel8tQU5tRjhsT2Y3MTFVQmN3dG9rYmdjbVVfNWx0cllGMmx5eGEwS1JHZExuZ25iNDVoeS1hbWs5MjZHX21URGlHZXNPQW9SdWNTbEZuc0FVc2hfS0lpaw?oc=5",
-    "published": "Sat, 08 Aug 2026 07:00:00 GMT"
+    "title": "How much protein should we really be eating? Five things to know - Stanford Medicine",
+    "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBTajNtcVpkNDlzTHV2b2VBY1ZqMVVIeE9tMnhNRE82MzRfeklyTkpkZGFTWkdnVjlBWVhhcUtqaXFGX3RQdEdzejFqbi1YRXVvTmhxQU5ma3R3clVaalg2c2NDWHFQSUZwR1N3aGkzZnVEQWs1ZG9R?oc=5",
+    "published": "Wed, 25 Mar 2026 07:00:00 GMT"
    },
    {
-    "title": "New Research Suggests Creatine May Help Boost Strength After 45—Even Without Exercise - Health.com",
-    "link": "https://news.google.com/rss/articles/CBMickFVX3lxTE5Sa2c0bGcyeHVQRGhHSUE0b1lKTG40b3c5MDRnbG83NnRvN25LWTFqbEdoM1lFclFoc20tVmU5Nlk1X3pUSkFvcDA5bUR6NjBOZ3VyTWxtVE9OOGsyZTU3ZEExV0cybFBUeThGWHQwQktUUQ?oc=5",
-    "published": "Wed, 02 Sep 2026 07:00:00 GMT"
+    "title": "How can strength training build healthier bodies as we age? - National Institute on Aging (.gov)",
+    "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPbFdvTW9oMHctUk1mNF90WVBxRHp1WVhLcjFWbWdBMTk1REV5OGhmTWVxZGpBNWU1djhxbnpVdnFCa1FBNkx6ejFhS0tpbmp6OFpaNjJwaDE4Yi16NzZSUW1vNXlRM1ZQbGxxWVVwLXBnQ25QZzAwd1F3OEVuaTJ6SS1nY2pfN1g5SWk4aA?oc=5",
+    "published": "Thu, 30 Jun 2022 07:00:00 GMT"
    },
    {
-    "title": "Popular Supplement Increases Strength Even Without Exercise, Study Shows - ScienceAlert",
-    "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQb0ZDS1RZY3FuSEZUTkVaSW1wYjAyZmd6STk3dk11bndzUUdZMDBuRGpSUEFTejVSTGdIa3F2Z1hQYktES3VNejlZQkc1SXd2YTBjQmc0eTBEOEM1VFBnWjBrMnBIUDNzbXNBRUx0V2VQT2ktVmJTNzFNd2ZkZjFWVWJ4YnFWdml3WExEclZFYW92YU9jUUlyTld1UjlYYWlxZFE?oc=5",
-    "published": "Sat, 26 Sep 2026 07:00:00 GMT"
+    "title": "Pre-exercise Caffeine Intake Enhances Bench Press Strength Training Adaptations - Frontiers",
+    "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNa3hiVlM2dVBmXzdUelZnQl9rd2RfckdXMTFQMExIeld5MF9hdlZCWXlJcDUtcWFRSlh2LWNiTUlCOWczcGdlekZYLWZQaDZQTWtOS3A3cERiUUsxMkFPRzk3d1hpMDF5b2VSc1pzTWF0aXhqTDNmR0RkS3RGVVlGZzlhZDZVUDM2NGtXR0Jn?oc=5",
+    "published": "Wed, 26 Jun 2024 08:41:11 GMT"
    }
   ],
   "psychology": [
@@ -217,26 +217,36 @@
     "published": "Tue, 06 Oct 2026 07:00:00 GMT"
    },
    {
-    "title": "Mental health problems are more likely to persist among adults now than a decade ago, study finds - Medical Xpress",
-    "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQVFNCY01NVV8yajJHcXRCY3QwV0pQdWJOTE5tYlhOYWlUSTVNVVVXVXBLenRJQWNibGxwUE9HU1R5cjhydmVOMUs2R1kyZUltb1VEZ1VSX3JPX1hGWmxkT0ZCcXhpZ1ZmN0I2Rm9zZVdLVzJ3bmlxbktyRm9jbVdfZE50UWlFV0Ut?oc=5",
-    "published": "Mon, 28 Sep 2026 07:00:00 GMT"
+    "title": "How children talk can indicate risk for future mental health problems - Stanford School of Humanities and Sciences",
+    "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOZ0RNQ3ltbVFvU2JGbkdITmVURC1HNWNCbTZYS1pMQzlzTXpsZWJFakVzanJXOWpvOEl6YTJZb00xMkNIXzNYeGt4YnZvRHpxMURVX1g4dEExbGpoWnZWdlNFcXFQTk13TVF3aHY5dVFsWTZmTFlFb2FCajV6cnJWZVlpQ0V2SU5kYXowTUo5aDZXV3J2bGhsM3RkaXFSNzhmMGJn?oc=5",
+    "published": "Fri, 31 Jul 2026 14:17:42 GMT"
    }
   ],
   "business": [
-   {
-    "title": "50 Business Ideas Positioned for Growth in 2026 and Beyond - U.S. Chamber of Commerce",
-    "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQei1NOUxoNVNqX2xta0lhUHRBTnV0eWozSGFOY01jNl9SMk50UHNwUkFqZ3pQVUVKMkQ4T2VmUWhRSFNGcmZ5c3ZsRjFxaHBlM2g2aFFOZk1lY0Y5QXFQNF83b2hFdzVKNTRxc1pEcEZ5OWJ1Z2lndUdyNlFzek1LdWhhZw?oc=5",
-    "published": "Wed, 15 Apr 2026 07:00:00 GMT"
-   },
    {
     "title": "Startup and small business trends across the US in 2026 - The Mountain-Ear",
     "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPQzA1b0NOcEcyNGdqLVpGTmFTZlRudXhEX080bzcxbElNT2hpQjhfa1IyS252U0VNdEJBTUdzdE12R1c2NlN3eVhwUDc3OFFDeVJ4Nkg3VURzcFpBS2MtSmZZM1lRQ2l5Uml1NnYtaEswQjhINzRxS25iTlVEM0JNb0NvcDNfX1RxWjFMSklNZjhYVi1Xb2lybU1PVU9aeDJWdU00dDZYejJyWFBH?oc=5",
     "published": "Thu, 17 Sep 2026 07:00:00 GMT"
    },
    {
+    "title": "50 Business Ideas Positioned for Growth in 2026 and Beyond - U.S. Chamber of Commerce",
+    "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQei1NOUxoNVNqX2xta0lhUHRBTnV0eWozSGFOY01jNl9SMk50UHNwUkFqZ3pQVUVKMkQ4T2VmUWhRSFNGcmZ5c3ZsRjFxaHBlM2g2aFFOZk1lY0Y5QXFQNF83b2hFdzVKNTRxc1pEcEZ5OWJ1Z2lndUdyNlFzek1LdWhhZw?oc=5",
+    "published": "Wed, 15 Apr 2026 07:00:00 GMT"
+   },
+   {
+    "title": "America’s startup boom offers hope for the future of work - The Economist",
+    "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQbVhpV1h1NGVXd3VUNlN1TzU0UGF2bXUxYTM1SkEyV0RVaDNJaXowN21wVmprUGFjZEZCck96Q1RqcGJ4T2tHTDJSMkxZSUZiNVVBM0hQZjdvak0waWNYY29Tcy1UQTZ0VWJSanh1Z19fTmt2cjJDQW14WTBsQTRrZ1pfTjFUTXJnT3gtZGFJNExVTTNFZTNYUHBUb1BQZTMwd1NR?oc=5",
+    "published": "Thu, 30 Jul 2026 07:00:00 GMT"
+   },
+   {
     "title": "Top small business ideas for 2026: Start & succeed - Wolters Kluwer",
     "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBRcTk2b3V5M1NfdHF2WEVnZFEzOEp0NldtMWZVTG9Zc05nRHB1c3V1bE8wZjNTbU5CRlhQREp1dXRnTkN3OWdlRDM3UlVHLXJZZWRjcVd5bURTcUJVSkhnMGhFbGgwSUZCcGVmb3BQSzBvUExnRmQxWkZoOElQalU?oc=5",
     "published": "Tue, 06 Jan 2026 08:00:00 GMT"
+   },
+   {
+    "title": "40 Startup Business Ideas That Could Take Off in 2026 - NerdWallet",
+    "link": "https://news.google.com/rss/articles/CBMiZkFVX3lxTFBXV2xoekJTM1cwWjRGRGhqZUdCZnRlM3BlNmdBb25lNTV6Uk8wU1ViUXBUUGZmVEZLODB1Z2UwUVI2NllYNjNtWm16R2plZzVkTnNuWFhJUDVpcmZpMTktT0REc296UQ?oc=5",
+    "published": "Thu, 29 Jan 2026 08:00:00 GMT"
    },
    {
     "title": "35 Great Business Ideas to Start in 2026 - Business News Daily",
@@ -252,16 +262,6 @@
     "title": "How to Apply for a Small Business Loan Successfully - U.S. Chamber of Commerce",
     "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQcWo1MFBlcG9hMm05ZjFaa1ZnS3p5SmVtNTk2QmRCcTh4bEhacWVVYXdxUzBUVEdHQXNjWF9JN1lWOW9NdGsxZzF3QXdqbkxRNDMzVElrdHpFRGxKZjZQcFNsSmxXdUhHNGhBNzlyNHU0bm5xTXVXUDluNmpQOWdOS3BDM0lnWXhD?oc=5",
     "published": "Wed, 10 Jun 2026 07:00:00 GMT"
-   },
-   {
-    "title": "The Average Income for Entrepreneurs—Find Out Your Standing - Investopedia",
-    "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE9xNTVtUzljYkItZ2pPd1NkaXNsTkdZVG1Ea1hGREFjdVN2Q191dWFLTDdscTUwblFHcDVKbE90cmZmOF84eU9QaGpaSU1DNkNFd0xNWWdPUXhZaEVIMUZ1VVdCMmhfLVZtLXlqUGRmenhlU3lHNFF2SHhB?oc=5",
-    "published": "Wed, 21 Jan 2026 08:00:00 GMT"
-   },
-   {
-    "title": "Top Small Business Trends For 2026: Smart Tech You Need to Know - Salesforce",
-    "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTFBmbl9welhSNUVPODI1ZmlvWlNrenNKTUxPTHR4N1h2UV9qZGVUWkwyQk5Xa20tMGdDTGdHaHpKRUR4MGxTZzFPRGJKeS1KcWxnUjFsYlRRMkhXVFlpbUhCTnB3aE5Td3RadmRCTDNlbl9JYUFGS2dXQQ?oc=5",
-    "published": "Thu, 12 Jun 2025 07:00:00 GMT"
    }
   ],
   "health": []
