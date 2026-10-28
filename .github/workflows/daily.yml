@@ -50,6 +50,9 @@ jobs:
         env:
           SITE_URL: ${{ vars.SITE_URL }}
 
+      - name: ساخت پکیج‌های اختصاصی VIP (ورزشی، روانشناسی و...)
+        run: python scripts/make_packages.py
+
       - name: ساخت ویدیو کوتاه
         run: python scripts/make_short.py
         env:
