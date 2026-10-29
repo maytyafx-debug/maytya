@@ -1,8 +1,9 @@
-import os, json, html
+import os, json, html, urllib.request, urllib.error
 
 ROOT = os.path.join(os.path.dirname(__file__), "..", "docs")
 DATA = os.path.join(ROOT, "content.json")
-OUT_DIR = os.path.join(ROOT, "downloads")
+# خروجی خصوصی: داخل docs نیست، پس GitHub Pages آن را منتشر نمی‌کند و commit هم نمی‌شود.
+OUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "private_packs")
 os.makedirs(OUT_DIR, exist_ok=True)
 
 with open(DATA, encoding="utf-8") as f:
@@ -61,4 +62,23 @@ for key, sec in data["sections"].items():
     with open(out_file, "w", encoding="utf-8") as f:
         f.write(final_html)
         
+SB_URL = (os.environ.get("SUPABASE_URL") or "").rstrip("/")
+SB_KEY = os.environ.get("SUPABASE_SERVICE_KEY") or ""
+if not (SB_URL and SB_KEY):
+    print("هشدار: SUPABASE_URL یا SUPABASE_SERVICE_KEY تنظیم نیست؛ فایل‌ها فقط محلی ساخته شدند و ربات نمی‌تواند بفرستد.")
+else:
+    for name in os.listdir(OUT_DIR):
+        if not name.endswith("-pack.html"):
+            continue
+        with open(os.path.join(OUT_DIR, name), "rb") as f:
+            body = f.read()
+        req = urllib.request.Request(
+            f"{SB_URL}/storage/v1/object/paid-packs/packs/{name}", data=body, method="POST",
+            headers={"Authorization": f"Bearer {SB_KEY}", "apikey": SB_KEY,
+                     "Content-Type": "text/html; charset=utf-8", "x-upsert": "true"})
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                print("آپلود شد (خصوصی):", name, r.status)
+        except urllib.error.HTTPError as e:
+            print("آپلود نشد:", name, e.code, e.read()[:200])
 print("بسته‌های اختصاصی ساخته شدند.")
