@@ -3,7 +3,7 @@ name: Metatya daily
 on:
   schedule:
     - cron: "30 4 * * *"   # هر روز ساعت ۸:۰۰ صبح به وقت تهران (UTC+3:30)
-  workflow_dispatch:       # امکان اجرای دستی از تب Actions
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -26,7 +26,13 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt && sudo apt-get update && sudo apt-get install -y ffmpeg libraqm0 libfribidi0
 
-      - name: ربات‌های جمع‌آوری داده (بانک اطلاعاتی روزانه)
+      - name: دانلود فونت وزیرمتن (قبل از ساخت PDF)
+        run: |
+          mkdir -p assets/fonts
+          curl -fsSL --max-time 60 -o assets/fonts/Vazirmatn-Regular.ttf "https://github.com/rastikerdar/vazirmatn/raw/master/fonts/ttf/Vazirmatn-Regular.ttf" || echo "دانلود فونت نشد"
+        continue-on-error: true
+
+      - name: ربات‌های جمع‌آوری داده
         run: python scripts/collector.py
         env:
           SUPABASE_URL: ${{ vars.SUPABASE_URL }}
@@ -38,20 +44,17 @@ jobs:
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
 
-      - name: دانلود فونت وزیرمتن (اگر نشد، DejaVu داخل ریپو استفاده می‌شود)
-        run: |
-          mkdir -p assets/fonts
-          curl -fsSL --max-time 60 -o assets/fonts/Vazirmatn-Regular.ttf "https://github.com/rastikerdar/vazirmatn/raw/master/fonts/ttf/Vazirmatn-Regular.ttf" || echo "دانلود فونت نشد؛ فونت پیش‌فرض"
-          [ -s assets/fonts/Vazirmatn-Regular.ttf ] && [ "$(head -c 4 assets/fonts/Vazirmatn-Regular.ttf | xxd -p)" = "00010000" ] || rm -f assets/fonts/Vazirmatn-Regular.ttf
-        continue-on-error: true
-
       - name: ساخت صفحات سایت
         run: python scripts/build_pages.py
         env:
           SITE_URL: ${{ vars.SITE_URL }}
 
-      - name: ساخت پکیج‌های اختصاصی VIP (ورزشی، روانشناسی و...)
+      - name: ساخت و آپلود پکیج‌های اختصاصی VIP (Supabase)
         run: python scripts/make_packages.py
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          FONT_PATH: "assets/fonts/Vazirmatn-Regular.ttf"
 
       - name: ساخت ویدیو کوتاه
         run: python scripts/make_short.py
@@ -59,7 +62,7 @@ jobs:
           SITE_URL: ${{ vars.SITE_URL }}
         continue-on-error: true
 
-      - name: ارسال به تلگرام
+      - name: ارسال به تلگرام (کانال عمومی)
         run: python scripts/post_telegram.py
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -70,7 +73,7 @@ jobs:
           SITE_URL: ${{ vars.SITE_URL }}
         continue-on-error: true
 
-      - name: ربات جستجوگر فرصت (فهرست خصوصی برای پاسخ مفید)
+      - name: ربات جستجوگر فرصت
         run: python scripts/radar.py
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
