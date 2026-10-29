@@ -1,5 +1,5 @@
 // Metatya sales bots v2 — یک Cloudflare Worker رایگان؛ هر مسیر /tg/<persona> یک ربات تلگرام.
-// Secrets: BOT_RISK, BOT_BOURSE, BOT_FIT, BOT_MIND, BOT_BIZ, WEBHOOK_SECRET, OWNER_CHAT_ID, PAY_INFO
+// Secrets: BOT_RISK, BOT_BOURSE, BOT_FIT, BOT_MIND, BOT_BIZ, WEBHOOK_SECRET, OWNER_CHAT_ID, PAY_INFO, SUPABASE_URL, SUPABASE_SERVICE_KEY (فقط برای خواندن فایل‌های خصوصی پک)
 //   PAY_INFO = متن پرداخت (شماره کارت یا حساب). فقط در Secrets؛ ریپو عمومی است و نباید در آن باشد.
 // Binding: AI   |   Var: SITE_URL
 // جریان سفارش: /start order_<نوع> ← فرم در چت ← مشتری پرداخت و رسید می‌فرستد
@@ -31,6 +31,21 @@ const ageOf = t => { const m = toEn(t).match(/سن\s*[:：]?\s*(\d{1,2})/); retu
 
 async function tg(env, key, method, body) {
   return fetch(`https://api.telegram.org/bot${env['BOT_' + key.toUpperCase()]}/${method}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+}
+// فایل پک خصوصی را از Supabase Storage (bucket خصوصی paid-packs) می‌خواند و به‌عنوان سند تلگرام می‌فرستد.
+// فقط با کلید سرویس (secret) کار می‌کند؛ فایل از هیچ آدرس عمومی سایت در دسترس نیست.
+async function sendPackFile(env, key, section, target, caption) {
+  if (!section || !env.SUPABASE_URL || !env.SUPABASE_SERVICE_KEY) return false;
+  const name = `${section}-pack.html`;
+  const src = await fetch(`${env.SUPABASE_URL.replace(/\/$/, '')}/storage/v1/object/paid-packs/packs/${name}`,
+    { headers: { Authorization: `Bearer ${env.SUPABASE_SERVICE_KEY}`, apikey: env.SUPABASE_SERVICE_KEY } });
+  if (!src.ok) return false;
+  const fd = new FormData();
+  fd.append('chat_id', String(target));
+  fd.append('caption', String(caption || '').slice(0, 900));
+  fd.append('document', new File([await src.blob()], name, { type: 'text/html' }));
+  const r = await fetch(`https://api.telegram.org/bot${env['BOT_' + key.toUpperCase()]}/sendDocument`, { method: 'POST', body: fd });
+  return r.ok;
 }
 async function loadPacks(env) {
   try { const r = await fetch((env.SITE_URL || '') + '/packs.json', { cf: { cacheTtl: 600 } }); if (r.ok) return await r.json(); } catch (e) {}
@@ -110,16 +125,20 @@ async function handle(env, ctx, key, upd) {
     } catch (e) {}
     if (!draft) return ownerSend('تولید پیش‌نویس ناموفق بود؛ دوباره دکمه را بزن.');
     return ownerSend(`📝 پیش‌نویس برای مشتری ${target}\n\n${draft}`, { reply_markup: { inline_keyboard: [
-      [{ text: '📤 ارسال به مشتری', callback_data: `send:${target}` }],
+      [{ text: '📤 ارسال به مشتری', callback_data: `send:${target}:${kind}` }],
       [{ text: '❌ رد', callback_data: `rej:${target}` }]] } });
   }
-  async function deliver(target) {
+  async function deliver(target, kind) {
     const raw = msg.text || '';
     const k = raw.indexOf('\n\n');
     const body = k > 0 && raw.startsWith('📝') ? raw.slice(k + 2).trim() : '';
     if (!body) return ownerSend('پیش‌نویسی برای ارسال پیدا نشد.');
-    await send(`${body.slice(0, 3400)}\n\n⚠️ ${pack.disclaimer}`, {}, target);
-    return ownerSend(`✅ برای مشتری ${target} ارسال شد.`);
+    const sent = await send(`${body.slice(0, 3400)}\n\n⚠️ ${pack.disclaimer}`, {}, target);
+    if (!sent.ok) return ownerSend(`⚠️ ارسال به مشتری ${target} انجام نشد (احتمالاً ربات را بلاک کرده یا آیدی اشتباه است). دستی بررسی کن.`);
+    if (kind !== 'pack') return ownerSend(`✅ برای مشتری ${target} ارسال شد.`);
+    const fileOk = await sendPackFile(env, key, pack.section, target, `${pack.title} | فایل کامل پک`);
+    if (!fileOk) return ownerSend(`⚠️ پیام متنی برای ${target} رفت، اما فایل پک ارسال نشد (فایل پیدا نشد یا خطای ذخیره‌سازی). فایل را دستی بفرست.`);
+    return ownerSend(`✅ پیام و فایل کامل پک برای مشتری ${target} ارسال شد.`);
   }
   async function reject(target) {
     await send(`متأسفانه نمی‌توانیم این درخواست را انجام دهیم. برای توضیح با مسئول تماس بگیر: ${contact}`, {}, target);
@@ -136,7 +155,7 @@ async function handle(env, ctx, key, upd) {
     if (act === 'order') return askForm('pack');
     if (!isOwner) return;
     if (act === 'gen') return generate(target, kind);
-    if (act === 'send') return deliver(target);
+    if (act === 'send') return deliver(target, kind);
     if (act === 'rej') return reject(target);
     return;
   }
