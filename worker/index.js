@@ -36,14 +36,14 @@ async function tg(env, key, method, body) {
 // فقط با کلید سرویس (secret) کار می‌کند؛ فایل از هیچ آدرس عمومی سایت در دسترس نیست.
 async function sendPackFile(env, key, section, target, caption) {
   if (!section || !env.SUPABASE_URL || !env.SUPABASE_SERVICE_KEY) return false;
-  const name = `${section}-pack.html`;
+  const name = `${section}-pack.pdf`;
   const src = await fetch(`${env.SUPABASE_URL.replace(/\/$/, '')}/storage/v1/object/paid-packs/packs/${name}`,
     { headers: { Authorization: `Bearer ${env.SUPABASE_SERVICE_KEY}`, apikey: env.SUPABASE_SERVICE_KEY } });
   if (!src.ok) return false;
   const fd = new FormData();
   fd.append('chat_id', String(target));
   fd.append('caption', String(caption || '').slice(0, 900));
-  fd.append('document', new File([await src.blob()], name, { type: 'text/html' }));
+  fd.append('document', new File([await src.blob()], name, { type: 'application/pdf' }));
   const r = await fetch(`https://api.telegram.org/bot${env['BOT_' + key.toUpperCase()]}/sendDocument`, { method: 'POST', body: fd });
   return r.ok;
 }
