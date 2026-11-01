@@ -210,7 +210,8 @@ export default {
     if (req.method !== 'POST' || !m) return new Response('metatya-bots ok');
     const key = m[1];
     if (!PERSONAS[key] || !env['BOT_' + key.toUpperCase()]) return new Response('unknown', { status: 404 });
-    if (env.WEBHOOK_SECRET && req.headers.get('X-Telegram-Bot-Api-Secret-Token') !== env.WEBHOOK_SECRET) return new Response('forbidden', { status: 403 });
+    // fail closed: بدون WEBHOOK_SECRET هیچ درخواستی پذیرفته نمی‌شود
+    if (!env.WEBHOOK_SECRET || req.headers.get('X-Telegram-Bot-Api-Secret-Token') !== env.WEBHOOK_SECRET) return new Response('forbidden', { status: 403 });
     let upd; try { upd = await req.json(); } catch (e) { return new Response('bad', { status: 400 }); }
     try { await handle(env, ctx, key, upd); } catch (e) { console.log('err', String(e).slice(0, 200)); }
     return new Response('ok');
