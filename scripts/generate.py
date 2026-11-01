@@ -19,7 +19,7 @@ def E(name, default=""):
 
 GN = "https://news.google.com/rss/search?q={q}&hl={hl}&gl={gl}&ceid={gl}:{lang}"
 FEEDS = {
-    "forex":  [GN.format(q="forex+EURUSD+dollar+gold+Fed", hl="en-US", gl="US", lang="en"), "https://www.fxstreet.com/rss/news"],
+    "forex":  [GN.format(q="forex+EURUSD+dollar+gold+Fed", hl="en-US", gl="US", lang="en"), ],
     "crypto": [GN.format(q="bitcoin+price+ETF", hl="en-US", gl="US", lang="en"), "https://cointelegraph.com/rss"],
     "bourse": [GN.format(q="%D8%B4%D8%A7%D8%AE%D8%B5+%DA%A9%D9%84+%D8%A8%D9%88%D8%B1%D8%B3+%D8%AA%D9%87%D8%B1%D8%A7%D9%86", hl="fa", gl="IR", lang="fa")],
 }
@@ -127,19 +127,25 @@ def fa_ratio(t):
 
 
 def clean(items, tabs, key):
-    good = []
+    good, why = [], {}
     for it in items if isinstance(items, list) else []:
+        reason = None
         try:
             t, b, ss = it["title"].strip(), it["body"].strip(), it["short_script"]
-            ok = (it.get("tab") in tabs and 5 <= len(t) <= 140 and 60 <= len(b) <= 900
-                  and fa_ratio(t + b) >= 0.6 and isinstance(ss, list) and len(ss) == 3
-                  and all(isinstance(x, str) and 3 <= len(x) <= 120 for x in ss)
-                  and not any(w in t + b for w in BANNED))
+            if it.get("tab") not in tabs: reason = "تب نامعتبر"
+            elif not (5 <= len(t) <= 140): reason = "طول عنوان"
+            elif not (60 <= len(b) <= 900): reason = "طول متن"
+            elif fa_ratio(t + b) < 0.6: reason = "نسبت فارسی کم"
+            elif not (isinstance(ss, list) and len(ss) == 3 and all(isinstance(x, str) and 3 <= len(x) <= 120 for x in ss)): reason = "خلاصه‌ی صوتی"
+            elif any(w in t + b for w in BANNED): reason = "عبارت ممنوع"
         except Exception:
-            ok = False
-        if ok:
+            reason = "ساختار JSON"
+        if reason is None:
             d = DISCLAIMER.get(KIND.get(key, ""), "")
             good.append({"tab": it["tab"], "title": t, "body": b + (" " + d if d and d not in b else ""), "short_script": ss})
+        else:
+            why[reason] = why.get(reason, 0) + 1
+    if why: print(f"  دروازه کیفیت [{key}] رد شد:", why)
     if not good: raise ValueError("هیچ مطلب سالمی از دروازه کیفیت رد نشد")
     return good
 
