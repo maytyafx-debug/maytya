@@ -34,18 +34,21 @@ async function tg(env, key, method, body) {
 }
 // فایل پک خصوصی را از Supabase Storage (bucket خصوصی paid-packs) می‌خواند و به‌عنوان سند تلگرام می‌فرستد.
 // فقط با کلید سرویس (secret) کار می‌کند؛ فایل از هیچ آدرس عمومی سایت در دسترس نیست.
-async function sendPackFile(env, key, section, target, caption) {
-  if (!section || !env.SUPABASE_URL || !env.SUPABASE_SERVICE_KEY) return false;
-  const name = `${section}-pack.pdf`;
+async function sendStorageFile(env, key, name, target, caption) {
+  if (!name || !/^[A-Za-z0-9._-]+$/.test(name) || !env.SUPABASE_URL || !env.SUPABASE_SERVICE_KEY) return false;
+  const ctype = name.endsWith('.xlsx') ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' : 'application/pdf';
   const src = await fetch(`${env.SUPABASE_URL.replace(/\/$/, '')}/storage/v1/object/paid-packs/packs/${name}`,
     { headers: { Authorization: `Bearer ${env.SUPABASE_SERVICE_KEY}`, apikey: env.SUPABASE_SERVICE_KEY } });
   if (!src.ok) return false;
   const fd = new FormData();
   fd.append('chat_id', String(target));
   fd.append('caption', String(caption || '').slice(0, 900));
-  fd.append('document', new File([await src.blob()], name, { type: 'application/pdf' }));
+  fd.append('document', new File([await src.blob()], name, { type: ctype }));
   const r = await fetch(`https://api.telegram.org/bot${env['BOT_' + key.toUpperCase()]}/sendDocument`, { method: 'POST', body: fd });
   return r.ok;
+}
+async function sendPackFile(env, key, section, target, caption) {
+  return sendStorageFile(env, key, section ? `${section}-pack.pdf` : '', target, caption);
 }
 async function loadPacks(env) {
   try { const r = await fetch((env.SITE_URL || '') + '/packs.json', { cf: { cacheTtl: 600 } }); if (r.ok) return await r.json(); } catch (e) {}
@@ -136,7 +139,16 @@ async function handle(env, ctx, key, upd) {
     const sent = await send(`${body.slice(0, 3400)}\n\n⚠️ ${pack.disclaimer}`, {}, target);
     if (!sent.ok) return ownerSend(`⚠️ ارسال به مشتری ${target} انجام نشد (احتمالاً ربات را بلاک کرده یا آیدی اشتباه است). دستی بررسی کن.`);
     if (kind !== 'pack') return ownerSend(`✅ برای مشتری ${target} ارسال شد.`);
-    const fileOk = await sendPackFile(env, key, pack.section, target, `${pack.title} | فایل کامل پک`);
+    let fileOk;
+    if (Array.isArray(pack.files) && pack.files.length) {
+      fileOk = true;
+      for (const f of pack.files) {
+        const ok = await sendStorageFile(env, key, f.name, target, `${pack.title} | ${f.label}`);
+        if (!ok) { fileOk = false; await ownerSend(`⚠️ فایل «${f.label}» (${f.name}) برای ${target} ارسال نشد.`); }
+      }
+    } else {
+      fileOk = await sendPackFile(env, key, pack.section, target, `${pack.title} | فایل کامل پک`);
+    }
     if (!fileOk) return ownerSend(`⚠️ پیام متنی برای ${target} رفت، اما فایل پک ارسال نشد (فایل پیدا نشد یا خطای ذخیره‌سازی). فایل را دستی بفرست.`);
     return ownerSend(`✅ پیام و فایل کامل پک برای مشتری ${target} ارسال شد.`);
   }
