@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#050807">
-<title>Metatya — پرونده‌های واقعی معاملات</title>
-<meta name="description" content="پرونده‌های واقعی معاملات بورس ایران. تاریخ، اعداد، دلیل ورود و خروج، درس هر معامله.">
+<title>Metatya — گزارش معاملات شخصی (گذشته، بدون تضمین)</title>
+<meta name="description" content="گزارش معاملات شخصی گذشته در بورس ایران، با تاریخ، دلیل ورود و خروج و درس هر معامله. تضمین سود آینده نیست؛ آموزشی است.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -262,7 +262,7 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
 
   <div class="hero">
     <div class="kicker">CASE FILES / REAL TRADES</div>
-    <h1>پرونده‌های <span>واقعی</span><br>معاملات من</h1>
+    <h1>گزارش <span>شخصی</span><br>معاملات گذشته‌ی من</h1>
     <p>این‌ها پز نیستن. هر کدوم یه درس داره. حتی ضررها. چون معامله‌گر واقعی، از اشتباهاتش درس می‌گیره.</p>
     
     <div class="stats-row">
@@ -279,17 +279,18 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
     <button class="filter" data-filter="recent">اخیر</button>
   </div>
 
+  <div style="margin:12px 0;padding:12px 14px;border:1px solid #c08a2e;border-radius:12px;font-size:13px;line-height:1.9">این صفحه گزارش معاملات گذشته‌ی شخصی من است و برای آموزش منتشر شده. نتایج گذشته تضمین سود آینده نیست. هیچ‌کدام از این معاملات توصیه‌ی خرید یا فروش نیستند. خدمات Metatya آموزشی است و مشاوره‌ی سرمایه‌گذاری مجاز نیست.</div>
   <div id="tradesList"></div>
 
   <div class="bottom-cta">
-    <h3>دفترچه‌ای که این پرونده‌ها رو ساخت</h3>
+    <h3>دفترچه‌ی ثبت و بررسی معامله</h3>
     <p>بیش از ۱۰۰۰ فرمول + داشبورد آماری + راهنمای مدیریت ریسک. دقیقاً همون چیزی که این معاملات رو قابل بررسی کرد.</p>
     <a href="https://t.me/maytya?direct" target="_blank" rel="noopener">📩 استعلام قیمت در تلگرام</a>
-    <p class="resp">💬 پاسخ در کمتر از ۱ ساعت</p>
   </div>
 
   <p class="footer">
-    Metatya Files · نمونه‌های واقعی از حساب بورس ایران<br>
+    Metatya Files · گزارش شخصی از معاملات گذشته‌ی بورس ایران<br>
+    این گزارش تضمین سود آینده نیست و توصیه‌ی خرید یا فروش هم نیست.<br>
     این محتوا آموزشی است و توصیه‌ی خرید یا فروش نیست.
   </p>
 
@@ -516,7 +517,7 @@ function renderTrades(filter = 'all'){
   
   list.innerHTML = filtered.map(t => {
     const statusClass = t.status;
-    const statusText = t.status === 'win' ? 'PROFITABLE' : 'LOSS / LESSON';
+    const statusText = t.status === 'win' ? 'سود' : 'زیان و درس';
     const valueClass = t.status === 'win' ? 'win' : 'loss';
     
     return `
@@ -577,7 +578,7 @@ function openTrade(id){
   
   document.getElementById('modalTitle').textContent = t.symbol + ' — ' + t.id;
   
-  const statusText = t.status === 'win' ? 'PROFITABLE' : 'LOSS';
+  const statusText = t.status === 'win' ? 'سود' : 'زیان';
   const valueClass = t.status === 'win' ? 'win' : 'loss';
   
   const html = `
