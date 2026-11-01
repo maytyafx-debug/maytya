@@ -35,6 +35,7 @@ jobs:
 
       - name: تولید محتوا
         run: python scripts/generate.py
+        timeout-minutes: 20
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
 
