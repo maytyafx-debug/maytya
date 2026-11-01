@@ -77,7 +77,7 @@ def openrouter(prompt):
                     "X-Title": "Metatya"
                 },
                 json=body,
-                timeout=180
+                timeout=60
             )
         except requests.RequestException as e:
             last = f"{model}:{str(e)[:60]}"
@@ -165,7 +165,7 @@ def ask(key, name, tabs, old_titles, provs):
     err = []
     for pname, fn, _ in provs:
         if pname in DEAD: continue
-        for attempt in range(3):
+        for attempt in range(2):
             try:
                 txt = fn(prompt)
                 items = clean(json.loads(re.search(r"\{.*\}", txt, re.S).group(0))["items"], tabs, key)
