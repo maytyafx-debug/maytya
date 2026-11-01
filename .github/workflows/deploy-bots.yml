@@ -20,10 +20,12 @@ jobs:
           WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
           OWNER_CHAT_ID: ${{ secrets.TELEGRAM_REVIEW_CHAT_ID }}
           PAY_INFO: ${{ secrets.PAY_INFO }}
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: |
           python3 - <<'PY'
           import os, json
-          keys = ["BOT_RISK","BOT_BOURSE","BOT_FIT","BOT_MIND","BOT_BIZ","WEBHOOK_SECRET","OWNER_CHAT_ID","PAY_INFO"]
+          keys = ["BOT_RISK","BOT_BOURSE","BOT_FIT","BOT_MIND","BOT_BIZ","WEBHOOK_SECRET","OWNER_CHAT_ID","PAY_INFO","SUPABASE_URL","SUPABASE_SERVICE_KEY"]
           d = {k: os.environ[k] for k in keys if os.environ.get(k)}
           json.dump(d, open("secrets.json","w"), ensure_ascii=False)
           print("secrets:", sorted(d), "| تعداد:", len(d))
