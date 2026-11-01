@@ -22,7 +22,7 @@
     "file": "downloads/Metatya-Trading-Journal-LITE.xlsx"
    },
    "price": "۱۴۹ هزار تومان",
-   "bot": "MetatyaRisk_bot",
+   "bot": "MetatyaRisk_bot", "section": "forex",
    "page": "services.html",
    "disclaimer": "آموزشی است؛ توصیه‌ی سرمایه‌گذاری یا وعده‌ی سود نیست. معامله ریسک زیان دارد."
   },
@@ -48,7 +48,7 @@
    "preview": "downloads/portfolio-preview.png",
    "previewAlt": "نمونه‌ی ابزار پرتفوی بورس با داده‌ی فرضی",
    "price": "رایگان",
-   "bot": "MetatyaBurse_bot",
+   "bot": "MetatyaBurse_bot", "section": "bourse",
    "page": "pack.html?p=bourse",
    "disclaimer": "ابزار ثبت و آموزش است، نه توصیه‌ی خرید، فروش یا نگهداری هیچ نماد. اعداد و نمادهای نمونه فرضی‌اند و قیمت‌ها به‌صورت دستی وارد می‌شوند."
   },
@@ -72,7 +72,7 @@
     "file": "downloads/Metatya-Fit-LITE.xlsx"
    },
    "price": "۹۹ هزار تومان",
-   "bot": "MetatyaFit_bot",
+   "bot": "MetatyaFit_bot", "section": "health",
    "page": "pack.html?p=fit",
    "disclaimer": "اطلاعات عمومی ورزشی است و جایگزین پزشک یا مربی حضوری نیست؛ با بیماری یا مصدومیت قبل از شروع با پزشک مشورت کنید."
   },
@@ -96,7 +96,7 @@
     "file": "downloads/Metatya-Mind-LITE.xlsx"
    },
    "price": "۹۹ هزار تومان",
-   "bot": "MetatyaMind_bot",
+   "bot": "MetatyaMind_bot", "section": "psychology",
    "page": "pack.html?p=mind",
    "disclaimer": "این پک روان‌درمانی یا تشخیص نیست. در بحران یا افکار آسیب به خود، فوراً با اورژانس یا یک فرد مورد اعتماد و متخصص تماس بگیرید."
   },
@@ -120,7 +120,7 @@
     "file": "downloads/Metatya-Biz-LITE.xlsx"
    },
    "price": "۱۴۹ هزار تومان",
-   "bot": "MetatyaBiz_bot",
+   "bot": "MetatyaBiz_bot", "section": "business",
    "page": "pack.html?p=biz",
    "disclaimer": "آموزشی است و مشاوره‌ی مالی، حقوقی یا مالیاتی نیست؛ اعداد مدل بر اساس ورودی‌های شما هستند و نتیجه تضمین نمی‌شود."
   }
