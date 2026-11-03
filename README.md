@@ -1,65 +1,34 @@
-# Metatya — اجرای خودکار روزانه (رایگان)
-1. ریپازیتوری GitHub بسازید و همه‌ی این پوشه را (با پوشه مخفی .github) آپلود کنید.
-2. Settings > Secrets and variables > Actions. **حداقل یکی** از این کلیدهای رایگان (ترتیب کیفیت؛ اگر چند تا بگذارید خودکار پشتیبان هم می‌شوند):
-   - GEMINI_API_KEY (aistudio.google.com، بهترین فارسی)
-   - CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID (Workers AI)
-   - MISTRAL_API_KEY (console.mistral.ai)
-   - برای تلگرام: TELEGRAM_BOT_TOKEN و TELEGRAM_CHAT_ID (مثلاً @maytya)
-   - در Variables: SITE_URL = https://نام‌کاربری.github.io/نام‌ریپو/
-3. Settings > Pages > Deploy from branch > main > پوشه /docs
-4. Actions > Metatya daily > Run workflow (یک‌بار برای تست). از آن به بعد هر روز خودکار اجرا می‌شود.
-5. Actions > Metatya health check هر ۶ ساعت سایت را چک می‌کند؛ اگر قطع یا بیش از ۳۶ ساعت کهنه باشد قرمز می‌شود و گیت‌هاب ایمیل می‌دهد.
-- نصب روی گوشی: سایت را در Chrome/Safari باز کنید > Add to Home Screen (PWA).
-- بک‌آپ: هر روز docs/content.json در تاریخچه git ذخیره می‌شود.
-- ویدیوهای ۱۰ ثانیه‌ای: Actions > Artifacts > shorts (آپلود خودکار نیاز به تأیید API گوگل/متا دارد).
-- تست محلی بدون API: python scripts/generate.py --dry  (فایل docs/content.json را با نمونه جایگزین می‌کند؛ قبلش کپی بگیرید)
+# اجرای روزانه‌ی Metatya با داکر
 
-## راه‌اندازی درآمد (مهم‌ترین بخش)
-1. فایل docs/monetization.json را در گیت‌هاب ویرایش کنید: آیتم‌های `_نمونه` را (با لینک و متن واقعی خودتان) به آرایه `items` ببرید. بدون هیچ کدنویسی، همان لحظه در همه‌ی صفحه‌ها نمایش داده می‌شود.
-2. هر آیتم affiliate خودکار با برچسب «لینک معرفی» و rel=sponsored نمایش داده می‌شود. قوانین یوتیوب/اینستاگرام/تلگرام و قوانین کشور خودتان درباره تبلیغ بروکر و صرافی را بررسی کنید؛ هرگز سود تضمینی وعده ندهید.
-3. ایمیل‌های خبرنامه در جدول `leads` سوپابیس ذخیره می‌شود (فقط با کلید مدیریتی قابل خواندن است).
-4. هر روز برای هر مطلب یک صفحه‌ی مستقل SEO + sitemap.xml + feed.xml ساخته می‌شود. sitemap را در Google Search Console ثبت کنید (رایگان).
-5. متن آماده‌ی عنوان و توضیح هر شورت در Artifacts > shorts (فایل *_upload.txt) است.
+## ساخت ایمیج
+    docker build -t metatya-daily .
 
-## نکات عیب‌یابی
-- فونت ویدیو: ابتدا Vazirmatn دانلود می‌شود؛ اگر نشد از assets/fonts/DejaVuSans.ttf (همراه ریپو، مجوز آزاد DejaVu) استفاده می‌شود. شکل‌دهی فارسی با Pillow+RAQM انجام می‌شود (libraqm0 در ورک‌فلو نصب می‌شود).
-- پست تکراری تلگرام: وضعیت ارسال در docs/posted.json ثبت می‌شود. برای ارسال مجدد عمدی متغیر FORCE_POST=1 بگذارید.
-- ربات‌های Node قدیمی پوشه‌ی metatya-bots (مبتنی بر Anthropic پولی) را هم‌زمان با این سیستم اجرا نکنید تا پست تکراری نرود.
+## فایل تنظیمات (.env)
+یک فایل `.env` کنار پروژه بساز؛ **هرگز این فایل را در گیت commit نکن**:
 
-## فقط رایگان؛ بدون Gemini و بدون Render
-- **حداقل لازم (همه رایگان):** GitHub (کد + سایت + اجرای روزانه)، Cloudflare Workers AI (تولید محتوا)، ربات تلگرام، Supabase (خبرنامه).
-- **Gemini و Mistral اختیاری‌اند.** اگر کلیدشان نیست یا سهمیه‌شان تمام شده، برنامه خودکار از Cloudflare استفاده می‌کند. لازم نیست چیزی بخرید.
-- **Render لازم نیست.** تأیید دستی پست‌ها بدون سرور انجام می‌شود:
-  1. Variable به نام `POST_MODE` با مقدار `review` بسازید.
-  2. در تلگرام به ربات خودتان پیام «سلام» بدهید و شناسه‌ی عددی چت خودتان را (مثلاً از ربات @userinfobot) بگیرید و به‌عنوان Secret با نام `TELEGRAM_REVIEW_CHAT_ID` ثبت کنید.
-  3. از آن به بعد پست‌ها فقط در چت خصوصی خودتان می‌آید؛ خوب بود دستی به کانال فوروارد کنید.
-  4. وقتی به کیفیت اطمینان کردید، `POST_MODE` را `auto` کنید تا مستقیم در کانال منتشر شود.
-- **ویرایش نگارشی رایگان:** برای فارکس، کریپتو و بورس یک مرحله‌ی ویرایش با همان مدل انجام می‌شود (فقط اگر هیچ عدد جدیدی اضافه نشود پذیرفته می‌شود). خاموش‌کردن: Variable به نام `POLISH` با مقدار `0`.
+    OPENROUTER_API_KEY=...
+    TELEGRAM_BOT_TOKEN=...
+    TELEGRAM_CHAT_ID=...
+    TELEGRAM_REVIEW_CHAT_ID=...
+    POST_MODE=...
+    POST_KEYS=...
+    SITE_URL=https://maytyafx-debug.github.io/maytya
+    SUPABASE_URL=https://megbqtoihsuouiaxpifl.supabase.co
+    SUPABASE_SERVICE_KEY=...
 
-## ربات‌ها، بانک داده و پک‌ها (نسخه‌ی کامل)
-**همه‌ی ربات‌ها رایگان‌اند (GitHub + Cloudflare + تلگرام + Supabase).**
+مقدارها را از GitHub Settings → Secrets و Variables بردار (همان نام‌ها).
 
-| ربات | کار | فایل |
-|---|---|---|
-| جمع‌آور داده | قیمت‌های API رسمی + تیتر خبر ۷ حوزه ← `docs/data/latest.json` و تاریخچه‌ی ۶۰ روزه (و اختیاری جدول `data_bank` در Supabase) | `scripts/collector.py` |
-| تولید محتوا | هر روز مطلب ۱۱ حوزه با قیمت‌های مرجع بانک داده | `scripts/generate.py` |
-| تولید ویدیو | موشن‌گرافی + گوینده‌ی فارسی (edge-tts) + موسیقی و افکت صوتی ← mp4 + کاور | `scripts/make_short.py` |
-| انتشار تلگرام | پست + ویدیو (حالت review یا auto) | `scripts/post_telegram.py` |
-| ربات‌های فروشنده (۵ نفر) | پاسخ‌گوی مشتری هر پک: risk، bourse، fit، mind، biz — با هوش مصنوعی رایگان Cloudflare، بدون وعده‌ی سود و با اطلاع به شما هنگام علاقه به خرید | `worker/index.js` |
-| جستجوگر فرصت | فرصت‌های «پاسخ مفید» در گفت‌وگوهای عمومی ← فهرست خصوصی در تلگرام شما | `scripts/radar.py` |
+## اجرای دستی
+    docker run --rm --env-file .env \
+      -v "$PWD/docs:/app/docs" -v "$PWD/data:/app/data" \
+      metatya-daily
 
-### فعال‌سازی ربات‌های فروشنده (۱۰ دقیقه)
-1. در @BotFather برای هر پک یک ربات بسازید (هرچندتا خواستید): مثلاً `metatya_risk_bot`.
-2. در گیت‌هاب Secrets: توکن‌ها با نام `BOT_RISK`، `BOT_BOURSE`، `BOT_FIT`، `BOT_MIND`، `BOT_BIZ` و یک رشته‌ی دلخواه طولانی به نام `WEBHOOK_SECRET`. همچنین `TELEGRAM_REVIEW_CHAT_ID` (شناسه‌ی چت خودتان؛ به هر ربات یک‌بار /start بدهید تا بتواند به شما اطلاع بدهد).
-3. توکن Cloudflare باید اجازه‌ی Workers را داشته باشد: در Cloudflare ← API Tokens ← الگوی «Edit Cloudflare Workers» را بسازید و به‌عنوان `CLOUDFLARE_DEPLOY_TOKEN` ثبت کنید.
-4. Actions ← «Deploy sales bots» ← Run workflow. این مرحله Worker را منتشر و webhook هر ربات را ثبت می‌کند.
-5. نام کاربری هر ربات را در `docs/packs.json` در فیلد `bot` بنویسید تا دکمه‌ی «پرسش از ربات» در صفحه‌ی پک ظاهر شود. قیمت هر پک را در فیلد `price` بنویسید.
+خروجی صفحات در `docs/` و داده‌ها در `data/` روی سرور ذخیره می‌شوند.
 
-### بانک داده در Supabase (اختیاری)
-جدول `data_bank` ساخته شده و فقط با کلید `service_role` قابل نوشتن/خواندن است. برای فعال‌شدن: Variable به نام `SUPABASE_URL` و Secret به نام `SUPABASE_SERVICE_KEY`. این کلید را هرگز در سایت یا کد نگذارید.
+## اجرای خودکار روزانه (cron، ساعت ۸ صبح تهران = ۴:۳۰ UTC)
+    30 4 * * * cd /opt/metatya && docker run --rm --env-file .env -v /opt/metatya/docs:/app/docs -v /opt/metatya/data:/app/data metatya-daily >> /var/log/metatya.log 2>&1
 
-### ردیابی مبدأ ورود
-سایت اولین مبدأ هر بازدیدکننده (یوتیوب، اینستاگرام، تلگرام، گوگل یا لینک مستقیم) را از `utm_source`/ارجاع‌دهنده تشخیص می‌دهد، پیام خوش‌آمد مناسب نشان می‌دهد و همان مبدأ را کنار ایمیل خبرنامه ذخیره می‌کند (ستون `source` جدول `leads`، مثل `youtube/bourse|home`). لینک‌های شما باید `?utm_source=youtube&utm_campaign=bourse` داشته باشند.
-
-### ردیاب پرتفوی بورس در پک رایگان
-دفترچه‌ی رایگان (`Metatya-Trading-Journal-LITE.xlsx`) حالا برگه‌ی «پرتفوی بورس» دارد: نماد، تعداد، میانگین خرید، آخرین قیمت و قیمت پایانی را می‌نویسید؛ ارزش خالص (بعد از کارمزد فروش)، سود/زیان، تغییر امروز، وزن هر نماد و هشدار تمرکز خودکار حساب می‌شود. فرمول ارزش خالص با نمای پرتفوی یک اپ کارگزاری واقعی (ارزش = تعداد × قیمت × (۱ − ۰٫۸۸٪)) تست شد و عددها با اپ یکی درآمد؛ نرخ کارگزاری خودتان را در برگه عوض کنید. تصویر پیش‌نمایش (با عکس بنیان‌گذار و اعداد نمونه): `docs/downloads/free-pack-preview.png`؛ بازسازی: `scripts/make_cover.py`.
+## نکته‌ها
+- مرحله‌ی commit و push به GitHub داخل ایمیج نیست. اگر می‌خواهی خروجی به سایت GitHub Pages برود، روی سرور `git add docs data && git commit && git push` را جداگانه اجرا کن (با کلید دسترسی جدا).
+- ربات‌های فروش (worker) روی Cloudflare می‌مانند و با workflow «Deploy sales bots» دیپلوی می‌شوند؛ ربطی به این داکر ندارند.
+- خروجی PDF خصوصی (`private_packs/`) فقط آپلود به Supabase می‌شود و روی سرور نگه داشته نمی‌شود.
