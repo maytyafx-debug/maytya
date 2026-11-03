@@ -51,13 +51,6 @@ jobs:
         env:
           SITE_URL: ${{ vars.SITE_URL }}
 
-      - name: ساخت پکیج‌های اختصاصی VIP (PDF، خصوصی)
-        run: python scripts/make_packages.py
-        env:
-          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
-          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-        continue-on-error: true
-
       - name: ساخت ویدیو کوتاه
         run: python scripts/make_short.py
         env:
