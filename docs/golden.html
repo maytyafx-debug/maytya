@@ -233,9 +233,51 @@ footer strong{color:var(--gold2)}
   *,*:before,*:after{scroll-behavior:auto!important;transition:none!important}
 }
 </style>
+<style>
+/* METATYA CINEMATIC ENTRANCE */
+#metatyaIntro{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;overflow:hidden;background:radial-gradient(circle at center,rgba(0,255,157,.13),transparent 35%),#030605;color:#f3d98b;transition:opacity 1s ease,visibility 1s ease}
+#metatyaIntro.hide{opacity:0;visibility:hidden;pointer-events:none}
+.intro-orbit{width:190px;height:190px;border:1px solid rgba(0,255,157,.5);border-radius:50%;display:grid;place-items:center;position:relative;animation:orbitPulse 2.5s ease-in-out infinite;box-shadow:0 0 45px rgba(0,255,157,.12)}
+.intro-orbit::before,.intro-orbit::after{content:"";position:absolute;inset:13px;border:1px solid rgba(214,173,69,.5);border-radius:50%;animation:orbitSpin 8s linear infinite}
+.intro-orbit::after{inset:27px;border-color:rgba(0,255,157,.35);animation-direction:reverse;animation-duration:12s}
+.intro-logo{font-size:30px;font-weight:900;letter-spacing:4px;text-shadow:0 0 20px rgba(0,255,157,.5);animation:logoReveal 1.8s ease both}
+.intro-subtitle{margin-top:32px;color:#b6c6bb;font-size:13px;letter-spacing:3px;animation:logoReveal 2s ease both}
+.intro-line{width:160px;height:2px;margin-top:22px;background:linear-gradient(90deg,transparent,#00ff9d,#d6ad45,transparent);animation:lineGlow 2s ease-in-out infinite}
+.intro-enter{margin-top:35px;padding:13px 27px;border:1px solid #d6ad45;border-radius:30px;color:#f3d98b;background:rgba(0,255,157,.06);font-family:inherit;font-weight:bold;cursor:pointer;transition:.3s}
+.intro-enter:hover{background:#00ff9d;color:#031008;box-shadow:0 0 25px rgba(0,255,157,.4)}
+.intro-skip{position:absolute;bottom:28px;border:0;background:transparent;color:#89978e;font-family:inherit;cursor:pointer}
+.intro-particles{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(#00ff9d 1px,transparent 1px),radial-gradient(#d6ad45 1px,transparent 1px);background-size:83px 83px,127px 127px;background-position:0 0,35px 50px;opacity:.18;animation:particleDrift 18s linear infinite}
+@keyframes orbitPulse{50%{transform:scale(1.06)}}
+@keyframes orbitSpin{to{transform:rotate(360deg)}}
+@keyframes logoReveal{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@keyframes lineGlow{50%{opacity:.35;transform:scaleX(.7)}}
+@keyframes particleDrift{to{background-position:83px 83px,162px 177px}}
+@media (prefers-reduced-motion:reduce){#metatyaIntro *,#metatyaIntro *::before,#metatyaIntro *::after{animation:none!important;transition:none!important}}
+</style>
 </head>
 
 <body>
+<div id="metatyaIntro">
+  <div class="intro-particles"></div>
+
+  <div class="intro-orbit">
+    <div class="intro-logo">METATYA</div>
+  </div>
+
+  <div class="intro-subtitle">
+    GOLDEN EDUCATION LIBRARY
+  </div>
+
+  <div class="intro-line"></div>
+
+  <button class="intro-enter" onclick="enterMetatya()">
+    ورود به کتابخانه طلایی
+  </button>
+
+  <button class="intro-skip" onclick="enterMetatya()">
+    عبور از مقدمه
+  </button>
+</div>
 <header>
   <div class="container nav">
     <a class="brand" href="index.html"><i></i>Meta<span>tya</span></a>
@@ -782,6 +824,28 @@ document.addEventListener("keydown",e=>{
 });
 
 render();
+</script>
+<script>
+(function () {
+  const intro = document.getElementById("metatyaIntro");
+
+  window.enterMetatya = function () {
+    if (!intro) return;
+
+    intro.classList.add("hide");
+
+    setTimeout(function () {
+      intro.remove();
+    }, 1100);
+  };
+
+  // ورود خودکار بعد از 7 ثانیه
+  setTimeout(function () {
+    if (document.getElementById("metatyaIntro")) {
+      window.enterMetatya();
+    }
+  }, 7000);
+})();
 </script>
 </body>
 </html>
