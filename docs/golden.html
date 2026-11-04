@@ -254,6 +254,9 @@ footer strong{color:var(--gold2)}
 @keyframes particleDrift{to{background-position:83px 83px,162px 177px}}
 @media (prefers-reduced-motion:reduce){#metatyaIntro *,#metatyaIntro *::before,#metatyaIntro *::after{animation:none!important;transition:none!important}}
 </style>
+<link rel="stylesheet" href="golden-effects.css">
+<link rel="stylesheet" href="golden-effects.css">
+<style>.pack-links{display:flex;gap:8px;flex-wrap:wrap}.pack-link{flex:1 1 auto;text-align:center;padding:9px 10px;border-radius:12px;border:1px solid rgba(214,173,69,.45);color:var(--gold2);font-size:.8rem;font-weight:800}.pack-link:hover{background:rgba(214,173,69,.1)}</style>
 </head>
 
 <body>
@@ -359,6 +362,7 @@ footer strong{color:var(--gold2)}
 const packs = [
 {
  id:"forex",category:"finance",icon:"📊",name:"فارکس",
+ links:[{href:"forex-learning.html",label:"شروع آموزش رایگان"},{href:"forex-pro.html",label:"ورود به Forex Pro"}],
  title:"پک جامع سواد و انضباط معامله‌گری",
  tagline:"با قانون معامله کن، نه با هیجان.",
  audience:"علاقه‌مندان به شناخت بازار ارز و معامله‌گری مسئولانه",
@@ -755,6 +759,7 @@ function render(){
     <span class="meta">${p.modules.length} سرفصل آموزشی</span>
    </div>
    <button class="open-pack" data-id="${p.id}">مشاهده نقشه یادگیری ←</button>
+   ${p.links ? `<div class="pack-links">${p.links.map(l=>`<a class="pack-link" href="${l.href}">${l.label}</a>`).join("")}</div>` : ""}
   </article>
  `).join("");
 
@@ -845,6 +850,96 @@ render();
       window.enterMetatya();
     }
   }, 7000);
+})();
+</script>
+<script>
+(function () {
+  const reduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  function revealCards() {
+    const cards = document.querySelectorAll("#packGrid .pack:not(.is-visible)");
+
+    if (reduced || !("IntersectionObserver" in window)) {
+      cards.forEach(card => card.classList.add("is-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    cards.forEach((card, index) => {
+      card.style.transitionDelay = (index % 3) * 85 + "ms";
+      observer.observe(card);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", revealCards);
+  revealCards();
+
+  // وقتی فیلتر یا جستجو کارت‌ها را دوباره می‌سازد، کارت‌های جدید هم نمایش داده شوند
+  const grid = document.getElementById("packGrid");
+  if (grid) {
+    new MutationObserver(revealCards).observe(grid, { childList: true });
+  }
+
+  document.addEventListener("pointermove", event => {
+    const card = event.target.closest("#packGrid .pack");
+    if (!card || reduced) return;
+
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty("--mx", event.clientX - rect.left + "px");
+    card.style.setProperty("--my", event.clientY - rect.top + "px");
+  }, { passive: true });
+})();
+</script>
+<script>
+(function () {
+  const reduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  function revealCards() {
+    const cards = document.querySelectorAll("#packGrid .pack");
+
+    if (reduced || !("IntersectionObserver" in window)) {
+      cards.forEach(card => card.classList.add("is-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    cards.forEach((card, index) => {
+      card.style.transitionDelay = (index % 3) * 85 + "ms";
+      observer.observe(card);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", revealCards);
+  revealCards();
+
+  document.addEventListener("pointermove", event => {
+    const card = event.target.closest("#packGrid .pack");
+    if (!card || reduced) return;
+
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty("--mx", event.clientX - rect.left + "px");
+    card.style.setProperty("--my", event.clientY - rect.top + "px");
+  }, { passive: true });
 })();
 </script>
 </body>
