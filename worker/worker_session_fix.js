@@ -112,10 +112,6 @@ async function handle(env, ctx, key, upd) {
 
   // ---- کارهای مسئول (فقط از چت مسئول) ----
   async function generate(target, kind) {
-    if (kind !== 'pack') {
-      await send(`پرداخت ${KIND[kind]} تأیید شد ✅ زمان‌بندی را با مسئول هماهنگ کن: ${contact}`, {}, target);
-      return ownerSend(`✅ ${KIND[kind]} مشتری ${target} تأیید شد و پیام هماهنگی برایش رفت.`);
-    }
     const raw = msg.text || '';
     const i = raw.indexOf(START), j = raw.indexOf(END);
     const intake = i >= 0 && j > i ? raw.slice(i + START.length, j).trim() : '';
@@ -123,7 +119,7 @@ async function handle(env, ctx, key, upd) {
     const age = ageOf(intake);
     let draft = '';
     try {
-      const r = await env.AI.run(MODEL, { messages: [{ role: 'system', content: draftSystem(p, pack, age === null || age < 18) }, { role: 'user', content: intake.slice(0, 1500) }], max_tokens: 1200, temperature: 0.4 });
+      const r = await env.AI.run(MODEL, { messages: [{ role: 'system', content: draftSystem(p, kind === 'pack' ? pack : { ...pack, title: KIND[kind] }, age === null || age < 18) }, { role: 'user', content: intake.slice(0, 1500) }], max_tokens: 1200, temperature: 0.4 });
       draft = String((r && (r.response || r.result)) || '').trim();
     } catch (e) {}
     if (!draft) return ownerSend('تولید پیش‌نویس ناموفق بود؛ دوباره دکمه را بزن.');
@@ -203,7 +199,7 @@ async function handle(env, ctx, key, upd) {
     const minor = age === null || age < 18;
     await ownerSend(`🧾 سفارش جدید | ${p.name} | ${KIND[kind]}\nکاربر: ${who}\nسن: ${age === null ? 'نامشخص' : age}${minor ? ' ⚠️ زیر ۱۸ یا نامشخص؛ با دقت بیشتر بازبینی کن' : ''}\n${START}\n${text.slice(0, 1500)}\n${END}\nپس از دیدن واریز در حساب خودت، دکمه را بزن.`, {
       reply_markup: { inline_keyboard: [
-        [{ text: kind === 'pack' ? '💳 واریز شد، تولید کن' : '💳 واریز شد، تأیید کن', callback_data: `gen:${chat}:${kind}` }],
+        [{ text: '💳 واریز شد، تولید کن', callback_data: `gen:${chat}:${kind}` }],
         [{ text: '❌ رد', callback_data: `rej:${chat}` }]] } });
     return send(payText(env, pack, contact, kind, priceOf(cfg, key, kind) || (kind === 'pack' ? pack.price : '')));
   }
