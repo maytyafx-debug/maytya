@@ -132,7 +132,18 @@ def clean(items, tabs, key):
         reason = None
         try:
             t, b, ss = it["title"].strip(), it["body"].strip(), it["short_script"]
-            if it.get("tab") not in tabs: reason = "تب نامعتبر"
+            raw_tab = str(it.get("tab", "")).strip()
+
+            def norm_tab(value):
+                value = str(value).strip()
+                value = value.replace("ي", "ی").replace("ك", "ک")
+                value = re.sub(r"[\s‌ـ]+", "", value)
+                return value
+
+            tab_lookup = {norm_tab(t): t for t in tabs}
+            tab = tab_lookup.get(norm_tab(raw_tab))
+
+            if tab is None: reason = f"تب نامعتبر: {raw_tab[:40]}"
             elif not (5 <= len(t) <= 140): reason = "طول عنوان"
             elif not (60 <= len(b) <= 900): reason = "طول متن"
             elif fa_ratio(t + b) < 0.6: reason = "نسبت فارسی کم"
@@ -142,7 +153,7 @@ def clean(items, tabs, key):
             reason = "ساختار JSON"
         if reason is None:
             d = DISCLAIMER.get(KIND.get(key, ""), "")
-            good.append({"tab": it["tab"], "title": t, "body": b + (" " + d if d and d not in b else ""), "short_script": ss})
+            good.append({"tab": tab, "title": t, "body": b + (" " + d if d and d not in b else ""), "short_script": ss})
         else:
             why[reason] = why.get(reason, 0) + 1
     if why: print(f"  دروازه کیفیت [{key}] رد شد:", why)
