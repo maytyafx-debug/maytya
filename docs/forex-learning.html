@@ -1,0 +1,330 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050807">
+<title>Metatya | Forex Learning</title>
+
+<style>
+:root{
+  --bg:#050807;
+  --panel:#0d1511;
+  --panel2:#111d17;
+  --green:#00ff9d;
+  --gold:#d6ad45;
+  --white:#f4f7f5;
+  --muted:#a5b2aa;
+  --border:rgba(0,255,157,.16);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 80% 0%,rgba(0,255,157,.09),transparent 30%),
+    radial-gradient(circle at 10% 40%,rgba(214,173,69,.06),transparent 30%),
+    var(--bg);
+  color:var(--white);
+  font-family:Tahoma,Arial,sans-serif;
+  line-height:2;
+}
+a{color:inherit;text-decoration:none}
+.container{width:min(1100px,92%);margin:auto}
+header{
+  padding:18px 0;
+  border-bottom:1px solid var(--border);
+  background:rgba(5,8,7,.8);
+}
+.nav{
+  display:flex;justify-content:space-between;
+  align-items:center;gap:12px;flex-wrap:wrap;
+}
+.logo{font-size:22px;font-weight:900;color:var(--green)}
+.logo span{color:var(--gold)}
+.back{
+  border:1px solid var(--border);
+  padding:7px 15px;border-radius:30px;
+  color:var(--muted);font-size:13px;
+}
+.hero{text-align:center;padding:65px 0 45px}
+.tag{
+  display:inline-block;color:var(--green);
+  border:1px solid var(--border);
+  padding:5px 15px;border-radius:30px;
+  font-size:12px;letter-spacing:1px;
+}
+h1{font-size:clamp(30px,6vw,54px);line-height:1.5;margin:18px 0}
+h1 span{color:var(--gold)}
+.hero p{max-width:700px;margin:auto;color:var(--muted)}
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:12px;margin:30px auto;max-width:650px;
+}
+.stat{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:15px;padding:14px;
+}
+.stat strong{display:block;color:var(--green);font-size:23px}
+.stat small{color:var(--muted)}
+.progress-wrap{
+  background:#18221c;border-radius:30px;
+  height:9px;overflow:hidden;margin:15px 0 8px;
+}
+#progress{
+  height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--gold));
+  transition:width .4s;
+}
+.section-title{margin:45px 0 18px;font-size:24px}
+.section-title span{color:var(--green)}
+.lesson-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:17px;
+}
+.lesson{
+  background:linear-gradient(145deg,var(--panel2),var(--panel));
+  border:1px solid var(--border);border-radius:18px;
+  padding:22px;transition:.25s;
+}
+.lesson:hover{
+  transform:translateY(-4px);
+  border-color:var(--green);
+  box-shadow:0 12px 35px rgba(0,255,157,.08);
+}
+.lesson-number{color:var(--gold);font-size:13px}
+.lesson h3{margin:8px 0;color:var(--green)}
+.lesson p{color:var(--muted);font-size:14px}
+.lesson ul{padding-right:20px;font-size:14px}
+.lesson li{margin:5px 0}
+.lesson button,.action{
+  border:0;border-radius:10px;padding:10px 17px;
+  background:var(--green);color:#03110a;
+  font-weight:bold;cursor:pointer;font-family:inherit;
+}
+.lesson button.done{background:#263b30;color:var(--green)}
+.note{
+  border-right:3px solid var(--gold);
+  background:rgba(214,173,69,.07);
+  padding:15px 18px;border-radius:10px;
+  margin:22px 0;color:#e8d9ad;font-size:14px;
+}
+.exercise{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:18px;padding:22px;margin-top:18px;
+}
+.exercise h3{color:var(--gold)}
+.checklist label{
+  display:flex;gap:10px;align-items:flex-start;
+  padding:10px 0;border-bottom:1px solid var(--border);
+  font-size:14px;cursor:pointer;
+}
+.checklist input{accent-color:var(--green);margin-top:8px}
+.quiz-question{
+  padding:15px 0;border-bottom:1px solid var(--border);
+}
+.quiz-question p{font-weight:bold}
+.quiz-question label{display:block;color:var(--muted);padding:5px;cursor:pointer}
+.quiz-question input{accent-color:var(--green)}
+#quizResult{margin-top:15px;color:var(--green);font-weight:bold}
+footer{
+  margin-top:55px;padding:25px 0;text-align:center;
+  border-top:1px solid var(--border);
+  color:var(--muted);font-size:12px;
+}
+@media(max-width:650px){
+  .lesson-grid{grid-template-columns:1fr}
+  .stats{gap:7px}
+  .stat{padding:10px 5px}
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="container nav">
+    <div class="logo">META<span>TYA</span></div>
+    <a class="back" href="golden.html">← بازگشت به کتابخانه آموزشی</a>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <span class="tag">METATYA ACADEMY · FOREX</span>
+    <h1>از شناخت بازار تا <span>تفکر حرفه‌ای</span></h1>
+    <p>
+      مسیر آموزشی فارکس متاتیا برای یادگیری ساختاریافته،
+      شناخت بازار، تحلیل نمودار، مدیریت ریسک و ساخت عادت‌های
+      صحیح در فرایند تصمیم‌گیری.
+    </p>
+
+    <div class="stats">
+      <div class="stat"><strong>۴</strong><small>درس پایه</small></div>
+      <div class="stat"><strong id="completed">۰</strong><small>درس تکمیل‌شده</small></div>
+      <div class="stat"><strong id="percent">۰٪</strong><small>پیشرفت دوره</small></div>
+    </div>
+
+    <div class="progress-wrap"><div id="progress"></div></div>
+    <small style="color:var(--muted)">نوار پیشرفت یادگیری</small>
+  </section>
+
+  <h2 class="section-title">مسیر <span>یادگیری</span></h2>
+
+  <section class="lesson-grid">
+
+    <article class="lesson">
+      <div class="lesson-number">LESSON 01 · مبانی</div>
+      <h3>فارکس چیست؟</h3>
+      <p>با ساختار بازار ارز و مفاهیم اولیه آشنا شو.</p>
+      <ul>
+        <li>مفهوم بازار تبادل ارز</li>
+        <li>جفت‌ارزهای اصلی و فرعی</li>
+        <li>قیمت خرید و فروش (Bid / Ask)</li>
+        <li>پیپ، اسپرد و مفهوم حجم</li>
+      </ul>
+      <div class="note">هدف این درس: شناخت زبان پایه بازار، بدون عجله برای معامله.</div>
+      <button onclick="completeLesson(1,this)">علامت‌گذاری به‌عنوان تکمیل‌شده</button>
+    </article>
+
+    <article class="lesson">
+      <div class="lesson-number">LESSON 02 · نمودار</div>
+      <h3>خواندن نمودار قیمت</h3>
+      <p>ساختار نمودار را بشناس و تفاوت مشاهده با پیش‌بینی را یاد بگیر.</p>
+      <ul>
+        <li>کندل و اجزای آن</li>
+        <li>تایم‌فریم چیست؟</li>
+        <li>روند صعودی، نزولی و خنثی</li>
+        <li>حمایت و مقاومت به‌عنوان ناحیه</li>
+      </ul>
+      <div class="note">هدف این درس: توصیف آنچه روی نمودار دیده می‌شود، نه پیش‌بینی قطعی آینده.</div>
+      <button onclick="completeLesson(2,this)">علامت‌گذاری به‌عنوان تکمیل‌شده</button>
+    </article>
+
+    <article class="lesson">
+      <div class="lesson-number">LESSON 03 · مدیریت ریسک</div>
+      <h3>ریسک و سرمایه</h3>
+      <p>قبل از هر تصمیم مالی، مفهوم ریسک و عدم قطعیت را درک کن.</p>
+      <ul>
+        <li>تفاوت ریسک و بازده</li>
+        <li>ضرورت تعیین حد زیان</li>
+        <li>ریسک‌های اهرم و نوسان</li>
+        <li>چرا حفظ سرمایه اهمیت دارد؟</li>
+      </ul>
+      <div class="note">اهرم می‌تواند زیان را نیز بزرگ کند. یادگیری این مفاهیم به معنی توصیه به استفاده از اهرم نیست.</div>
+      <button onclick="completeLesson(3,this)">علامت‌گذاری به‌عنوان تکمیل‌شده</button>
+    </article>
+
+    <article class="lesson">
+      <div class="lesson-number">LESSON 04 · روان‌شناسی</div>
+      <h3>ژورنال و نظم ذهنی</h3>
+      <p>فرایند یادگیری را ثبت کن تا بتوانی تصمیم‌هایت را بررسی کنی.</p>
+      <ul>
+        <li>ثبت فرضیه و دلیل تصمیم</li>
+        <li>ثبت احساسات و خطاهای شناختی</li>
+        <li>مرور منظم عملکرد</li>
+        <li>ساخت عادت یادگیری مستمر</li>
+      </ul>
+      <div class="note">اصل متاتیا: با قانون تصمیم بگیر، نه با هیجان.</div>
+      <button onclick="completeLesson(4,this)">علامت‌گذاری به‌عنوان تکمیل‌شده</button>
+    </article>
+
+  </section>
+
+  <h2 class="section-title">تمرین <span>کاربردی</span></h2>
+  <section class="exercise">
+    <h3>تمرین مشاهده بازار</h3>
+    <p style="color:var(--muted)">
+      یک نمودار تاریخی را باز کن و بدون انجام معامله، مشاهداتت را بنویس.
+    </p>
+    <div class="checklist">
+      <label><input type="checkbox"> تایم‌فریم نمودار را مشخص کردم.</label>
+      <label><input type="checkbox"> وضعیت کلی نمودار را توصیف کردم.</label>
+      <label><input type="checkbox"> نواحی مهم قیمت را علامت زدم.</label>
+      <label><input type="checkbox"> تفاوت مشاهده و پیش‌بینی را رعایت کردم.</label>
+      <label><input type="checkbox"> نتیجه تمرین را در دفترچه ثبت کردم.</label>
+    </div>
+  </section>
+
+  <h2 class="section-title">آزمون <span>پایان مسیر</span></h2>
+  <section class="exercise">
+    <p style="color:var(--muted)">به سه سؤال زیر پاسخ بده و نتیجه یادگیری‌ات را ببین.</p>
+
+    <div class="quiz-question">
+      <p>۱. جفت‌ارز در بازار فارکس چه چیزی را نشان می‌دهد؟</p>
+      <label><input type="radio" name="q1" value="a"> قیمت یک دارایی بدون مقایسه</label>
+      <label><input type="radio" name="q1" value="b"> ارزش یک ارز نسبت به ارز دیگر</label>
+      <label><input type="radio" name="q1" value="c"> میزان سود قطعی معامله</label>
+    </div>
+
+    <div class="quiz-question">
+      <p>۲. آیا روند گذشته، آینده قیمت را تضمین می‌کند؟</p>
+      <label><input type="radio" name="q2" value="a"> بله، همیشه</label>
+      <label><input type="radio" name="q2" value="b"> فقط در تایم‌فریم بالا</label>
+      <label><input type="radio" name="q2" value="c"> خیر، بازار با عدم قطعیت همراه است</label>
+    </div>
+
+    <div class="quiz-question">
+      <p>۳. هدف اصلی ژورنال معاملاتی چیست؟</p>
+      <label><input type="radio" name="q3" value="a"> ثبت و ارزیابی تصمیم‌ها و فرایند یادگیری</label>
+      <label><input type="radio" name="q3" value="b"> تضمین سود</label>
+      <label><input type="radio" name="q3" value="c"> حذف کامل ریسک</label>
+    </div>
+
+    <button class="action" onclick="checkQuiz()">بررسی پاسخ‌ها</button>
+    <div id="quizResult"></div>
+  </section>
+
+  <div class="note" style="margin-top:30px">
+    <strong>یادآوری مهم:</strong>
+    این محتوا صرفاً آموزشی است و توصیه سرمایه‌گذاری، سیگنال خرید یا فروش
+    یا تضمین نتیجه مالی محسوب نمی‌شود. بازارهای مالی ریسک دارند.
+    پیش از هرگونه تصمیم مالی، آموزش و ارزیابی مستقل ضروری است.
+  </div>
+</main>
+
+<footer>
+  METATYA ACADEMY · با قانون معامله کن، نه با هیجان
+  <br>
+  © 2026 Metatya
+</footer>
+
+<script>
+let completedLessons = new Set();
+
+function completeLesson(number, button){
+  if(completedLessons.has(number)){
+    completedLessons.delete(number);
+    button.classList.remove("done");
+    button.textContent="علامت‌گذاری به‌عنوان تکمیل‌شده";
+  }else{
+    completedLessons.add(number);
+    button.classList.add("done");
+    button.textContent="✓ تکمیل شد";
+  }
+  updateProgress();
+}
+
+function updateProgress(){
+  const count=completedLessons.size;
+  const percent=Math.round((count/4)*100);
+  document.getElementById("completed").textContent=count;
+  document.getElementById("percent").textContent=percent+"٪";
+  document.getElementById("progress").style.width=percent+"%";
+}
+
+function checkQuiz(){
+  const answers={q1:"b",q2:"c",q3:"a"};
+  let score=0;
+  for(const key in answers){
+    const selected=document.querySelector('input[name="'+key+'"]:checked');
+    if(selected && selected.value===answers[key]) score++;
+  }
+
+  const result=document.getElementById("quizResult");
+  if(score===3){
+    result.textContent="عالی! هر سه پاسخ درست است. مسیر مقدماتی را به‌خوبی یاد گرفته‌ای.";
+  }else{
+    result.textContent="نتیجه: "+score+" از ۳ پاسخ درست بود. درس‌ها را دوباره مرور کن.";
+  }
+}
+</script>
+</body>
+</html>
