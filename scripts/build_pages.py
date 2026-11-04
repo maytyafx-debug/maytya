@@ -48,8 +48,7 @@ now = datetime.datetime.now(datetime.timezone.utc)
 home = (SITE + "/") if SITE else "index.html"
 sm = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' \
      + f"<url><loc>{E(home)}</loc><lastmod>{now.date()}</lastmod></url>" \
-     + (f"<url><loc>{E(SITE)}/services.html</loc><lastmod>{now.date()}</lastmod></url>" if SITE and os.path.exists(os.path.join(ROOT, "services.html")) else "") \
-     + f"<url><loc>{E((SITE + '/services.html') if SITE else 'services.html')}</loc><lastmod>{now.date()}</lastmod></url>" \
+     + (f"<url><loc>{E((SITE + '/services.html') if SITE else 'services.html')}</loc><lastmod>{now.date()}</lastmod></url>" if os.path.exists(os.path.join(ROOT, "services.html")) else "") \
      + "".join(f"<url><loc>{E(u)}</loc><lastmod>{d or now.date()}</lastmod></url>" for u, d in urls) + "</urlset>"
 open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8").write(sm)
 open(os.path.join(ROOT, "robots.txt"), "w").write("User-agent: *\nAllow: /\n" + (f"Sitemap: {SITE}/sitemap.xml\n" if SITE else ""))
