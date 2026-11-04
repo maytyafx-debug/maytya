@@ -1,0 +1,787 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#050807">
+<title>Metatya | Golden Edition</title>
+<meta name="description" content="کتابخانه آموزشی متاتیا؛ مسیرهای یادگیری، تمرین و ابزارهای کاربردی در ۱۱ حوزه و چهار سطح ورزشی.">
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#050807;
+  --panel:#0c1511;
+  --panel2:#101d17;
+  --gold:#d6ad45;
+  --gold2:#f3d98b;
+  --green:#00ff9d;
+  --text:#f2f5f2;
+  --muted:#9aa9a0;
+  --line:rgba(214,173,69,.2);
+  --radius:22px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:
+  radial-gradient(ellipse at 80% 0%,rgba(0,255,157,.09),transparent 35%),
+  radial-gradient(ellipse at 10% 35%,rgba(214,173,69,.08),transparent 32%),
+  var(--bg);
+  color:var(--text);font-family:Vazirmatn,Tahoma,sans-serif;
+  line-height:1.8;min-height:100vh
+}
+button,input{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+.container{width:min(1160px,92%);margin:auto}
+header{
+  position:sticky;top:0;z-index:20;
+  background:rgba(5,8,7,.86);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line)
+}
+.nav{
+  min-height:72px;display:flex;align-items:center;
+  justify-content:space-between;gap:16px
+}
+.brand{font-size:1.25rem;font-weight:900;letter-spacing:.4px}
+.brand span{color:var(--gold)}
+.brand i{
+  display:inline-block;width:9px;height:9px;border-radius:50%;
+  background:var(--green);box-shadow:0 0 15px var(--green);
+  margin-left:8px
+}
+.nav-link{
+  color:var(--gold2);border:1px solid var(--line);
+  border-radius:30px;padding:7px 15px;font-size:.85rem
+}
+.hero{padding:76px 0 48px;position:relative}
+.kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--green);font-size:.82rem;font-weight:800;
+  border:1px solid rgba(0,255,157,.25);
+  background:rgba(0,255,157,.06);
+  padding:7px 14px;border-radius:40px
+}
+.kicker:before{
+  content:"";width:7px;height:7px;border-radius:50%;
+  background:var(--green);box-shadow:0 0 12px var(--green)
+}
+h1{
+  font-size:clamp(2.2rem,6vw,4.6rem);
+  line-height:1.25;margin:22px 0 12px;font-weight:950
+}
+h1 span{
+  background:linear-gradient(90deg,var(--gold2),var(--gold),var(--green));
+  -webkit-background-clip:text;background-clip:text;color:transparent
+}
+.hero p{max-width:720px;color:var(--muted);font-size:1.03rem}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.btn{
+  border:1px solid var(--line);border-radius:14px;
+  padding:11px 18px;font-weight:800;display:inline-flex;
+  justify-content:center;align-items:center;gap:8px;
+  transition:.25s
+}
+.btn-primary{
+  color:#06120b;background:linear-gradient(120deg,var(--gold2),var(--gold));
+  border-color:transparent
+}
+.btn-secondary{background:rgba(255,255,255,.035);color:var(--text)}
+.btn:hover{transform:translateY(-3px);filter:brightness(1.08)}
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:12px;margin-top:38px;max-width:680px
+}
+.stat{
+  padding:16px;border:1px solid var(--line);
+  background:rgba(255,255,255,.025);border-radius:16px
+}
+.stat strong{display:block;color:var(--gold2);font-size:1.5rem}
+.stat small{color:var(--muted)}
+.section{padding:34px 0}
+.section-title{
+  display:flex;justify-content:space-between;
+  align-items:end;gap:14px;margin-bottom:20px
+}
+.section-title h2{font-size:1.55rem;margin:0}
+.section-title p{color:var(--muted);font-size:.85rem;margin:4px 0 0}
+.search-panel{
+  padding:18px;border:1px solid var(--line);
+  border-radius:var(--radius);background:rgba(12,21,17,.82);
+  margin-bottom:20px
+}
+.search{
+  width:100%;padding:14px 17px;border-radius:13px;
+  border:1px solid var(--line);background:#07100b;
+  color:var(--text);outline:none
+}
+.search:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(0,255,157,.08)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.filter{
+  border:1px solid var(--line);background:transparent;
+  color:var(--muted);padding:7px 13px;border-radius:30px;
+  font-size:.82rem
+}
+.filter.active,.filter:hover{
+  color:var(--green);border-color:var(--green);
+  background:rgba(0,255,157,.07)
+}
+.grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:15px
+}
+.pack{
+  position:relative;overflow:hidden;min-width:0;
+  display:flex;flex-direction:column;gap:12px;
+  min-height:285px;padding:21px;
+  border:1px solid var(--line);border-radius:var(--radius);
+  background:linear-gradient(145deg,rgba(17,30,23,.96),rgba(8,14,11,.96));
+  transition:transform .25s,border-color .25s,box-shadow .25s
+}
+.pack:before{
+  content:"";position:absolute;width:180px;height:180px;
+  border-radius:50%;background:var(--glow,rgba(0,255,157,.08));
+  filter:blur(55px);top:-100px;left:-70px;pointer-events:none
+}
+.pack:hover{
+  transform:translateY(-5px);border-color:rgba(0,255,157,.48);
+  box-shadow:0 18px 45px rgba(0,0,0,.3)
+}
+.pack-top{display:flex;justify-content:space-between;align-items:center}
+.pack-icon{
+  width:48px;height:48px;border-radius:15px;
+  display:grid;place-items:center;font-size:1.5rem;
+  background:rgba(214,173,69,.1);border:1px solid var(--line)
+}
+.pack-number{font-size:.72rem;color:var(--muted)}
+.pack h3{margin:0;font-size:1.08rem}
+.pack .tagline{margin:0;color:var(--gold2);font-size:.83rem}
+.pack .desc{margin:0;color:var(--muted);font-size:.83rem;flex:1}
+.pack-meta{display:flex;flex-wrap:wrap;gap:7px}
+.meta{
+  color:var(--muted);font-size:.7rem;padding:4px 9px;
+  border:1px solid rgba(255,255,255,.09);border-radius:30px
+}
+.open-pack{
+  width:100%;border:1px solid rgba(0,255,157,.35);
+  background:rgba(0,255,157,.07);color:var(--green);
+  padding:10px;border-radius:12px;font-weight:800
+}
+.open-pack:hover{background:rgba(0,255,157,.14)}
+.empty{
+  display:none;text-align:center;padding:40px;
+  border:1px dashed var(--line);border-radius:18px;color:var(--muted)
+}
+.callout{
+  margin:28px 0;padding:25px;border-radius:var(--radius);
+  border:1px solid rgba(214,173,69,.35);
+  background:linear-gradient(110deg,rgba(214,173,69,.08),rgba(0,255,157,.04))
+}
+.callout h3{margin:0 0 8px;color:var(--gold2)}
+.callout p{margin:0;color:var(--muted);font-size:.9rem}
+.modal{
+  position:fixed;inset:0;z-index:50;display:none;
+  align-items:center;justify-content:center;padding:16px;
+  background:rgba(0,0,0,.78);backdrop-filter:blur(8px)
+}
+.modal.show{display:flex}
+.modal-box{
+  width:min(760px,100%);max-height:88vh;overflow:auto;
+  background:#0a120d;border:1px solid rgba(214,173,69,.4);
+  border-radius:24px;padding:25px;position:relative;
+  box-shadow:0 25px 90px rgba(0,0,0,.6)
+}
+.close{
+  position:absolute;left:16px;top:14px;width:38px;height:38px;
+  border:1px solid var(--line);border-radius:50%;
+  color:var(--text);background:transparent;font-size:1.2rem
+}
+.modal-icon{font-size:2.1rem}
+.modal-box h2{margin:8px 0;color:var(--gold2);font-size:1.5rem}
+.modal-box .intro{color:var(--muted)}
+.detail-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:20px
+}
+.detail-card{
+  padding:16px;border:1px solid var(--line);
+  border-radius:15px;background:rgba(255,255,255,.025)
+}
+.detail-card h3{margin:0 0 9px;color:var(--green);font-size:.95rem}
+.detail-card ul{padding-right:18px;margin:0;color:var(--muted);font-size:.85rem}
+.detail-card li{margin:5px 0}
+.modal-note{
+  margin-top:16px;padding:13px;border-radius:12px;
+  background:rgba(214,173,69,.07);color:var(--gold2);font-size:.8rem
+}
+footer{
+  border-top:1px solid var(--line);padding:30px 0 45px;
+  margin-top:50px;color:var(--muted);font-size:.82rem
+}
+.footer-row{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+footer strong{color:var(--gold2)}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){
+  .grid{grid-template-columns:1fr}
+  .hero{padding-top:48px}
+  .stats{grid-template-columns:1fr 1fr}
+  .detail-grid{grid-template-columns:1fr}
+  .section-title{display:block}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{scroll-behavior:auto!important;transition:none!important}
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="index.html"><i></i>Meta<span>tya</span></a>
+    <a class="nav-link" href="index.html">بازگشت به صفحه اصلی ↗</a>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <div class="kicker">نسخه ویژه آموزش و توسعه فردی</div>
+    <h1>دانش عمیق‌تر؛<br><span>تصمیم هوشمندانه‌تر</span></h1>
+    <p>
+      کتابخانه Golden Edition متاتیا؛ مجموعه‌ای از مسیرهای آموزشی ساختاریافته،
+      تمرین‌های کاربردی و ابزارهای تصمیم‌گیری برای زندگی، کار، بازار و ورزش.
+      اینجا قرار نیست فقط اطلاعات جمع کنی؛ قرار است آموخته‌ها را به مهارت تبدیل کنی.
+    </p>
+    <div class="hero-actions">
+      <a href="#library" class="btn btn-primary">مشاهده کتابخانه ←</a>
+      <a href="#standards" class="btn btn-secondary">استانداردهای متاتیا</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><strong>۱۵</strong><small>مسیر آموزشی مستقل</small></div>
+      <div class="stat"><strong>۱۱ + ۴</strong><small>حوزه اصلی و ورزشی</small></div>
+      <div class="stat"><strong>۱۰۰٪</strong><small>قابل توسعه و ویرایش</small></div>
+    </div>
+  </section>
+
+  <section class="section" id="library">
+    <div class="section-title">
+      <div>
+        <h2>کتابخانه مسیرهای طلایی</h2>
+        <p>مسیر موردنظرت را پیدا کن و نقشه یادگیری آن را ببین.</p>
+      </div>
+    </div>
+
+    <div class="search-panel">
+      <input id="search" class="search" type="search"
+        placeholder="جست‌وجو در عنوان، حوزه یا مهارت..." aria-label="جست‌وجوی پک‌ها">
+      <div class="filters" id="filters">
+        <button class="filter active" data-filter="all">همه مسیرها</button>
+        <button class="filter" data-filter="finance">مالی و بازار</button>
+        <button class="filter" data-filter="career">کار و کسب‌وکار</button>
+        <button class="filter" data-filter="personal">رشد فردی</button>
+        <button class="filter" data-filter="sport">ورزش</button>
+      </div>
+    </div>
+
+    <div class="grid" id="packGrid"></div>
+    <div class="empty" id="empty">موردی با این عبارت پیدا نشد. عبارت دیگری را امتحان کن.</div>
+  </section>
+
+  <section class="callout" id="standards">
+    <h3>استاندارد طلایی متاتیا</h3>
+    <p>
+      هر مسیر باید شامل آموزش مرحله‌ای، مثال قابل فهم، تمرین عملی،
+      ابزار ثبت پیشرفت، معیار ارزیابی و منابع تکمیلی باشد.
+      محتوای مالی آموزشی است و سیگنال یا تضمین سود ارائه نمی‌کند.
+      محتوای ذهن و عادت جایگزین روان‌درمانی نیست و مسیر ورزشی جایگزین
+      ارزیابی و برنامه اختصاصی مربی واجد صلاحیت نخواهد بود.
+    </p>
+  </section>
+</main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <button class="close" id="closeModal" aria-label="بستن پنجره">×</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="container footer-row">
+    <div><strong>METATYA GOLDEN EDITION</strong><br>با قانون و آگاهی پیش برو، نه با هیجان.</div>
+    <div>© Metatya — محتوای آموزشی و توسعه مهارت</div>
+  </div>
+</footer>
+
+<script>
+const packs = [
+{
+ id:"forex",category:"finance",icon:"📊",name:"فارکس",
+ title:"پک جامع سواد و انضباط معامله‌گری",
+ tagline:"با قانون معامله کن، نه با هیجان.",
+ audience:"علاقه‌مندان به شناخت بازار ارز و معامله‌گری مسئولانه",
+ desc:"از مبانی بازار تا طراحی فرایند معاملاتی، ثبت تصمیم‌ها و ارزیابی عملکرد.",
+ modules:[
+  "ساختار بازار فارکس، جفت‌ارزها و مفاهیم پایه",
+  "شناخت نمودار، روند، محدوده و سطوح مهم",
+  "مبانی تحلیل تکنیکال و بنیادی و محدودیت‌های هرکدام",
+  "مدیریت ریسک، اندازه موقعیت و مفهوم زیان احتمالی",
+  "روان‌شناسی تصمیم، سوگیری‌ها و کنترل رفتار",
+  "طراحی چک‌لیست و ژورنال معاملاتی",
+  "مرور داده‌ها، خطاها و بهبود فرایند"
+ ],
+ practice:[
+  "ساخت واژه‌نامه شخصی از مفاهیم بازار",
+  "تحلیل آموزشی نمودارهای تاریخی بدون پول واقعی",
+  "تکمیل نمونه ژورنال با داده فرضی",
+  "نوشتن قوانین شخصی برای توقف و بازبینی"
+ ],
+ outcome:"توانایی توضیح سازوکار بازار، شناسایی ریسک و ارزیابی منظم تصمیم‌ها؛ نه پیش‌بینی قطعی قیمت.",
+ caution:"این مسیر آموزشی است و توصیه سرمایه‌گذاری، سیگنال خریدوفروش یا تضمین سود نیست. بازارهای اهرمی ریسک بالایی دارند."
+},
+{
+ id:"crypto",category:"finance",icon:"₿",name:"کریپتو",
+ title:"پک شناخت دارایی‌های دیجیتال",
+ tagline:"قبل از اعتماد، سازوکار را بشناس.",
+ audience:"افرادی که می‌خواهند فناوری و ریسک دارایی‌های دیجیتال را بشناسند",
+ desc:"آشنایی با بلاکچین، کیف پول، نگهداری امن، ریسک پروژه و ارزیابی اطلاعات.",
+ modules:[
+  "مفاهیم بلاکچین، شبکه و تراکنش",
+  "تفاوت کوین، توکن و کاربردهای شبکه",
+  "آشنایی با کیف پول و اصول حفاظت از دسترسی",
+  "شناخت ریسک نوسان، نقدشوندگی و خطای عملیاتی",
+  "بررسی مستندات و شفافیت پروژه‌ها",
+  "تشخیص وعده‌های غیرواقعی و کلاهبرداری‌های رایج",
+  "طراحی چک‌لیست امنیت و تصمیم‌گیری"
+ ],
+ practice:[
+  "ترسیم مسیر فرضی یک تراکنش",
+  "ارزیابی یک پروژه با چک‌لیست بی‌طرفانه",
+  "ساخت برنامه پشتیبان‌گیری امن",
+  "تمرین تشخیص پیام‌ها و لینک‌های مشکوک"
+ ],
+ outcome:"درک بهتر فناوری، ریسک‌ها و اصول حفاظت از دارایی دیجیتال.",
+ caution:"این پک توصیه خرید رمزارز یا انتخاب پروژه سرمایه‌گذاری نیست. عبارت بازیابی، رمز و کدهای محرمانه را با هیچ‌کس به اشتراک نگذار."
+},
+{
+ id:"bourse",category:"finance",icon:"📈",name:"بورس",
+ title:"پک سواد مالی و شناخت بازار سرمایه",
+ tagline:"عددها را بفهم؛ تصمیم را بررسی کن.",
+ audience:"افراد علاقه‌مند به یادگیری سازوکار بازار سرمایه",
+ desc:"شناخت سهام، صورت‌های مالی، مفاهیم ارزش‌گذاری و پایش پرتفوی به زبان آموزشی.",
+ modules:[
+  "ساختار بازار سرمایه و نقش نهادها",
+  "مبانی سهم، شاخص، نقدشوندگی و کارمزد",
+  "آشنایی مقدماتی با صورت سود و زیان و ترازنامه",
+  "مفاهیم سودآوری، بدهی و جریان نقد",
+  "مبانی تنوع‌بخشی و ریسک تمرکز",
+  "ساخت دفتر ثبت و مرور پرتفوی فرضی",
+  "خطاهای شناختی در تصمیم‌های مالی"
+ ],
+ practice:[
+  "خواندن نمونه ساده صورت مالی",
+  "ساخت پرتفوی تمرینی با داده فرضی",
+  "محاسبه وزن دارایی‌ها در یک نمونه آموزشی",
+  "نوشتن گزارش ماهانه عملکرد فرضی"
+ ],
+ outcome:"توانایی خواندن مفاهیم پایه بازار و بررسی منظم اطلاعات مالی.",
+ caution:"محتوا آموزشی است و توصیه خرید، فروش یا نگهداری هیچ نمادی ارائه نمی‌کند."
+},
+{
+ id:"income",category:"career",icon:"🚀",name:"کسب درآمد",
+ title:"پک طراحی مسیر مهارت تا درآمد",
+ tagline:"اول مهارت قابل ارائه؛ بعد پیشنهاد ارزشمند.",
+ audience:"افرادی که می‌خواهند مهارت خود را به خدمت یا محصول تبدیل کنند",
+ desc:"شناسایی توانایی، انتخاب مسئله مشتری، ساخت نمونه‌کار و طراحی مسیر آزمایشی.",
+ modules:[
+  "فهرست مهارت‌ها و منابع قابل اتکا",
+  "انتخاب مسئله واقعی و قابل حل",
+  "شناخت مخاطب و نیاز او",
+  "تعریف پیشنهاد ارزش و محدوده خدمت",
+  "ساخت نمونه‌کار و دریافت بازخورد",
+  "قیمت‌گذاری آزمایشی و محاسبه هزینه",
+  "برنامه چهار هفته‌ای اجرا و بازبینی"
+ ],
+ practice:[
+  "تهیه نقشه مهارت و شکاف یادگیری",
+  "مصاحبه تمرینی با مخاطب فرضی",
+  "ساخت یک نمونه‌کار کوچک",
+  "نوشتن پیشنهاد خدمت یک‌صفحه‌ای"
+ ],
+ outcome:"یک مسیر آزمایشی روشن برای تبدیل مهارت به ارزش قابل ارائه.",
+ caution:"درآمد تضمین نمی‌شود؛ نتیجه به مهارت، بازار، اجرا و عوامل بیرونی بستگی دارد."
+},
+{
+ id:"business",category:"career",icon:"🏢",name:"کسب‌وکار",
+ title:"پک شروع و رشد کسب‌وکار کوچک",
+ tagline:"قبل از توسعه، مدل را اعتبارسنجی کن.",
+ audience:"صاحبان کسب‌وکار کوچک و افراد دارای ایده",
+ desc:"از شناخت مشتری تا مدل درآمدی، هزینه‌ها، بازاریابی و برنامه عملیاتی.",
+ modules:[
+  "تعریف مسئله مشتری و پیشنهاد ارزش",
+  "شناخت مشتری و بخش‌بندی بازار",
+  "بوم مدل کسب‌وکار",
+  "هزینه ثابت، متغیر و نقطه سربه‌سر",
+  "جریان نقدی و بودجه عملیاتی",
+  "بازاریابی محتوایی و کانال فروش",
+  "برنامه اجرایی ۹۰ روزه و شاخص‌های سنجش"
+ ],
+ practice:[
+  "تکمیل بوم مدل کسب‌وکار",
+  "طراحی پرسش‌های مصاحبه مشتری",
+  "ساخت جدول هزینه و درآمد فرضی",
+  "تعریف سه شاخص برای ارزیابی پیشرفت"
+ ],
+ outcome:"مدل اولیه کسب‌وکار و نقشه‌ای برای آزمودن فرضیه‌ها با داده واقعی.",
+ caution:"این محتوا جایگزین مشاوره حقوقی، مالیاتی یا حسابداری تخصصی نیست."
+},
+{
+ id:"personal-finance",category:"finance",icon:"💳",name:"مالی شخصی",
+ title:"پک مدیریت بودجه و سواد مالی",
+ tagline:"پول را آگاهانه مدیریت کن.",
+ audience:"افرادی که می‌خواهند دخل‌وخرج خود را بهتر بشناسند",
+ desc:"ثبت درآمد و هزینه، اولویت‌بندی، هدف‌گذاری و مرور عادت‌های مالی.",
+ modules:[
+  "شناخت جریان ورودی و خروجی پول",
+  "دسته‌بندی هزینه‌های ضروری و انتخابی",
+  "طراحی بودجه متناسب با شرایط فرد",
+  "هدف‌گذاری و برنامه پس‌انداز واقع‌بینانه",
+  "شناخت بدهی و هزینه تعهدات",
+  "مبانی صندوق اضطراری و مدیریت عدم‌قطعیت",
+  "مرور ماهانه و اصلاح بودجه"
+ ],
+ practice:[
+  "ثبت نمونه هزینه‌های یک ماه",
+  "ساخت بودجه آزمایشی",
+  "تعریف یک هدف مالی قابل سنجش",
+  "مرور و اصلاح دسته‌بندی هزینه‌ها"
+ ],
+ outcome:"دید شفاف‌تر نسبت به جریان پول و تصمیم‌های روزمره مالی.",
+ caution:"آموزش عمومی است و توصیه مالی شخصی یا محصول سرمایه‌گذاری ارائه نمی‌کند."
+},
+{
+ id:"research",category:"career",icon:"🔬",name:"تحصیل و پژوهش",
+ title:"پک یادگیری، مطالعه و پژوهش",
+ tagline:"به‌جای حفظ پراکنده، عمیق یاد بگیر.",
+ audience:"دانش‌آموزان، دانشجویان و علاقه‌مندان به پژوهش",
+ desc:"برنامه‌ریزی یادگیری، ارزیابی منبع، یادداشت‌برداری و ارائه نتیجه.",
+ modules:[
+  "تبدیل موضوع کلی به پرسش روشن",
+  "جست‌وجو و ارزیابی اعتبار منابع",
+  "یادداشت‌برداری و سازمان‌دهی اطلاعات",
+  "مبانی روش تحقیق و اخلاق پژوهش",
+  "مرور فعال و بازیابی آموخته‌ها",
+  "ساختاردهی گزارش و ارائه",
+  "برنامه چهار هفته‌ای یادگیری"
+ ],
+ practice:[
+  "ساخت نقشه مفهومی یک موضوع",
+  "ارزیابی اعتبار سه منبع",
+  "نوشتن خلاصه با ارجاع",
+  "ارائه کوتاه بر پایه یافته‌ها"
+ ],
+ outcome:"یک برنامه یادگیری مستند و توانایی ارائه یافته‌ها با دقت بیشتر.",
+ caution:"در پژوهش، منابع را بررسی کن و از جعل ارجاع یا ارائه خروجی هوش مصنوعی به‌عنوان منبع مستقل خودداری کن."
+},
+{
+ id:"legal",category:"personal",icon:"⚖️",name:"حقوق",
+ title:"پک سواد حقوقی و آمادگی مشاوره",
+ tagline:"مسئله را منظم کن؛ مشاوره معتبر بگیر.",
+ audience:"افرادی که می‌خواهند مدارک و پرسش‌های حقوقی خود را بهتر سازمان‌دهی کنند",
+ desc:"آشنایی عمومی با قرارداد، مستندسازی و آماده‌سازی برای مراجعه به وکیل.",
+ modules:[
+  "شناخت مفهوم تعهد و توافق",
+  "اجزای عمومی یک قرارداد",
+  "اهمیت تاریخ، نسخه و مستندات",
+  "روش نگهداری امن اسناد",
+  "تنظیم شرح زمانی رویدادها",
+  "تهیه پرسش‌های دقیق برای مشاور",
+  "شناخت زمان نیاز به متخصص دارای صلاحیت"
+ ],
+ practice:[
+  "ساخت فهرست مدارک یک موضوع فرضی",
+  "تنظیم جدول زمانی رویدادها",
+  "نوشتن پرسش‌های روشن برای جلسه مشاوره",
+  "مرور بندهای یک قرارداد نمونه آموزشی"
+ ],
+ outcome:"آمادگی بهتر برای گفت‌وگو با متخصص حقوقی و ارائه منظم اطلاعات.",
+ caution:"این پک مشاوره حقوقی یا تفسیر پرونده مشخص نیست. برای تصمیم حقوقی، به وکیل دارای صلاحیت در حوزه مربوط مراجعه کن."
+},
+{
+ id:"habits",category:"personal",icon:"🧠",name:"ذهن و عادت",
+ title:"پک ۲۱ روز خودآگاهی و عادت‌سازی",
+ tagline:"تغییر پایدار با قدم‌های کوچک و قابل پیگیری.",
+ audience:"افرادی که می‌خواهند عادت‌ها و رفتار روزمره خود را بهتر بشناسند",
+ desc:"ثبت رفتار، هدف‌گذاری کوچک، طراحی محیط و مرور پیشرفت.",
+ modules:[
+  "شناخت نشانه، رفتار و پیامد عادت",
+  "انتخاب هدف کوچک و مشخص",
+  "طراحی محیط برای آسان‌تر شدن رفتار مطلوب",
+  "ثبت روزانه و مرور بدون قضاوت",
+  "مدیریت وقفه‌ها و شروع دوباره",
+  "ساخت برنامه ۲۱ روزه",
+  "مرور نتایج و انتخاب قدم بعدی"
+ ],
+ practice:[
+  "انتخاب یک عادت کوچک و واقع‌بینانه",
+  "ثبت روزانه انجام یا عدم انجام آن",
+  "شناسایی مانع‌های محیطی",
+  "مرور هفتگی و تنظیم هدف"
+ ],
+ outcome:"یک برنامه شخصی ساده برای مشاهده و پیگیری عادت‌ها.",
+ caution:"این محتوا آموزشی و عمومی است؛ تشخیص یا درمان روان‌شناختی نیست. در صورت نیاز، از متخصص واجد صلاحیت کمک بگیر."
+},
+{
+ id:"ai",category:"career",icon:"🤖",name:"هوش مصنوعی و کار",
+ title:"پک کاربرد هوش مصنوعی در کار",
+ tagline:"از ابزار هوشمند استفاده کن؛ خروجی را خودت بسنج.",
+ audience:"دانشجویان، تولیدکنندگان محتوا و صاحبان کسب‌وکار",
+ desc:"مهندسی پرامپت، ارزیابی خروجی، گردش‌کار و استفاده مسئولانه از ابزارها.",
+ modules:[
+  "شناخت قابلیت‌ها و محدودیت‌های مدل‌های هوش مصنوعی",
+  "ساخت درخواست دقیق و زمینه‌مند",
+  "تولید، بازنویسی و سازمان‌دهی محتوا",
+  "کار با داده و بررسی خطا",
+  "طراحی گردش‌کارهای ساده",
+  "حریم خصوصی و اطلاعات محرمانه",
+  "ارزیابی کیفیت و نظارت انسانی"
+ ],
+ practice:[
+  "نوشتن سه نسخه از یک پرامپت",
+  "مقایسه خروجی و ثبت خطاها",
+  "طراحی یک گردش‌کار ساده",
+  "ساخت چک‌لیست کنترل کیفیت"
+ ],
+ outcome:"توانایی استفاده هدفمند از AI همراه با بررسی و قضاوت انسانی.",
+ caution:"خروجی هوش مصنوعی ممکن است نادرست یا ناقص باشد؛ اطلاعات حساس را وارد ابزارهای ناشناس نکن."
+},
+{
+ id:"security",category:"personal",icon:"🛡️",name:"امنیت دیجیتال",
+ title:"پک سواد امنیت و حریم خصوصی",
+ tagline:"امنیت از عادت‌های کوچک شروع می‌شود.",
+ audience:"کاربران عمومی، خانواده‌ها و صاحبان کسب‌وکارهای کوچک",
+ desc:"اصول حفاظت از حساب‌ها، حریم خصوصی و تشخیص فریب‌های دیجیتال.",
+ modules:[
+  "شناخت تهدیدهای رایج آنلاین",
+  "ساخت و نگهداری امن گذرواژه‌ها",
+  "احراز هویت چندمرحله‌ای",
+  "شناخت فیشینگ و جعل هویت",
+  "مدیریت مجوزهای اپلیکیشن‌ها",
+  "پشتیبان‌گیری و بازیابی حساب",
+  "برنامه واکنش و گزارش رخداد"
+ ],
+ practice:[
+  "بازبینی تنظیمات امنیتی حساب‌های خود",
+  "ساخت چک‌لیست تشخیص پیام مشکوک",
+  "مرور مجوزهای اپلیکیشن‌ها",
+  "تهیه فهرست راه‌های بازیابی حساب"
+ ],
+ outcome:"افزایش آگاهی امنیتی و ساخت عادت‌های محافظتی روزمره.",
+ caution:"هیچ روشی امنیت صددرصدی تضمین نمی‌کند. اطلاعات ورود و کدهای یک‌بارمصرف را در اختیار دیگران نگذار."
+},
+{
+ id:"sport-start",category:"sport",icon:"🏃",name:"ورزش | سطح شروع",
+ title:"پک پایه آشنایی با ورزش و مهارت",
+ tagline:"پایه محکم، مسیر یادگیری بهتر.",
+ audience:"افراد تازه‌کار و کسانی که در آغاز مسیر ورزشی هستند",
+ desc:"آشنایی با اصول یادگیری مهارت، ایمنی، نظم تمرین و همکاری با مربی.",
+ modules:[
+  "تعیین هدف یادگیری متناسب با علاقه",
+  "آشنایی با قوانین و تجهیزات رشته",
+  "اصول عمومی ایمنی و گرم‌کردن با راهنمای مربی",
+  "یادگیری مهارت‌های پایه با بازخورد",
+  "ثبت حضور، تجربه و احساس پس از تمرین",
+  "شناخت استراحت و اهمیت بازیابی",
+  "گفت‌وگو با مربی درباره پیشرفت"
+ ],
+ practice:[
+  "تهیه دفترچه ثبت تجربه تمرین",
+  "نوشتن سه هدف یادگیری کوتاه",
+  "ثبت پرسش‌ها برای مربی",
+  "مرور هفتگی تجربه و ایمنی"
+ ],
+ outcome:"شناخت بهتر مسیر شروع و توانایی پیگیری یادگیری با نظارت مربی.",
+ caution:"برنامه تمرین، شدت و حجم فعالیت باید با سن، شرایط فرد و نظر مربی واجد صلاحیت متناسب شود."
+},
+{
+ id:"sport-advanced",category:"sport",icon:"🥇",name:"ورزش | سطح پیشرفته",
+ title:"پک ورزشکار رقابتی و پیشرفته",
+ tagline:"تمرین هدفمند با بازخورد و نظم.",
+ audience:"ورزشکاران دارای تجربه تمرین منظم و حضور در رقابت",
+ desc:"ثبت عملکرد، تحلیل مسابقه، ارتباط با مربی و مدیریت فرایند آماده‌سازی.",
+ modules:[
+  "تعریف هدف عملکردی با مربی",
+  "ثبت داده‌های تمرین و مسابقه",
+  "تحلیل فنی نقاط قوت و زمینه‌های بهبود",
+  "آمادگی ذهنی عمومی و تمرکز بر فرایند",
+  "ارتباط مؤثر با مربی و تیم پشتیبان",
+  "مرور مسابقه و یادگیری از تجربه",
+  "اصول بازیابی و گزارش خستگی به مربی"
+ ],
+ practice:[
+  "ساخت فرم مرور مسابقه",
+  "ثبت بازخورد مربی و اقدام بعدی",
+  "تعریف یک هدف فنی قابل مشاهده",
+  "مرور روند پیشرفت در بازه‌های منظم"
+ ],
+ outcome:"پرونده منظم‌تری از عملکرد و فرایند یادگیری ورزشی.",
+ caution:"این پک جایگزین برنامه تخصصی مربی، فیزیوتراپیست یا پزشک ورزشی نیست."
+},
+{
+ id:"sport-national",category:"sport",icon:"🏆",name:"ورزش | ملی و قهرمانی",
+ title:"پک ورزشکاران ملی و سطح قهرمانی",
+ tagline:"جزئیات عملکرد را مستند و قابل بازبینی کن.",
+ audience:"ورزشکاران منتخب، ملی‌پوشان و ورزشکاران سطح قهرمانی",
+ desc:"ساختاردهی پرونده عملکرد، تحلیل رقابت و هماهنگی تیم پشتیبان.",
+ modules:[
+  "تعیین شاخص‌های عملکرد با کادر فنی",
+  "ثبت منظم داده‌های رقابت و تمرین",
+  "تحلیل روند و شرایط اجرای مهارت",
+  "مرور تاکتیکی و تصمیم‌گیری در مسابقه",
+  "ارتباط بین ورزشکار، مربی و تیم پشتیبان",
+  "مدیریت سفر و آمادگی اجرایی مسابقه",
+  "بازبینی دوره‌ای اهداف و مستندات"
+ ],
+ practice:[
+  "ساخت پرونده عملکرد فصل",
+  "تهیه گزارش پس از مسابقه",
+  "ثبت بازخوردهای کادر فنی",
+  "مستندسازی اهداف و شاخص‌های توافق‌شده"
+ ],
+ outcome:"پرونده ساختاریافته برای گفت‌وگو و تصمیم‌گیری مشترک با کادر فنی.",
+ caution:"هرگونه برنامه‌ریزی تخصصی تمرین، تغذیه و بازیابی باید توسط متخصصان واجد صلاحیت و متناسب با ورزشکار انجام شود."
+},
+{
+ id:"sport-elite",category:"sport",icon:"🌟",name:"ورزش | نخبه و المپیکی",
+ title:"پک ورزشکار نخبه و مسیر المپیک",
+ tagline:"عملکرد پایدار، تصمیم‌گیری تیمی و جزئیات دقیق.",
+ audience:"ورزشکاران نخبه و افراد حاضر در مسیر آماده‌سازی سطح بین‌المللی",
+ desc:"چارچوب حرفه‌ای مستندسازی عملکرد و هماهنگی چندرشته‌ای با تیم تخصصی.",
+ modules:[
+  "تعریف شاخص‌های کلیدی با کادر فنی",
+  "مستندسازی چرخه‌های آماده‌سازی",
+  "تحلیل عملکرد در شرایط رقابت مهم",
+  "هماهنگی مربی، پزشکی ورزشی و پشتیبانی",
+  "آمادگی ذهنی و مهارت‌های تمرکز با متخصص",
+  "مدیریت اطلاعات و محرمانگی پرونده",
+  "مرور پس از رقابت و انتقال تجربه"
+ ],
+ practice:[
+  "ساخت داشبورد گزارش عملکرد",
+  "تهیه چک‌لیست اجرایی مسابقه",
+  "ثبت بازخورد تیم تخصصی",
+  "تهیه گزارش پس از رقابت و درس‌آموخته‌ها"
+ ],
+ outcome:"چارچوب مستند و حرفه‌ای برای هماهنگی تصمیم‌های تیم پشتیبان ورزشکار.",
+ caution:"این مسیر جایگزین مربیگری تخصصی، مراقبت پزشکی یا خدمات روان‌شناسی ورزشی دارای صلاحیت نیست."
+}
+];
+
+const categoryNames = {
+ finance:"مالی و بازار",
+ career:"کار و کسب‌وکار",
+ personal:"رشد فردی",
+ sport:"ورزش"
+};
+
+const grid = document.getElementById("packGrid");
+const search = document.getElementById("search");
+const empty = document.getElementById("empty");
+let activeFilter = "all";
+
+function render(){
+ const q = search.value.trim().toLocaleLowerCase();
+ const filtered = packs.filter(p=>{
+  const matchesCategory = activeFilter==="all" || p.category===activeFilter;
+  const text = [p.name,p.title,p.tagline,p.audience,p.desc,...p.modules].join(" ").toLocaleLowerCase();
+  return matchesCategory && text.includes(q);
+ });
+
+ grid.innerHTML = filtered.map((p,index)=>`
+  <article class="pack" style="--glow:${p.category==="sport"?"rgba(0,255,157,.10)":"rgba(214,173,69,.10)"}">
+   <div class="pack-top">
+    <div class="pack-icon">${p.icon}</div>
+    <span class="pack-number">GOLDEN / ${String(packs.indexOf(p)+1).padStart(2,"0")}</span>
+   </div>
+   <div>
+    <h3>${p.title}</h3>
+    <p class="tagline">${p.tagline}</p>
+   </div>
+   <p class="desc">${p.desc}</p>
+   <div class="pack-meta">
+    <span class="meta">${categoryNames[p.category]}</span>
+    <span class="meta">${p.modules.length} سرفصل آموزشی</span>
+   </div>
+   <button class="open-pack" data-id="${p.id}">مشاهده نقشه یادگیری ←</button>
+  </article>
+ `).join("");
+
+ empty.style.display = filtered.length ? "none" : "block";
+}
+
+function openPack(id){
+ const p = packs.find(x=>x.id===id);
+ if(!p)return;
+
+ document.getElementById("modalContent").innerHTML = `
+  <div class="modal-icon">${p.icon}</div>
+  <h2 id="modalTitle">${p.title}</h2>
+  <p class="intro">${p.desc}</p>
+  <div class="detail-card">
+   <h3>مخاطب این مسیر</h3>
+   <p class="intro">${p.audience}</p>
+  </div>
+  <div class="detail-grid">
+   <div class="detail-card">
+    <h3>سرفصل‌های آموزشی</h3>
+    <ul>${p.modules.map(x=>`<li>${x}</li>`).join("")}</ul>
+   </div>
+   <div class="detail-card">
+    <h3>تمرین‌ها و فعالیت‌ها</h3>
+    <ul>${p.practice.map(x=>`<li>${x}</li>`).join("")}</ul>
+   </div>
+  </div>
+  <div class="detail-card" style="margin-top:13px">
+   <h3>خروجی مورد انتظار</h3>
+   <p class="intro">${p.outcome}</p>
+  </div>
+  <div class="modal-note">نکته مهم: ${p.caution}</div>
+ `;
+ document.getElementById("modal").classList.add("show");
+ document.body.style.overflow="hidden";
+ document.getElementById("closeModal").focus();
+}
+
+function closePack(){
+ document.getElementById("modal").classList.remove("show");
+ document.body.style.overflow="";
+}
+
+grid.addEventListener("click",e=>{
+ const btn=e.target.closest("[data-id]");
+ if(btn)openPack(btn.dataset.id);
+});
+
+document.getElementById("filters").addEventListener("click",e=>{
+ const btn=e.target.closest("[data-filter]");
+ if(!btn)return;
+ activeFilter=btn.dataset.filter;
+ document.querySelectorAll(".filter").forEach(x=>
+  x.classList.toggle("active",x===btn)
+ );
+ render();
+});
+
+search.addEventListener("input",render);
+document.getElementById("closeModal").addEventListener("click",closePack);
+document.getElementById("modal").addEventListener("click",e=>{
+ if(e.target.id==="modal")closePack();
+});
+document.addEventListener("keydown",e=>{
+ if(e.key==="Escape")closePack();
+});
+
+render();
+</script>
+</body>
+</html>
