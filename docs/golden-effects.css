@@ -1,0 +1,73 @@
+
+/* METATYA GOLDEN MOTION */
+.pack {
+  opacity: 0;
+  transform: translateY(24px) scale(.985);
+  transition: opacity .65s ease, transform .65s ease,
+    border-color .3s, box-shadow .3s;
+  isolation: isolate;
+}
+
+.pack.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.pack::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    260px circle at var(--mx,50%) var(--my,0%),
+    rgba(0,255,157,.13), transparent 68%
+  );
+  opacity: 0;
+  transition: opacity .35s;
+}
+
+.pack:hover::after { opacity: 1; }
+
+.pack:hover {
+  transform: translateY(-7px) scale(1.008);
+  border-color: rgba(0,255,157,.62);
+  box-shadow: 0 20px 55px rgba(0,0,0,.38),
+              0 0 25px rgba(0,255,157,.07);
+}
+
+.pack-icon {
+  transition: transform .45s, box-shadow .45s;
+}
+
+.pack:hover .pack-icon {
+  transform: translateY(-3px) rotate(-5deg);
+  box-shadow: 0 0 24px rgba(0,255,157,.14);
+}
+
+.open-pack {
+  position: relative;
+  overflow: hidden;
+  transition: .25s;
+}
+
+.open-pack:active { transform: scale(.98); }
+
+.modal.show .modal-box {
+  animation: goldenModalIn .42s ease both;
+}
+
+@keyframes goldenModalIn {
+  from { opacity: 0; transform: translateY(18px) scale(.975); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pack, .pack-icon, .open-pack,
+  .modal.show .modal-box {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
