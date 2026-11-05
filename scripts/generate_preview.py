@@ -1,145 +1,207 @@
 
-"""Safe Metatya preview. Never writes docs/content.json."""
 import json
 import os
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
-LIVE_FILE = ROOT / "docs" / "content.json"
-PREVIEW_FILE = ROOT / "out" / "preview-content.json"
 
 sys.path.insert(0, str(SCRIPTS))
+
 import generate as gen
+
+LIVE_FILE = ROOT / "docs" / "content.json"
+PREVIEW_FILE = ROOT / "out" / "preview-content.json"
 
 
 def read_json(path):
     if not path.exists():
-        return {}
-    with path.open("r", encoding="utf-8") as f:
-        return json.load(f)
+        raise FileNotFoundError(f"فایل پیدا نشد: {path}")
+
+    with path.open("r", encoding="utf-8") as file:
+        return json.load(file)
+
+
+def write_json(path, data):
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    with path.open("w", encoding="utf-8") as file:
+        json.dump(data, file, ensure_ascii=False, indent=2)
+
+
+def normalize_title(value):
+    return gen.normalize(str(value or ""))
+
+
+def collect_titles(data):
+    titles = set()
+
+    sections = data.get("sections", {})
+
+    for section in sections.values():
+        if not isinstance(section, dict):
+            continue
+
+        for item in section.get("items", []):
+            if isinstance(item, dict) and item.get("title"):
+                titles.add(normalize_title(item["title"]))
+
+    return titles
 
 
 def selected_sections():
     raw = os.getenv("PREVIEW_SECTIONS", "forex,crypto")
-    keys = list(dict.fromkeys(
-        item.strip() for item in raw.split(",") if item.strip()
-    ))
+
+    keys = [
+        item.strip()
+        for item in raw.split(",")
+        if item.strip()
+    ]
 
     if not keys:
-        raise ValueError("هیچ حوزه‌ای انتخاب نشده است")
+        raise ValueError("هیچ بخشی برای پیش‌نمایش انتخاب نشده است.")
 
     unknown = [key for key in keys if key not in gen.SECTIONS]
+
     if unknown:
-        raise ValueError(f"حوزه ناشناخته: {unknown}")
+        raise ValueError(
+            "بخش‌های ناشناخته: " + ", ".join(unknown)
+        )
 
     return keys
 
 
 def prepare_preview(keys):
     live = read_json(LIVE_FILE)
+
+    baseline_titles = collect_titles(live)
     live_sections = live.get("sections", {})
 
-    # فقط داده‌های حوزه‌های انتخابی وارد فایل آزمایشی می‌شوند.
     seed = {
         "updated": live.get("updated"),
         "note": live.get("note", ""),
         "sections": {
-            key: live_sections[key]
-            for key in keys if key in live_sections
+            key: live_sections.get(
+                key,
+                {
+                    "title": gen.SECTIONS[key][0],
+                    "items": []
+                }
+            )
+            for key in keys
         }
     }
 
-    PREVIEW_FILE.parent.mkdir(parents=True, exist_ok=True)
-    with PREVIEW_FILE.open("w", encoding="utf-8") as f:
-        json.dump(seed, f, ensure_ascii=False, indent=2)
+    write_json(PREVIEW_FILE, seed)
+
+    return baseline_titles
 
 
-def validate_preview(keys):
+def validate_preview(keys, baseline_titles):
     data = read_json(PREVIEW_FILE)
-    sections = data.get("sections")
-
-    if not isinstance(sections, dict):
-        raise ValueError("ساختار sections معتبر نیست")
+    sections = data.get("sections", {})
 
     errors = []
+    total_new_items = 0
+
     for key in keys:
         section = sections.get(key)
+
         if not isinstance(section, dict):
-            errors.append(f"{key}: حوزه در خروجی وجود ندارد")
+            errors.append(f"{key}: بخش در خروجی وجود ندارد.")
             continue
 
-        if section.get("ok") is not True:
-            errors.append(
-                f"{key}: تولید ناموفق؛ {section.get('error', 'خطای نامشخص')}"
-            )
+        items = section.get("items", [])
+
+        if not isinstance(items, list):
+            errors.append(f"{key}: فهرست محتوا معتبر نیست.")
             continue
 
-        tabs = gen.SECTIONS[key][1]
-        run_date = str(data.get("updated", ""))[:10]
-        items = [
-            item for item in section.get("items", [])
-            if isinstance(item, dict) and item.get("date") == run_date
-        ]
+        new_items = []
 
-        counts = {tab: 0 for tab in tabs}
         for item in items:
             if not isinstance(item, dict):
                 continue
-            tab = item.get("tab")
-            if tab in counts:
-                counts[tab] += 1
 
-            if not isinstance(item.get("title"), str) or not item["title"].strip():
-                errors.append(f"{key}: عنوان خالی")
-            if not isinstance(item.get("body"), str) or len(item["body"].strip()) < 60:
-                errors.append(f"{key}: متن خالی یا کوتاه")
-            script = item.get("short_script")
-            if not isinstance(script, list) or len(script) != 3:
-                errors.append(f"{key}: short_script باید سه جمله داشته باشد")
+            title = normalize_title(item.get("title", ""))
 
-        missing = [tab for tab, count in counts.items() if count == 0]
-        duplicate = [tab for tab, count in counts.items() if count > 1]
+            if title and title not in baseline_titles:
+                new_items.append(item)
 
-        if missing:
-            errors.append(f"{key}: تب‌های بدون مطلب: {missing}")
-        if duplicate:
-            errors.append(f"{key}: تب‌های دارای مطلب تکراری: {duplicate}")
+        if len(new_items) != 1:
+            errors.append(
+                f"{key}: انتظار یک محتوای جدید داشتیم؛ "
+                f"اما {len(new_items)} مورد پیدا شد."
+            )
+            continue
 
-    if errors:
-        raise RuntimeError(
-            "Preview validation failed:\n- " + "\n- ".join(errors)
+        item = new_items[0]
+        total_new_items += 1
+
+        required_fields = ("title", "body", "short_script")
+
+        for field in required_fields:
+            value = item.get(field)
+
+            if not isinstance(value, str) or not value.strip():
+                errors.append(
+                    f"{key}: فیلد {field} خالی یا نامعتبر است."
+                )
+
+        if not item.get("provider"):
+            errors.append(
+                f"{key}: مشخصات منبع تولید محتوا ثبت نشده است."
+            )
+
+        if not item.get("tab"):
+            errors.append(
+                f"{key}: دسته‌بندی محتوای جدید مشخص نیست."
+            )
+
+    if total_new_items != len(keys):
+        errors.append(
+            f"تعداد محتوای جدید ({total_new_items}) "
+            f"با تعداد بخش‌های انتخاب‌شده ({len(keys)}) برابر نیست."
         )
 
-    print("PREVIEW VALIDATION PASSED")
-    print("Sections:", ", ".join(keys))
-    print("Artifact:", PREVIEW_FILE)
+    if errors:
+        print("\n❌ اعتبارسنجی پیش‌نمایش ناموفق بود:")
+
+        for error in errors:
+            print(f"- {error}")
+
+        raise SystemExit(1)
+
+    print("\n✅ اعتبارسنجی پیش‌نمایش موفق بود.")
+    print(f"تعداد بخش‌های بررسی‌شده: {len(keys)}")
+    print(f"تعداد محتوای جدید معتبر: {total_new_items}")
+    print(f"فایل خروجی: {PREVIEW_FILE}")
 
 
 def main():
     keys = selected_sections()
-    print("Metatya Preview:", ", ".join(keys))
 
-    prepare_preview(keys)
+    print("شروع ساخت پیش‌نمایش Metatya...")
+    print("بخش‌ها:", ", ".join(keys))
 
-    # تاریخچه کامل زنده برای dedupe؛ خروجی همچنان آزمایشی است.
+    baseline_titles = prepare_preview(keys)
+
     os.environ["HISTORY_FILE"] = str(LIVE_FILE)
     os.environ["CONTENT_OUTPUT"] = str(PREVIEW_FILE)
 
     gen.OUT = PREVIEW_FILE
     gen.HISTORY_FILE = LIVE_FILE
+
     gen.SECTIONS = {
-        key: gen.SECTIONS[key] for key in keys
+        key: gen.SECTIONS[key]
+        for key in keys
     }
 
     gen.main()
-    validate_preview(keys)
+
+    validate_preview(keys, baseline_titles)
 
 
 if __name__ == "__main__":
-    try:
-        main()
-    except Exception as exc:
-        print(f"PREVIEW FAILED: {exc}", file=sys.stderr)
-        sys.exit(1)
+    main()
