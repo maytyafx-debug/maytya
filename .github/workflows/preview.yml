@@ -41,8 +41,7 @@ jobs:
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           PREVIEW_SECTIONS: ${{ inputs.sections }}
-        run: |
-          python scripts/generate_preview.py
+        run: python scripts/generate_preview.py
 
       - name: Upload preview artifact
         if: always()
