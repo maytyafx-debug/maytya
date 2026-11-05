@@ -129,41 +129,31 @@ def validate_preview(keys, baseline_titles):
             if title and title not in baseline_titles:
                 new_items.append(item)
 
-        if len(new_items) != 1:
-            errors.append(
-                f"{key}: انتظار یک محتوای جدید داشتیم؛ "
-                f"اما {len(new_items)} مورد پیدا شد."
-            )
-            continue
+        expected_tabs = gen.SECTIONS[key][1]
+        tab_counts = {tab: 0 for tab in expected_tabs}
 
-        item = new_items[0]
-        total_new_items += 1
+        for item in new_items:
+            tab = item.get("tab")
+            if tab in tab_counts:
+                tab_counts[tab] += 1
 
-        required_fields = ("title", "body", "short_script")
+            for field in ("title", "body", "short_script"):
+                value = item.get(field)
+                if not value or (isinstance(value, str) and not value.strip()):
+                    errors.append(f"{key}: فیلد {field} خالی است.")
 
-        for field in required_fields:
-            value = item.get(field)
+            if not item.get("provider"):
+                errors.append(f"{key}: منبع تولید ثبت نشده است.")
 
-            if not isinstance(value, str) or not value.strip():
-                errors.append(
-                    f"{key}: فیلد {field} خالی یا نامعتبر است."
-                )
+        missing = [t for t, c in tab_counts.items() if c == 0]
+        duplicate = [t for t, c in tab_counts.items() if c > 1]
 
-        if not item.get("provider"):
-            errors.append(
-                f"{key}: مشخصات منبع تولید محتوا ثبت نشده است."
-            )
+        if missing:
+            errors.append(f"{key}: تب‌های بدون محتوای جدید: {missing}")
+        if duplicate:
+            errors.append(f"{key}: تب‌های با بیش از یک محتوای جدید: {duplicate}")
 
-        if not item.get("tab"):
-            errors.append(
-                f"{key}: دسته‌بندی محتوای جدید مشخص نیست."
-            )
-
-    if total_new_items != len(keys):
-        errors.append(
-            f"تعداد محتوای جدید ({total_new_items}) "
-            f"با تعداد بخش‌های انتخاب‌شده ({len(keys)}) برابر نیست."
-        )
+        total_new_items += len(new_items)
 
     if errors:
         print("\n❌ اعتبارسنجی پیش‌نمایش ناموفق بود:")
