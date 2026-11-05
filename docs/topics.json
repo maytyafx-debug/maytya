@@ -430,7 +430,7 @@
     {
       "slug": "ai",
       "name": "هوش مصنوعی و کار",
-      "tab": "",
+      "tab": "ai",
       "scene": "network",
       "accent": "lime",
       "category": "موضوع جدید",
@@ -475,7 +475,7 @@
     {
       "slug": "privacy",
       "name": "امنیت دیجیتال",
-      "tab": "",
+      "tab": "privacy",
       "scene": "rings",
       "accent": "accent",
       "category": "حریم داده",
