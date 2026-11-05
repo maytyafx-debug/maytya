@@ -1,9 +1,10 @@
+
 name: Metatya daily
 
 on:
   schedule:
-    - cron: "30 4 * * *"   # هر روز ساعت ۸:۰۰ صبح به وقت تهران (UTC+3:30)
-  workflow_dispatch:       # امکان اجرای دستی از تب Actions
+    - cron: "30 4 * * *" # ساعت ۸ صبح تهران
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -16,29 +17,39 @@ jobs:
   run:
     runs-on: ubuntu-latest
     timeout-minutes: 40
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+    steps:
+      - name: دریافت مخزن
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: آماده‌سازی Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt && sudo apt-get update && sudo apt-get install -y ffmpeg libraqm0 libfribidi0
+      - name: نصب وابستگی‌ها
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg libraqm0 libfribidi0
 
-      - name: ربات‌های جمع‌آوری داده (بانک اطلاعاتی روزانه)
+      - name: جمع‌آوری داده‌های روزانه
         run: python scripts/collector.py
         env:
           SUPABASE_URL: ${{ vars.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         continue-on-error: true
 
-      - name: کپی محتوای زنده به فایل موقت
+      - name: ساخت فایل موقت از محتوای زنده
         run: |
           mkdir -p out
+          test -s docs/content.json
           cp docs/content.json out/staged.json
 
-      - name: تولید محتوای جدید در فایل موقت
+      - name: تولید محتوای جدید
         run: python scripts/generate.py
         timeout-minutes: 20
         env:
@@ -46,14 +57,26 @@ jobs:
           CONTENT_OUTPUT: ${{ github.workspace }}/out/staged.json
           HISTORY_FILE: ${{ github.workspace }}/docs/content.json
 
-      - name: اعتبارسنجی مستقل و انتشار جزئی با حفظ تاریخچه
-        run: python scripts/publish_gate.py --live docs/content.json --staged out/staged.json --promote
+      - name: اعتبارسنجی و انتشار جزئی با حفظ تاریخچه
+        run: |
+          python scripts/validate_content.py \
+            --live docs/content.json \
+            --staged out/staged.json \
+            --promote
 
-      - name: دانلود فونت وزیرمتن (اگر نشد، DejaVu داخل ریپو استفاده می‌شود)
+      - name: دانلود فونت وزیرمتن
         run: |
           mkdir -p assets/fonts
-          curl -fsSL --max-time 60 -o assets/fonts/Vazirmatn-Regular.ttf "https://github.com/rastikerdar/vazirmatn/raw/master/fonts/ttf/Vazirmatn-Regular.ttf" || echo "دانلود فونت نشد؛ فونت پیش‌فرض"
-          [ -s assets/fonts/Vazirmatn-Regular.ttf ] && [ "$(head -c 4 assets/fonts/Vazirmatn-Regular.ttf | xxd -p)" = "00010000" ] || rm -f assets/fonts/Vazirmatn-Regular.ttf
+          curl -fsSL --max-time 60 \
+            -o assets/fonts/Vazirmatn-Regular.ttf \
+            "https://github.com/rastikerdar/vazirmatn/raw/master/fonts/ttf/Vazirmatn-Regular.ttf" \
+            || echo "دانلود فونت انجام نشد"
+
+          if [ -s assets/fonts/Vazirmatn-Regular.ttf ]; then
+            if [ "$(head -c 4 assets/fonts/Vazirmatn-Regular.ttf | xxd -p)" != "00010000" ]; then
+              rm -f assets/fonts/Vazirmatn-Regular.ttf
+            fi
+          fi
         continue-on-error: true
 
       - name: ساخت صفحات سایت
@@ -61,13 +84,13 @@ jobs:
         env:
           SITE_URL: ${{ vars.SITE_URL }}
 
-      - name: ساخت ویدیو کوتاه
+      - name: ساخت ویدیوی کوتاه
         run: python scripts/make_short.py
         env:
           SITE_URL: ${{ vars.SITE_URL }}
         continue-on-error: true
 
-      - name: ارسال به تلگرام
+      - name: ارسال محتوای تلگرام
         run: python scripts/post_telegram.py
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -78,32 +101,42 @@ jobs:
           SITE_URL: ${{ vars.SITE_URL }}
         continue-on-error: true
 
-      - name: ربات جستجوگر فرصت (فهرست خصوصی برای پاسخ مفید)
+      - name: ربات جستجوگر فرصت
         run: python scripts/radar.py
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_REVIEW_CHAT_ID: ${{ secrets.TELEGRAM_REVIEW_CHAT_ID }}
         continue-on-error: true
 
-      - name: آپلود آرتیفکت‌ها
+      - name: ذخیره آرتیفکت‌ها
         uses: actions/upload-artifact@v4
         with:
-          name: shorts
+          name: metatya-daily-output
           path: |
             out/*.mp4
             out/*.png
             out/*.txt
+            out/staged.json
           if-no-files-found: ignore
 
-      - name: commit content (backup)
+      - name: بررسی تغییرات و ثبت نسخه
+        shell: bash
         run: |
+          set -euo pipefail
+
           git config user.name "metatya-bot"
           git config user.email "bot@users.noreply.github.com"
+
           git add docs data -- ':!*.bak'
+
           if git diff --cached --quiet; then
-            echo "no changes"
-          else
-            git commit -m "daily content $(date -u +%F)"
-            git pull --rebase --autostash origin "$(git rev-parse --abbrev-ref HEAD)" || true
-            git push
+            echo "NO_CHANGES=true" >> "$GITHUB_ENV"
+            echo "هیچ تغییر جدیدی برای ثبت وجود ندارد."
+            exit 0
           fi
+
+          echo "NO_CHANGES=false" >> "$GITHUB_ENV"
+
+          git commit -m "daily content $(date -u +%F)"
+
+          git push origin "HEAD:${GITHUB_REF_NAME}"
