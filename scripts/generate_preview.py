@@ -1,101 +1,74 @@
-"""اجرای آزمایشی تولید محتوا برای Metatya
-- فایل زنده docs/content.json را تغییر نمی‌دهد.
-- خروجی فقط در out/preview-content.json ذخیره می‌شود.
-- به‌صورت پیش‌فرض فقط forex و crypto را اجرا می‌کند.
-- در صورت شکست هر حوزه یا ناقص بودن تب‌ها، با کد خطا خارج می‌شود.
-"""
 
+"""Safe Metatya preview. Never writes docs/content.json."""
 import json
 import os
 import sys
 from pathlib import Path
 
-# مسیر ریشه مخزن
 ROOT = Path(__file__).resolve().parent.parent
 SCRIPTS = ROOT / "scripts"
-OUT_DIR = ROOT / "out"
-PREVIEW_FILE = OUT_DIR / "preview-content.json"
 LIVE_FILE = ROOT / "docs" / "content.json"
+PREVIEW_FILE = ROOT / "out" / "preview-content.json"
 
-# برای import صحیح generate.py
 sys.path.insert(0, str(SCRIPTS))
-
 import generate as gen
+
+
+def read_json(path):
+    if not path.exists():
+        return {}
+    with path.open("r", encoding="utf-8") as f:
+        return json.load(f)
 
 
 def selected_sections():
     raw = os.getenv("PREVIEW_SECTIONS", "forex,crypto")
-    selected = [item.strip() for item in raw.split(",") if item.strip()]
+    keys = list(dict.fromkeys(
+        item.strip() for item in raw.split(",") if item.strip()
+    ))
 
-    if not selected:
-        raise ValueError("هیچ حوزه‌ای برای پیش‌نمایش انتخاب نشده است.")
+    if not keys:
+        raise ValueError("هیچ حوزه‌ای انتخاب نشده است")
 
-    unknown = [key for key in selected if key not in gen.SECTIONS]
+    unknown = [key for key in keys if key not in gen.SECTIONS]
     if unknown:
-        raise ValueError(f"حوزه‌های ناشناخته: {unknown}")
+        raise ValueError(f"حوزه ناشناخته: {unknown}")
 
-    # حذف موارد تکراری، با حفظ ترتیب
-    return list(dict.fromkeys(selected))
+    return keys
 
 
-def prepare_preview_seed(keys):
-    """فقط داده‌های قبلی حوزه‌های انتخاب‌شده را به فایل پیش‌نمایش منتقل می‌کند."""
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
+def prepare_preview(keys):
+    live = read_json(LIVE_FILE)
+    live_sections = live.get("sections", {})
 
-    live_sections = {}
-    if LIVE_FILE.exists():
-        with LIVE_FILE.open("r", encoding="utf-8") as file:
-            live_data = json.load(file)
-        live_sections = live_data.get("sections", {})
-
-    baseline_titles = {}
-    for key in keys:
-        previous_items = live_sections.get(key, {}).get("items", [])
-        baseline_titles[key] = {
-            item.get("title")
-            for item in previous_items
-            if isinstance(item, dict) and item.get("title")
+    # فقط داده‌های حوزه‌های انتخابی وارد فایل آزمایشی می‌شوند.
+    seed = {
+        "updated": live.get("updated"),
+        "note": live.get("note", ""),
+        "sections": {
+            key: live_sections[key]
+            for key in keys if key in live_sections
         }
+    }
 
-    if not LIVE_FILE.exists():
-        seed = {"sections": {}}
-    else:
-        seed = {
-            "updated": live_data.get("updated"),
-            "note": live_data.get("note", ""),
-            "sections": {
-                key: live_sections[key]
-                for key in keys
-                if key in live_sections
-            },
-        }
-
-    with PREVIEW_FILE.open("w", encoding="utf-8") as file:
-        json.dump(seed, file, ensure_ascii=False, indent=2)
-
-    return baseline_titles
+    PREVIEW_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with PREVIEW_FILE.open("w", encoding="utf-8") as f:
+        json.dump(seed, f, ensure_ascii=False, indent=2)
 
 
-def validate_preview(keys, baseline_titles):
-    if not PREVIEW_FILE.exists():
-        raise RuntimeError("فایل پیش‌نمایش ساخته نشده است.")
-
-    with PREVIEW_FILE.open("r", encoding="utf-8") as file:
-        data = json.load(file)
-
+def validate_preview(keys):
+    data = read_json(PREVIEW_FILE)
     sections = data.get("sections")
+
     if not isinstance(sections, dict):
-        raise ValueError("ساختار sections در خروجی معتبر نیست.")
+        raise ValueError("ساختار sections معتبر نیست")
 
     errors = []
-
     for key in keys:
-        if key not in sections:
-            errors.append(f"{key}: حوزه در خروجی وجود ندارد.")
+        section = sections.get(key)
+        if not isinstance(section, dict):
+            errors.append(f"{key}: حوزه در خروجی وجود ندارد")
             continue
-
-        section = sections[key]
-        expected_tabs = gen.SECTIONS[key][1]
 
         if section.get("ok") is not True:
             errors.append(
@@ -103,87 +76,70 @@ def validate_preview(keys, baseline_titles):
             )
             continue
 
-        items = section.get("items", [])
-        new_items = [
-            item for item in items
-            if isinstance(item, dict)
-            and item.get("title") not in baseline_titles.get(key, set())
+        tabs = gen.SECTIONS[key][1]
+        run_date = str(data.get("updated", ""))[:10]
+        items = [
+            item for item in section.get("items", [])
+            if isinstance(item, dict) and item.get("date") == run_date
         ]
 
-        # بررسی محتوای تولیدشده در اجرای فعلی
-        tab_counts = {tab: 0 for tab in expected_tabs}
-
-        for item in new_items:
+        counts = {tab: 0 for tab in tabs}
+        for item in items:
+            if not isinstance(item, dict):
+                continue
             tab = item.get("tab")
-            if tab in tab_counts:
-                tab_counts[tab] += 1
+            if tab in counts:
+                counts[tab] += 1
 
             if not isinstance(item.get("title"), str) or not item["title"].strip():
-                errors.append(f"{key}: عنوان خالی یا نامعتبر است.")
-
-            if not isinstance(item.get("body"), str) or not item["body"].strip():
-                errors.append(f"{key}: متن خالی یا نامعتبر است.")
-
+                errors.append(f"{key}: عنوان خالی")
+            if not isinstance(item.get("body"), str) or len(item["body"].strip()) < 60:
+                errors.append(f"{key}: متن خالی یا کوتاه")
             script = item.get("short_script")
             if not isinstance(script, list) or len(script) != 3:
-                errors.append(f"{key}: short_script باید دقیقاً سه جمله داشته باشد.")
+                errors.append(f"{key}: short_script باید سه جمله داشته باشد")
 
-        missing = [tab for tab, count in tab_counts.items() if count == 0]
-        duplicated = [tab for tab, count in tab_counts.items() if count > 1]
+        missing = [tab for tab, count in counts.items() if count == 0]
+        duplicate = [tab for tab, count in counts.items() if count > 1]
 
         if missing:
-            errors.append(f"{key}: تب‌های بدون محتوای تازه: {missing}")
-
-        if duplicated:
-            errors.append(f"{key}: تب‌های تکراری: {duplicated}")
+            errors.append(f"{key}: تب‌های بدون مطلب: {missing}")
+        if duplicate:
+            errors.append(f"{key}: تب‌های دارای مطلب تکراری: {duplicate}")
 
     if errors:
         raise RuntimeError(
-            "اعتبارسنجی پیش‌نمایش ناموفق بود:\n- " + "\n- ".join(errors)
+            "Preview validation failed:\n- " + "\n- ".join(errors)
         )
 
-    print("اعتبارسنجی موفق بود.")
-    print(f"حوزه‌های بررسی‌شده: {', '.join(keys)}")
-    print(f"فایل خروجی: {PREVIEW_FILE}")
+    print("PREVIEW VALIDATION PASSED")
+    print("Sections:", ", ".join(keys))
+    print("Artifact:", PREVIEW_FILE)
 
 
 def main():
-    if not os.getenv("OPENROUTER_API_KEY", "").strip():
-        raise RuntimeError(
-            "کلید OPENROUTER_API_KEY در محیط اجرا تنظیم نشده است."
-        )
-
     keys = selected_sections()
+    print("Metatya Preview:", ", ".join(keys))
 
-    print("Metatya Preview Generator")
-    print("حوزه‌ها:", ", ".join(keys))
+    prepare_preview(keys)
 
-    # ابتدا محتوای قبلی فقط به فایل آزمایشی منتقل می‌شود.
-    baseline_titles = prepare_preview_seed(keys)
+    # تاریخچه کامل زنده برای dedupe؛ خروجی همچنان آزمایشی است.
+    os.environ["HISTORY_FILE"] = str(LIVE_FILE)
+    os.environ["CONTENT_OUTPUT"] = str(PREVIEW_FILE)
 
-    # تنظیم موتور اصلی روی حالت واقعی، اما با خروجی آزمایشی
-    gen.DRY = False
-    gen.OUT = str(PREVIEW_FILE)
+    gen.OUT = PREVIEW_FILE
+    gen.HISTORY_FILE = LIVE_FILE
     gen.SECTIONS = {
-        key: gen.SECTIONS[key]
-        for key in keys
+        key: gen.SECTIONS[key] for key in keys
     }
 
-    # تولید محتوا
     gen.main()
-
-    # موتور اصلی ممکن است با موفقیت نسبی هم برگردد؛
-    # بنابراین اعتبارسنجی مستقل ضروری است.
-    validate_preview(keys, baseline_titles)
+    validate_preview(keys)
 
 
 if __name__ == "__main__":
     try:
         main()
-    except Exception as error:
-        print(f"PREVIEW FAILED: {error}", file=sys.stderr)
+    except Exception as exc:
+        print(f"PREVIEW FAILED: {exc}", file=sys.stderr)
         sys.exit(1)
-    except SystemExit as error:
-        # خطاهای خروجی موتور اصلی نیز باید در Actions شکست محسوب شوند.
-        if error.code not in (None, 0):
-            raise

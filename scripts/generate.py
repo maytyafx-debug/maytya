@@ -1,298 +1,470 @@
-"""تولید روزانه محتوای همه حوزه‌ها -> docs/content.json
-ارائه‌دهنده: OpenRouter (رایگان، ۵۰ درخواست در روز، بدون محدودیت جغرافیایی).
-بازارها: تیتر خبرهای روز از RSS رایگان؛ مدل فقط بر پایه همان‌ها می‌نویسد.
-دروازه کیفیت: ساختار، زبان فارسی، طول، عبارت‌های ممنوع؛ هشدار ریسک همیشه با کد اضافه می‌شود."""
-import os, sys, json, re, time, datetime
+
+"""Metatya content engine.
+Preview-safe, optional OpenRouter, local fallback for forex/crypto.
+"""
+import os
+import sys
+import json
+import re
+import time
+import datetime
 import xml.etree.ElementTree as ET
+from pathlib import Path
+
 import requests
 from sections import SECTIONS
 
+ROOT = Path(__file__).resolve().parent.parent
 DRY = "--dry" in sys.argv
-OUT = os.path.join(os.path.dirname(__file__), "..", "out" if DRY else "docs", "dry-content.json" if DRY else "content.json")
+OUT = Path(os.getenv(
+    "CONTENT_OUTPUT",
+    str(ROOT / ("out/dry-content.json" if DRY else "docs/content.json"))
+))
+HISTORY_FILE = Path(os.getenv("HISTORY_FILE", str(OUT)))
 KEEP = 40
-DEAD, FAILS = set(), {}
 
+OR_MODELS_DEFAULT = "xingchen-agi/xing4.0-29b-a4b:free"
+OR_URL = "https://openrouter.ai/api/v1/chat/completions"
 
-def E(name, default=""):
-    return (os.environ.get(name) or default).strip()
+BANNED = [
+    "سود تضمینی", "تضمین سود", "بدون ریسک",
+    "قطعاً سود", "قطعا سود", "درآمد تضمینی"
+]
 
+MARKET_TABS = ["تکنیکال", "فاندامنتال", "آموزش", "روان‌شناسی"]
 
-GN = "https://news.google.com/rss/search?q={q}&hl={hl}&gl={gl}&ceid={gl}:{lang}"
-FEEDS = {
-    "forex":  [GN.format(q="forex+EURUSD+dollar+gold+Fed", hl="en-US", gl="US", lang="en"), ],
-    "crypto": [GN.format(q="bitcoin+price+ETF", hl="en-US", gl="US", lang="en"), "https://cointelegraph.com/rss"],
-    "bourse": [GN.format(q="%D8%B4%D8%A7%D8%AE%D8%B5+%DA%A9%D9%84+%D8%A8%D9%88%D8%B1%D8%B3+%D8%AA%D9%87%D8%B1%D8%A7%D9%86", hl="fa", gl="IR", lang="fa")],
-}
 DISCLAIMER = {
     "fin": "این محتوا آموزشی است و توصیه مالی یا سرمایه‌گذاری نیست.",
-    "med": "جایگزین مشاوره پزشک نیست.",
-    "law": "اطلاعات عمومی است و جایگزین مشاوره وکیل نیست.",
-    "general": "این محتوا آموزشی و عمومی است؛ برای تصمیم‌های حساس، اطلاعات را از منابع معتبر بررسی کن.",
+    "med": "این محتوا عمومی است و جایگزین نظر متخصص سلامت نیست.",
+    "law": "این مطلب اطلاعات عمومی است و جایگزین مشاوره حقوقی نیست.",
+    "general": "این محتوا آموزشی و عمومی است."
 }
+
 KIND = {
     "forex": "fin", "crypto": "fin", "bourse": "fin",
     "income": "fin", "business": "fin", "finance": "fin",
     "sport": "med", "health": "med", "law": "law",
     "ai": "general", "privacy": "general"
 }
-BANNED = ["سود تضمینی", "تضمین سود", "بدون ریسک", "قطعا سود", "قطعاً سود", "تضمینی"]
 
-PROMPT = """نقش تو: سردبیر ارشد و استراتژیست محتوای آموزشی پلتفرم فارسی Metatya هستی.
+FEEDS = {
+    "forex": [
+        "https://news.google.com/rss/search?q=forex+EURUSD+dollar+Fed&hl=en-US&gl=US&ceid=US:en"
+    ],
+    "crypto": [
+        "https://news.google.com/rss/search?q=bitcoin+crypto+ETF&hl=en-US&gl=US&ceid=US:en",
+        "https://cointelegraph.com/rss"
+    ],
+    "bourse": [
+        "https://news.google.com/rss/search?q=%D8%A8%D9%88%D8%B1%D8%B3+%D8%A7%DB%8C%D8%B1%D8%A7%D9%86&hl=fa&gl=IR&ceid=IR:fa"
+    ]
+}
 
-مشخصات:
-تاریخ: {today}
+PROMPT = """
+تو سردبیر آموزشی پلتفرم فارسی Metatya هستی.
 حوزه: {name}
+تاریخ: {today}
 تب‌های مجاز: {tabs}
-اطلاعات و زمینه خبری: {ctx}
-عنوان‌های قبلی که نباید تکرار شوند: {old}
+زمینه خبری: {context}
+عنوان‌های اخیر در تمام حوزه‌ها که نباید تکرار شوند:
+{history}
 
-ماموریت:
-برای تک‌تک تب‌های مجاز دقیقاً یک مطلب مستقل و ارزشمند تولید کن. هیچ تبی را حذف نکن و برای هیچ تبی چند مطلب نساز. موضوع هر مطلب باید با حوزه و تب مربوط کاملاً منطبق باشد.
+برای هر تب دقیقاً یک مطلب تازه و مستقل تولید کن.
+عنوان و متن باید فارسی، روشن، مفید و غیرتکراری باشند.
+متن هر مطلب ۶۰ تا ۹۰۰ نویسه باشد.
+هر مطلب یک مسئله را توضیح دهد و یک نکته آموزشی روشن داشته باشد.
+از وعده سود، ادعای قطعی، خبر یا قیمت ساختگی و توصیه شخصی خودداری کن.
+اگر خبر کافی نیست، محتوای آموزشی ماندگار بنویس.
+برای short_script دقیقاً سه جمله بنویس:
+۱) هوک کوتاه
+۲) نکته آموزشی
+۳) جمع‌بندی یا پرسش مرتبط
 
-استاندارد سردبیری:
-۱. برای هر مطلب یک موضوع مشخص، مفید و غیرتکراری انتخاب کن.
-۲. عنوان جذاب، روشن و دقیق باشد؛ بدون اغراق و وعده نتیجه.
-۳. فارسی روان، طبیعی و حرفه‌ای بنویس.
-۴. بدنه هر مطلب حدود ۶۰ تا ۹۰ واژه فارسی و بین ۶۰ تا ۹۰۰ نویسه باشد.
-۵. هر مطلب باید یک مسئله را توضیح دهد، دلیل یا منطق آن را روشن کند و حداقل یک نکته آموزشی کاربردی داشته باشد.
-۶. از مقدمه‌های طولانی، شعار، تکرار و جملات پرکننده پرهیز کن.
-۷. مطالب قبلی را بازنویسی سطحی نکن؛ زاویه و ارزش آموزشی تازه ارائه بده.
-۸. هیچ آمار، خبر، قیمت، نقل‌قول، قانون یا منبعی را جعل نکن.
-۹. اگر اطلاعات خبری کافی نیست، به‌جای حدس‌زدن محتوای آموزشی ماندگار تولید کن.
-۱۰. تیتر خبری به‌تنهایی اثبات‌کننده جزئیات یک رویداد نیست.
+برای بازارهای مالی فقط آموزش عمومی، سواد مالی و مدیریت ریسک؛
+بدون سیگنال، نقطه ورود یا خروج و پیش‌بینی قطعی.
 
-استاندارد حوزه‌ها:
-- فارکس، کریپتو و بورس: آموزش مفاهیم، سازوکار بازار، سواد مالی و مدیریت ریسک. بدون سیگنال، نقطه ورود و خروج، پیش‌بینی قطعی یا توصیه سرمایه‌گذاری شخصی.
-- کسب درآمد و کسب‌وکار: ایده‌های واقع‌بینانه همراه با مهارت موردنیاز، هزینه، زمان و ریسک؛ بدون تضمین درآمد.
-- مالی شخصی: بودجه‌بندی، پس‌انداز، شناخت هزینه‌ها و تصمیم‌گیری آگاهانه.
-- ورزش: آموزش عمومی و ایمن؛ بدون تمرین افراطی، توصیه مکمل یا ادعای درمان.
-- روان‌شناسی: آموزش عمومی و غیرتشخیصی؛ بدون برچسب‌گذاری یا وعده درمان.
-- سلامت: اطلاعات عمومی و محتاطانه؛ بدون تشخیص یا تجویز.
-- حقوق: اطلاعات عمومی؛ بدون جعل ماده قانونی یا تضمین نتیجه پرونده. قوانین ممکن است بر اساس کشور و زمان تغییر کنند.
-- تحصیل و پژوهش: مهارت یادگیری، روش تحقیق و تفکر نقادانه؛ بدون جعل منبع علمی.
-- هوش مصنوعی: آموزش ابزارها، کاربردها، محدودیت‌ها، بررسی خروجی و اخلاق استفاده؛ بدون ادعای قطعی درباره توانایی ابزارها.
-- امنیت و حریم خصوصی: حفاظت حساب‌ها، شناخت کلاهبرداری، حریم داده و امنیت دیجیتال؛ بدون درخواست یا انتشار رمز و اطلاعات محرمانه.
-
-سناریوی ویدیویی:
-برای هر مطلب فیلد short_script دقیقاً شامل سه جمله باشد:
-۱. هوک جذاب و مرتبط، حداکثر ۸ واژه.
-۲. یک نکته آموزشی یا کاربردی.
-۳. جمع‌بندی یا پرسش مرتبط برای مشارکت مخاطب.
-هر سه جمله باید با متن اصلی هماهنگ باشند و ادعای تازه‌ای اضافه نکنند.
-
-قواعد خروجی:
-- مقدار tab باید دقیقاً یکی از نام‌های تب‌های مجاز باشد.
-- برای هر تب دقیقاً یک مطلب تولید کن.
-- title و body رشته فارسی باشند.
-- short_script دقیقاً سه رشته داشته باشد.
-- فقط JSON معتبر برگردان؛ بدون Markdown و توضیح اضافه.
-- ساختار دقیق خروجی:
-
-{{"items":[{{"tab":"نام دقیق تب","title":"عنوان مطلب","body":"متن کامل مطلب","short_script":["هوک","نکته آموزشی","جمع‌بندی یا پرسش"]}}]}}"""
+فقط JSON معتبر با این ساختار برگردان:
+{{"items":[
+ {{"tab":"نام تب","title":"عنوان","body":"متن","short_script":["هوک","نکته","جمع‌بندی"]}}
+]}}
+"""
 
 
-# ---------- ارائه‌دهنده: OpenRouter (با جایگزینی خودکار مدل) ----------
-# لیست مدل‌های رایگان به ترتیب اولویت. اگر یکی خطا داد یا پولی/ناموجود شد، مدل بعدی امتحان می‌شود.
-# می‌توانی با متغیر OR_MODELS (جداشده با ویرگول) این لیست را از بیرون عوض کنی.
-OR_MODELS_DEFAULT = "nvidia/nemotron-3.5-super-vl:free,recursive/flint-v1.0:free,xingchen-agi/xing4.0-29b-a4b:free"
+# محتوای محلی مستقل از API؛ فعلاً فقط برای دو حوزه Preview
+LOCAL_BANK = {
+    "forex": {
+        "تکنیکال": [
+            ("ساختار بازار را قبل از اندیکاتور بشناس",
+             "در بررسی نمودار، ابتدا به توالی سقف‌ها و کف‌ها توجه کن. این ساختار تصویری ساده از رفتار قیمت در بازه انتخابی می‌دهد؛ اما به‌تنهایی جهت آینده را مشخص نمی‌کند. اندیکاتورها ابزار کمکی‌اند و نباید جای مشاهده و ثبت شواهد را بگیرند. برای یادگیری، چند نمودار تاریخی را بدون پیش‌بینی نتیجه بررسی و مشاهداتت را ثبت کن."),
+            ("حمایت و مقاومت؛ ناحیه‌اند نه عدد جادویی",
+             "سطوح حمایت و مقاومت بهتر است به‌صورت ناحیه بررسی شوند، نه یک قیمت دقیق و قطعی. واکنش‌های گذشته می‌توانند محل توجه معامله‌گران را نشان دهند، اما تضمینی برای تکرار رفتار بازار نیستند. در تمرین نموداری، محدوده‌ها را مشخص کن و سپس بررسی کن آیا واکنش قیمت با فرض اولیه‌ات سازگار بوده است یا نه.")
+        ],
+        "فاندامنتال": [
+            ("نرخ بهره چرا در بازار ارز اهمیت دارد؟",
+             "نرخ بهره بر هزینه نگهداری پول و جذابیت نسبی دارایی‌ها اثر می‌گذارد. بااین‌حال، واکنش ارزها فقط به یک عدد وابسته نیست؛ انتظارات قبلی، لحن بانک مرکزی و داده‌های اقتصادی دیگر نیز اهمیت دارند. هنگام مطالعه یک تصمیم پولی، تفاوت میان انتظار بازار و نتیجه اعلام‌شده را یادداشت کن و از نتیجه‌گیری قطعی درباره جهت قیمت پرهیز کن."),
+            ("تورم را جدا از انتظارات بازار بررسی کن",
+             "انتشار داده تورم به‌تنهایی تصویر کاملی از شرایط اقتصادی نمی‌دهد. بازار ممکن است پیش از انتشار، بخشی از انتظار خود را در قیمت‌ها منعکس کرده باشد. برای تحلیل آموزشی، عدد اعلام‌شده را کنار مقدار قبلی و پیش‌بینی منتشرشده قرار بده و محدودیت این مقایسه را هم بنویس. یک داده اقتصادی به‌تنهایی مبنای تصمیم قطعی نیست.")
+        ],
+        "آموزش": [
+            ("دفتر ثبت معاملات چه چیزی را آشکار می‌کند؟",
+             "حافظه انسان معمولاً جزئیات تصمیم‌های گذشته را دقیق نگه نمی‌دارد. ثبت دلیل تصمیم، شرایط بازار، میزان ریسک برنامه‌ریزی‌شده و نتیجه مشاهده‌شده کمک می‌کند الگوهای رفتاری را بهتر بشناسی. دفتر ثبت قرار نیست نتیجه را تضمین کند؛ ارزش آن در تبدیل تجربه‌های پراکنده به داده قابل بررسی است. مرور منظم یادداشت‌ها، کیفیت فرایند یادگیری را بهتر می‌کند."),
+            ("تفاوت ریسک هر معامله با ریسک کل حساب",
+             "ریسک یک موقعیت فقط بخشی از تصویر است. چند موقعیت هم‌جهت یا دارایی‌های به‌شدت هم‌بسته می‌توانند در عمل ریسک مشترکی ایجاد کنند. در آموزش مدیریت ریسک، علاوه بر هر موقعیت، مجموع مواجهه‌ها و سناریوی زیان هم‌زمان را بررسی کن. هدف این است که وابستگی میان تصمیم‌ها دیده شود، نه اینکه فقط هر مورد جداگانه ارزیابی شود.")
+        ],
+        "روان‌شناسی": [
+            ("چرا تصمیم عجولانه بعد از زیان رخ می‌دهد؟",
+             "پس از یک نتیجه نامطلوب، ممکن است فرد برای جبران سریع، قواعد قبلی خود را کنار بگذارد. این واکنش می‌تواند کیفیت ارزیابی را کاهش دهد. ثبت احساس پیش و پس از تصمیم، مکث و مرور چک‌لیست از روش‌های آموزشی برای شناخت این الگو هستند. هدف، حذف کامل احساسات نیست؛ هدف این است که احساس جایگزین فرایند سنجیده نشود."),
+            ("اعتمادبه‌نفس را با قطعیت اشتباه نگیر",
+             "تجربه بیشتر می‌تواند مهارت ارزیابی را تقویت کند، اما هیچ فردی از خطا مصون نیست. وقتی فرضیه‌ای با شواهد مخالف روبه‌رو می‌شود، توانایی بازبینی آن نشانه تفکر نقادانه است. در دفتر یادداشت، شواهد موافق و مخالف را جدا بنویس و میزان اطمینانت را نیز ثبت کن. این کار کمک می‌کند تفاوت میان باور و واقعیت روشن‌تر شود.")
+        ]
+    },
+    "crypto": {
+        "تکنیکال": [
+            ("نوسان بالا، اهمیت اندازه‌گیری را بیشتر می‌کند",
+             "بازار رمزارزها ممکن است در بازه‌های کوتاه نوسان قابل‌توجهی داشته باشد. به همین دلیل، مشاهده نمودار بدون توجه به بازه زمانی و مقیاس می‌تواند برداشت نادرستی ایجاد کند. هنگام مطالعه نمودار، تایم‌فریم، دامنه تغییرات و حجم معاملات را کنار هم ثبت کن. هیچ‌کدام به‌تنهایی جهت آینده را تضمین نمی‌کنند."),
+            ("حجم معاملات را در کنار قیمت بخوان",
+             "تغییر قیمت بدون بررسی حجم، اطلاعات ناقصی ارائه می‌کند. حجم می‌تواند نشان دهد در یک بازه چه میزان فعالیت ثبت شده است، اما تفسیر آن به نوع بازار و کیفیت داده وابسته است. برای تمرین، چند حرکت تاریخی را با حجم همان بازه مقایسه کن و مواردی را که داده ناقص یا غیرعادی دارند جدا علامت بزن.")
+        ],
+        "فاندامنتال": [
+            ("عرضه یک رمزارز را چگونه ارزیابی کنیم؟",
+             "برای شناخت یک دارایی دیجیتال، فقط قیمت روز کافی نیست. عرضه در گردش، سقف عرضه اعلام‌شده، برنامه آزادسازی توکن‌ها و تمرکز مالکیت می‌توانند در ارزیابی ساختار آن مؤثر باشند. این داده‌ها باید از مستندات معتبر همان پروژه بررسی شوند؛ زیرا تعریف عرضه در پروژه‌های مختلف یکسان نیست. هیچ شاخصی به‌تنهایی ارزش آینده را مشخص نمی‌کند."),
+            ("کاربرد واقعی پروژه را از تبلیغات جدا کن",
+             "وعده‌های بازاریابی لزوماً نشان‌دهنده استفاده واقعی از یک شبکه نیستند. برای ارزیابی آموزشی، مسئله‌ای را که پروژه ادعا می‌کند حل می‌کند، کاربران هدف، مستندات فنی و شواهد استفاده را جداگانه بررسی کن. اگر داده مستقل یا قابل راستی‌آزمایی وجود ندارد، آن را به‌عنوان ابهام ثبت کن؛ نه اینکه ادعا را واقعیت قطعی فرض کنی.")
+        ],
+        "آموزش": [
+            ("کیف پول امانی و غیرامانی چه تفاوتی دارند؟",
+             "در کیف پول امانی، نگهداری کلیدها معمولاً بر عهده یک ارائه‌دهنده خدمت است. در کیف پول غیرامانی، کنترل کلید خصوصی در اختیار خود کاربر قرار می‌گیرد و مسئولیت حفاظت از آن نیز بیشتر بر عهده اوست. پیش از استفاده از هر ابزار، سازوکار بازیابی، پشتیبانی و خطرهای آن را از مستندات رسمی بررسی کن. عبارت بازیابی را با هیچ‌کس به اشتراک نگذار."),
+            ("کارمزد شبکه را با کارمزد صرافی یکی ندان",
+             "در انتقال دارایی دیجیتال ممکن است هزینه شبکه و هزینه خدمات پلتفرم با هم متفاوت باشند. مقدار کارمزد شبکه به ازدحام و سازوکار همان شبکه وابسته است؛ درحالی‌که پلتفرم ممکن است هزینه جداگانه‌ای داشته باشد. پیش از هر انتقال واقعی، اطلاعات رسمی و مبلغ نهایی نمایش‌داده‌شده را با دقت بررسی کن و تفاوت این دو هزینه را بشناس.")
+        ],
+        "روان‌شناسی": [
+            ("ترس از جا ماندن چگونه قضاوت را مختل می‌کند؟",
+             "دیدن رشد سریع یک دارایی ممکن است احساس جا ماندن از فرصت را ایجاد کند. این احساس می‌تواند فرد را به تصمیم عجولانه وادار کند، حتی وقتی اطلاعات کافی ندارد. برای شناخت این الگو، پیش از هر ارزیابی فرضیه، شواهد و موارد نامعلوم را بنویس. فرصت ازدست‌رفته، به‌خودی‌خود دلیل مناسبی برای تصمیم تازه نیست."),
+            ("اثر جمع را با شواهد مستقل اشتباه نگیر",
+             "تکرار یک ادعا در شبکه‌های اجتماعی لزوماً اعتبار آن را بیشتر نمی‌کند. تعداد بازنشرها جایگزین منبع اولیه، داده قابل بررسی یا تحلیل مستقل نیست. هنگام مواجهه با یک روایت پرطرفدار، منبع اصلی را پیدا کن، تاریخ انتشار را بررسی کن و شواهد مخالف را هم بخوان. این عادت از تصمیم‌گیری صرفاً بر پایه هیجان جمعی جلوگیری می‌کند.")
+        ]
+    }
+}
 
 
-def or_models():
-    return [m.strip() for m in E("OR_MODELS", OR_MODELS_DEFAULT).split(",") if m.strip()]
+def env(name, default=""):
+    return (os.getenv(name) or default).strip()
 
 
-def openrouter(prompt):
-    key = E("OPENROUTER_API_KEY")
-    url = "https://openrouter.ai/api/v1/chat/completions"
-    last = ""
-    for model in or_models():
-        body = {
+def normalize(value):
+    value = str(value or "").strip()
+    value = value.replace("ي", "ی").replace("ك", "ک")
+    return re.sub(r"[\s‌ـ]+", "", value)
+
+
+def read_json(path):
+    if not path.exists():
+        return {}
+    with path.open("r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def all_recent_titles():
+    data = read_json(HISTORY_FILE)
+    result = set()
+    for section in data.get("sections", {}).values():
+        for item in section.get("items", []):
+            title = item.get("title")
+            if title:
+                result.add(normalize(title))
+    return result
+
+
+def get_headlines(key):
+    result = []
+    for url in FEEDS.get(key, []):
+        try:
+            response = requests.get(
+                url, timeout=12,
+                headers={"User-Agent": "Mozilla/5.0 Metatya"}
+            )
+            response.raise_for_status()
+            root = ET.fromstring(response.content)
+            for item in root.iter("item"):
+                title = (item.findtext("title") or "").strip()
+                if title:
+                    result.append(title)
+                if len(result) >= 15:
+                    break
+        except Exception as exc:
+            print(f"RSS warning [{key}]: {str(exc)[:100]}")
+    return result[:15]
+
+
+def fa_ratio(text):
+    letters = [c for c in text if c.isalpha()]
+    if not letters:
+        return 0
+    return sum("\u0600" <= c <= "\u06ff" for c in letters) / len(letters)
+
+
+def validate_items(items, tabs, key):
+    if not isinstance(items, list):
+        raise ValueError("items باید آرایه باشد")
+
+    tab_lookup = {normalize(tab): tab for tab in tabs}
+    counts = {tab: 0 for tab in tabs}
+    clean = []
+
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+
+        tab = tab_lookup.get(normalize(item.get("tab")))
+        title = str(item.get("title") or "").strip()
+        body = str(item.get("body") or "").strip()
+        script = item.get("short_script")
+
+        if tab is None:
+            continue
+        if not 5 <= len(title) <= 140:
+            continue
+        if not 60 <= len(body) <= 900:
+            continue
+        if fa_ratio(title + body) < 0.55:
+            continue
+        if any(word in title + body for word in BANNED):
+            continue
+        if not isinstance(script, list) or len(script) != 3:
+            continue
+        if not all(isinstance(x, str) and 3 <= len(x) <= 120 for x in script):
+            continue
+
+        disclaimer = DISCLAIMER.get(KIND.get(key, "general"), "")
+        if disclaimer and disclaimer not in body:
+            body += " " + disclaimer
+
+        clean.append({
+            "tab": tab,
+            "title": title,
+            "body": body,
+            "short_script": script
+        })
+        counts[tab] += 1
+
+    missing = [tab for tab, count in counts.items() if count == 0]
+    duplicate = [tab for tab, count in counts.items() if count > 1]
+
+    if missing or duplicate:
+        raise ValueError(
+            f"پوشش تب ناقص است؛ جاافتاده={missing} تکراری={duplicate}"
+        )
+
+    return clean
+
+
+def local_fallback(key, tabs, recent):
+    bank = LOCAL_BANK.get(key)
+    if not bank:
+        raise RuntimeError(
+            f"fallback محلی برای حوزه {key} هنوز آماده نشده است"
+        )
+
+    output = []
+    for tab in tabs:
+        candidates = bank.get(tab, [])
+        selected = next(
+            (entry for entry in candidates
+             if normalize(entry[0]) not in recent),
+            None
+        )
+        if not selected:
+            raise RuntimeError(
+                f"موضوع تازه و بدون تکرار برای {key}/{tab} موجود نیست"
+            )
+
+        title, body = selected
+        output.append({
+            "tab": tab,
+            "title": title,
+            "body": body,
+            "short_script": [
+                title,
+                "این نکته را با شواهد و منابع معتبر بررسی کن.",
+                "برای مرور بعدی، این مطلب را ذخیره کن."
+            ],
+            "provider": "local-fallback"
+        })
+        recent.add(normalize(title))
+
+    return validate_items(output, tabs, key)
+
+
+def call_openrouter(prompt):
+    key = env("OPENROUTER_API_KEY")
+    if not key:
+        raise RuntimeError("کلید OpenRouter تنظیم نشده است")
+
+    models = [
+        x.strip() for x in env("OR_MODELS", OR_MODELS_DEFAULT).split(",")
+        if x.strip()
+    ]
+    if not models:
+        raise RuntimeError("فهرست مدل‌ها خالی است")
+
+    last_error = "unknown"
+    for model in models:
+        payload = {
             "model": model,
-            "temperature": 0.4,
-            "max_tokens": 8000,
+            "temperature": 0.35,
+            "max_tokens": 5000,
             "response_format": {"type": "json_object"},
             "messages": [
-                {"role": "system", "content": "You reply only with valid JSON. No markdown, no code fences."},
+                {"role": "system", "content": "Return valid JSON only."},
                 {"role": "user", "content": prompt}
             ]
         }
         try:
-            r = requests.post(
-                url,
+            response = requests.post(
+                OR_URL,
                 headers={
                     "Authorization": f"Bearer {key}",
                     "Content-Type": "application/json",
                     "HTTP-Referer": "https://maytyafx-debug.github.io/maytya/",
                     "X-Title": "Metatya"
                 },
-                json=body,
+                json=payload,
                 timeout=60
             )
-        except requests.RequestException as e:
-            last = f"{model}:{str(e)[:60]}"
-            print(f"  {model} ارتباط ناموفق — مدل بعدی")
-            continue
-        if r.status_code in (401, 403):
-            # مشکل از کلید است؛ با تغییر مدل حل نمی‌شود
-            r.raise_for_status()
-        if r.status_code != 200:
-            last = f"{model}:{r.status_code}"
-            print(f"  {model} خطای {r.status_code} — مدل بعدی | {r.text[:120]}")
-            continue
-        content = r.json()["choices"][0]["message"].get("content") or ""
-        if not content.strip():
-            last = f"{model}:empty"
-            print(f"  {model} پاسخ خالی — مدل بعدی")
-            continue
-        return content
-    raise RuntimeError(f"همه مدل‌های رایگان شکست خوردند ({last})")
+
+            if response.status_code == 429:
+                retry = response.headers.get("Retry-After", "5")
+                try:
+                    wait = min(max(int(float(retry)), 1), 10)
+                except ValueError:
+                    wait = 5
+                time.sleep(wait)
+                response = requests.post(
+                    OR_URL,
+                    headers={
+                        "Authorization": f"Bearer {key}",
+                        "Content-Type": "application/json",
+                        "HTTP-Referer": "https://maytyafx-debug.github.io/maytya/",
+                        "X-Title": "Metatya"
+                    },
+                    json=payload,
+                    timeout=60
+                )
+
+            if response.status_code in (401, 403):
+                raise RuntimeError(
+                    "کلید OpenRouter معتبر نیست یا دسترسی ندارد"
+                )
+
+            response.raise_for_status()
+            content = response.json()["choices"][0]["message"].get("content")
+            if not content:
+                raise ValueError("مدل پاسخ خالی برگرداند")
+
+            match = re.search(r"\{.*\}", content, re.S)
+            if not match:
+                raise ValueError("JSON در پاسخ مدل پیدا نشد")
+
+            return json.loads(match.group(0)), model
+
+        except Exception as exc:
+            last_error = f"{model}: {str(exc)[:160]}"
+            print("OpenRouter fallback:", last_error)
+
+    raise RuntimeError(last_error)
 
 
-def providers():
-    p = []
-    if E("OPENROUTER_API_KEY"):
-        p.append(("openrouter", openrouter, 3))
-    return p
+def generate_section(key, name, tabs, recent):
+    context = get_headlines(key)
+    context_text = "\n".join("- " + x for x in context) or (
+        "خبر قابل اتکا در دسترس نیست؛ فقط آموزش ماندگار تولید کن."
+    )
 
+    history_text = "\n".join(sorted(recent))[-12000:] or "ندارد"
+    prompt = PROMPT.format(
+        name=name,
+        today=datetime.date.today().isoformat(),
+        tabs="، ".join(tabs),
+        context=context_text,
+        history=history_text
+    )
 
-# ---------- خبر و کیفیت ----------
-def headlines(key):
-    out = []
-    for u in FEEDS.get(key, []):
+    if env("OPENROUTER_API_KEY"):
         try:
-            r = requests.get(u, timeout=20, headers={"User-Agent": "Mozilla/5.0 MetatyaBot"})
-            for it in ET.fromstring(r.content).iter("item"):
-                t = (it.findtext("title") or "").strip()
-                if t: out.append(t)
-                if len(out) >= 25: break
-        except Exception as e:
-            print("  RSS خطا:", u[:50], e)
-    return out[:25]
+            payload, model = call_openrouter(prompt)
+            items = validate_items(payload.get("items"), tabs, key)
 
+            for item in items:
+                if normalize(item["title"]) in recent:
+                    raise ValueError("عنوان تکراری با محتوای اخیر")
+            return items, model
 
-def fa_ratio(t):
-    letters = [c for c in t if c.isalpha()]
-    return sum('\u0600' <= c <= '\u06ff' for c in letters) / len(letters) if letters else 0
+        except Exception as exc:
+            print(f"AI failed [{key}], using local fallback: {exc}")
 
-
-def clean(items, tabs, key):
-    good, why = [], {}
-    for it in items if isinstance(items, list) else []:
-        reason = None
-        try:
-            t, b, ss = it["title"].strip(), it["body"].strip(), it["short_script"]
-            raw_tab = str(it.get("tab", "")).strip()
-
-            def norm_tab(value):
-                value = str(value).strip()
-                value = value.replace("ي", "ی").replace("ك", "ک")
-                value = re.sub(r"[\s‌ـ]+", "", value)
-                return value
-
-            tab_lookup = {norm_tab(t): t for t in tabs}
-            tab = tab_lookup.get(norm_tab(raw_tab))
-
-            if tab is None: reason = f"تب نامعتبر: {raw_tab[:40]}"
-            elif not (5 <= len(t) <= 140): reason = "طول عنوان"
-            elif not (60 <= len(b) <= 900): reason = "طول متن"
-            elif fa_ratio(t + b) < 0.6: reason = "نسبت فارسی کم"
-            elif not (isinstance(ss, list) and len(ss) == 3 and all(isinstance(x, str) and 3 <= len(x) <= 120 for x in ss)): reason = "خلاصه‌ی صوتی"
-            elif any(w in t + b for w in BANNED): reason = "عبارت ممنوع"
-        except Exception:
-            reason = "ساختار JSON"
-        if reason is None:
-            d = DISCLAIMER.get(KIND.get(key, ""), "")
-            good.append({"tab": tab, "title": t, "body": b + (" " + d if d and d not in b else ""), "short_script": ss})
-        else:
-            why[reason] = why.get(reason, 0) + 1
-    counts = {tab: 0 for tab in tabs}
-
-    for item in good:
-        counts[item["tab"]] += 1
-
-    missing = [tab for tab, count in counts.items() if count == 0]
-    duplicated = [tab for tab, count in counts.items() if count > 1]
-
-    if missing or duplicated:
-        raise ValueError(
-            f"پوشش تب‌ها ناقص است؛ "
-            f"تب‌های جاافتاده: {missing}؛ "
-            f"تب‌های تکراری: {duplicated}"
-        )
-
-    if why: print(f"  دروازه کیفیت [{key}] رد شد:", why)
-    if not good: raise ValueError("هیچ مطلب سالمی از دروازه کیفیت رد نشد")
-    return good
-
-
-def ask(key, name, tabs, old_titles, provs):
-    if DRY:
-        return [{"tab": t, "title": f"نمونه {name} - {t}", "body": "متن نمونه (حالت آزمایشی).",
-                 "short_script": ["هوک نمونه", "نکته نمونه", "جمع‌بندی نمونه"], "sources": []} for t in tabs], "dry"
-    ctx, srcs = "", []
-    if key in FEEDS:
-        hl = headlines(key)
-        ctx = ("تیتر خبرهای امروز (فقط بر اساس همین‌ها بنویس؛ اگر عدد دقیق نیست بنویس عدد را از منبع ببین):\n- " + "\n- ".join(hl) + "\n") if hl \
-              else "خبر امروز در دسترس نیست؛ فقط آموزش و مفهوم بنویس و قیمت یا خبری نساز.\n"
-        srcs = []
-    prompt = PROMPT.format(today=datetime.date.today().isoformat(), name=name, tabs="، ".join(tabs), ctx=ctx,
-                           old="، ".join(old_titles[:12]) or "ندارد")
-    err = []
-    for pname, fn, _ in provs:
-        if pname in DEAD: continue
-        for attempt in range(2):
-            try:
-                txt = fn(prompt)
-                items = clean(json.loads(re.search(r"\{.*\}", txt, re.S).group(0))["items"], tabs, key)
-                for it in items: it["sources"] = srcs
-                return items, pname
-            except requests.HTTPError as e:
-                err.append(f"{pname}:{e.response.status_code}")
-                if e.response.status_code in (401, 403):
-                    DEAD.add(pname)
-                    print(f"  {pname} کلید نامعتبر — کنار گذاشته شد")
-                    break
-                if e.response.status_code == 429:
-                    wait = 30 * (attempt + 1)
-                    print(f"  {pname} سهمیه — صبر {wait}s")
-                    time.sleep(wait)
-                    continue
-                time.sleep(2)
-            except Exception as e:
-                err.append(f"{pname}:{str(e)[:60]}")
-                time.sleep(2)
-    raise RuntimeError("OpenRouter شکست خورد: " + " | ".join(err))
+    items = local_fallback(key, tabs, recent)
+    return items, "local-fallback"
 
 
 def main():
-    provs = providers()
-    if not DRY and not provs:
-        sys.exit("OPENROUTER_API_KEY تنظیم نشده")
-    pause = min((p[2] for p in provs), default=0)
-    old = {}
-    if os.path.exists(OUT):
-        old = json.load(open(OUT, encoding="utf-8")).get("sections", {})
-    now = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
-    result, first, used = {}, True, {}
-    for key, (name, tabs, _) in SECTIONS.items():
-        prev = old.get(key, {}).get("items", [])
+    old_data = read_json(OUT)
+    old_sections = old_data.get("sections", {})
+    recent = all_recent_titles()
+
+    now = datetime.datetime.now(datetime.timezone.utc)
+    today = now.date().isoformat()
+    result = {}
+    successes = 0
+
+    for key, (name, tabs, _needs_web) in SECTIONS.items():
+        previous = old_sections.get(key, {}).get("items", [])
+        section_recent = set(recent)
+
         try:
-            if not DRY and not first: time.sleep(pause)
-            first = False
-            items, who = ask(key, name, tabs, [p["title"] for p in prev], provs)
-            for it in items: it["date"] = now[:10]
-            result[key] = {"name": name, "items": (items + prev)[:KEEP], "ok": True, "provider": who}
-            used[who] = used.get(who, 0) + 1
-            print("OK  ", key, len(items), who)
-        except Exception as e:
-            print("FAIL", key, e)
-            result[key] = {"name": name, "items": prev, "ok": False, "error": str(e)[:200]}
-    os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    note = "خلاصه‌ی تیتر خبرهای عمومی؛ قیمت‌ها لحظه‌ای نیستند. مطالب مالی، سلامت و حقوق جایگزین مشاوره متخصص نیستند."
-    json.dump({"updated": now, "note": note, "sections": result}, open(OUT, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    ok = sum(1 for v in result.values() if v["ok"])
-    print(f"گزارش: {ok}/{len(result)} حوزه به‌روز شد | ارائه‌دهنده‌ها: {used}")
-    if ok == 0: sys.exit(1)
+            items, provider = generate_section(
+                key, name, tabs, section_recent
+            )
+
+            for item in items:
+                item["date"] = today
+                item["provider"] = provider
+                recent.add(normalize(item["title"]))
+
+            result[key] = {
+                "name": name,
+                "items": (items + previous)[:KEEP],
+                "ok": True,
+                "provider": provider
+            }
+            successes += 1
+            print(f"OK {key}: {len(items)} items [{provider}]")
+
+        except Exception as exc:
+            result[key] = {
+                "name": name,
+                "items": previous[:KEEP],
+                "ok": False,
+                "provider": None,
+                "error": str(exc)[:300]
+            }
+            print(f"FAIL {key}: {exc}")
+
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    output = {
+        "updated": now.isoformat(timespec="seconds"),
+        "note": (
+            "محتوای آموزشی عمومی؛ اطلاعات بازار لحظه‌ای نیست و "
+            "مطالب جایگزین مشاوره تخصصی نیستند."
+        ),
+        "sections": result
+    }
+
+    with OUT.open("w", encoding="utf-8") as f:
+        json.dump(output, f, ensure_ascii=False, indent=2)
+
+    print(f"RESULT: {successes}/{len(SECTIONS)} sections succeeded")
+    if successes == 0:
+        sys.exit(1)
 
 
 if __name__ == "__main__":
