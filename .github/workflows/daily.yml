@@ -1,10 +1,9 @@
-
 name: Metatya daily
 
 on:
   schedule:
-    - cron: "30 4 * * *"
-  workflow_dispatch:
+    - cron: "30 4 * * *"   # هر روز ساعت ۸:۰۰ صبح به وقت تهران (UTC+3:30)
+  workflow_dispatch:       # امکان اجرای دستی از تب Actions
 
 permissions:
   contents: write
@@ -17,61 +16,44 @@ jobs:
   run:
     runs-on: ubuntu-latest
     timeout-minutes: 40
-
     steps:
-      - name: دریافت مخزن
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: آماده‌سازی Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: نصب وابستگی‌ها
-        run: |
-          pip install -r requirements.txt
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg libraqm0 libfribidi0
+      - name: Install dependencies
+        run: pip install -r requirements.txt && sudo apt-get update && sudo apt-get install -y ffmpeg libraqm0 libfribidi0
 
-      - name: جمع‌آوری داده‌های روزانه
+      - name: ربات‌های جمع‌آوری داده (بانک اطلاعاتی روزانه)
         run: python scripts/collector.py
         env:
           SUPABASE_URL: ${{ vars.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         continue-on-error: true
 
-      - name: آماده‌سازی نسخه موقت محتوا
+      - name: کپی محتوای زنده به فایل موقت
         run: |
           mkdir -p out
-          test -s docs/content.json
-          cp docs/content.json out/staged-content.json
+          cp docs/content.json out/staged.json
 
-      - name: تولید محتوای موقت
+      - name: تولید محتوای جدید در فایل موقت
         run: python scripts/generate.py
         timeout-minutes: 20
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          CONTENT_OUTPUT: out/staged-content.json
-          HISTORY_FILE: docs/content.json
+          CONTENT_OUTPUT: ${{ github.workspace }}/out/staged.json
+          HISTORY_FILE: ${{ github.workspace }}/docs/content.json
 
-      - name: اعتبارسنجی و انتشار اتمیک محتوا
-        run: |
-          python scripts/validate_content.py \
-            --live docs/content.json \
-            --staged out/staged-content.json \
-            --promote
+      - name: اعتبارسنجی مستقل و انتشار جزئی با حفظ تاریخچه
+        run: python scripts/publish_gate.py --live docs/content.json --staged out/staged.json --promote
 
-      - name: دانلود فونت وزیرمتن
+      - name: دانلود فونت وزیرمتن (اگر نشد، DejaVu داخل ریپو استفاده می‌شود)
         run: |
           mkdir -p assets/fonts
-          curl -fsSL --max-time 60 \
-            -o assets/fonts/Vazirmatn-Regular.ttf \
-            "https://github.com/rastikerdar/vazirmatn/raw/master/fonts/ttf/Vazirmatn-Regular.ttf" \
-            || echo "دانلود فونت نشد؛ فونت پیش‌فرض استفاده می‌شود"
-
-          [ -s assets/fonts/Vazirmatn-Regular.ttf ] \
-            && [ "$(head -c 4 assets/fonts/Vazirmatn-Regular.ttf | xxd -p)" = "00010000" ] \
-            || rm -f assets/fonts/Vazirmatn-Regular.ttf
+          curl -fsSL --max-time 60 -o assets/fonts/Vazirmatn-Regular.ttf "https://github.com/rastikerdar/vazirmatn/raw/master/fonts/ttf/Vazirmatn-Regular.ttf" || echo "دانلود فونت نشد؛ فونت پیش‌فرض"
+          [ -s assets/fonts/Vazirmatn-Regular.ttf ] && [ "$(head -c 4 assets/fonts/Vazirmatn-Regular.ttf | xxd -p)" = "00010000" ] || rm -f assets/fonts/Vazirmatn-Regular.ttf
         continue-on-error: true
 
       - name: ساخت صفحات سایت
@@ -96,7 +78,7 @@ jobs:
           SITE_URL: ${{ vars.SITE_URL }}
         continue-on-error: true
 
-      - name: جستجوگر فرصت
+      - name: ربات جستجوگر فرصت (فهرست خصوصی برای پاسخ مفید)
         run: python scripts/radar.py
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -113,11 +95,15 @@ jobs:
             out/*.txt
           if-no-files-found: ignore
 
-      - name: ثبت تغییرات
+      - name: commit content (backup)
         run: |
           git config user.name "metatya-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add docs data
-          git commit -m "daily content $(date -u +%F)" || echo "no changes"
-          git pull --rebase --autostash origin "$(git rev-parse --abbrev-ref HEAD)" || true
-          git push
+          git add docs data -- ':!*.bak'
+          if git diff --cached --quiet; then
+            echo "no changes"
+          else
+            git commit -m "daily content $(date -u +%F)"
+            git pull --rebase --autostash origin "$(git rev-parse --abbrev-ref HEAD)" || true
+            git push
+          fi
