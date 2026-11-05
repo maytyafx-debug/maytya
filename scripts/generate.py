@@ -234,7 +234,7 @@ def ask(key, name, tabs, old_titles, provs):
         hl = headlines(key)
         ctx = ("تیتر خبرهای امروز (فقط بر اساس همین‌ها بنویس؛ اگر عدد دقیق نیست بنویس عدد را از منبع ببین):\n- " + "\n- ".join(hl) + "\n") if hl \
               else "خبر امروز در دسترس نیست؛ فقط آموزش و مفهوم بنویس و قیمت یا خبری نساز.\n"
-        srcs = [u for u in FEEDS[key] if "news.google" not in u]
+        srcs = []
     prompt = PROMPT.format(today=datetime.date.today().isoformat(), name=name, tabs="، ".join(tabs), ctx=ctx,
                            old="، ".join(old_titles[:12]) or "ندارد")
     err = []
