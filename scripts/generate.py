@@ -205,6 +205,21 @@ def clean(items, tabs, key):
             good.append({"tab": tab, "title": t, "body": b + (" " + d if d and d not in b else ""), "short_script": ss})
         else:
             why[reason] = why.get(reason, 0) + 1
+    counts = {tab: 0 for tab in tabs}
+
+    for item in good:
+        counts[item["tab"]] += 1
+
+    missing = [tab for tab, count in counts.items() if count == 0]
+    duplicated = [tab for tab, count in counts.items() if count > 1]
+
+    if missing or duplicated:
+        raise ValueError(
+            f"پوشش تب‌ها ناقص است؛ "
+            f"تب‌های جاافتاده: {missing}؛ "
+            f"تب‌های تکراری: {duplicated}"
+        )
+
     if why: print(f"  دروازه کیفیت [{key}] رد شد:", why)
     if not good: raise ValueError("هیچ مطلب سالمی از دروازه کیفیت رد نشد")
     return good
