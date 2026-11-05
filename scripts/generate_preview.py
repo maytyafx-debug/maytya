@@ -42,13 +42,24 @@ def prepare_preview_seed(keys):
     """فقط داده‌های قبلی حوزه‌های انتخاب‌شده را به فایل پیش‌نمایش منتقل می‌کند."""
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
+    live_sections = {}
+    if LIVE_FILE.exists():
+        with LIVE_FILE.open("r", encoding="utf-8") as file:
+            live_data = json.load(file)
+        live_sections = live_data.get("sections", {})
+
+    baseline_titles = {}
+    for key in keys:
+        previous_items = live_sections.get(key, {}).get("items", [])
+        baseline_titles[key] = {
+            item.get("title")
+            for item in previous_items
+            if isinstance(item, dict) and item.get("title")
+        }
+
     if not LIVE_FILE.exists():
         seed = {"sections": {}}
     else:
-        with LIVE_FILE.open("r", encoding="utf-8") as file:
-            live_data = json.load(file)
-
-        live_sections = live_data.get("sections", {})
         seed = {
             "updated": live_data.get("updated"),
             "note": live_data.get("note", ""),
@@ -62,8 +73,10 @@ def prepare_preview_seed(keys):
     with PREVIEW_FILE.open("w", encoding="utf-8") as file:
         json.dump(seed, file, ensure_ascii=False, indent=2)
 
+    return baseline_titles
 
-def validate_preview(keys):
+
+def validate_preview(keys, baseline_titles):
     if not PREVIEW_FILE.exists():
         raise RuntimeError("فایل پیش‌نمایش ساخته نشده است.")
 
@@ -93,7 +106,8 @@ def validate_preview(keys):
         items = section.get("items", [])
         new_items = [
             item for item in items
-            if isinstance(item, dict) and item.get("date") == data.get("updated", "")[:10]
+            if isinstance(item, dict)
+            and item.get("title") not in baseline_titles.get(key, set())
         ]
 
         # بررسی محتوای تولیدشده در اجرای فعلی
@@ -145,7 +159,7 @@ def main():
     print("حوزه‌ها:", ", ".join(keys))
 
     # ابتدا محتوای قبلی فقط به فایل آزمایشی منتقل می‌شود.
-    prepare_preview_seed(keys)
+    baseline_titles = prepare_preview_seed(keys)
 
     # تنظیم موتور اصلی روی حالت واقعی، اما با خروجی آزمایشی
     gen.DRY = False
@@ -160,7 +174,7 @@ def main():
 
     # موتور اصلی ممکن است با موفقیت نسبی هم برگردد؛
     # بنابراین اعتبارسنجی مستقل ضروری است.
-    validate_preview(keys)
+    validate_preview(keys, baseline_titles)
 
 
 if __name__ == "__main__":
