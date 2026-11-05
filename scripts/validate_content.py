@@ -3,8 +3,9 @@
 Metatya publication gate.
 
 Each configured section is validated independently.
-Valid sections are promoted together; failed sections retain their live content.
-If no section passes, the live content file remains unchanged.
+Valid sections are promoted while preserving their live history.
+Failed sections retain their existing live content.
+The final file is written atomically.
 """
 
 import argparse
@@ -12,12 +13,13 @@ import datetime
 import json
 import os
 import re
-import sys
 import tempfile
 from pathlib import Path
 
 from sections import SECTIONS
 
+
+KEEP = 40
 
 BANNED = [
     "سود تضمینی",
@@ -173,8 +175,6 @@ def validate_section(
 
         title = normalize(item.get("title", ""))
 
-        # Items already present in the live file are historical content,
-        # even if their date happens to be today.
         if title and title in baseline_titles:
             continue
 
@@ -217,7 +217,6 @@ def validate_section(
     if not new_items:
         errors.append("هیچ مطلب جدیدی برای این حوزه پیدا نشد.")
 
-    # Only successful sections reserve their titles globally.
     if not errors:
         globally_seen_titles.update(section_seen_titles)
 
@@ -242,6 +241,7 @@ def validate_all(live_data, staged_data):
 
     baseline_titles = collect_titles(live_data)
     globally_seen_titles = set()
+
     today = datetime.datetime.now(
         datetime.timezone.utc
     ).date().isoformat()
@@ -286,6 +286,125 @@ def validate_all(live_data, staged_data):
     }
 
 
+def merge_section_history(
+    key,
+    staged_section,
+    live_section,
+    today,
+):
+    """
+    Put validated fresh items first, then append old live history.
+    Deduplicate by normalized title and keep at most KEEP items.
+    """
+
+    staged_items = staged_section.get("items", [])
+    live_items = (
+        live_section.get("items", [])
+        if isinstance(live_section, dict)
+        else []
+    )
+
+    if not isinstance(staged_items, list):
+        staged_items = []
+
+    if not isinstance(live_items, list):
+        live_items = []
+
+    baseline_titles = set()
+
+    for item in live_items:
+        if isinstance(item, dict) and item.get("title"):
+            baseline_titles.add(normalize(item["title"]))
+
+    fresh_items = []
+
+    for item in staged_items:
+        if not isinstance(item, dict):
+            continue
+
+        if item.get("date") != today:
+            continue
+
+        title = normalize(item.get("title", ""))
+
+        if not title or title in baseline_titles:
+            continue
+
+        fresh_items.append(item)
+
+    merged_items = []
+    seen = set()
+
+    # Fresh validated content always appears first.
+    for item in fresh_items + live_items:
+        if not isinstance(item, dict):
+            continue
+
+        title = normalize(item.get("title", ""))
+
+        if title:
+            if title in seen:
+                continue
+            seen.add(title)
+
+        merged_items.append(item)
+
+        if len(merged_items) >= KEEP:
+            break
+
+    merged_section = dict(staged_section)
+    merged_section["items"] = merged_items
+
+    return merged_section, len(fresh_items), len(live_items)
+
+
+def build_merged_content(live_data, staged_data, report):
+    merged = dict(live_data)
+    live_sections = live_data.get("sections", {})
+    merged_sections = dict(live_sections)
+
+    history_stats = {}
+
+    for key, staged_section in report["valid_sections"].items():
+        live_section = live_sections.get(key, {})
+
+        merged_section, fresh_count, old_count = merge_section_history(
+            key=key,
+            staged_section=staged_section,
+            live_section=live_section,
+            today=report["today"],
+        )
+
+        merged_sections[key] = merged_section
+
+        history_stats[key] = {
+            "new_items": fresh_count,
+            "previous_items": old_count,
+            "final_items": len(merged_section["items"]),
+        }
+
+    merged["sections"] = merged_sections
+
+    if report["valid_sections"]:
+        if staged_data.get("updated"):
+            merged["updated"] = staged_data["updated"]
+
+        merged["publication"] = {
+            "mode": "partial",
+            "published_at": datetime.datetime.now(
+                datetime.timezone.utc
+            ).isoformat(timespec="seconds"),
+            "published_domains": sorted(report["valid_sections"]),
+            "retained_domains": sorted(report["failed_sections"]),
+            "published_count": len(report["valid_sections"]),
+            "retained_count": len(report["failed_sections"]),
+            "new_items": report["total_new"],
+            "history": history_stats,
+        }
+
+    return merged
+
+
 def atomic_write_json(data, live_path):
     live_path.parent.mkdir(parents=True, exist_ok=True)
     temp_path = None
@@ -315,35 +434,6 @@ def atomic_write_json(data, live_path):
     finally:
         if temp_path and temp_path.exists():
             temp_path.unlink()
-
-
-def build_merged_content(live_data, staged_data, report):
-    merged = dict(live_data)
-    merged_sections = dict(live_data.get("sections", {}))
-
-    for key, section in report["valid_sections"].items():
-        merged_sections[key] = section
-
-    merged["sections"] = merged_sections
-
-    # Keep the original live metadata if nothing was promoted.
-    if report["valid_sections"]:
-        if staged_data.get("updated"):
-            merged["updated"] = staged_data["updated"]
-
-        merged["publication"] = {
-            "mode": "partial",
-            "published_at": datetime.datetime.now(
-                datetime.timezone.utc
-            ).isoformat(timespec="seconds"),
-            "published_domains": sorted(report["valid_sections"]),
-            "retained_domains": sorted(report["failed_sections"]),
-            "published_count": len(report["valid_sections"]),
-            "retained_count": len(report["failed_sections"]),
-            "new_items": report["total_new"],
-        }
-
-    return merged
 
 
 def print_report(report):
@@ -387,7 +477,7 @@ def main():
     parser.add_argument(
         "--promote",
         action="store_true",
-        help="Publish valid sections while retaining failed sections.",
+        help="Publish valid sections and preserve live history.",
     )
 
     args = parser.parse_args()
@@ -418,8 +508,17 @@ def main():
         atomic_write_json(merged_data, live_path)
 
         print("\nانتشار جزئی با موفقیت انجام شد.")
+
+        for key, stats in merged_data["publication"]["history"].items():
+            print(
+                f"{key}: "
+                f"{stats['new_items']} مطلب تازه + "
+                f"{stats['previous_items']} مطلب قبلی؛ "
+                f"در فایل نهایی: {stats['final_items']}"
+            )
+
         print(
-            f"{len(report['valid_sections'])} حوزه جدید منتشر شد؛ "
+            f"\n{len(report['valid_sections'])} حوزه منتشر شد؛ "
             f"{len(report['failed_sections'])} حوزه قبلی حفظ شد."
         )
     else:
