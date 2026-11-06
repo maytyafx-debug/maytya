@@ -554,7 +554,7 @@ def local_fallback(key, tabs, recent):
         title, explanation = selected
 
         short_explanation = re.split(
-            r"(?<=[.!؟])\\s+",
+            r"(?<=[.!؟])\s+",
             explanation.strip(),
             maxsplit=1
         )[0].strip()
