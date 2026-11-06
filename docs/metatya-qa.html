@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050807">
+<title>Metatya | Quality Assurance</title>
+<style>
+:root {
+  --bg:#050807;
+  --panel:#0c1411;
+  --green:#00ff9d;
+  --gold:#d6ad45;
+  --red:#ff5263;
+  --text:#edf5ef;
+  --muted:#91a096;
+  --border:rgba(255,255,255,.1);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Tahoma,Arial,sans-serif;line-height:1.8
+}
+.container{width:min(1000px,94%);margin:auto}
+header{padding:25px 0;border-bottom:1px solid var(--border)}
+.brand{font-weight:900;font-size:22px}
+.brand span{color:var(--green)}
+main{padding:30px 0 60px}
+h1{font-size:clamp(25px,4vw,36px);margin:5px 0}
+.muted{color:var(--muted);font-size:13px}
+.panel{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:16px;padding:20px;margin:18px 0
+}
+button{
+  background:var(--green);color:#03110a;border:0;
+  border-radius:10px;padding:12px 20px;
+  font-weight:900;cursor:pointer;font:inherit
+}
+button:disabled{opacity:.5;cursor:wait}
+.progress{
+  height:8px;background:#1b2821;border-radius:20px;
+  overflow:hidden;margin:15px 0
+}
+.progress div{
+  height:100%;width:0;background:var(--green);
+  transition:width .2s
+}
+.result{
+  display:grid;grid-template-columns:1fr auto;
+  gap:10px;padding:12px 0;border-bottom:1px solid var(--border)
+}
+.result:last-child{border:0}
+.status{font-size:12px;font-weight:bold}
+.ok{color:var(--green)}
+.fail{color:var(--red)}
+.warn{color:var(--gold)}
+.small{font-size:11px;color:var(--muted);overflow-wrap:anywhere}
+.summary{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:10px;margin:15px 0
+}
+.metric{
+  background:#07100b;border:1px solid var(--border);
+  border-radius:12px;padding:15px
+}
+.metric strong{display:block;font-size:24px}
+.metric span{font-size:11px;color:var(--muted)}
+#report{
+  white-space:pre-wrap;overflow-wrap:anywhere;
+  background:#070d0a;border-radius:10px;padding:14px;
+  font-size:12px;color:#b9c7bd;max-height:350px;overflow:auto
+}
+@media(max-width:550px){
+  .summary{grid-template-columns:1fr 1fr}
+  .panel{padding:14px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="container brand">META<span>TYA</span> / QA</div>
+</header>
+
+<main class="container">
+  <p class="muted">QUALITY ASSURANCE • SITE DIAGNOSTICS</p>
+  <h1>مرکز کنترل کیفیت Metatya</h1>
+  <p class="muted">
+    بررسی دسترسی فایل‌ها، صفحات، داده‌ها و لینک‌های داخلی نسخه منتشرشده.
+  </p>
+
+  <section class="panel">
+    <strong>آماده اجرای بررسی</strong>
+    <p class="muted">
+      این ابزار باید از طریق آدرس سایت و روی HTTPS اجرا شود؛
+      اجرای مستقیم با file:// نتیجه معتبر نمی‌دهد.
+    </p>
+    <button id="runBtn">اجرای بررسی کامل</button>
+    <div class="progress"><div id="progressBar"></div></div>
+    <div id="runStatus" class="muted">هنوز بررسی اجرا نشده است.</div>
+  </section>
+
+  <section class="summary">
+    <div class="metric"><strong id="total">۰</strong><span>کل بررسی‌ها</span></div>
+    <div class="metric"><strong id="passed" class="ok">۰</strong><span>موفق</span></div>
+    <div class="metric"><strong id="failed" class="fail">۰</strong><span>ناموفق</span></div>
+  </section>
+
+  <section class="panel">
+    <h2>نتایج بررسی</h2>
+    <div id="results">
+      <p class="muted">نتیجه‌ای وجود ندارد.</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>گزارش فنی</h2>
+    <button id="copyBtn" type="button">کپی گزارش</button>
+    <pre id="report">گزارش پس از اجرای بررسی اینجا نمایش داده می‌شود.</pre>
+  </section>
+</main>
+
+<script>
+(() => {
+"use strict";
+
+const $ = id => document.getElementById(id);
+
+const files = [
+  ["صفحه اصلی","index.html","html"],
+  ["صفحه دفترچه","metatya-journal.html","html"],
+  ["صفحه خانه مستقل","metatya-home.html","html"],
+  ["پنل مدیریت محتوا","metatya-admin-content.html","html"],
+  ["هسته CSS","metatya-core.css","css"],
+  ["هسته JavaScript","metatya-core.js","js"],
+  ["داده‌های Metatya","metatya-data.js","js"],
+  ["کامپوننت‌ها","metatya-components.js","js"],
+  ["استایل کامپوننت‌ها","metatya-components.css","css"],
+  ["فهرست محورهای سایت","topics.json","json"],
+  ["فهرست محصولات","packs.json","json"],
+  ["محتوای سایت","content.json","json"],
+  ["اطلاعات درآمدزایی","monetization.json","json"],
+  ["فایل CTA","cta.js","js"]
+];
+
+const results = [];
+let running = false;
+
+function addResult(name,status,detail){
+  results.push({name,status,detail});
+  renderResults();
+}
+
+function renderResults(){
+  const root = $("results");
+  root.replaceChildren();
+
+  if(!results.length){
+    root.textContent = "نتیجه‌ای وجود ندارد.";
+    return;
+  }
+
+  results.forEach(item => {
+    const row = document.createElement("div");
+    row.className = "result";
+
+    const left = document.createElement("div");
+    const name = document.createElement("strong");
+    name.textContent = item.name;
+
+    const detail = document.createElement("div");
+    detail.className = "small";
+    detail.textContent = item.detail;
+
+    left.append(name,detail);
+
+    const right = document.createElement("div");
+    right.className = "status " +
+      (item.status === "OK" ? "ok" :
+       item.status === "FAIL" ? "fail" : "warn");
+    right.textContent = item.status;
+
+    row.append(left,right);
+    root.appendChild(row);
+  });
+}
+
+function updateSummary(){
+  const passed = results.filter(x => x.status === "OK").length;
+  const failed = results.filter(x => x.status === "FAIL").length;
+
+  $("total").textContent = results.length.toLocaleString("fa-IR");
+  $("passed").textContent = passed.toLocaleString("fa-IR");
+  $("failed").textContent = failed.toLocaleString("fa-IR");
+}
+
+async function checkFile(name,path,type){
+  const url = new URL(path,location.href);
+
+  try{
+    const response = await fetch(url.href,{
+      method:"GET",
+      cache:"no-store",
+      credentials:"same-origin"
+    });
+
+    if(!response.ok){
+      addResult(name,"FAIL",`HTTP ${response.status} — ${path}`);
+      return;
+    }
+
+    const text = await response.text();
+
+    if(type === "json"){
+      try{
+        JSON.parse(text);
+      }catch(error){
+        addResult(name,"FAIL","فایل وجود دارد اما JSON معتبر نیست.");
+        return;
+      }
+    }
+
+    if(type === "html" && !/<html[\s>]/i.test(text)){
+      addResult(name,"WARN","فایل پاسخ داده اما ساختار HTML آن نیاز به بررسی دارد.");
+      return;
+    }
+
+    if(type === "js" && !text.trim()){
+      addResult(name,"FAIL","فایل JavaScript خالی است.");
+      return;
+    }
+
+    if(type === "css" && !text.trim()){
+      addResult(name,"FAIL","فایل CSS خالی است.");
+      return;
+    }
+
+    addResult(name,"OK",`HTTP ${response.status} — ${path}`);
+  }catch(error){
+    addResult(name,"FAIL",`${path} — ${error.message}`);
+  }
+}
+
+async function checkLocalLinks(){
+  try{
+    const response = await fetch(
+      new URL("index.html",location.href).href,
+      {cache:"no-store"}
+    );
+
+    if(!response.ok){
+      addResult("بررسی لینک‌های داخلی","FAIL",
+        "صفحه اصلی قابل دریافت نیست.");
+      return;
+    }
+
+    const html = await response.text();
+    const doc = new DOMParser().parseFromString(html,"text/html");
+    const anchors = [...doc.querySelectorAll("a[href]")];
+
+    let checked = 0;
+    let broken = 0;
+    const unique = new Set();
+
+    for(const anchor of anchors){
+      const href = anchor.getAttribute("href");
+
+      if(!href || href.startsWith("#") ||
+         /^(mailto:|tel:|javascript:)/i.test(href)) continue;
+
+      let url;
+      try{
+        url = new URL(href,location.href);
+      }catch{
+        broken++;
+        continue;
+      }
+
+      if(url.origin !== location.origin) continue;
+
+      url.hash = "";
+      if(unique.has(url.href)) continue;
+      unique.add(url.href);
+
+      checked++;
+
+      try{
+        const result = await fetch(url.href,{
+          method:"GET",
+          cache:"no-store"
+        });
+
+        if(!result.ok) broken++;
+      }catch{
+        broken++;
+      }
+    }
+
+    if(broken){
+      addResult("بررسی لینک‌های داخلی","WARN",
+        `${broken} لینک از ${checked} لینک داخلی پاسخ موفق نداد.`);
+    }else{
+      addResult("بررسی لینک‌های داخلی","OK",
+        `${checked} لینک داخلی بررسی شد.`);
+    }
+  }catch(error){
+    addResult("بررسی لینک‌های داخلی","FAIL",error.message);
+  }
+}
+
+function createReport(){
+  const lines = [
+    "METATYA QUALITY ASSURANCE",
+    "Date: " + new Date().toISOString(),
+    "Origin: " + location.origin,
+    "Path: " + location.pathname,
+    "",
+    ...results.map(item =>
+      `[${item.status}] ${item.name}: ${item.detail}`
+    ),
+    "",
+    `TOTAL: ${results.length}`,
+    `PASSED: ${results.filter(x=>x.status==="OK").length}`,
+    `FAILED: ${results.filter(x=>x.status==="FAIL").length}`,
+    `WARNINGS: ${results.filter(x=>x.status==="WARN").length}`
+  ];
+
+  $("report").textContent = lines.join("\n");
+}
+
+async function run(){
+  if(running) return;
+
+  if(location.protocol !== "https:" &&
+     location.hostname !== "localhost"){
+    $("runStatus").textContent =
+      "برای بررسی معتبر، صفحه را از طریق HTTPS سایت باز کنید.";
+    return;
+  }
+
+  running = true;
+  results.length = 0;
+  renderResults();
+  updateSummary();
+
+  $("runBtn").disabled = true;
+  $("runStatus").textContent = "بررسی آغاز شد...";
+
+  const totalSteps = files.length + 1;
+  let completed = 0;
+
+  for(const file of files){
+    await checkFile(...file);
+    completed++;
+    $("progressBar").style.width =
+      Math.round(completed/totalSteps*100) + "%";
+    updateSummary();
+  }
+
+  await checkLocalLinks();
+  completed++;
+
+  $("progressBar").style.width = "100%";
+  updateSummary();
+  createReport();
+
+  const failed = results.filter(x=>x.status==="FAIL").length;
+  const warnings = results.filter(x=>x.status==="WARN").length;
+
+  $("runStatus").textContent = failed
+    ? `بررسی تمام شد؛ ${failed} خطای ناموفق و ${warnings} هشدار ثبت شد.`
+    : `بررسی تمام شد؛ خطای دسترسی یا ساختار JSON پیدا نشد. هشدارها: ${warnings}`;
+
+  $("runBtn").disabled = false;
+  running = false;
+}
+
+$("runBtn").addEventListener("click",run);
+
+$("copyBtn").addEventListener("click",async()=>{
+  try{
+    await navigator.clipboard.writeText($("report").textContent);
+    $("copyBtn").textContent = "گزارش کپی شد";
+  }catch{
+    $("copyBtn").textContent = "کپی خودکار در این مرورگر در دسترس نیست";
+  }
+});
+
+})();
+</script>
+</body>
+</html>
