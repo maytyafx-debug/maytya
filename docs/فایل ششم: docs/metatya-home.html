@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050807">
+  <meta name="description" content="Metatya؛ پلتفرم آموزش، تحلیل، توسعه مهارت و سواد مالی. با قانون معامله کن، نه با هیجان.">
+  <title>Metatya | با قانون معامله کن، نه با هیجان</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="metatya-core.css">
+  <link rel="stylesheet" href="metatya-components.css">
+
+  <style>
+    .mt-hero-badge {
+      display: inline-flex;
+      padding: 7px 15px;
+      border: 1px solid rgba(0,255,157,.25);
+      border-radius: 30px;
+      color: var(--mt-green);
+      background: rgba(0,255,157,.07);
+      font-size: .8rem;
+      font-weight: 800;
+    }
+
+    .mt-stat-row {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 12px;
+      margin-top: 45px;
+    }
+
+    .mt-stat {
+      padding: 16px;
+      border: 1px solid var(--mt-border);
+      border-radius: 15px;
+      background: rgba(255,255,255,.025);
+    }
+
+    .mt-stat strong {
+      display: block;
+      color: var(--mt-green);
+      font-size: 1.7rem;
+    }
+
+    .mt-stat span {
+      color: var(--mt-muted);
+      font-size: .78rem;
+    }
+
+    .mt-section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+      margin-bottom: 35px;
+    }
+
+    .mt-feature-banner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 35px;
+      align-items: center;
+      padding: 45px;
+      border: 1px solid rgba(0,255,157,.2);
+      border-radius: 25px;
+      background:
+        radial-gradient(circle at 0 100%,rgba(0,255,157,.1),transparent 45%),
+        #0a110e;
+    }
+
+    .mt-checklist {
+      display: grid;
+      gap: 12px;
+      padding: 0;
+      list-style: none;
+      color: var(--mt-muted);
+    }
+
+    .mt-checklist li::before {
+      content: "✓";
+      color: var(--mt-green);
+      margin-left: 10px;
+      font-weight: 900;
+    }
+
+    .mt-cta {
+      padding: 65px 25px;
+      text-align: center;
+      border: 1px solid rgba(214,173,69,.25);
+      border-radius: 25px;
+      background:
+        radial-gradient(ellipse at center,rgba(214,173,69,.1),transparent 70%),
+        #0b100d;
+    }
+
+    .mt-cta .mt-description {
+      margin-inline: auto;
+    }
+
+    .mt-mobile-links {
+      display: none;
+      padding: 15px 20px;
+      background: #0b1210;
+      border-top: 1px solid var(--mt-border);
+    }
+
+    .mt-mobile-links a {
+      display: block;
+      padding: 10px;
+      color: var(--mt-muted);
+    }
+
+    @media(max-width:850px) {
+      .mt-feature-banner {
+        grid-template-columns: 1fr;
+        padding: 25px;
+      }
+
+      .mt-section-heading {
+        display: block;
+      }
+    }
+
+    @media(max-width:580px) {
+      .mt-stat-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="mt-header">
+  <div class="mt-container mt-nav">
+    <a href="metatya-home.html" class="mt-brand">
+      <span class="mt-brand-mark">M</span>
+      <span>METATYA</span>
+    </a>
+
+    <nav class="mt-nav-links" aria-label="منوی اصلی">
+      <a href="#pillars">حوزه‌ها</a>
+      <a href="#products">محصولات</a>
+      <a href="#fit">مسیر FIT</a>
+      <a href="#journal">دفترچه معاملات</a>
+    </nav>
+
+    <a class="mt-button mt-button-primary"
+       href="https://t.me/Maytyafx"
+       target="_blank"
+       rel="noopener noreferrer">
+      ارتباط با مایتیا
+    </a>
+
+    <button class="mt-mobile-menu mt-button mt-button-outline"
+            data-mt-menu-toggle
+            aria-expanded="false"
+            aria-controls="mobileMenu">
+      منو ☰
+    </button>
+  </div>
+
+  <nav id="mobileMenu" class="mt-mobile-links"
+       data-mt-menu hidden>
+    <a href="#pillars">حوزه‌ها</a>
+    <a href="#products">محصولات</a>
+    <a href="#fit">مسیر FIT</a>
+    <a href="#journal">دفترچه معاملات</a>
+  </nav>
+</header>
+
+<main>
+
+  <section class="mt-container mt-hero">
+    <div class="mt-hero-content">
+      <span class="mt-hero-badge">
+        پلتفرم جامع آموزش و توسعه مهارت
+      </span>
+
+      <h1 class="mt-title">
+        آینده را با
+        <span>دانش</span>
+        بساز، نه با هیجان.
+      </h1>
+
+      <p class="mt-description">
+        Metatya فضایی یکپارچه برای یادگیری، تحلیل، مدیریت تصمیم‌ها،
+        سواد مالی، فناوری و توسعه مهارت‌های فردی و حرفه‌ای است.
+      </p>
+
+      <div class="mt-hero-actions">
+        <a href="#pillars" class="mt-button mt-button-primary">
+          کشف دنیای Metatya
+        </a>
+
+        <a href="#journal" class="mt-button mt-button-outline">
+          آشنایی با دفترچه معاملات
+        </a>
+      </div>
+
+      <div class="mt-stat-row">
+        <div class="mt-stat">
+          <strong>۱۱</strong>
+          <span>حوزه تخصصی</span>
+        </div>
+        <div class="mt-stat">
+          <strong>۳</strong>
+          <span>سطح محصول</span>
+        </div>
+        <div class="mt-stat">
+          <strong>۱</strong>
+          <span>اکوسیستم یکپارچه</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-hero-visual" aria-label="نماد سه‌بعدی Metatya">
+      <div class="mt-orbit"></div>
+      <div class="mt-core">
+        <strong>MT</strong>
+      </div>
+    </div>
+  </section>
+
+  <section id="pillars" class="mt-container mt-section">
+    <div class="mt-section-heading">
+      <div>
+        <span class="mt-eyebrow">ECOSYSTEM</span>
+        <h2 class="mt-title">۱۱ مسیر برای <span>رشد</span></h2>
+        <p class="mt-description">
+          حوزه‌های مستقل با یک هویت مشترک و مسیرهای آموزشی متناسب با نیاز هر مخاطب.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-grid" data-mt-pillars></div>
+  </section>
+
+  <section id="journal" class="mt-container mt-section">
+    <div class="mt-feature-banner">
+      <div>
+        <span class="mt-eyebrow">TRADING JOURNAL</span>
+        <h2 class="mt-title">
+          معامله‌گر بدون دفترچه،
+          <span>خلبان بدون چک‌لیست</span>
+          است.
+        </h2>
+
+        <p class="mt-description">
+          حافظه همیشه دقیق نیست. ثبت تصمیم‌ها و مرور منظم آن‌ها
+          کمک می‌کند اشتباهات، الگوها و نقاط قابل بهبود را بهتر بشناسیم.
+        </p>
+
+        <a href="#products" class="mt-button mt-button-primary">
+          مشاهده محصولات دفترچه
+        </a>
+      </div>
+
+      <div>
+        <ul class="mt-checklist">
+          <li>ثبت منظم تصمیم‌ها و مشاهدات</li>
+          <li>مرور عملکرد و شناسایی الگوها</li>
+          <li>ابزارهای محاسباتی و آماری</li>
+          <li>توجه به نظم، انضباط و مدیریت ریسک</li>
+          <li>ارزیابی آموزشی بدون وعده سود قطعی</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="products" class="mt-container mt-section">
+    <div class="mt-section-heading">
+      <div>
+        <span class="mt-eyebrow">METATYA PRODUCTS</span>
+        <h2 class="mt-title">ابزارهای <span>Metatya</span></h2>
+        <p class="mt-description">
+          محصولات با سطح امکانات متفاوت؛ جزئیات و شرایط دریافت هر نسخه
+          باید پیش از عرضه نهایی مشخص و آزمایش شوند.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-product-grid" data-mt-products></div>
+  </section>
+
+  <section id="fit" class="mt-container mt-section">
+    <div class="mt-section-heading">
+      <div>
+        <span class="mt-eyebrow">FIT DEVELOPMENT</span>
+        <h2 class="mt-title">سه مسیر، سه <span>سطح متفاوت</span></h2>
+        <p class="mt-description">
+          مسیر شروع، مسیر رقابتی و مسیر قهرمانی مستقل هستند؛
+          آموزش و تمرین باید با سطح مهارت و نظارت تخصصی متناسب باشد.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-grid" data-mt-fit></div>
+  </section>
+
+  <section class="mt-container mt-section">
+    <div class="mt-cta">
+      <span class="mt-eyebrow">JOIN METATYA</span>
+      <h2 class="mt-title">
+        مسیر رشد از <span>تصمیم درست</span> آغاز می‌شود.
+      </h2>
+
+      <p class="mt-description">
+        با دنیای آموزشی Metatya آشنا شو و مسیر مناسب یادگیری خودت را پیدا کن.
+      </p>
+
+      <a class="mt-button mt-button-primary"
+         href="https://t.me/Maytyafx"
+         target="_blank"
+         rel="noopener noreferrer">
+        ارتباط با Metatya در تلگرام
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="mt-footer">
+  <div class="mt-container mt-footer-inner">
+    <div>
+      <strong>METATYA</strong>
+      <p>با قانون معامله کن، نه با هیجان.</p>
+    </div>
+
+    <div>
+      © <span data-mt-year></span>
+      تمامی حقوق برای Metatya محفوظ است.
+    </div>
+
+    <a href="https://t.me/Maytyafx"
+       target="_blank"
+       rel="noopener noreferrer">
+      ارتباط با ما
+    </a>
+  </div>
+</footer>
+
+<script src="metatya-data.js" defer></script>
+<script src="metatya-core.js" defer></script>
+<script src="metatya-components.js" defer></script>
+
+</body>
+</html>
