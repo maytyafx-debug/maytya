@@ -553,6 +553,18 @@ def local_fallback(key, tabs, recent):
 
         title, explanation = selected
 
+        short_explanation = re.split(
+            r"(?<=[.!؟])\\s+",
+            explanation.strip(),
+            maxsplit=1
+        )[0].strip()
+
+        if len(short_explanation) > 120:
+            short_explanation = (
+                short_explanation[:117].rstrip(" ،؛:")
+                + "..."
+            )
+
         body = (
             f"{title}. {explanation} "
             "برای تمرین این موضوع، یک نمونه تاریخی یا مستند را انتخاب کن، "
@@ -566,7 +578,7 @@ def local_fallback(key, tabs, recent):
             "body": body,
             "short_script": [
                 title,
-                explanation,
+                short_explanation,
                 "این نکته را با منبع معتبر بررسی و برای مرور ثبت کن."
             ]
         })
