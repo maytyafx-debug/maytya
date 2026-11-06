@@ -64,8 +64,7 @@ small{color:var(--mut)}
   const api=(p,o)=>fetch('https://api.github.com/repos/'+R+'/contents/'+p,Object.assign({headers:{Authorization:'Bearer '+T,Accept:'application/vnd.github+json'}},o||{}));
   const b64=s=>btoa(String.fromCharCode(...new TextEncoder().encode(s)));
   const unb64=s=>new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\n/g,'')),c=>c.charCodeAt(0)));
-  try{T=sessionStorage.getItem('mt')||'';R=sessionStorage.getItem('mr')||''}catch(e){}
-  if(T&&R){$('token').value=T;$('repo').value=R}
+  // توکن GitHub فقط در حافظه‌ی همین صفحه نگه‌داری می‌شود؛ در storage ذخیره نمی‌شود.
 
   $('enter').onclick=async()=>{
     T=$('token').value.trim();R=$('repo').value.trim();B=$('branch').value.trim()||'main';
@@ -74,7 +73,6 @@ small{color:var(--mut)}
     if(!r.ok){m('ورود ناموفق ('+r.status+'). توکن و دسترسی را بررسی کن.','err');return}
     const j=await r.json();
     if(!(j.permissions&&j.permissions.push)){m('این توکن اجازه‌ی نوشتن ندارد.','err');return}
-    try{sessionStorage.setItem('mt',T);sessionStorage.setItem('mr',R)}catch(e){}
     $('login').hidden=true;$('editor').hidden=false;$('photo').hidden=false;m('وارد شدی ✅','ok');load();
   };
   async function load(){
