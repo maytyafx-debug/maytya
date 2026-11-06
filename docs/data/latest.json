@@ -1,59 +1,64 @@
 {
- "updated": "2026-11-05T12:38:40+00:00",
+ "updated": "2026-11-06T12:53:50+00:00",
  "prices": {
   "BTC/USD": {
-   "value": 79840,
-   "change24h_pct": 2.12,
+   "value": 75973,
+   "change24h_pct": -4.52,
    "source": "CoinGecko"
   },
   "ETH/USD": {
-   "value": 2402.52,
-   "change24h_pct": 3.7,
+   "value": 2235.46,
+   "change24h_pct": -6.42,
    "source": "CoinGecko"
   },
   "SOL/USD": {
-   "value": 95.25,
-   "change24h_pct": 2.7,
+   "value": 90.27,
+   "change24h_pct": -5.09,
    "source": "CoinGecko"
   },
   "XRP/USD": {
-   "value": 1.3,
-   "change24h_pct": 2.05,
+   "value": 1.19,
+   "change24h_pct": -8.68,
    "source": "CoinGecko"
   },
   "EUR/USD": {
-   "value": 1.1267,
-   "date": "2026-11-04",
+   "value": 1.1224,
+   "date": "2026-11-05",
    "source": "ECB/Frankfurter"
   },
   "GBP/USD": {
-   "value": 1.34998,
-   "date": "2026-11-04",
+   "value": 1.34591,
+   "date": "2026-11-05",
    "source": "ECB/Frankfurter"
   },
   "AUD/USD": {
-   "value": 0.70151,
-   "date": "2026-11-04",
+   "value": 0.70004,
+   "date": "2026-11-05",
    "source": "ECB/Frankfurter"
   },
   "USD/JPY": {
-   "value": 158.25,
-   "date": "2026-11-04",
+   "value": 158.46,
+   "date": "2026-11-05",
    "source": "ECB/Frankfurter"
   },
   "USD/CHF": {
-   "value": 0.81548,
-   "date": "2026-11-04",
+   "value": 0.81789,
+   "date": "2026-11-05",
    "source": "ECB/Frankfurter"
   },
   "USD/CAD": {
-   "value": 1.3935,
-   "date": "2026-11-04",
+   "value": 1.3966,
+   "date": "2026-11-05",
    "source": "ECB/Frankfurter"
   }
  },
  "news": {
   "forex": [
+   {
+    "title": "US Dollar stabilises after election-driven volatility as Euro momentum fades - www.tmgm.com",
+    "link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxQbzByd212M0JNS3doTDVReHJKazFLY0p1Y0ZHeW5RWFFTWEJOU3VENjFFaklBNk5SYmwxVUc1a2JwdDNlR3VOV0VGZll2Q2s3Y2VuZzNscmxlRmhaTnNxUjg4OERaclBIS3MtSjlJckxYVHkyWk1mWVltM184WlFBc2F3Q0tMcTNMRFRqX1dUQV9zOE5xd19BX0kzVDlKRm1BeUNqVUZMc09nUFh1Nk5aeUlDUHh1NFJjTFlHU0VHWkdGRkt1N0UtMXNDMXU0cEQ5bE1RSkowa0ZaNTZRU1E?oc=5",
+    "published": "Thu, 05 Nov 2026 19:37:12 GMT"
+   },
    {
     "title": "EUR/USD Update: Will Fed Expectations Keep Pressure on the Euro? - FOREX.com",
     "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQc1lzUks2QlVpMnd4NVpRWncxTk94UUkzdmc5XzgybzRnMFEwdVI1aFhkVVZGY1I2N3oxQmN6RWFWM2E1VzlhTk55MFpSVk9ta3B3Vy1UeTIyaFVMdXp6YjJ3bUxZQlJMVjk0M0drQndKdzVuMzE1cEVqX2xfV29FMnA2ck1zOHdLOXAxOXpVYW1OQ056NjBWdDdTNFp3V3lzVWNlTGtVckJBdjFGZXfSAboBQVVfeXFMUE12NDBCaGxOdWpnNk1vbEQzWm5nYVRxNXQ5ZlRLY1ZxSmN6T29qRlBkN2dNMDdJY2w2RUE0NlZTd2JYVmw0QXJ6UUVHX055VUQ3TUZobXFLekwwYWFORDR1eTdSVVVseGZiTEtueERFZGdqVHEtcU9zNm5EN1FHRkxRWHcwR1c4WkNvMzQ1QkFBNG9hWDZ1MGJGalZVdlFtTE81MWxWRWlMd3RBcldWb2xDOHJLOEJMdkx3?oc=5",
@@ -75,9 +80,9 @@
     "published": "Sat, 29 Aug 2026 17:41:32 GMT"
    },
    {
-    "title": "EUR/USD Bounce Hits a Wall of Fed Hawks and French Finances - FOREX.com",
-    "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPWU9HLVFUOVZFY0lJd2tBbDVwN0wza19QT3ZrcUlhdmpDbkZqM3prSzV3LTZkNHZqZ2VtVzZhM1dkbTV3WWh1Nm80M1czTzd6LVc5SkRSc2N2Tm1nNmNZNGQ5UW5pOF9GSTV4Y1RENUpNQ0VGVnBsRHFZVkJxRFV3dlluQnRwVVhNai1uQ18yaUZIOXR3Wl9SNEpvZmpsdk92MlNYcVlYeDBiUQ?oc=5",
-    "published": "Wed, 14 Oct 2026 12:48:50 GMT"
+    "title": "Euro Technical Forecast: EUR/USD Coils in September Range Ahead of Fed - FOREX.com",
+    "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPcTl2d0ZhZGVDT0tJcDhwSFhFdjJ1c1B1anBtU2gwdDNYUmliUkR0elFkeEM3UkJldzBQc0FlUjJGYlRNRWYxZEQ0ZVRqZFhNeDQ0VXNBU2FTSzNrYzFYaU5ybTBwdnFlbHBLbWhFaDBvbTBEdXpIQ1dmYmlxaW8yWHlBSGhHdHBDQzFvQWY3NHdVOW9fd29EbjUzcTJLY1FHd1I0SkVMUUprZ0pKMkQ4bzBvdnJqN2ZKRXNneUNiajBpbDZk0gHQAUFVX3lxTE1waGNFTWlpQVAxcFI0dXB3cm9fZEVRR1hjT1NZZWVrWU1CUHh0Wi12aUJROUE4VzVvemlva3NHZnJPREd0azRsQThlcnJscDBNWm9LZTBCT3o5cHRJMWJrYTlYa2hjVEgtcHRhZWZJWWNoRV9SMl9tcjFUcHdHMGlXS3hrckdqYlFBMTd4cUIxMXZpOG50TjRlSWRUc2lhczF2MTV2MVZoZkpoTlV1M2ZISmh6azg4YkFQQ3duUDhtRXFwZUg2T2plZW16NDlOemQ?oc=5",
+    "published": "Sat, 12 Sep 2026 07:00:00 GMT"
    },
    {
     "title": "The U.S. Dollar’s Role as a Reserve Currency - Federal Reserve Bank of St. Louis",
@@ -85,14 +90,9 @@
     "published": "Wed, 25 Feb 2026 08:00:00 GMT"
    },
    {
-    "title": "Euro Technical Forecast: EUR/USD Coils in September Range Ahead of Fed - FOREX.com",
-    "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPcTl2d0ZhZGVDT0tJcDhwSFhFdjJ1c1B1anBtU2gwdDNYUmliUkR0elFkeEM3UkJldzBQc0FlUjJGYlRNRWYxZEQ0ZVRqZFhNeDQ0VXNBU2FTSzNrYzFYaU5ybTBwdnFlbHBLbWhFaDBvbTBEdXpIQ1dmYmlxaW8yWHlBSGhHdHBDQzFvQWY3NHdVOW9fd29EbjUzcTJLY1FHd1I0SkVMUUprZ0pKMkQ4bzBvdnJqN2ZKRXNneUNiajBpbDZk0gHQAUFVX3lxTE1waGNFTWlpQVAxcFI0dXB3cm9fZEVRR1hjT1NZZWVrWU1CUHh0Wi12aUJROUE4VzVvemlva3NHZnJPREd0azRsQThlcnJscDBNWm9LZTBCT3o5cHRJMWJrYTlYa2hjVEgtcHRhZWZJWWNoRV9SMl9tcjFUcHdHMGlXS3hrckdqYlFBMTd4cUIxMXZpOG50TjRlSWRUc2lhczF2MTV2MVZoZkpoTlV1M2ZISmh6azg4YkFQQ3duUDhtRXFwZUg2T2plZW16NDlOemQ?oc=5",
-    "published": "Sat, 12 Sep 2026 07:00:00 GMT"
-   },
-   {
-    "title": "The Fed - The International Role of the U.S. Dollar – 2025 Edition - Federal Reserve (.gov)",
-    "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPYmVDVHp4UW9hRmdUekI4eTVhSHNENGx2WVFWTVZlNk8yRHdma004Wm44SjFCUDdTUG4yMVBGSDhPQnN2VVdOaVJHdUtGMU81MVhPNDBGdzFaN3laYXdKRXY0U2k4TVVsQndBYTFuSlZUU3ZVUUFqZjVzWmlZRm1WUk5TWXdNY1d1UTZRRzhWU0EySGRyckZWVHJWd3ktN0pmMEUzbVdLNFpfS1F1UnJ3eGN1bHJvZkR1VnZUNV9ObFQ?oc=5",
-    "published": "Fri, 18 Jul 2025 07:00:00 GMT"
+    "title": "EUR/USD outlook: Hawkish Fed puts euro on the ropes - FOREX.com",
+    "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxOc3BwV0NtNFE3bzZFYlBHSWI5cERZaTBsZExWajRPMnJJVUw4Y2xnbXpCd3VWNk1MNll0aWVEY1FTT1ZkT0c2RE54bzhyU3ZjZmg1MHBuZXFiVjU3cmJxb0UwT3pPQmRCM1JXSVNteGJUVEo4MlZNMEFaTE9nSDF1Y3lQVTZ4QW1hZk9JWlNKeHJUNkJNTUVrXzk1TklRUdIBqgFBVV95cUxPcXB3QldpdEZ1YWc3N0h0Q2hyQ3htMzdmTDdXMVhEN01RQTNfV2R5UHQzUXZqazU2Qm9oMUZqMjRLd3VSbTh5MkN1a3VMc0taUjRSM3g1QXc1b1RwZnNXRVhacG02OWF4aU83cXJKbVpyN0VoUmpzZndpamVMbkpWT1o4azJ3TVc1OVI2YTByU1ZzUzRJNnJ5TEI0OEdCQnRSTV9KQ1p6dWxjUQ?oc=5",
+    "published": "Wed, 16 Sep 2026 07:00:00 GMT"
    }
   ],
   "crypto": [
@@ -102,14 +102,9 @@
     "published": "Mon, 02 Nov 2026 20:30:00 GMT"
    },
    {
-    "title": "What's next as Bitcoin, Ethereum and XRP recovery cools? - FXStreet",
-    "link": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOT01rSWNxY1hzS09IVFhoeWt6N1M5Y0Q0cXhlZ3lwWGZiT3pRT0tEYlNEcGJuZmRjSUVtTEY4YXpDbnVQYjg1YkRfLVRtaG1aN1FiLWJaOWV5c0FKS1JPMGVSQ1lqX21JS1A2YUFGY0RhUGpXU3BMOUVzU24yRWFZM2JQLXhLMkw0SFpVck5sRzhpYl93U1hoOXRUeUNaWDBodFR6N0lEOXBvT0p5U3ktQmVlRnBZMUtxRTM5aGRpcnJDYlB3S1k3clg5OXVxWHNNTWtfRmFn?oc=5",
-    "published": "Thu, 05 Nov 2026 10:17:32 GMT"
-   },
-   {
-    "title": "$250 Each in Bitcoin, Ethereum, XRP and Solana at the Start of October: What Is the $1,000 Worth Now? - 24/7 Wall St.",
-    "link": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxNUXZrM0NDVGt3bTBzcG1uMlhHLU05MlN1emtoSFVnRWo5Qjl2QXNpVXJsOW0zZ2M4OHNOMDZQWGItU1pYWjAyV3ZTSWRqbF9PdVVvc2RxWFhZelp0WklvalZiQ25Nb005ZGVMVFFIbHRTTFMyVW1tZGo5VzY4cjRsYzBWSGhQRnBBWHVSQUdMRHlEeFNISzUzb21ES1hRd0puTEJ6Mm9uUU9kR0lLbWhqc0VXLUVvZ3Z6U2NmN3Rmb2tZNHZDTEZ5OVdRYnRlNXpXSW1ELVc3Q1o3OFlyRUN2aGdSeGtzZXNt?oc=5",
-    "published": "Thu, 05 Nov 2026 02:05:00 GMT"
+    "title": "We Asked ChatGPT if Ethereum Can Reach $3,000 by March 2027 - 24/7 Wall St.",
+    "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPUjM0c3doNWpWVHRMdzBuSDQtblpBNmEtY1BydVJjaVlEQ0ZES05ydS01V2Y5Z2wzVWlyVnRaLWItN3hjRFZ1VFZfZlhXMTRLRHA2bkRsV25xVVJJZTdGNVlhQTNhM3ExY1EteUlsQkNrTlJsVTVFMHhKTU55Y0Q0bWFWTmJVcVBXYm1BM0JCazMwaU5DVjR5cWx5alpXY2xvdDZhcllZUHE3QlFzM3RqZFBHeVA5TTA?oc=5",
+    "published": "Thu, 05 Nov 2026 21:41:00 GMT"
    },
    {
     "title": "Investors Withdrew Cash From Crypto ETFs, Except for One Altcoin - Yahoo Finance",
@@ -117,24 +112,29 @@
     "published": "Wed, 04 Nov 2026 10:24:53 GMT"
    },
    {
-    "title": "Is Google's New Cryptocurrency Service a Reason to Buy Ethereum or Solana? - The Motley Fool",
-    "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQX1BodjA4TXY0ZG1sSGtQRmVSM3pHRG5DZ1Fib0ZYWnN0OEFWQ1RwUnFZaEo4Sjc0eGNpTndJUVlxci1LZTZZZVFJblhhMlZmYkZrUFREV0ZUaXB3d0FKLVNxRWRJTHAxbGZJYmlYNThpVnE1a21rMWg3WVFTQTA2RjlyYzhtcWJpM3NOMWJ0MUZKR2hVYXJB?oc=5",
-    "published": "Wed, 04 Nov 2026 12:15:00 GMT"
+    "title": "Ethereum Price Drops 7.9%: ETF Outflows and Liquidations - CryptoTicker.io",
+    "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTE9iZGpJZ0ZDV19FdUt0dVd3YWpydXZLTmdSNVFqYWF2Q1MzaHc2Y2ZCV0Nid3ZOTjVySFNaTk9jckRmLTI2bDZENFF5LVh4NlBpRllnekU3dTJHc1A4VlBybjNfcUMwZ1ZJaEhzR2lsTU9JSnFpZEhicHpPZGhYZw?oc=5",
+    "published": "Fri, 06 Nov 2026 03:12:39 GMT"
    },
    {
-    "title": "Bitcoin and Ethereum ETFs shed $1.8B – Why investors are pulling back - AMBCrypto",
-    "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPdmlMTHlFTXF2dWRzV09pdlU0cEptelNiQUpMQzNQeFcyS0x4aUdjV1I4eXFLT3ZkblFvTW5vR2tQbmZrNzJYaG9KODhEbkZ2LWJINmJ4SmtfR1QyaTVmT3FodXQ2VUttYnRTZzkwdklqalVidmFJUDdYNVZsTWtwbUs2MlM1X3BCZEJoOVJkcjRzY2c?oc=5",
-    "published": "Wed, 04 Nov 2026 23:00:31 GMT"
+    "title": "Crypto Market Today, Nov. 5: Bitcoin Erases Post-Election Rally as Wall Street Suffers Worst Day in 18 Months - The Motley Fool",
+    "link": "https://news.google.com/rss/articles/CBMi-wFBVV95cUxQbHR0NFpmUE5SbHdzOVctcDc0am12aVVfc3hlQjF6akZWSWstakRTTnRxZVF5aV9kempOTHBnbVdvRGtuSlBYMnExLTR5cTdYN1l0UVlVZlZLQTBoMmxDUWQ2TVA3eVg0WHd1UDZJbS15amxIeDFzUWxuclNtX3ZvN1R4N0czQnoyWlhGdW5xZk53RVd5aUh1a2poV1Fyd2lUT2QwTEJMZlBQTGh1ZEVDUUFXa1h0UVJLZktpVlJhcXRoakIxS0dNdWxOM2wteGpOak15M2NWYmpVM3dBZjZkRFlxU092azlQVDR0OG5EWVQzWlJNMW9JRGNYZw?oc=5",
+    "published": "Thu, 05 Nov 2026 22:25:00 GMT"
    },
    {
-    "title": "Bitcoin steadies at $76,900 as ETFs lose $399 million and Binance outflows hit $4.7 billion - CoinDesk",
-    "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxNLXI5UGNpbURfSFpPbDYtTDN4UGU2R3BkbU00V2huUEJPdjhwWTY4Y3FOaW5HMmpMa1ZnakR2N05WcUR2YjVobi0tVkdwZU9qVHNZaTlFTXdZVWVHamYyblkxdjZtRDVxZElZcGhBWVBDSkNhTm4yOEhsSTY5T2dlV0hOT1REYkhrV0pKMzVWaGVacHVsRkt5eUhnbnVBRzdWbmkyTEFLZmJfbDg2aGZreHB2OWExZkpycmwyWVBKNjI2V2FFQU5GLVNNc1M1ZUIwQzBB?oc=5",
-    "published": "Tue, 03 Nov 2026 11:28:00 GMT"
+    "title": "Top Reasons Why Bitcoin, Ethereum and XRP Price Are Crashing Today - CoinGape",
+    "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQUmMwdEVJbF9Wb2JnNmluMWRmNmtoNXJTWjZJRDJUUWh2UU10UWNIVzk1MXNFR01tSHRVRnpQZk5KUHVDZVZFMjhrLVZlc250cDVmRU5rdXpVXzd3S2ZldnFHZUtJcXRCRzVlTGo1Z3ZLS0xqQ3VtN04yQ3VHWXdaTG5kYzhYekJRSW84MlN2TUJDcnpqNkJad2hmRQ?oc=5",
+    "published": "Fri, 06 Nov 2026 10:19:06 GMT"
    },
    {
-    "title": "Investors Withdrew Cash From Crypto ETFs, Except for One Altcoin - BeInCrypto",
-    "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTE9lNDNDRTQ2NWFFaDFrLVB3Yi10SjlMX1Y1X2pOWDhsZ2VubWpxa0lhbmVJSW5kWGIwWnEyN0RKdkJlaGVSWlRNSG55NGYtcmhqVzdQWFF2UG9VaW1JNjhhWWVBUGQ2aDAwWWNBR1NRU05TOGZrZXBRUkN1aDM2dw?oc=5",
-    "published": "Wed, 04 Nov 2026 10:24:00 GMT"
+    "title": "Bitcoin and Ethereum ETFs End Six Days of Outflows With $252.5M Haul - Startup Fortune",
+    "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQNkxCamRQeFVYRTlpZTRpT2t3YVRheEZLQ1FncEtLRmo1OFNWbFRTQzlhUFNVVXM2OS01RVFkZHQtcWRfaENOcVg3NHl1ZXdYWHVmTGdhU2RVZzQ1eDc3R1VXbGhJSTI3RGZ1Sm95VnlySEozOW1JV0J5ejdlR3RYSFF3bDEyWVRUeGpoZGNNMkpCelItNXR5VXln?oc=5",
+    "published": "Fri, 06 Nov 2026 06:20:55 GMT"
+   },
+   {
+    "title": "What's next as Bitcoin, Ethereum and XRP recovery cools? - FXStreet",
+    "link": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOT01rSWNxY1hzS09IVFhoeWt6N1M5Y0Q0cXhlZ3lwWGZiT3pRT0tEYlNEcGJuZmRjSUVtTEY4YXpDbnVQYjg1YkRfLVRtaG1aN1FiLWJaOWV5c0FKS1JPMGVSQ1lqX21JS1A2YUFGY0RhUGpXU3BMOUVzU24yRWFZM2JQLXhLMkw0SFpVck5sRzhpYl93U1hoOXRUeUNaWDBodFR6N0lEOXBvT0p5U3ktQmVlRnBZMUtxRTM5aGRpcnJDYlB3S1k3clg5OXVxWHNNTWtfRmFn?oc=5",
+    "published": "Thu, 05 Nov 2026 10:17:32 GMT"
    }
   ],
   "bourse": [
@@ -181,6 +181,11 @@
   ],
   "sport": [
    {
+    "title": "Protein Before or After Lifting? Research Challenges a Common Muscle-Building Rule - Men's Journal",
+    "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNQUxBdF9JQ0pJcFQtUXl0aldzYnVES0s4ZkV3Ql9hS2M5LWl0MmdKdUZDOFZ2S1gxMkhVM3oyTkFveHRXQ0NrTW1tazRSOXk1UVdMM1F0Vk9JRHdHQS1BVDBQRlpJSnMzXzhKOW1zbzZGMHNIQzFQWTRjdnZRRGctN2tsOHZMUGlPT2NMVm03dEcwbjVUM25iX3l2aWtlb0hLVE5UQUJsVnlsM0tTVGl2cjdwOEg?oc=5",
+    "published": "Mon, 02 Nov 2026 00:43:00 GMT"
+   },
+   {
     "title": "Moderate amount of strength training each week could boost longevity - Harvard T.H. Chan School of Public Health",
     "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNSG5BbHdreHM3ZjNiaXItN3BybU5PR0pYcmtLWk9vMF9CejBCNU5NR2Q1ZWRmOUZUUm9RYllaeEpMSlBpTUszUHJ1Y0JSZTR1TWFwa2lXR2NSOG5JYXF3em03M3IyTGtkcm10cHFPQXNEVTNJQW5sZ3liLTlSSTE4QlA4c0diY3NDbWMxR2V4TG5lUkhVLVlsdV9BTGhkclJB?oc=5",
     "published": "Tue, 09 Jun 2026 07:00:00 GMT"
@@ -214,11 +219,6 @@
     "title": "Protein for strength training? Vegan diet matches meat for muscle gains - NPR",
     "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQSmUzcWhMak9oRkRYdE9BelZnMUNybjFaVVJMTzBmU2NKVEQtNTh4Qmdnb1NMTjhVYXNOM01mUG9rVVhHbDhLd054XzVySDQ0SzVad2FBd09sY3dDOTdELV9sY2M0UXlrZHlmSS1WandLbWpaRFAyWnFwYl9xaE5XZWhsZVBkS1NzYkQ5QXFhenVxWkhp?oc=5",
     "published": "Mon, 19 May 2025 07:00:00 GMT"
-   },
-   {
-    "title": "Weightlifting beats running for blood sugar control, researchers find - Virginia Tech News",
-    "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNajBHeDFNY1FPcEtyVUlySS00d2h4TlBkS09ob1piUVBRNUkwYXI5NE52SFE1SVNzQ1JKblpLRXNKVGJrTkVIZ202Z21oOFFOUnNVWDR1Skd5ZmRFMjl0MkViRC15UFFqRXkzUFFhTy1NVTAtd2MzdG5ZQUViZ1BGdThMRU9qVVk?oc=5",
-    "published": "Wed, 05 Nov 2025 08:00:00 GMT"
    }
   ],
   "psychology": [
@@ -228,14 +228,19 @@
     "published": "Fri, 23 Oct 2026 07:00:00 GMT"
    },
    {
+    "title": "How 76 Years of Palestinian Mental Health Research Stayed Western, Clinical and Depoliticized - Bioengineer.org",
+    "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOMzFvTlNVRVB6QkhvQ0Fsd3d1Y2s1ZFR2Rm1ha1RfYkhRU0cyaVJiaE5HRjRFbnVaRFFKUVZhSFlLYkdsMnNRemZYTGhnUFZYb2FWLWFBRFdwVnVGYUJ1YURjSGVjdm5IdkJ3RENreGRxeWlfMXJEMXhFbXV4SG5FbUtGTHFQc3JJQlp5by1LY19MSjV4YURBQzdGaFRPemJSMWlsWlVFYllnVFNybEM4YXZYcGhheWcw?oc=5",
+    "published": "Fri, 06 Nov 2026 11:22:59 GMT"
+   },
+   {
     "title": "Study establishes weekly 'dose-of-nature' benchmarks for mental health benefits - Medical Xpress",
     "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPOU1NekVLd3Y5a280dkFGUFJoYWI0UXJlQ3NCVWc3OVpsQ2RGellFQmpJdklSeFo4alEzVWhmVHUtRTlDODlBRkYyZVZKLVMyRy0yM3NoYk8xSm15akFKT2hVSkJpbl9nN056S04zek5haGNZRlFzVC1BMGd2a2pQdlJpVmRsb3c?oc=5",
     "published": "Wed, 04 Nov 2026 12:00:04 GMT"
    },
    {
-    "title": "Your teenage mental health may say something about your vote at 40, study finds - PsyPost",
-    "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOa3U3Rk9ObkdpMGJ6YURDN2xJNFdTcHpYMlo3a1BpcHhmSjgyMU1Mb1dDVHdRWWpBNHhCYjQ5UUVnSy00WTdTQjlIOHlKR0pDUzRCNkhHYjhzNkhmY1hiZTk4SkQzcU1EMnRFU1VWa2NvMHdaTjhDRnF0TmtLaF9YbkNNRUc4RFAtVV9KNA?oc=5",
-    "published": "Sun, 01 Nov 2026 12:18:41 GMT"
+    "title": "Losing childhood weight by adulthood might erase later depression risks - PsyPost",
+    "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNOW5LR0pWVGlWa0s1bGw4enN5MFItQUJnakRUT1F1VTEyczg3ck4yTGw4THlCLUhCRjZ5cG52SHRDVjBSNDZkUFBuOWVkN1ZjZ3l1a3AycEVoTjAzTWZKbEp6OENsT1RCZGg3QzhRcS1hNXJocUFmMTZvR0poa2pxaWlrZUZCSjhLN2Z0YzR3Z1NFbDYwVXNzMUdR?oc=5",
+    "published": "Thu, 05 Nov 2026 17:36:26 GMT"
    },
    {
     "title": "Mental illness, mental health, and mental well-being - npj Mental Health Research - Nature",
@@ -256,11 +261,6 @@
     "title": "New Policies Affecting Access to Mental Health Care - APA/APASI Response Center",
     "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPR3pWZm02QktFYzFTVW1KdzZ4aW1yM2ZSZzltVkR3NXEwcVY4SGNJb2JHRXl5Sk5vanplTVlmWGFxRW02VGVnSTYyOWtnLWswSFVEcTE3eWpGSVV1NGFKckdodDVqX01kSFdxMWVCbmZDaUgwSUJBeW1fVmstY1h6bVJMRGdmZUZzMzBR?oc=5",
     "published": "Thu, 15 Jan 2026 08:00:00 GMT"
-   },
-   {
-    "title": "Prevalence and severity of mental health problems in early-career researchers: a systematic review and meta-analysis - Nature",
-    "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9iZEZWOV9qanJwNHhqRTN3UFBCdFZQNXJnbERrWDN1alJheFJhWXZvSjJ2UGg0bmhTVnNXaXl5M2R0YlE0YnpKb2c3MUstX2FuaGRLZDE1WXJhZlhRcXNj?oc=5",
-    "published": "Mon, 29 Jun 2026 07:00:00 GMT"
    }
   ],
   "business": [
@@ -270,19 +270,14 @@
     "published": "Thu, 17 Sep 2026 07:00:00 GMT"
    },
    {
-    "title": "America’s startup boom offers hope for the future of work - The Economist",
-    "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQbVhpV1h1NGVXd3VUNlN1TzU0UGF2bXUxYTM1SkEyV0RVaDNJaXowN21wVmprUGFjZEZCck96Q1RqcGJ4T2tHTDJSMkxZSUZiNVVBM0hQZjdvak0waWNYY29Tcy1UQTZ0VWJSanh1Z19fTmt2cjJDQW14WTBsQTRrZ1pfTjFUTXJnT3gtZGFJNExVTTNFZTNYUHBUb1BQZTMwd1NR?oc=5",
-    "published": "Thu, 30 Jul 2026 07:00:00 GMT"
-   },
-   {
     "title": "24 Fastest Growing Companies & Startups (October 2026) - Exploding Topics",
     "link": "https://news.google.com/rss/articles/CBMiZkFVX3lxTFB3SWR0UnU0aDlmLTBuNXNSVmxLT3k1UnF1cVJpdVJWckhDNDhJWFpxenUwam1RY3lhWHR4WWJUOThkZXRVdm9QdmFJb2dfWU1NVUN0cUlWS0YtMUlyMEZJVkRmbllDdw?oc=5",
     "published": "Mon, 26 Oct 2026 07:00:00 GMT"
    },
    {
-    "title": "Small business statistics 2026: Key facts and growth trends for entrepreneurs - Hostinger",
-    "link": "https://news.google.com/rss/articles/CBMic0FVX3lxTE5TTVNSb3BFYUFlVjRHcWZpeXFNTDRoYV96UTZWVWlhbkdZT3NjWGo2bHB6eTNBUWtfNFFBSmdyakcyWVg4SDlMRVBaRUc4VEpEMTREcFlYNG5KODZKQmhUS1dlbU9QWTVPR0k4bkdwdXZFOTg?oc=5",
-    "published": "Fri, 18 Sep 2026 07:00:00 GMT"
+    "title": "America’s startup boom offers hope for the future of work - The Economist",
+    "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQbVhpV1h1NGVXd3VUNlN1TzU0UGF2bXUxYTM1SkEyV0RVaDNJaXowN21wVmprUGFjZEZCck96Q1RqcGJ4T2tHTDJSMkxZSUZiNVVBM0hQZjdvak0waWNYY29Tcy1UQTZ0VWJSanh1Z19fTmt2cjJDQW14WTBsQTRrZ1pfTjFUTXJnT3gtZGFJNExVTTNFZTNYUHBUb1BQZTMwd1NR?oc=5",
+    "published": "Thu, 30 Jul 2026 07:00:00 GMT"
    },
    {
     "title": "How to Apply for a Small Business Loan Successfully - U.S. Chamber of Commerce",
@@ -303,6 +298,11 @@
     "title": "50 Business Ideas Positioned for Growth in 2026 and Beyond - U.S. Chamber of Commerce",
     "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQei1NOUxoNVNqX2xta0lhUHRBTnV0eWozSGFOY01jNl9SMk50UHNwUkFqZ3pQVUVKMkQ4T2VmUWhRSFNGcmZ5c3ZsRjFxaHBlM2g2aFFOZk1lY0Y5QXFQNF83b2hFdzVKNTRxc1pEcEZ5OWJ1Z2lndUdyNlFzek1LdWhhZw?oc=5",
     "published": "Wed, 15 Apr 2026 07:00:00 GMT"
+   },
+   {
+    "title": "35 Great Business Ideas to Start in 2026 - Business News Daily",
+    "link": "https://news.google.com/rss/articles/CBMickFVX3lxTFBlbno2aF9uS2k3QzdXbTA2b1I4VHlQLXVTMTg1Z1dJeGk0R0lGSWZhaklibEoxS3BpM01GUmt4U0RoLTdKZEdhN0JJVmtidmU2V25zd2dyeWI5elltTm80dzVMTy1RTWJDT3Q2SlY1d0lLdw?oc=5",
+    "published": "Wed, 18 Mar 2026 07:00:00 GMT"
    }
   ],
   "health": []
