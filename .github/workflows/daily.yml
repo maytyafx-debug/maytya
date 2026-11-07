@@ -11,6 +11,7 @@ on:
       - "scripts/build_products.py"
       - "scripts/upload_private_products.py"
       - "scripts/build_pages.py"
+      - "scripts/make_short.py"
       - ".github/workflows/daily.yml"
   schedule:
     - cron: "30 4 * * *" # ساعت ۸ صبح تهران
@@ -103,8 +104,9 @@ jobs:
         env:
           SITE_URL: ${{ vars.SITE_URL }}
 
-      - name: ساخت ویدیوی کوتاه
+      - name: ساخت ویدیوی کوتاه آموزشی
         run: python scripts/make_short.py
+        timeout-minutes: 4
         env:
           SITE_URL: ${{ vars.SITE_URL }}
         continue-on-error: true
