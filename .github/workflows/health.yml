@@ -19,6 +19,7 @@ jobs:
           [ -n "$SITE_URL" ] || { echo "SITE_URL تنظیم نشده"; exit 1; }
           curl -fsS --max-time 30 "${SITE_URL%/}/" -o /dev/null
           curl -fsS --max-time 30 "${SITE_URL%/}/content.json" -o c.json
+          curl -fsS --max-time 30 "${SITE_URL%/}/data/latest.json" -o market.json
           python3 - <<'PY'
           import json
           import datetime
@@ -37,6 +38,24 @@ jobs:
           age = (
               datetime.datetime.now(datetime.timezone.utc) - updated
           ).total_seconds()
+
+          with open("market.json", encoding="utf-8") as file:
+              market = json.load(file)
+
+          market_updated = datetime.datetime.fromisoformat(
+              market["updated"].replace("Z", "+00:00")
+          )
+          market_age = (
+              datetime.datetime.now(datetime.timezone.utc) - market_updated
+          ).total_seconds()
+          prices = market.get("prices", {})
+          news = market.get("news", {})
+          news_count = sum(
+              len(items) for items in news.values()
+              if isinstance(items, list)
+          )
+          required_prices = {"BTC/USD", "ETH/USD", "EUR/USD"}
+          missing_prices = sorted(required_prices - set(prices))
 
           sections = data.get("sections", {})
           missing = sorted(expected - set(sections))
@@ -64,6 +83,9 @@ jobs:
           )
 
           print("سن محتوا (ساعت):", round(age / 3600, 1))
+          print("سن داده بازار (ساعت):", round(market_age / 3600, 1))
+          print("قیمت‌های اصلی مفقود:", missing_prices)
+          print("تعداد تیترهای خبری:", news_count)
           print("حوزه‌های ناموفق:", bad)
           print("حوزه‌های خالی:", empty)
           print("حوزه‌های مفقود:", missing)
@@ -71,6 +93,9 @@ jobs:
           print("حوزه‌های دارای مطلب ناقص:", malformed)
 
           assert 0 <= age < 36 * 3600, "زمان به‌روزرسانی محتوا نامعتبر یا بیش از ۳۶ ساعت قدیمی است"
+          assert 0 <= market_age < 36 * 3600, "داده بازار نامعتبر یا بیش از ۳۶ ساعت قدیمی است"
+          assert not missing_prices, "قیمت‌های مرجع اصلی در snapshot بازار موجود نیستند"
+          assert news_count > 0, "هیچ تیتر خبری در snapshot بازار وجود ندارد"
           assert not missing, "یک یا چند حوزه مورد انتظار در فایل محتوا وجود ندارد"
           assert not unexpected, "حوزه ناشناخته در فایل محتوا وجود دارد"
           assert not bad, "یک یا چند حوزه با ok=false منتشر شده‌اند"
