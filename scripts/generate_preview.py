@@ -153,6 +153,15 @@ def validate_preview(keys, baseline_titles):
         if duplicate:
             errors.append(f"{key}: تب‌های با بیش از یک محتوای جدید: {duplicate}")
 
+        # همان اعتبارسنج سخت‌گیرانه موتور اصلی را روی محتوای تازه نیز اجرا کن.
+        # این کار مانع موفقیت کاذب پیش‌نمایش با متن ناقص یا short_script نامعتبر می‌شود.
+        try:
+            gen.validate_items(new_items, expected_tabs, key)
+        except Exception as exc:
+            errors.append(
+                f"{key}: اعتبارسنجی محتوای جدید شکست خورد: {str(exc)[:240]}"
+            )
+
         total_new_items += len(new_items)
 
     if errors:
