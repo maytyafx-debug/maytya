@@ -1,5 +1,10 @@
 name: Metatya health check
 on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/content.json"
+      - ".github/workflows/health.yml"
   schedule: [{cron: "30 */6 * * *"}]
   workflow_dispatch: {}
 jobs:
