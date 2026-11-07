@@ -16,12 +16,20 @@ def build_post(key, sec, it, link):
     if key in FIN: out += ["", "<i>آموزشی است؛ توصیه‌ی سرمایه‌گذاری نیست.</i>"]
     return "\n".join(out)
 tok, chat = os.environ["TELEGRAM_BOT_TOKEN"], os.environ["TELEGRAM_CHAT_ID"]
-# POST_MODE=review: پست‌ها فقط به چت خصوصی خودتان با ربات می‌روند (بدون سرور و رایگان)؛ اگر خوب بود دستی فوروارد کنید.
-# POST_MODE=auto (پیش‌فرض): مستقیم در کانال منتشر می‌شود.
+# POST_MODE=auto: محتوای عمومی فقط به کانال اصلی (TELEGRAM_CHAT_ID) منتشر می‌شود.
+# POST_MODE=review: فقط برای بازبینی خصوصی؛ شناسه بازبینی هرگز جای شناسه کانال قرار نمی‌گیرد.
 MODE = os.environ.get("POST_MODE", "auto")
 if MODE == "review":
     chat = os.environ.get("TELEGRAM_REVIEW_CHAT_ID", "")
     if not chat: raise SystemExit("POST_MODE=review ولی TELEGRAM_REVIEW_CHAT_ID تنظیم نشده؛ چیزی ارسال نشد")
+elif MODE == "auto":
+    if not chat:
+        raise SystemExit("TELEGRAM_CHAT_ID تنظیم نشده؛ انتشار در کانال لغو شد")
+    review_chat = os.environ.get("TELEGRAM_REVIEW_CHAT_ID", "")
+    if review_chat and chat == review_chat:
+        raise SystemExit("خطای مسیریابی: شناسه کانال با چت بازبینی یکسان است؛ انتشار لغو شد")
+else:
+    raise SystemExit(f"POST_MODE نامعتبر است: {MODE}")
 site = os.environ.get("SITE_URL", "")
 latest = {}
 try: latest = json.load(open(os.path.join(os.path.dirname(__file__), "..", "docs", "latest.json"), encoding="utf-8"))
