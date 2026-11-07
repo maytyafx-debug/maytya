@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#050807">
+<title>مرکز پیشرفت یادگیری | Metatya Academy</title>
+<meta name="description" content="مرکز پیگیری مسیرهای یادگیری آکادمی متاتیا؛ مشاهده پیشرفت درس‌ها و دسترسی به آزمایشگاه‌های آموزشی.">
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root{--bg:#050807;--panel:#0c1511;--panel2:#101d17;--gold:#d6ad45;--gold2:#f3d98b;--green:#00ff9d;--text:#f2f5f2;--muted:#9aa9a0;--line:rgba(214,173,69,.2)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 80% 0%,rgba(0,255,157,.09),transparent 35%),var(--bg);color:var(--text);font-family:Vazirmatn,Tahoma,sans-serif;line-height:1.8;min-height:100vh}a{color:inherit;text-decoration:none}.wrap{width:min(1080px,92%);margin:auto}header{border-bottom:1px solid var(--line);background:rgba(5,8,7,.88);position:sticky;top:0;z-index:5;backdrop-filter:blur(14px)}.nav{min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{font-weight:900;font-size:1.2rem}.brand span{color:var(--gold)}.nav a:last-child{color:var(--gold2);font-size:.85rem;border:1px solid var(--line);padding:6px 13px;border-radius:30px}
+.hero{padding:54px 0 28px}.kicker{color:var(--green);font-size:.82rem;font-weight:800}.hero h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.3;margin:10px 0}.hero h1 span{color:var(--gold2)}.hero p{max-width:760px;color:var(--muted);margin:0}.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}.stat,.course{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(17,30,23,.95),rgba(8,14,11,.95));padding:18px}.stat strong{display:block;color:var(--gold2);font-size:1.65rem}.stat small{color:var(--muted)}
+.section-title{margin:30px 0 14px}.section-title h2{margin:0;font-size:1.35rem}.section-title p{margin:3px 0;color:var(--muted);font-size:.86rem}.courses{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.course{display:flex;flex-direction:column;gap:10px}.course-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.course h3{margin:0;font-size:1.03rem}.course .desc{color:var(--muted);font-size:.82rem;margin:0}.count{color:var(--green);white-space:nowrap;font-size:.8rem}.track{height:9px;background:#1b2b22;border-radius:20px;overflow:hidden}.track span{height:100%;width:0;display:block;background:linear-gradient(90deg,var(--green),var(--gold));border-radius:20px;transition:width .35s}.meta{display:flex;justify-content:space-between;color:var(--muted);font-size:.77rem}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}.btn{display:inline-flex;justify-content:center;align-items:center;padding:8px 13px;border-radius:11px;border:1px solid rgba(0,255,157,.3);background:rgba(0,255,157,.06);color:var(--green);font-weight:800;font-size:.82rem}.btn.secondary{border-color:var(--line);color:var(--gold2);background:transparent}
+.note{margin:24px 0;padding:16px;border:1px solid var(--line);border-radius:15px;color:var(--muted);font-size:.82rem;background:rgba(214,173,69,.045)}.resources{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.resource{border:1px solid var(--line);border-radius:15px;padding:15px;background:rgba(255,255,255,.02)}.resource strong{display:block;color:var(--gold2);margin-bottom:5px}.resource p{font-size:.8rem;color:var(--muted);margin:0 0 10px}footer{border-top:1px solid var(--line);margin-top:45px;padding:25px 0;color:var(--muted);font-size:.8rem}
+@media(max-width:650px){.courses,.resources{grid-template-columns:1fr}.summary{grid-template-columns:1fr 1fr}.hero{padding-top:38px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="wrap nav"><a class="brand" href="../golden.html">Meta<span>tya</span> Academy</a><a href="../golden.html">بازگشت به کتابخانه طلایی ↗</a></div></header>
+<main class="wrap">
+<section class="hero">
+<div class="kicker">LEARNING PROGRESS CENTER</div>
+<h1>مسیرت را ببین؛<br><span>یادگیری را ادامه بده.</span></h1>
+<p>این داشبورد پیشرفت فصل‌هایی را نشان می‌دهد که آکادمی در همین مرورگر ثبت کرده است. با بازکردن هر مسیر می‌توانی از همان‌جا ادامه بدهی.</p>
+<div class="summary">
+<div class="stat"><strong id="doneTotal">۰</strong><small>فصل و ماژول ثبت‌شده</small></div>
+<div class="stat"><strong id="overall">۰٪</strong><small>پیشرفت مسیرهای قابل‌پیگیری</small></div>
+<div class="stat"><strong>۲۴</strong><small>واحد آموزشی قابل‌پیگیری</small></div>
+</div>
+</section>
+<section>
+<div class="section-title"><h2>مسیرهای دارای ثبت پیشرفت</h2><p>وضعیت از حافظه محلی همین مرورگر خوانده می‌شود.</p></div>
+<div class="courses">
+<article class="course" data-course="mastery"><div class="course-head"><h3>📘 آکادمی جامع فارکس متاتیا</h3><span class="count" id="masteryCount">۰ از ۱۲</span></div><p class="desc">۱۲ فصل از مفاهیم پایه تا پروژه پژوهش نهایی.</p><div class="track"><span id="masteryBar"></span></div><div class="meta"><span>پیشرفت فصل‌ها</span><span id="masteryPct">۰٪</span></div><div class="actions"><a class="btn" href="metatya-forex-mastery.html">ادامه یادگیری ←</a></div></article>
+<article class="course" data-course="foundations"><div class="course-head"><h3>🧭 درس‌نامه بنیادین فارکس</h3><span class="count" id="foundationCount">۰ از ۴</span></div><p class="desc">چهار فصل پایه برای فهم زبان بازار و داده‌ها.</p><div class="track"><span id="foundationBar"></span></div><div class="meta"><span>پیشرفت فصل‌ها</span><span id="foundationPct">۰٪</span></div><div class="actions"><a class="btn" href="metatya-forex-foundations.html">ادامه یادگیری ←</a></div></article>
+<article class="course" data-course="discovery"><div class="course-head"><h3>🔎 آزمایشگاه کشف رفتار قیمت</h3><span class="count" id="discoveryCount">۰ از ۴</span></div><p class="desc">تمرین مشاهده ساختار، شتاب، بازگشت و نویز.</p><div class="track"><span id="discoveryBar"></span></div><div class="meta"><span>پیشرفت فصل‌ها</span><span id="discoveryPct">۰٪</span></div><div class="actions"><a class="btn" href="metatya-price-action-discovery.html">ادامه یادگیری ←</a></div></article>
+<article class="course" data-course="structure"><div class="course-head"><h3>🏛️ آزمایشگاه پیشرفته ساختار بازار</h3><span class="count" id="structureCount">۰ از ۴</span></div><p class="desc">چهار ماژول برای ساختار چندمقیاسی و ممیزی شواهد.</p><div class="track"><span id="structureBar"></span></div><div class="meta"><span>پیشرفت ماژول‌ها</span><span id="structurePct">۰٪</span></div><div class="actions"><a class="btn" href="metatya-market-structure-master.html">ادامه یادگیری ←</a></div></article>
+</div>
+</section>
+<section>
+<div class="section-title"><h2>آزمایشگاه‌ها و منابع تکمیلی</h2><p>این منابع در دسترس‌اند؛ اما هنوز در درصد کلی داشبورد محاسبه نمی‌شوند.</p></div>
+<div class="resources">
+<div class="resource"><strong>💎 Price Action PRO</strong><p>چارچوب‌های پژوهشی مستقل MRL، BRC، MSL و TCM؛ پیشرفت آن هنوز به داشبورد متصل نیست.</p><a class="btn secondary" href="metatya-price-action-pro.html">مشاهده آزمایشگاه ←</a></div>
+<div class="resource"><strong>📚 آکادمی پژوهشی پورصمدی</strong><p>مرور مفهومی و مستقل چند عنوان آموزشی؛ این صفحه سامانه ثبت پیشرفت ندارد.</p><a class="btn secondary" href="poursamadi-research-academy.html">مشاهده آکادمی ←</a></div>
+</div>
+</section>
+<div class="note">نکته مهم: پیشرفت در این نسخه فقط در حافظه محلی مرورگر دستگاه ذخیره می‌شود؛ با پاک‌کردن داده‌های مرورگر یا تغییر دستگاه ممکن است از بین برود. این داشبورد هنوز حساب کاربری یا همگام‌سازی ابری ندارد. درصدها فقط فصل‌هایی را می‌شمارند که خود صفحه آموزشی ثبت کرده است.</div>
+</main>
+<footer><div class="wrap">METATYA ACADEMY · یادگیری دقیق، پیشرفت قابل‌مشاهده</div></footer>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const safeGet=key=>{try{return localStorage.getItem(key)}catch(e){return null}};
+const safeJson=(key)=>{try{const v=JSON.parse(safeGet(key)||"[]");return Array.isArray(v)?v:[]}catch(e){return []}};
+const courses=[
+{id:"mastery",total:12,done:()=>new Set(safeJson("metatyaForexDone")).size},
+{id:"foundation",total:4,done:()=>[0,1,2,3].filter(i=>safeGet("mt_foundation_"+i)==="1").length},
+{id:"discovery",total:4,done:()=>[1,2,3,4].filter(i=>safeGet("metatya_discovery_done_"+i)==="1").length},
+{id:"structure",total:4,done:()=>[1,2,3,4].filter(i=>safeGet("metatya_structure_done_"+i)==="1").length}
+];
+let completed=0,total=0;
+courses.forEach(c=>{
+const n=Math.min(c.total,c.done());const pct=Math.round(n/c.total*100);
+completed+=n;total+=c.total;
+$(c.id+"Count").textContent=n+" از "+c.total;
+$(c.id+"Bar").style.width=pct+"%";
+$(c.id+"Pct").textContent=pct+"٪";
+});
+$("doneTotal").textContent=completed.toLocaleString("fa-IR");
+$("overall").textContent=Math.round(completed/total*100).toLocaleString("fa-IR")+"٪";
+})();
+</script>
+</body>
+</html>
