@@ -3,8 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Metatya | رشد مالی و ذهنی</title>
-<meta name="description" content="ابزار رایگان، آموزش و پرونده‌های معاملاتی واقعی برای بازارها، درآمد، سلامت و ذهن. بدون سیگنال و بدون وعده‌ی سود.">
+<title>Metatya | یادگیری، ابزار و رشد آگاهانه</title>
+<meta name="description" content="متاتیا؛ پلتفرم چندحوزه‌ای آموزش و ابزارهای کاربردی برای سواد مالی، فناوری، کسب‌وکار، ذهن و ورزش. یادگیری آگاهانه، بدون سیگنال و وعده‌ی سود.">
+<meta name="theme-color" content="#05060a">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Metatya | یادگیری، ابزار و رشد آگاهانه">
+<meta property="og:description" content="۱۳ مسیر یادگیری و ابزارهای کاربردی؛ با قانون پیش برو، نه با هیجان.">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
 <style>
@@ -259,6 +263,35 @@ footer{margin-top:56px;padding:22px 0 8px;border-top:1px solid var(--line);font-
   .hero{padding-top:44px}
   .chip{display:none}
 }
+
+/* ===== ارتقای تجربه‌ی صفحه‌ی اصلی: استاندارد طراحی متاتیا ===== */
+.hero{padding-top:clamp(48px,8vw,88px);padding-bottom:44px}
+.hero .lead{max-width:66ch;font-size:clamp(1rem,2vw,1.12rem);line-height:2}
+.hero-proof{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:24px;color:var(--muted);font-size:.82rem}
+.hero-proof b{color:var(--accent);font-size:1.05rem}
+.hero-proof i{width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:.8}
+.section{scroll-margin-top:100px}
+.section-head{margin-bottom:22px}
+.section-head h2{letter-spacing:-.5px}
+.bento{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.card{min-height:210px;padding:22px;gap:14px}
+.card.wide{grid-column:span 2;min-height:210px}
+.card .ico{width:58px;height:58px}
+.card h3{font-size:1.04rem}
+.card p{font-size:.82rem}
+.pillar-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+.pillar-grid a{min-width:0;display:grid;grid-template-columns:42px minmax(0,1fr);grid-template-rows:auto auto;column-gap:12px;align-items:center;padding:15px;border:1px solid var(--line);border-radius:17px;background:var(--surface);transition:transform .25s var(--ease),border-color .25s,background .25s}
+.pillar-grid a:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent) 55%,var(--line));background:var(--surface-hi)}
+.pillar-grid a>span{grid-row:1/3;width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);font-size:1.25rem;font-weight:900}
+.pillar-grid b{font-size:.88rem;line-height:1.5}
+.pillar-grid small{color:var(--muted);font-size:.72rem;line-height:1.5}
+.golden-entry{position:relative;isolation:isolate;overflow:hidden}
+.golden-entry::after{content:"";position:absolute;z-index:-1;inset:auto -10% -70% 45%;height:260px;background:radial-gradient(ellipse,var(--glow),transparent 70%);pointer-events:none}
+.golden-button:focus-visible,.pillar-grid a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+@media(max-width:900px){.bento{grid-template-columns:repeat(2,minmax(0,1fr))}.card.wide{grid-column:span 2}.pillar-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.hero{padding-top:44px}.bento{grid-template-columns:minmax(0,1fr)}.card.wide{grid-column:auto}.pillar-grid{grid-template-columns:minmax(0,1fr)}.hero-proof{gap:8px;font-size:.74rem}.hero-proof i{margin-inline:2px}.section{margin-top:44px}}
+@media(prefers-reduced-motion:reduce){.pillar-grid a{transition:none}}
+
 </style>
 </head>
 <body>
@@ -298,21 +331,27 @@ footer{margin-top:56px;padding:22px 0 8px;border-top:1px solid var(--line);font-
   </header>
 
   <section class="hero">
-    <span class="eyebrow"><span class="dot"></span>رایگان شروع کن · بدون سیگنال</span>
+    <span class="eyebrow"><span class="dot"></span>یک پلتفرم، چند مسیر برای رشد آگاهانه</span>
     <h1>
-      <span class="w" style="--i:0">رشد</span>
-      <span class="w" style="--i:1">مالی</span>
-      <span class="w" style="--i:2">و</span>
-      <span class="w" style="--i:3">ذهنی،</span>
-      <em><span class="w" style="--i:4">با</span> <span class="w" style="--i:5">داده</span></em>
-      <span class="w" style="--i:6">نه</span>
-      <span class="w" style="--i:7">با</span>
-      <span class="w" style="--i:8">هیجان</span>
+      <span class="w" style="--i:0">یادگیری</span>
+      <span class="w" style="--i:1">دقیق،</span>
+      <em><span class="w" style="--i:2">رشد</span> <span class="w" style="--i:3">آگاهانه</span></em>
+      <span class="w" style="--i:4">و</span>
+      <span class="w" style="--i:5">پیشرفت</span>
+      <span class="w" style="--i:6">قابل</span>
+      <span class="w" style="--i:7">سنجش</span>
     </h1>
-    <p class="lead">ابزار رایگان، آموزش و پرونده‌های معاملاتی واقعی برای بازارها، درآمد، سلامت و ذهن. هیچ‌جا وعده‌ی سود تضمینی نمی‌دهیم.</p>
+    <p class="lead">متاتیا یک پلتفرم چندحوزه‌ای برای یادگیری و ساختن مهارت است؛ از سواد مالی و فناوری تا کسب‌وکار، ذهن و ورزش. هر مسیر با آموزش روشن، تمرین و ابزار کاربردی طراحی می‌شود؛ بدون وعده‌های غیرواقعی.</p>
     <div class="cta-row">
-      <a class="btn btn-main" href="toolbox.html">شروع از ابزارهای رایگان</a>
-      <a class="btn btn-ghost" href="trades.html">گزارش معاملات شخصی</a>
+      <a class="btn btn-main" href="#start">کشف مسیرهای یادگیری <span aria-hidden="true">←</span></a>
+      <a class="btn btn-ghost" href="golden.html">ورود به کتابخانه طلایی</a>
+    </div>
+    <div class="hero-proof" aria-label="ویژگی‌های متاتیا">
+      <span><b>۱۳</b> مسیر یادگیری</span>
+      <i aria-hidden="true"></i>
+      <span>آموزش + تمرین + ابزار</span>
+      <i aria-hidden="true"></i>
+      <span>بدون وعده‌ی سود</span>
     </div>
   </section>
 
@@ -324,7 +363,7 @@ footer{margin-top:56px;padding:22px 0 8px;border-top:1px solid var(--line);font-
   </div>
 
   <section class="section reveal" id="start">
-    <div class="section-head"><h2>از کجا شروع کنم</h2><span>انتخاب کن چه می‌خواهی یاد بگیری</span></div>
+    <div class="section-head"><h2>مسیرت را انتخاب کن</h2><span>۱۳ حوزه در یک پلتفرم منسجم</span></div>
     <div class="bento">
       <a class="card tilt reveal" href="topic.html?t=forex">
         <svg class="ico"><use href="#i-chart"/></svg>
@@ -346,16 +385,16 @@ footer{margin-top:56px;padding:22px 0 8px;border-top:1px solid var(--line);font-
         <svg class="ico"><use href="#i-heart"/></svg>
       </a>
     </div>
-    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:18px">
-      <a class="btn btn-ghost" href="topic.html?t=ai">هوش مصنوعی و کار</a>
-      <a class="btn btn-ghost" href="topic.html?t=privacy">امنیت دیجیتال</a>
-      <a class="btn btn-ghost" href="topic.html?t=crypto">کریپتو</a>
-      <a class="btn btn-ghost" href="topic.html?t=bourse">بورس</a>
-      <a class="btn btn-ghost" href="topic.html?t=business">کسب‌وکار</a>
-      <a class="btn btn-ghost" href="topic.html?t=finance">مالی شخصی</a>
-      <a class="btn btn-ghost" href="topic.html?t=education">تحصیل و پژوهش</a>
-      <a class="btn btn-ghost" href="topic.html?t=law">حقوق</a>
-      <a class="btn btn-ghost" href="sport-elite-mind.html">ذهن ورزشی حرفه‌ای</a>
+    <div class="pillar-grid" aria-label="سایر مسیرهای متاتیا">
+      <a href="topic.html?t=ai"><span>✳</span><b>هوش مصنوعی و کار</b><small>فناوری برای حل مسئله</small></a>
+      <a href="topic.html?t=privacy"><span>⌁</span><b>امنیت دیجیتال</b><small>حریم خصوصی و سواد امنیتی</small></a>
+      <a href="topic.html?t=crypto"><span>₿</span><b>دارایی‌های دیجیتال</b><small>مفاهیم و شناخت بازار</small></a>
+      <a href="topic.html?t=bourse"><span>▥</span><b>بورس</b><small>آموزش و سواد بازار</small></a>
+      <a href="topic.html?t=business"><span>◇</span><b>کسب‌وکار</b><small>مدل‌سازی و کارآفرینی</small></a>
+      <a href="topic.html?t=finance"><span>◈</span><b>مالی شخصی</b><small>بودجه و تصمیم آگاهانه</small></a>
+      <a href="topic.html?t=education"><span>▤</span><b>تحصیل و پژوهش</b><small>یادگیری و روش تحقیق</small></a>
+      <a href="topic.html?t=law"><span>§</span><b>حقوق و آگاهی</b><small>مفاهیم پایه و شناخت حقوق</small></a>
+      <a href="sport-elite-mind.html"><span>◎</span><b>ذهن ورزشی حرفه‌ای</b><small>تمرکز و آمادگی ذهنی</small></a>
     </div>
   </section>
 
@@ -368,13 +407,13 @@ footer{margin-top:56px;padding:22px 0 8px;border-top:1px solid var(--line);font-
         <div class="bars" aria-hidden="true">
           <i style="--h:55%;--d:0"></i><i style="--h:82%;--d:1"></i><i class="neg" style="--h:40%;--d:2"></i><i style="--h:68%;--d:3"></i><i class="neg" style="--h:30%;--d:4"></i><i style="--h:90%;--d:5"></i><i style="--h:48%;--d:6"></i>
         </div>
-        <div class="legend"><span>سود</span><span class="n">ضرر</span><span style="margin-inline-start:auto">نمونه‌ی تصویری</span></div>
+        <div class="legend"><span>پیشرفت</span><span class="n">چالش</span><span style="margin-inline-start:auto">نمایش تزئینی، نه داده‌ی واقعی</span></div>
         <a class="btn btn-ghost" href="mirror.html" style="margin-top:16px">باز کردن دفترچه یادگیری</a>
       </div>
       <ol class="timeline reveal d1">
-        <li><span class="k"></span><div><b>امروز</b>ابزارهای رایگان و دفترچه سواد مالی</div></li>
-        <li><span class="k"></span><div><b>همین حالا</b>دفترچه یادگیری برای ثبت و مرور منابع</div></li>
-        <li><span class="k soon"></span><div><b>بعداً</b>بخش‌های تازه برای درآمد و سلامت</div></li>
+        <li><span class="k"></span><div><b>شروع آزاد</b>ابزارها و مسیرهای آموزشی در دسترس</div></li>
+        <li><span class="k"></span><div><b>یادگیری فعال</b>ثبت منابع، تمرین و مرور پیشرفت</div></li>
+        <li><span class="k soon"></span><div><b>در حال توسعه</b>قابلیت‌های تازه پس از تکمیل و آزمون معرفی می‌شوند</div></li>
       </ol>
     </div>
   </section>
