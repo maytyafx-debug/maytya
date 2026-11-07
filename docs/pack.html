@@ -29,9 +29,7 @@ h2{font-size:17px;margin:24px 0 8px}.card{background:var(--card);border:1px soli
   if(p.free&&p.free.file)h+='<a class="btn" download href="'+E(p.free.file)+'">🎁 '+E(p.free.title)+'</a>';
   h+='</div>'+(p.preview?'<img src="'+E(p.preview)+'" alt="'+E(p.previewAlt||p.title)+'" style="width:100%;border-radius:16px;border:1px solid var(--line);margin-top:6px" loading="lazy"><div class="card" style="font-size:11.5px">تصویر بالا نمونه با داده‌ی فرضی است، نه پرتفوی واقعی.</div>':'')+'<h2>مشکل واقعی</h2><div class="card">'+E(p.problem)+'</div><h2>داخل پک چیست؟</h2><div class="card"><ul>'+p.bullets.map(function(b){return '<li>'+E(b)+'</li>'}).join('')+'</ul>';
   h+='</ul></div>';
-  var files=Array.isArray(p.files)?p.files.filter(function(f){return f&&/^downloads\\/[A-Za-z0-9._-]+$/.test(f.name||'')}):[];
-  if(files.length){h+='<h2>فایل‌های همراه</h2><div class="card file-links">'+files.map(function(f){return '<a download href="'+E(f.name)+'">⬇️ '+E(f.label||'دریافت فایل')+'</a>'}).join('')+'</div>'}
-  h+='<div class="card" style="margin-top:8px">برای اطلاع از قیمت و روش دریافت، از مسیر رسمی همین محصول استعلام بگیر.</div>';
+  h+='<div class="card" style="margin-top:8px">فایل‌های نسخه کامل پس از تأیید سفارش، به‌صورت خصوصی از ربات رسمی محصول ارسال می‌شوند. نسخه رایگان از همین صفحه قابل دریافت است.</div>';
   h+='<div class="two"><div class="card yes"><h4>مناسب توست اگر…</h4>'+E(p.audience)+'</div><div class="card no"><h4>مناسب تو نیست اگر…</h4>'+E(p.notFor)+'</div></div>';
   h+='<div id="cta"></div><div class="warn">'+E(p.disclaimer)+' Metatya آموزشی است و هیچ نتیجه‌ای را تضمین نمی‌کند.</div>';
   root.innerHTML=h;
