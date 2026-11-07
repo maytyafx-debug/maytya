@@ -110,7 +110,7 @@ create table if not exists public.leads (
 3. ربات را به کانال **ادمین** کن و اجازه‌ی **Post messages** بده.
 4. این دو Secret را بساز:
    - `TELEGRAM_BOT_TOKEN` = توکن ربات کانال
-   - `TELEGRAM_CHAT_ID` = `@yourchannel`
+   - Variable `TELEGRAM_CHAT_ID` = `@Maytyafx` (یا یوزرنیم کانال خودت)
 5. آیدی عددی خودت را از @userinfobot بگیر و به‌عنوان Secret با نام `TELEGRAM_REVIEW_CHAT_ID` ذخیره کن.
 6. **مهم:** ربات کانال را در تلگرام باز کن و `/start` بزن. بدون این کار، ربات نمی‌تواند پیش‌نویس‌ها را برایت بفرستد.
 
@@ -155,7 +155,7 @@ Worker برای تحویل فایل‌های خصوصی از bucket خصوصی S
 |---|---|---|---|
 | `OPENROUTER_API_KEY` | OpenRouter | تولید محتوا | بله |
 | `TELEGRAM_BOT_TOKEN` | BotFather (ربات کانال) | ارسال پست به کانال | بله |
-| `TELEGRAM_CHAT_ID` | کانال (`@yourchannel`) | مقصد پست | بله |
+
 | `TELEGRAM_REVIEW_CHAT_ID` | @userinfobot | پیش‌نویس و بازبینی سفارش‌ها | بله |
 | `BOT_RISK`، `BOT_BOURSE`، `BOT_FIT`، `BOT_MIND`، `BOT_BIZ` | BotFather | توکن پنج ربات فروش | برای فروش بله |
 | `WEBHOOK_SECRET` | خودت (رشته‌ی تصادفی بلند) | امنیت webhook | برای فروش بله |
@@ -169,7 +169,8 @@ Worker برای تحویل فایل‌های خصوصی از bucket خصوصی S
 | نام | مقدار | توضیح |
 |---|---|---|
 | `SITE_URL` | `https://<نام‌کاربری>.github.io/<نام‌ریپو>/` | آدرس سایت. پست‌ها و health check از آن استفاده می‌کنند |
-| `POST_MODE` | `review` در شروع، بعد `auto` | `review` پست‌ها را فقط برای خودت می‌فرستد. `auto` مستقیم در کانال منتشر می‌کند |
+| `TELEGRAM_CHAT_ID` | `@Maytyafx` | مقصد انتشار؛ در صورت خالی بودن همین کانال پیش‌فرض است |
+| `POST_MODE` | `auto` (پیش‌فرض) یا `review` | `review` پیش‌نویس را فقط برای بازبینی می‌فرستد؛ `auto` مستقیم در کانال منتشر می‌کند |
 | `POST_KEYS` | `forex,crypto,bourse` (اختیاری) | کدام حوزه‌ها پست شوند |
 | `SUPABASE_URL` | `https://<project>.supabase.co` | اتصال سروری به Storage خصوصی و جمع‌آوری داده؛ کلید سرویس جداگانه و محرمانه است |
 
@@ -193,7 +194,7 @@ Worker برای تحویل فایل‌های خصوصی از bucket خصوصی S
 ## ۱۱. اولین اجرا (ترتیب دقیق)
 
 1. **سایت:** آدرس GitHub Pages را باز کن. باید صفحه‌ی اصلی را ببینی.
-2. **حالت انتشار:** در نسخه‌ی فعلی `POST_MODE` داخل `.github/workflows/daily.yml` روی `auto` تنظیم شده و محتوای عمومی به کانال اصلی می‌رود. برای آزمایش بدون انتشار عمومی، پیش از اجرای دستی workflow مقدار آن را به `review` تغییر بده و پس از بازبینی، در صورت نیاز به `auto` برگردان.
+2. **حالت انتشار:** مقدار پیش‌فرض `POST_MODE` برابر `auto` است. برای توقف انتشار مستقیم، در **Settings → Secrets and variables → Actions → Variables** مقدار `POST_MODE=review` بگذار؛ برای انتشار مستقیم، آن را روی `auto` قرار بده. مقصد پیش‌فرض کانال `@Maytyafx` است و با متغیر `TELEGRAM_CHAT_ID` قابل تغییر است.
 3. **تولید روزانه:** Actions → **Metatya daily** → **Run workflow**. معمولاً چند دقیقه طول می‌کشد. اگر سبز شد، `docs/content.json` به‌روز شده است. اگر قرمز شد، لاگ را باز کن.
 4. **بازبینی:** چت بازبینی تلگرامت را نگاه کن. پیش‌نویس پست‌ها باید آنجا باشد.
 5. **دیپلوی Worker:** Actions → **Deploy sales bots (Cloudflare Worker, free)**. در اجرای موفق، بررسی اعتبار Cloudflare، استقرار Worker، بارگذاری Secretها و ثبت webhookها باید همگی موفق باشند.
@@ -354,7 +355,7 @@ create policy "anon can insert leads"
 3. ربات را به کانال **ادمین** کن و اجازه‌ی **Post messages** بده.
 4. این دو Secret را بساز:
    - `TELEGRAM_BOT_TOKEN` = توکن ربات کانال
-   - `TELEGRAM_CHAT_ID` = `@yourchannel`
+   - Variable `TELEGRAM_CHAT_ID` = `@Maytyafx` (یا یوزرنیم کانال خودت)
 5. آیدی عددی خودت را از @userinfobot بگیر و به‌عنوان Secret با نام `TELEGRAM_REVIEW_CHAT_ID` ذخیره کن.
 6. **مهم:** ربات کانال را در تلگرام باز کن و `/start` بزن. بدون این کار، ربات نمی‌تواند پیش‌نویس‌ها را برایت بفرستد.
 
@@ -394,7 +395,7 @@ create policy "anon can insert leads"
 |---|---|---|---|
 | `OPENROUTER_API_KEY` | OpenRouter | تولید محتوا | بله |
 | `TELEGRAM_BOT_TOKEN` | BotFather (ربات کانال) | ارسال پست به کانال | بله |
-| `TELEGRAM_CHAT_ID` | کانال (`@yourchannel`) | مقصد پست | بله |
+
 | `TELEGRAM_REVIEW_CHAT_ID` | @userinfobot | پیش‌نویس و بازبینی سفارش‌ها | بله |
 | `BOT_RISK`، `BOT_BOURSE`، `BOT_FIT`، `BOT_MIND`، `BOT_BIZ` | BotFather | توکن پنج ربات فروش | برای فروش بله |
 | `WEBHOOK_SECRET` | خودت (رشته‌ی تصادفی بلند) | امنیت webhook | برای فروش بله |
@@ -408,7 +409,8 @@ create policy "anon can insert leads"
 | نام | مقدار | توضیح |
 |---|---|---|
 | `SITE_URL` | `https://<نام‌کاربری>.github.io/<نام‌ریپو>/` | آدرس سایت. پست‌ها و health check از آن استفاده می‌کنند |
-| `POST_MODE` | `review` در شروع، بعد `auto` | `review` پست‌ها را فقط برای خودت می‌فرستد. `auto` مستقیم در کانال منتشر می‌کند |
+| `TELEGRAM_CHAT_ID` | `@Maytyafx` | مقصد انتشار؛ در صورت خالی بودن همین کانال پیش‌فرض است |
+| `POST_MODE` | `auto` (پیش‌فرض) یا `review` | `review` پیش‌نویس را فقط برای بازبینی می‌فرستد؛ `auto` مستقیم در کانال منتشر می‌کند |
 | `POST_KEYS` | `forex,crypto,bourse` (اختیاری) | کدام حوزه‌ها پست شوند |
 | `SUPABASE_URL` | `https://<project>.supabase.co` | فقط اگر `data_bank` را فعال می‌کنی |
 
