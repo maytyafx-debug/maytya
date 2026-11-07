@@ -155,7 +155,7 @@ async function handle(env, ctx, key, upd) {
     if (act === 'pack') return send(`${pack.title}\n${pack.tagline}\n\n• ${pack.bullets.join('\n• ')}\n\nمناسب: ${pack.audience}\nمناسب نیست: ${pack.notFor}\n\n⚠️ ${pack.disclaimer}`, { reply_markup: menu(hasFree) });
     if (act === 'free') return send(hasFree ? `🎁 ${pack.free.title}\n${env.SITE_URL}/${pack.free.file}\n\nبعد از امتحان، هر سؤالی داشتی همین‌جا بپرس.` : 'نسخه‌ی رایگان به‌زودی.', { reply_markup: menu(hasFree) });
     if (act === 'ask') return send('سؤالت را بنویس؛ کوتاه و مشخص جواب می‌دهم.');
-    if (act === 'order') return send('سفارش پولی فقط برای بزرگسالان ۱۸+ است. اگر زیر ۱۸ سال هستی، سفارش نده و اطلاعات شخصی یا مالی ارسال نکن. نسخه رایگان آموزشی از دکمه دریافت رایگان در دسترس است.', { reply_markup: menu(hasFree) });
+    if (act === 'order') return askForm('pack');
     if (!isOwner) return;
     if (act === 'gen') return generate(target, kind);
     if (act === 'send') return deliver(target, kind);
@@ -192,7 +192,7 @@ async function handle(env, ctx, key, upd) {
     const kind = KIND[mk[1]] ? mk[1] : 'pack';
     const normalized = norm(text);
     const adult = /(?:۱۸\+|18\+|۱۸سالیا‌بیشتر|هجدهسالیا‌بیشتر|بزرگسال(?:هستم)?)/.test(normalized);
-    const minor = /(?:زیر۱۸|کمتر۱۸|زیرهجده|زیرهجده)/.test(normalized);
+    const minor = /(?:زیر۱۸|کمتر(?:از)?۱۸|زیرهجده)/.test(normalized);
     if (!adult || minor) {
       return send('برای حفاظت از کاربران زیر ۱۸ سال، سفارش پولی فقط برای بزرگسالان است. اطلاعات شخصی یا مالی نفرست. می‌توانی از محتوای رایگان آموزشی استفاده کنی.', { reply_markup: menu(hasFree) });
     }
