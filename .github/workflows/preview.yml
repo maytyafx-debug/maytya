@@ -13,7 +13,7 @@ on:
       sections:
         description: "حوزه‌ها با کاما جدا شوند؛ مثال: forex,crypto"
         required: true
-        default: "forex,crypto"
+        default: "forex,crypto,bourse,income,business,finance,education,psychology,law,ai,privacy,sport,health"
         type: string
 
 permissions:
@@ -48,7 +48,7 @@ jobs:
         env:
           # اجرای خودکار روی push باید قطعی و بدون مصرف API باشد؛ اجرای دستی می‌تواند AI را آزمایش کند.
           OPENROUTER_API_KEY: ${{ github.event_name == 'workflow_dispatch' && secrets.OPENROUTER_API_KEY || '' }}
-          PREVIEW_SECTIONS: ${{ github.event_name == 'workflow_dispatch' && inputs.sections || 'forex,crypto' }}
+          PREVIEW_SECTIONS: ${{ github.event_name == 'workflow_dispatch' && inputs.sections || 'forex,crypto,bourse,income,business,finance,education,psychology,law,ai,privacy,sport,health' }}
         run: python scripts/generate_preview.py
 
       - name: Upload preview artifact
