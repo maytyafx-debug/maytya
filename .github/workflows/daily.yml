@@ -12,6 +12,7 @@ on:
       - "scripts/upload_private_products.py"
       - "scripts/build_pages.py"
       - "scripts/make_short.py"
+      - "scripts/post_telegram.py"
       - ".github/workflows/daily.yml"
   schedule:
     - cron: "30 4 * * *" # ساعت ۸ صبح تهران
@@ -117,7 +118,7 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_REVIEW_CHAT_ID: ${{ secrets.TELEGRAM_REVIEW_CHAT_ID }}
-          POST_MODE: ${{ vars.POST_MODE || 'review' }}
+          POST_MODE: auto
           POST_KEYS: ${{ vars.POST_KEYS }}
           SITE_URL: ${{ vars.SITE_URL }}
         continue-on-error: true
