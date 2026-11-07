@@ -170,7 +170,7 @@ def build_timeline(sentences, voices):
     return scenes, cursor
 
 def make_frame_fn(A, scenes, total, label):
-    cta_spr = word_sprite("لینک در بایو · t.me/maytya", fl(54), (26, 20, 5))[0]
+    cta_spr = word_sprite("لینک در بایو · t.me/Maytyafx", fl(54), (26, 20, 5))[0]
     btn = Image.new("RGBA", (cta_spr.width + 90, cta_spr.height + 50), (0, 0, 0, 0)); ImageDraw.Draw(btn).rounded_rectangle([0, 0, btn.width - 1, btn.height - 1], radius=40, fill=(255, 200, 87, 255))
     btn.paste(cta_spr, (45, 25), cta_spr)
     tag = word_sprite(label, fl(40), (255, 200, 87))[0]
@@ -271,7 +271,7 @@ def main():
         except Exception as e:
             print("FAIL", key, e); continue
         open(os.path.join(ROOT, "out", f"{key}_upload.txt"), "w", encoding="utf-8").write(
-            f"عنوان: {it['title']} | Metatya\n\nتوضیح:\n{it['body'][:300]}\n\nتحلیل کامل و آموزش بیشتر: {site}\nتلگرام: https://t.me/maytya\nاینستاگرام: https://instagram.com/maytyafx\n\n#Metatya #فارکس #کریپتو #بورس #تحلیل_بازار\n⚠️ توصیه سرمایه‌گذاری نیست.\n")
+            f"عنوان: {it['title']} | Metatya\n\nتوضیح:\n{it['body'][:300]}\n\nتحلیل کامل و آموزش بیشتر: {site}\nتلگرام: https://t.me/Maytyafx\nاینستاگرام: https://instagram.com/maytyafx\n\n#Metatya #فارکس #کریپتو #بورس #تحلیل_بازار\n⚠️ توصیه سرمایه‌گذاری نیست.\n")
         print(f"ساخته شد: {key} ({d:.1f}s، گوینده: {'بله' if v else 'خیر'})")
 
 import tempfile
