@@ -149,6 +149,7 @@ jobs:
           git config user.name "metatya-bot"
           git config user.email "bot@users.noreply.github.com"
 
+          BRANCH="${GITHUB_REF_NAME}"
           git add docs data -- ':!*.bak'
 
           if git diff --cached --quiet; then
@@ -158,8 +159,38 @@ jobs:
           fi
 
           echo "NO_CHANGES=false" >> "$GITHUB_ENV"
-
           git commit -m "daily content $(date -u +%F)"
+          GENERATED_COMMIT="$(git rev-parse HEAD)"
 
-          git pull --rebase origin "${GITHUB_REF_NAME}"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          # فقط فایل‌های تولیدشده را روی آخرین main بازاعمال می‌کنیم.
+          # این روش از rebase متنی روی فایل‌های JSON و XLSX جلوگیری می‌کند
+          # و فایل‌های تازه‌ای را که هم‌زمان در مخزن ایجاد شده‌اند حذف نمی‌کند.
+          for attempt in 1 2 3; do
+            git fetch origin "+refs/heads/${BRANCH}:refs/remotes/origin/${BRANCH}"
+            git reset --hard "origin/${BRANCH}"
+
+            while IFS= read -r path; do
+              [ -n "$path" ] || continue
+              if git cat-file -e "${GENERATED_COMMIT}:${path}" 2>/dev/null; then
+                git restore --source="$GENERATED_COMMIT" --staged --worktree -- "$path"
+              else
+                git rm --ignore-unmatch -f -- "$path" >/dev/null
+              fi
+            done < <(git diff-tree --no-commit-id --name-only -r "$GENERATED_COMMIT")
+
+            if git diff --cached --quiet; then
+              echo "نسخه‌ی تولیدشده با آخرین مخزن یکسان است؛ ثبت تازه لازم نیست."
+              exit 0
+            fi
+
+            git commit -m "daily content $(date -u +%F)"
+            if git push origin "HEAD:${BRANCH}"; then
+              echo "ثبت محتوای روزانه موفق بود."
+              exit 0
+            fi
+
+            echo "تداخل هم‌زمان در push؛ تلاش مجدد ${attempt}/3"
+          done
+
+          echo "::error::ثبت محتوای روزانه پس از سه تلاش ناموفق ماند."
+          exit 1
