@@ -146,7 +146,7 @@ def workbook_bourse(tier, filename):
         ["بدهی", "تعهدات مالی شرکت؛ سررسید و شرایط آن مهم است."],
         ["یادداشت‌های توضیحی", "بخش مکمل صورت‌های مالی برای شناخت جزئیات و مفروضات."],
     ], [28,110])
-    wb.save(OUT / filename)
+    wb.save((OUT if tier == "LITE" else PRIVATE_OUT) / filename)
 
 def workbook_fit(tier, filename):
     wb = Workbook()
@@ -165,7 +165,7 @@ def workbook_fit(tier, filename):
     headers2 = ["روز", "کیفیت خواب ۱ تا ۵", "آب‌رسانی مناسب؟", "انرژی ۱ تا ۵", "استراحت کافی؟", "حال عمومی", "یادداشت"]
     rows2 = [[""] * len(headers2) for _ in range(count)]
     setup_sheet(ws2, "عادت‌های پشتیبان", headers2, rows2, [16,22,22,18,20,24,40])
-    wb.save(OUT / filename)
+    wb.save((OUT if tier == "LITE" else PRIVATE_OUT) / filename)
 
 def workbook_mind(tier, filename):
     wb = Workbook()
@@ -188,7 +188,7 @@ def workbook_mind(tier, filename):
         ["از چه کسی می‌توانم حمایت بخواهم؟", ""],
         ["یک عادت کوچک و واقع‌بینانه برای فردا چیست؟", ""],
     ], [55,100])
-    wb.save(OUT / filename)
+    wb.save((OUT if tier == "LITE" else PRIVATE_OUT) / filename)
 
 def workbook_biz(tier, filename):
     wb = Workbook()
@@ -213,7 +213,7 @@ def workbook_biz(tier, filename):
     ], [34,24,90])
     ws2["B6"].number_format = "0.00"
     ws2["B7"].number_format = "0.00"
-    wb.save(OUT / filename)
+    wb.save((OUT if tier == "LITE" else PRIVATE_OUT) / filename)
 
 def build_pdf(filename, title, subtitle, sections):
     path = PRIVATE_OUT / filename
