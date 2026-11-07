@@ -8,7 +8,7 @@ import requests
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 CFG = json.load(open(os.path.join(ROOT, "config", "radar.json"), encoding="utf-8"))
 SEEN_P = os.path.join(ROOT, "data", "radar_seen.json")
-PACK = {"risk": "پک مدیریت ریسک", "fit": "پک تمرین", "mind": "پک ۲۱ روز ذهن آرام‌تر", "biz": "پک کسب‌وکار"}
+PACK = {"risk": "پک سواد مالی", "fit": "پک عادت و مهارت ورزشی", "mind": "پک خودآگاهی و عادت", "biz": "پک یادگیری کسب‌وکار"}
 QUESTION = re.compile(r"(\?|؟|چطور|چگونه|چرا|کمک|how |why |help|should i)", re.I)
 UA = {"User-Agent": "Mozilla/5.0 MetatyaRadar"}
 
