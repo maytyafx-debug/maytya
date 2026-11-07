@@ -1,24 +1,24 @@
 {
- "updated": "2026-11-07T09:43:24+00:00",
+ "updated": "2026-11-07T09:46:50+00:00",
  "prices": {
   "BTC/USD": {
-   "value": 76055,
-   "change24h_pct": -0.01,
+   "value": 76028,
+   "change24h_pct": -0.04,
    "source": "CoinGecko"
   },
   "ETH/USD": {
-   "value": 2244.68,
+   "value": 2244.27,
    "change24h_pct": 0.28,
    "source": "CoinGecko"
   },
   "SOL/USD": {
-   "value": 89.98,
-   "change24h_pct": -0.15,
+   "value": 90.0,
+   "change24h_pct": -0.16,
    "source": "CoinGecko"
   },
   "XRP/USD": {
    "value": 1.17,
-   "change24h_pct": -2.37,
+   "change24h_pct": -2.39,
    "source": "CoinGecko"
   },
   "EUR/USD": {
