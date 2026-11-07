@@ -9,7 +9,7 @@ import os, sys, json, subprocess, textwrap, urllib.request, shutil, asyncio, mat
 from PIL import Image, ImageDraw, ImageFont, ImageFilter, features
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
-W, H = 1080, 1920
+W, H = 720, 1280
 RAQM = features.check("raqm")
 FONT_URLS = [
     "https://github.com/rastikerdar/vazirmatn/raw/master/fonts/ttf/Vazirmatn-Regular.ttf",
@@ -59,7 +59,7 @@ def font_at(size):
     return ImageFont.truetype(FONT, size, layout_engine=ImageFont.Layout.RAQM if RAQM else ImageFont.Layout.BASIC)
 
 
-FPS = 30
+FPS = 20
 GOLD, INK = (255, 200, 87), (238, 243, 241)
 NAMES = {"finance": "سواد مالی", "education": "یادگیری", "ai": "هوش مصنوعی"}
 KW = {"direction": "rtl", "language": "fa"} if RAQM else {}
@@ -243,7 +243,7 @@ def render_video(sentences, out_mp4, label, cover=None):
     graph, vfiles = audio_graph(scenes, total)
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-"]
     for v in vfiles: cmd += ["-i", v]
-    cmd += ["-filter_complex", graph, "-map", "0:v", "-map", "[aout]", "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-pix_fmt", "yuv420p",
+    cmd += ["-filter_complex", graph, "-map", "0:v", "-map", "[aout]", "-c:v", "libx264", "-preset", "ultrafast", "-crf", "22", "-pix_fmt", "yuv420p",
             "-c:a", "aac", "-b:a", "160k", "-t", f"{total:.2f}", "-movflags", "+faststart", out_mp4]
     p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
     try:
