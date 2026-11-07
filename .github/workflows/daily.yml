@@ -105,13 +105,6 @@ jobs:
         env:
           SITE_URL: ${{ vars.SITE_URL }}
 
-      - name: ساخت ویدیوی کوتاه آموزشی
-        run: python scripts/make_short.py
-        timeout-minutes: 4
-        env:
-          SITE_URL: ${{ vars.SITE_URL }}
-        continue-on-error: true
-
       - name: ارسال محتوای تلگرام
         run: python scripts/post_telegram.py
         env:
@@ -128,6 +121,13 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_REVIEW_CHAT_ID: ${{ secrets.TELEGRAM_REVIEW_CHAT_ID }}
+        continue-on-error: true
+
+      - name: ساخت ویدیوی کوتاه آموزشی
+        run: python scripts/make_short.py
+        timeout-minutes: 4
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
         continue-on-error: true
 
       - name: ذخیره آرتیفکت‌ها
