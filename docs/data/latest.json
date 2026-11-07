@@ -1,24 +1,24 @@
 {
- "updated": "2026-11-07T22:01:48+00:00",
+ "updated": "2026-11-07T22:23:32+00:00",
  "prices": {
   "BTC/USD": {
-   "value": 75671,
-   "change24h_pct": -0.25,
+   "value": 75704,
+   "change24h_pct": -0.33,
    "source": "CoinGecko"
   },
   "ETH/USD": {
-   "value": 2230.17,
-   "change24h_pct": -0.43,
+   "value": 2230.89,
+   "change24h_pct": -0.32,
    "source": "CoinGecko"
   },
   "SOL/USD": {
-   "value": 89.15,
-   "change24h_pct": -1.25,
+   "value": 89.23,
+   "change24h_pct": -1.04,
    "source": "CoinGecko"
   },
   "XRP/USD": {
    "value": 1.16,
-   "change24h_pct": -1.68,
+   "change24h_pct": -1.64,
    "source": "CoinGecko"
   },
   "EUR/USD": {
@@ -55,9 +55,24 @@
  "news": {
   "forex": [
    {
-    "title": "EUR/USD Update: Will Fed Expectations Keep Pressure on the Euro? - FOREX.com",
-    "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQc1lzUks2QlVpMnd4NVpRWncxTk94UUkzdmc5XzgybzRnMFEwdVI1aFhkVVZGY1I2N3oxQmN6RWFWM2E1VzlhTk55MFpSVk9ta3B3Vy1UeTIyaFVMdXp6YjJ3bUxZQlJMVjk0M0drQndKdzVuMzE1cEVqX2xfV29FMnA2ck1zOHdLOXAxOXpVYW1OQ056NjBWdDdTNFp3V3lzVWNlTGtVckJBdjFGZXfSAboBQVVfeXFMUE12NDBCaGxOdWpnNk1vbEQzWm5nYVRxNXQ5ZlRLY1ZxSmN6T29qRlBkN2dNMDdJY2w2RUE0NlZTd2JYVmw0QXJ6UUVHX055VUQ3TUZobXFLekwwYWFORDR1eTdSVVVseGZiTEtueERFZGdqVHEtcU9zNm5EN1FHRkxRWHcwR1c4WkNvMzQ1QkFBNG9hWDZ1MGJGalZVdlFtTE81MWxWRWlMd3RBcldWb2xDOHJLOEJMdkx3?oc=5",
-    "published": "Tue, 22 Sep 2026 07:00:00 GMT"
+    "title": "EUR/USD, Gold Forecast: Two trades to watch - StoneX",
+    "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNY2lMdTI4VnBiZEpCMjNZZFVKbnlxSEhxMWZYMnJvQm84bmpWQ3BJUHM4dVd5WXB0RzNta3IzRkg0YldkVlhDTmFtRkpjWWltaWNrem9rcHBQTFJhcjJ2M3Ayc1lGQmEya05GNFVldVJ2REJNbUpObUY2R0hwOGNBbGxDNlpIUVpyal9ENGhSbEdfRmxucXpyd2Z2VDB4TEJGckE?oc=5",
+    "published": "Wed, 04 Nov 2026 11:30:25 GMT"
+   },
+   {
+    "title": "Euro Technical Outlook: EUR/USD Support Reversal Sets Up Breakout Test Ahead of NFP - FOREX.com",
+    "link": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPY1FSYU1qbk1BNWE1RnJWejNfWnZTamlHX1AtckRQSWNyNXlOQ0UteHBvemhDVW9JUW5uRFdqOVZQRkE2VXJzb1M5V1I5YTRpQUwxMlNRMGpoLU5GaElHb05fTW0yYVprcC1CYjBGZ2kwdjVUUnIydW1ZNWdYRzZQTkpVTTNWd3NKSnNVaGVqQzFZRkdodVllSWtlQnViMEsyRmY5ZlI1LTdCRmQxT1JFMk9fQ0Y0Q2tjcGxxRERuUk0yellWZml1REVReVpSNllTYy1yRmZB0gHiAUFVX3lxTE41ZWU2aERSRllvX3pCSEVaNTZjTUtzUUd0RW0wUkNyMzE2T2NlOVlzVFdBbzhZR1ZlXzBPWG1uMjh5aEZtUlIzOVh3UHZqa0VoX3dxNjl2dmxGaUI5eG16ay1La1dYdXlXSGM4d0VSUW1NcUpxT2F5RnpTS3VnWWdJRXZLZnBzZzhaalk2QV9pVUtqVl9zQ1puV1R5WmRUN1J0bHl5V2tnRVdBVlhkRW5XcmtxZGhILWYwYW1reHFNNEswQlJXdTFwdWp1V2xhWGN5NUE3R1NNUllUX2NNaTNNVWc?oc=5",
+    "published": "Wed, 04 Nov 2026 15:30:55 GMT"
+   },
+   {
+    "title": "FX Daily: The Dollar Bears Still Need the Fed to Blink - The Dark Side Of The Boom",
+    "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQM1FBNmZLbXNQR2pWRkpMeUpKTVF2ZkVFS29kYmdjX3h5bmx0LTNPNjNJVHh6WEhsTjQ4cWtUWGtQLTZrSGdvazlOTk96MmFULU0wNTJaQUh0eVEyYnJFQWhtN1QzUTFxUGNpUmRjMU8zRExWcW14R2NFUEY3cU1BVmFYTFUtSnc?oc=5",
+    "published": "Thu, 05 Nov 2026 08:39:51 GMT"
+   },
+   {
+    "title": "EUR/USD Price Forecast: Declines below 1.1200 as bearish bias holds below key technical resistance - www.tmgm.com",
+    "link": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxQaVg0MUpkLVpKMkJhb1lGU011c19wSEtVaTdrTlJwZHZ6X05jd0pGVlA3YnJVV3hSajBES3ozeW5waWluZDV0YTAxTm50QnVMX0kycjdtbVBkRkJUMTgwbVBkRF9CeUFVR0JwM0FkNENNcWx6eFJ0U3RjbHdKTjVRX1VVUl9GSXp6Y05jNG1vT0NZS3BvX3NoYVpiN3A1WV9Ia1pxTGJqT29RdXlIb2hrT0lHcXpuTWJYd1pvTVIwUGpjRG5OTThIZWx3VENxNzdHRmY4QW12QjEwdzRXaHR4TlFQaVFIYnZJZ2oteDd5MkVwN3Nl?oc=5",
+    "published": "Fri, 06 Nov 2026 06:32:53 GMT"
    },
    {
     "title": "The U.S. Dollar’s Role as a Reserve Currency - Federal Reserve Bank of St. Louis",
@@ -65,34 +80,19 @@
     "published": "Wed, 25 Feb 2026 08:00:00 GMT"
    },
    {
-    "title": "EUR/USD Q4 2026 Outlook: Euro at a Crossroads as Fed, ECB Tighten - StoneX",
-    "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxONzlLOGV3X25jdk80UEV1MHVCNjlNTVUwX19VemN5ZWNVSExGb3RPR1V2RHJnaGFNcjhXdjZ5bHM2andvb2Zqdi1CSVRRdU5haGNBc21JOFRoXzhrRDE2aTcwSHI0bUQ5Yl9GT0J0N3J3R3J0V2ZTRG5CWjRWczFFSHhKYXZ6Tk5kaTkwQ1k4STMzSzRlMTNTcVlpeXo3cWV2ck9MbEk5SDMxSUp4M0FzbQ?oc=5",
-    "published": "Fri, 25 Sep 2026 18:49:16 GMT"
+    "title": "US Dollar Price Forecast: Fed Minutes Loom as EUR/USD and GBP/USD Test Resistance - Yahoo Finance",
+    "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxNNEFiNERWa0FzcDRoRVV3SlJhUVV3aUJsblcwS0x0RkJKWDZNWlZndDR1ZlBXSzN0QVpXWVZDdXl4alNXRVZvbE16RVVKdjJzVmVfYUNIZEdnVnFheXd3RXEzejZFRWpNcXZYemRfU3hYUEhfb2c3bjFxalNPLTZCcG14QnNuWGo3SVNZNDBZMGFLc28xRWhOaGFhR2lUZw?oc=5",
+    "published": "Mon, 17 Aug 2026 07:00:00 GMT"
    },
    {
-    "title": "EUR/USD, Gold Forecast: Two trades to watch - FOREX.com",
-    "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOSjRCUXlnQ1IzU2h3blg3WGo3ZXowOUo5U3pxV2xkay1XSlpKdW1UOEs2UkowbElqbVFRaUpQQUFJZHE5QzU2OC1rdjI0bXg3eGs0UWhXeThCVDRrVGVFRHg4Wll2VzFVV0ZWbVBWNTctTmJEQUFoN29lcjFicVdwREdaOEJuY0Zmei1lZVJ0MWQwTXg3TFRRekw2TEc5bDZN0gGsAUFVX3lxTFB4LTZWUFU5ZTV5NGlhQ0NTZmdpZW9IQWJ1b2kyWFlMclZSSkdlQzJQUkhpdkl5MURLR0RqSzhEOHFISG1GYlNfbFkyMVR2bGo3WTFFTGhjckZfY2l2RlZVMHJnMWJpamE2c09VNUZkTXUwVUFvOFZoUDdUU1N1R0theXlsdFBhUXVHSi1SYXd6bnR4cTJJRjFjUVBnX0I1QTRubzdKSnVfM196VWc?oc=5",
-    "published": "Wed, 23 Sep 2026 07:00:00 GMT"
+    "title": "Gold Analysis: Resilient U.S. Labor Market Continues to Pressure XAU/USD - FOREX.com",
+    "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPX1lZQ29OMS1Qem82LXp2aF95MDRMc0NBT3NtMTZMUktzVENzMjZHV01SSFV1SHROR1I5SEc4VEk3Zl9INVd4OUFlaHQ4aEtDYW9SQUFULU5IbVpuN1JCeno4ZWl6MDFDQklmYzd2djFFTXZRNmY3SWFKZEFsdGRGblV1XzBfOWVFVU91Qk45SEFZeXpBWXI0aDVqQ2hrYjBkV20wMThkTmcxZ2w1RHpGVHAycVZoM1Z1?oc=5",
+    "published": "Wed, 04 Nov 2026 00:26:38 GMT"
    },
    {
-    "title": "USD/JPY, EUR/JPY Outlook: BOJ Caution and Fed Signals Keep Yen Under Pressure - stonex.com",
-    "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQdG1hTm91Z3dMZmtScW1faE9GMUQtTDRuYnF4SnA2VDFRX3Y5akRkY2c1V0FSUm5zaXdVSzBtcU8xc19MaG9HSHZPSmFDelNXYkFlZzd5X3VBQ3NmcVBtOTd3VEg5ck1Mc2VDbWpkdmdRdXp0WTB4Q1NPOWRoY09DUHlqZnVBTE9BSzJ2TDBaYkF0VTlZU0JRMXNCVEN1bk1MOFdMYllBS0ZISGFmUk5qM0RhM3JvMzV6dTljTk9BM0Q?oc=5",
-    "published": "Sat, 29 Aug 2026 17:41:32 GMT"
-   },
-   {
-    "title": "Euro zone banks should prepare for risk of dollar squeeze, ECB says - Reuters",
-    "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQbXdYRXNKNXUtYkpMTXZnRV9iTEF4RFRGbnAtV3pyYXl1MzZ4bW1ybElUNkdSb2syWHZXQ25nQjA5cWU4SDZORTJERXpIYmNwUDVjblhpYXgxUGUzdUtCMWxvVXpYd0NXTDIxdy1JSzNSNkN3cl9rcTVWWXlGMHB3RFRfejRLSVR4QV9XSVBLM1ljQXRWNHF2d2JTclhZLTB1QWVPVFgzODdmNnVnT05NdU9zNU9WYWs?oc=5",
-    "published": "Wed, 26 Nov 2025 08:00:00 GMT"
-   },
-   {
-    "title": "The Fed - The International Role of the U.S. Dollar – 2025 Edition - Federal Reserve (.gov)",
-    "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPYmVDVHp4UW9hRmdUekI4eTVhSHNENGx2WVFWTVZlNk8yRHdma004Wm44SjFCUDdTUG4yMVBGSDhPQnN2VVdOaVJHdUtGMU81MVhPNDBGdzFaN3laYXdKRXY0U2k4TVVsQndBYTFuSlZUU3ZVUUFqZjVzWmlZRm1WUk5TWXdNY1d1UTZRRzhWU0EySGRyckZWVHJWd3ktN0pmMEUzbVdLNFpfS1F1UnJ3eGN1bHJvZkR1VnZUNV9ObFQ?oc=5",
-    "published": "Fri, 18 Jul 2025 07:00:00 GMT"
-   },
-   {
-    "title": "Euro Technical Forecast: EUR/USD Coils in September Range Ahead of Fed - FOREX.com",
-    "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPcTl2d0ZhZGVDT0tJcDhwSFhFdjJ1c1B1anBtU2gwdDNYUmliUkR0elFkeEM3UkJldzBQc0FlUjJGYlRNRWYxZEQ0ZVRqZFhNeDQ0VXNBU2FTSzNrYzFYaU5ybTBwdnFlbHBLbWhFaDBvbTBEdXpIQ1dmYmlxaW8yWHlBSGhHdHBDQzFvQWY3NHdVOW9fd29EbjUzcTJLY1FHd1I0SkVMUUprZ0pKMkQ4bzBvdnJqN2ZKRXNneUNiajBpbDZk0gHQAUFVX3lxTE1waGNFTWlpQVAxcFI0dXB3cm9fZEVRR1hjT1NZZWVrWU1CUHh0Wi12aUJROUE4VzVvemlva3NHZnJPREd0azRsQThlcnJscDBNWm9LZTBCT3o5cHRJMWJrYTlYa2hjVEgtcHRhZWZJWWNoRV9SMl9tcjFUcHdHMGlXS3hrckdqYlFBMTd4cUIxMXZpOG50TjRlSWRUc2lhczF2MTV2MVZoZkpoTlV1M2ZISmh6azg4YkFQQ3duUDhtRXFwZUg2T2plZW16NDlOemQ?oc=5",
-    "published": "Sat, 12 Sep 2026 07:00:00 GMT"
+    "title": "US Dollar stabilises after election-driven volatility as Euro momentum fades - www.tmgm.com",
+    "link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxQbzByd212M0JNS3doTDVReHJKazFLY0p1Y0ZHeW5RWFFTWEJOU3VENjFFaklBNk5SYmwxVUc1a2JwdDNlR3VOV0VGZll2Q2s3Y2VuZzNscmxlRmhaTnNxUjg4OERaclBIS3MtSjlJckxYVHkyWk1mWVltM184WlFBc2F3Q0tMcTNMRFRqX1dUQV9zOE5xd19BX0kzVDlKRm1BeUNqVUZMc09nUFh1Nk5aeUlDUHh1NFJjTFlHU0VHWkdGRkt1N0UtMXNDMXU0cEQ5bE1RSkowa0ZaNTZRU1E?oc=5",
+    "published": "Thu, 05 Nov 2026 19:37:12 GMT"
    }
   ],
   "crypto": [
