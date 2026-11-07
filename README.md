@@ -108,7 +108,7 @@ create table if not exists public.leads (
 1. یک کانال بساز و یوزرنیم عمومی بگذار، مثلاً `@yourchannel`.
 2. در @BotFather دستور `/newbot` را بزن و یک ربات برای کانال بساز. توکنش را نگه دار.
 3. ربات را به کانال **ادمین** کن و اجازه‌ی **Post messages** بده.
-4. این دو Secret را بساز:
+4. توکن ربات را به‌صورت Secret و شناسه‌ی کانال را به‌صورت Variable ذخیره کن:
    - `TELEGRAM_BOT_TOKEN` = توکن ربات کانال
    - Variable `TELEGRAM_CHAT_ID` = `@Maytyafx` (یا یوزرنیم کانال خودت)
 5. آیدی عددی خودت را از @userinfobot بگیر و به‌عنوان Secret با نام `TELEGRAM_REVIEW_CHAT_ID` ذخیره کن.
@@ -353,7 +353,7 @@ create policy "anon can insert leads"
 1. یک کانال بساز و یوزرنیم عمومی بگذار، مثلاً `@yourchannel`.
 2. در @BotFather دستور `/newbot` را بزن و یک ربات برای کانال بساز. توکنش را نگه دار.
 3. ربات را به کانال **ادمین** کن و اجازه‌ی **Post messages** بده.
-4. این دو Secret را بساز:
+4. توکن ربات را به‌صورت Secret و شناسه‌ی کانال را به‌صورت Variable ذخیره کن:
    - `TELEGRAM_BOT_TOKEN` = توکن ربات کانال
    - Variable `TELEGRAM_CHAT_ID` = `@Maytyafx` (یا یوزرنیم کانال خودت)
 5. آیدی عددی خودت را از @userinfobot بگیر و به‌عنوان Secret با نام `TELEGRAM_REVIEW_CHAT_ID` ذخیره کن.
