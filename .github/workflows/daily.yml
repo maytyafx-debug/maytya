@@ -158,4 +158,4 @@ jobs:
           git commit -m "daily content $(date -u +%F)"
 
           git pull --rebase origin "${GITHUB_REF_NAME}"
-git push origin "HEAD:${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
