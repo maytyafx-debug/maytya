@@ -2,7 +2,7 @@
 (function(){
   var CFG={url:'https://megbqtoihsuouiaxpifl.supabase.co',
     key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1lZ2JxdG9paHN1b3VpYXhwaWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA3ODYzNDEsImV4cCI6MjEwNjM2MjM0MX0.x7aDRiSPd6F6XkjdZ7EIQUf5bU8Qf6PKrZUECzNEZzU',
-    links:[['✈️','تلگرام','https://t.me/maytya'],['▶️','یوتیوب','https://www.youtube.com/@maytyaFx'],['📸','اینستاگرام','https://instagram.com/maytyafx']]};
+    links:[['✈️','کانال اصلی تلگرام','https://t.me/Maytyafx'],['▶️','یوتیوب','https://www.youtube.com/@maytyaFx'],['📸','اینستاگرام','https://instagram.com/maytyafx']]};
   // منبع ورود (اولین لمس): utm_source/ref یا دامنه‌ی ارجاع‌دهنده؛ در localStorage می‌ماند تا به لید وصل شود. هیچ داده‌ی شخصی ذخیره نمی‌شود.
   function detect(){
     try{
