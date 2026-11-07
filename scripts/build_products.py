@@ -22,8 +22,10 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Tabl
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs" / "downloads"
+PRIVATE_OUT = ROOT / "out" / "private-products"
 FONT = ROOT / "assets" / "fonts" / "Vazirmatn-Regular.ttf"
 OUT.mkdir(parents=True, exist_ok=True)
+PRIVATE_OUT.mkdir(parents=True, exist_ok=True)
 
 import arabic_reshaper
 from bidi.algorithm import get_display
@@ -121,7 +123,7 @@ def workbook_risk(tier, filename):
         ["آیا نظر شخصی را از داده جدا کردم؟", ""],
         ["در مرور بعدی چه مهارتی را تمرین می‌کنم؟", ""],
     ], [55,100])
-    wb.save(OUT / filename)
+    wb.save((OUT if tier == "LITE" else PRIVATE_OUT) / filename)
 
 def workbook_bourse(tier, filename):
     wb = Workbook()
@@ -214,7 +216,7 @@ def workbook_biz(tier, filename):
     wb.save(OUT / filename)
 
 def build_pdf(filename, title, subtitle, sections):
-    path = OUT / filename
+    path = PRIVATE_OUT / filename
     styles = getSampleStyleSheet()
     title_style = ParagraphStyle("FaTitle", parent=styles["Title"], fontName=PDF_FONT, fontSize=18, leading=28, alignment=TA_RIGHT, textColor=colors.HexColor("#14251F"), spaceAfter=12)
     head_style = ParagraphStyle("FaHead", parent=styles["Heading2"], fontName=PDF_FONT, fontSize=13, leading=21, alignment=TA_RIGHT, textColor=colors.HexColor("#1F6F63"), spaceBefore=10, spaceAfter=5)
@@ -282,7 +284,7 @@ def main():
         "mind-journal.xlsx", "biz-model.xlsx", *GUIDES.keys()
     ]
     for name in expected:
-        path = OUT / name
+        path = (OUT if name.endswith("-LITE.xlsx") else PRIVATE_OUT) / name
         if not path.exists() or path.stat().st_size < 1000:
             raise RuntimeError(f"فایل محصول ساخته نشد یا ناقص است: {name}")
         print(f"OK {name}: {path.stat().st_size} bytes")
