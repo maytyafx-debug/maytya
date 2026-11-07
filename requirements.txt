@@ -4,3 +4,4 @@ arabic-reshaper
 python-bidi
 edge-tts
 reportlab
+openpyxl
