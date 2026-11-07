@@ -46,9 +46,19 @@ for key, sec in data["sections"].items():
         if len(feed) < 40 and i == 0: feed.append((it, sec["name"], url))
 now = datetime.datetime.now(datetime.timezone.utc)
 home = (SITE + "/") if SITE else "index.html"
+static_pages = [
+    "services.html", "privacy.html", "terms.html", "market-literacy.html",
+    "forex-learning.html", "toolbox.html", "metatya-journal.html", "trades.html",
+    "sport.html", "sport-elite-mind.html", "golden.html", "pack.html", "topic.html"
+]
+static_urls = [
+    (f"{SITE}/{page}" if SITE else page)
+    for page in static_pages
+    if os.path.exists(os.path.join(ROOT, page))
+]
 sm = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' \
      + f"<url><loc>{E(home)}</loc><lastmod>{now.date()}</lastmod></url>" \
-     + (f"<url><loc>{E((SITE + '/services.html') if SITE else 'services.html')}</loc><lastmod>{now.date()}</lastmod></url>" if os.path.exists(os.path.join(ROOT, "services.html")) else "") \
+     + "".join(f"<url><loc>{E(u)}</loc><lastmod>{now.date()}</lastmod></url>" for u in static_urls) \
      + "".join(f"<url><loc>{E(u)}</loc><lastmod>{d or now.date()}</lastmod></url>" for u, d in urls) + "</urlset>"
 open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8").write(sm)
 open(os.path.join(ROOT, "robots.txt"), "w").write("User-agent: *\nAllow: /\n" + (f"Sitemap: {SITE}/sitemap.xml\n" if SITE else ""))
