@@ -8,6 +8,7 @@ on:
       - "scripts/generate.py"
       - "scripts/sections.py"
       - "scripts/validate_content.py"
+      - "scripts/build_products.py"
       - ".github/workflows/daily.yml"
   schedule:
     - cron: "30 4 * * *" # ساعت ۸ صبح تهران
@@ -85,6 +86,9 @@ jobs:
             fi
           fi
         continue-on-error: true
+
+      - name: ساخت فایل‌های واقعی محصولات LITE و PRO
+        run: python scripts/build_products.py
 
       - name: ساخت صفحات سایت
         run: python scripts/build_pages.py
