@@ -10,6 +10,7 @@ on:
       - "scripts/validate_content.py"
       - "scripts/build_products.py"
       - "scripts/upload_private_products.py"
+      - "scripts/build_pages.py"
       - ".github/workflows/daily.yml"
   schedule:
     - cron: "30 4 * * *" # ساعت ۸ صبح تهران
