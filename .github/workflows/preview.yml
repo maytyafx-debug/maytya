@@ -1,6 +1,13 @@
 name: Metatya Safe Content Preview
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/generate.py"
+      - "scripts/generate_preview.py"
+      - "scripts/sections.py"
+      - ".github/workflows/preview.yml"
   workflow_dispatch:
     inputs:
       sections:
@@ -39,8 +46,9 @@ jobs:
 
       - name: Generate safe preview
         env:
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          PREVIEW_SECTIONS: ${{ inputs.sections }}
+          # اجرای خودکار روی push باید قطعی و بدون مصرف API باشد؛ اجرای دستی می‌تواند AI را آزمایش کند.
+          OPENROUTER_API_KEY: ${{ github.event_name == 'workflow_dispatch' && secrets.OPENROUTER_API_KEY || '' }}
+          PREVIEW_SECTIONS: ${{ github.event_name == 'workflow_dispatch' && inputs.sections || 'forex,crypto' }}
         run: python scripts/generate_preview.py
 
       - name: Upload preview artifact
