@@ -9,6 +9,7 @@ on:
       - "scripts/sections.py"
       - "scripts/validate_content.py"
       - "scripts/build_products.py"
+      - "scripts/upload_private_products.py"
       - ".github/workflows/daily.yml"
   schedule:
     - cron: "30 4 * * *" # ساعت ۸ صبح تهران
@@ -89,6 +90,12 @@ jobs:
 
       - name: ساخت فایل‌های واقعی محصولات LITE و PRO
         run: python scripts/build_products.py
+
+      - name: بارگذاری امن فایل‌های PRO در فضای خصوصی Supabase
+        run: python scripts/upload_private_products.py
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
 
       - name: ساخت صفحات سایت
         run: python scripts/build_pages.py
