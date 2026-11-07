@@ -11,7 +11,7 @@
 .hero{background:linear-gradient(160deg,#0F2B26,#1F6F63);color:#fff;border-radius:20px;padding:26px 20px;margin:12px 0}.hero .ic{font-size:34px}.hero h1{font-size:22px;line-height:1.8;font-weight:800}.hero p{font-size:14px;opacity:.92;margin-top:6px}
 .btn{display:inline-block;text-decoration:none;font-family:inherit;font-size:14px;font-weight:600;padding:11px 20px;border-radius:12px;background:var(--gold);color:#1a1405;border:none;cursor:pointer;margin:10px 6px 0 0}.btn.t{background:var(--teal);color:#fff}
 h2{font-size:17px;margin:24px 0 8px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:8px 0;font-size:13.5px;color:var(--sub)}
-.card li{margin:3px 0}.card ul{padding-right:18px}.price{font-size:20px;font-weight:800;color:var(--ink);margin-top:6px}
+.card li{margin:3px 0}.card ul{padding-right:18px}.price{font-size:20px;font-weight:800;color:var(--ink);margin-top:6px}.file-links a{display:block;padding:9px 4px;color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line)}.file-links a:last-child{border-bottom:0}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}.two .card{font-size:12.8px}.no h4{color:var(--warn)}.yes h4{color:var(--teal)}
 .warn{font-size:11px;color:var(--sub);border-top:1px solid var(--line);margin-top:24px;padding-top:10px;line-height:1.9}
 .bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;justify-content:center}.bar .btn{margin:0;flex:1;max-width:260px;text-align:center}
@@ -28,7 +28,10 @@ h2{font-size:17px;margin:24px 0 8px}.card{background:var(--card);border:1px soli
   var h='<div class="hero"><div class="ic">'+E(p.icon)+'</div><h1>'+E(p.title)+'</h1><p>'+E(p.tagline)+'</p>';
   if(p.free&&p.free.file)h+='<a class="btn" download href="'+E(p.free.file)+'">🎁 '+E(p.free.title)+'</a>';
   h+='</div>'+(p.preview?'<img src="'+E(p.preview)+'" alt="'+E(p.previewAlt||p.title)+'" style="width:100%;border-radius:16px;border:1px solid var(--line);margin-top:6px" loading="lazy"><div class="card" style="font-size:11.5px">تصویر بالا نمونه با داده‌ی فرضی است، نه پرتفوی واقعی.</div>':'')+'<h2>مشکل واقعی</h2><div class="card">'+E(p.problem)+'</div><h2>داخل پک چیست؟</h2><div class="card"><ul>'+p.bullets.map(function(b){return '<li>'+E(b)+'</li>'}).join('')+'</ul>';
-  h+=(p.price?'<div class="price">'+E(p.price)+'</div>':'<div class="card" style="margin-top:8px">قیمت و روش پرداخت در ربات اعلام می‌شود.</div>')+'</div>';
+  h+='</ul></div>';
+  var files=Array.isArray(p.files)?p.files.filter(function(f){return f&&/^downloads\\/[A-Za-z0-9._-]+$/.test(f.name||'')}):[];
+  if(files.length){h+='<h2>فایل‌های همراه</h2><div class="card file-links">'+files.map(function(f){return '<a download href="'+E(f.name)+'">⬇️ '+E(f.label||'دریافت فایل')+'</a>'}).join('')+'</div>'}
+  h+='<div class="card" style="margin-top:8px">برای اطلاع از قیمت و روش دریافت، از مسیر رسمی همین محصول استعلام بگیر.</div>';
   h+='<div class="two"><div class="card yes"><h4>مناسب توست اگر…</h4>'+E(p.audience)+'</div><div class="card no"><h4>مناسب تو نیست اگر…</h4>'+E(p.notFor)+'</div></div>';
   h+='<div id="cta"></div><div class="warn">'+E(p.disclaimer)+' Metatya آموزشی است و هیچ نتیجه‌ای را تضمین نمی‌کند.</div>';
   root.innerHTML=h;
