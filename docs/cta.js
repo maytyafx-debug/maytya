@@ -28,11 +28,12 @@
     CFG.links.forEach(function(l,i){h+='<a class="mt-btn'+(i===0?' pri':'')+'" target="_blank" rel="noopener" href="'+safe(utm(l[2],src))+'">'+l[0]+' '+l[1]+'</a>'});
     el.insertAdjacentHTML('beforeend',h+'</div></div>')}
   function lead(el,src){css();var id='mtf'+Math.random().toString(36).slice(2,7);
-    el.insertAdjacentHTML('beforeend','<div class="mt-box mt-form" id="'+id+'"><h3>خبرنامه Metatya</h3><p>هفته‌ای یک‌بار خلاصه‌ی تحلیل‌ها و آموزش‌های تازه، بدون اسپم.</p><input type="email" placeholder="you@example.com" autocomplete="email" aria-label="ایمیل"><label><input type="checkbox"> با دریافت ایمیل از Metatya موافقم و می‌دانم هر زمان می‌توانم لغو کنم.</label><div class="mt-row"><button class="mt-btn pri" type="button">عضویت</button></div><div class="mt-msg" role="status"></div></div>');
-    var box=document.getElementById(id),inp=box.querySelector('input[type=email]'),ck=box.querySelector('input[type=checkbox]'),msg=box.querySelector('.mt-msg');
+    el.insertAdjacentHTML('beforeend','<div class="mt-box mt-form" id="'+id+'"><h3>خبرنامه Metatya</h3><p>هفته‌ای یک‌بار خلاصه‌ی تحلیل‌ها و آموزش‌های تازه، بدون اسپم.</p><input type="email" placeholder="you@example.com" autocomplete="email" aria-label="ایمیل"><label><input type="checkbox" data-consent> با دریافت ایمیل از Metatya موافقم و می‌دانم هر زمان می‌توانم لغو کنم.</label><label><input type="checkbox" data-adult> تأیید می‌کنم ۱۸ سال یا بیشتر دارم.</label><div class="mt-row"><button class="mt-btn pri" type="button">عضویت</button></div><div class="mt-msg" role="status"></div></div>');
+    var box=document.getElementById(id),inp=box.querySelector('input[type=email]'),ck=box.querySelector('[data-consent]'),adult=box.querySelector('[data-adult]'),msg=box.querySelector('.mt-msg');
     box.querySelector('button').onclick=function(){
       var e=(inp.value||'').trim();
       if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)){msg.textContent='ایمیل معتبر وارد کنید.';return}
+      if(!adult.checked){msg.textContent='عضویت خبرنامه فقط برای افراد ۱۸ سال به بالا است.';return}
       if(!ck.checked){msg.textContent='برای عضویت، تیک موافقت را بزنید.';return}
       msg.textContent='در حال ثبت...';
       fetch(CFG.url+'/rest/v1/leads',{method:'POST',headers:{apikey:CFG.key,Authorization:'Bearer '+CFG.key,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({email:e,source:((TOUCH.first?TOUCH.first.src+(TOUCH.first.camp?'/'+TOUCH.first.camp:''):'direct')+'|'+String(src||'site')).slice(0,60),consent:true})})
