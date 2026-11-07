@@ -61,7 +61,7 @@ def font_at(size):
 
 FPS = 30
 GOLD, INK = (255, 200, 87), (238, 243, 241)
-NAMES = {"forex": "فارکس", "crypto": "کریپتو", "bourse": "بورس ایران"}
+NAMES = {"finance": "سواد مالی", "education": "یادگیری", "ai": "هوش مصنوعی"}
 KW = {"direction": "rtl", "language": "fa"} if RAQM else {}
 VOICE = os.environ.get("VOICE", "fa-IR-DilaraNeural")
 
@@ -259,10 +259,10 @@ def main():
         im = make_frame_fn(make_assets(), *build_timeline(["یورو/دلار زیر ۱.۱۳۱۲ آمد", "شاخص کل بورس ۷٬۷۶۶٬۵۴۰ واحد", "Bitcoin بالای 86,000 دلار"], [None] * 3), "فارکس")(2.2)
         im.save(os.path.join(ROOT, "out", "selftest.png")); print("selftest.png ساخته شد | RAQM:", RAQM); return
     if "--demo" in sys.argv:
-        t0 = time.time(); d, v = render_video(["حد ضررت را چرا جابه‌جا کردی؟", "چون دلت می‌خواهد درست باشی؛ قانون را قبل از ورود بنویس.", "دفترچه‌ی رایگان در لینک بایو."], os.path.join(ROOT, "out", "demo_short.mp4"), "مدیریت ریسک", os.path.join(ROOT, "out", "demo_cover.png"))
+        t0 = time.time(); d, v = render_video(["هر عددی بدون منبع، فقط یک ادعاست.", "تاریخ، منبع و واحد اندازه‌گیری را کنار داده ثبت کن.", "دفترچه آموزشی Metatya را ببین."], os.path.join(ROOT, "out", "demo_short.mp4"), "سواد مالی", os.path.join(ROOT, "out", "demo_cover.png"))
         print(f"demo ساخته شد: {d:.1f}s | صدای گوینده: {v} | {time.time()-t0:.0f}s رندر"); return
     data = json.load(open(os.path.join(ROOT, "docs", "content.json"), encoding="utf-8")); site = os.environ.get("SITE_URL", "")
-    for key in ("forex", "crypto", "bourse"):
+    for key in ("finance", "education", "ai"):
         items = data["sections"].get(key, {}).get("items", [])
         if not items: continue
         it = items[0]
