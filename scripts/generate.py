@@ -723,7 +723,12 @@ def local_fallback(key, tabs, recent):
     return validate_items(output, tabs, key)
 
 
+OPENROUTER_RATE_LIMITED = False
+
 def call_openrouter(prompt):
+    global OPENROUTER_RATE_LIMITED
+    if OPENROUTER_RATE_LIMITED:
+        raise RuntimeError("OpenRouter rate limit فعال است؛ از بانک محلی استفاده می‌شود")
     api_key = env("OPENROUTER_API_KEY")
 
     if not api_key:
@@ -773,25 +778,12 @@ def call_openrouter(prompt):
                 OR_URL,
                 headers=headers,
                 json=payload,
-                timeout=60
+                timeout=25
             )
 
             if response.status_code == 429:
-                retry = response.headers.get("Retry-After", "5")
-
-                try:
-                    wait = min(max(int(float(retry)), 1), 10)
-                except ValueError:
-                    wait = 5
-
-                time.sleep(wait)
-
-                response = requests.post(
-                    OR_URL,
-                    headers=headers,
-                    json=payload,
-                    timeout=60
-                )
+                OPENROUTER_RATE_LIMITED = True
+                raise RuntimeError("OpenRouter پاسخ 429 داد؛ ادامه حوزه‌ها با بانک محلی تولید می‌شود")
 
             if response.status_code in (401, 403):
                 raise RuntimeError(
@@ -817,6 +809,8 @@ def call_openrouter(prompt):
         except Exception as exc:
             last_error = f"{model}: {str(exc)[:160]}"
             print("OpenRouter fallback:", last_error)
+            if OPENROUTER_RATE_LIMITED:
+                break
 
     raise RuntimeError(last_error)
 
