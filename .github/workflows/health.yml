@@ -5,18 +5,70 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - name: سایت بالاست و محتوا تازه است؟
+      - name: سایت بالاست و محتوای همه حوزه‌ها سالم و تازه است؟
         env: {SITE_URL: "${{ vars.SITE_URL }}"}
         run: |
-          [ -z "$SITE_URL" ] && echo "SITE_URL تنظیم نشده" && exit 1
+          set -euo pipefail
+          [ -n "$SITE_URL" ] || { echo "SITE_URL تنظیم نشده"; exit 1; }
           curl -fsS --max-time 30 "${SITE_URL%/}/" -o /dev/null
           curl -fsS --max-time 30 "${SITE_URL%/}/content.json" -o c.json
           python3 - <<'PY'
-          import json,datetime
-          d=json.load(open("c.json",encoding="utf-8"))
-          age=datetime.datetime.now(datetime.timezone.utc)-datetime.datetime.fromisoformat(d["updated"].replace("Z","+00:00"))
-          bad=[k for k,v in d["sections"].items() if not v.get("ok",True)]
-          print("سن محتوا (ساعت):",round(age.total_seconds()/3600,1),"| حوزه‌های خراب:",bad)
-          assert age.total_seconds()<36*3600, "محتوا بیش از ۳۶ ساعت به‌روز نشده"
+          import json
+          import datetime
+
+          expected = {
+              "forex", "crypto", "bourse", "income", "business", "finance",
+              "education", "psychology", "law", "ai", "privacy", "sport", "health"
+          }
+
+          with open("c.json", encoding="utf-8") as file:
+              data = json.load(file)
+
+          updated = datetime.datetime.fromisoformat(
+              data["updated"].replace("Z", "+00:00")
+          )
+          age = (
+              datetime.datetime.now(datetime.timezone.utc) - updated
+          ).total_seconds()
+
+          sections = data.get("sections", {})
+          missing = sorted(expected - set(sections))
+          unexpected = sorted(set(sections) - expected)
+          bad = sorted(
+              key for key in expected
+              if key in sections and sections[key].get("ok") is not True
+          )
+          empty = sorted(
+              key for key in expected
+              if key in sections
+              and not isinstance(sections[key].get("items"), list)
+              or key in sections
+              and not sections[key].get("items")
+          )
+          malformed = sorted(
+              key for key in expected
+              if key in sections and isinstance(sections[key].get("items"), list)
+              and any(
+                  not isinstance(item, dict)
+                  or not str(item.get("title", "")).strip()
+                  or not str(item.get("body", "")).strip()
+                  for item in sections[key]["items"]
+              )
+          )
+
+          print("سن محتوا (ساعت):", round(age / 3600, 1))
+          print("حوزه‌های ناموفق:", bad)
+          print("حوزه‌های خالی:", empty)
+          print("حوزه‌های مفقود:", missing)
+          print("حوزه‌های اضافی:", unexpected)
+          print("حوزه‌های دارای مطلب ناقص:", malformed)
+
+          assert 0 <= age < 36 * 3600, "زمان به‌روزرسانی محتوا نامعتبر یا بیش از ۳۶ ساعت قدیمی است"
+          assert not missing, "یک یا چند حوزه مورد انتظار در فایل محتوا وجود ندارد"
+          assert not unexpected, "حوزه ناشناخته در فایل محتوا وجود دارد"
+          assert not bad, "یک یا چند حوزه با ok=false منتشر شده‌اند"
+          assert not empty, "یک یا چند حوزه محتوای قابل نمایش ندارند"
+          assert not malformed, "یک یا چند مطلب عنوان یا متن معتبر ندارند"
           PY
