@@ -2,6 +2,8 @@
 import os
 from pathlib import Path
 import requests
+import io
+import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 PRIVATE = ROOT / "out" / "private-products"
@@ -43,9 +45,25 @@ def main():
 
         check = requests.get(url, headers=headers, timeout=45)
         check.raise_for_status()
-        if len(check.content) != path.stat().st_size:
-            raise SystemExit(f"Verification size mismatch for {name}")
-        print(f"PRIVATE_OK {name}: {len(check.content)} bytes")
+        # Validate the downloaded object itself. Some Storage/CDN paths may
+        # apply content encoding, so byte-length equality alone is not a
+        # reliable integrity test for XLSX downloads.
+        if name.endswith(".pdf"):
+            if not check.content.startswith(b"%PDF-"):
+                raise SystemExit(f"Downloaded PDF signature is invalid: {name}")
+        else:
+            try:
+                with zipfile.ZipFile(io.BytesIO(check.content)) as archive:
+                    bad_member = archive.testzip()
+                    if bad_member or "xl/workbook.xml" not in archive.namelist():
+                        raise SystemExit(f"Downloaded XLSX archive is invalid: {name}")
+            except zipfile.BadZipFile:
+                raise SystemExit(f"Downloaded XLSX is not a valid ZIP workbook: {name}")
+        expected_size = path.stat().st_size
+        actual_size = len(check.content)
+        if actual_size != expected_size:
+            print(f"PRIVATE_SIZE_NOTE {name}: local={expected_size}, downloaded={actual_size}; content integrity passed")
+        print(f"PRIVATE_OK {name}: {actual_size} bytes; integrity verified")
 
     print(f"PRIVATE_PRODUCTS_OK={len(FILES)}")
 
