@@ -25,23 +25,16 @@ OUT = ROOT / "docs" / "downloads"
 FONT = ROOT / "assets" / "fonts" / "Vazirmatn-Regular.ttf"
 OUT.mkdir(parents=True, exist_ok=True)
 
-try:
-    import arabic_reshaper
-    from bidi.algorithm import get_display
-    def rtl(value):
-        return get_display(arabic_reshaper.reshape(str(value)))
-except Exception:
-    def rtl(value):
-        return str(value)
+import arabic_reshaper
+from bidi.algorithm import get_display
 
-if FONT.exists():
-    try:
-        pdfmetrics.registerFont(TTFont("Vazirmatn", str(FONT)))
-        PDF_FONT = "Vazirmatn"
-    except Exception:
-        PDF_FONT = "Helvetica"
-else:
-    PDF_FONT = "Helvetica"
+def rtl(value):
+    return get_display(arabic_reshaper.reshape(str(value)))
+
+if not FONT.exists():
+    raise RuntimeError("فونت Vazirmatn برای ساخت PDF فارسی در دسترس نیست")
+pdfmetrics.registerFont(TTFont("Vazirmatn", str(FONT)))
+PDF_FONT = "Vazirmatn"
 
 NAVY = "14251F"
 GREEN = "1F6F63"
@@ -214,10 +207,10 @@ def workbook_biz(tier, filename):
         ["هزینه متغیر هر واحد", 40, "هزینه مستقیم فرضی"],
         ["هزینه ثابت دوره", 600, "هزینه فرضی یک دوره"],
         ["حاشیه مشارکت", "=B3-B4", "قیمت منهای هزینه متغیر"],
-        ["نقطه سربه‌سر (واحد)", '=IF(B5>0,B4/B5,0)', "هزینه ثابت تقسیم بر حاشیه مشارکت؛ فقط مدل آموزشی"],
+        ["نقطه سربه‌سر (واحد)", '=IF(B6>0,B5/B6,0)', "هزینه ثابت تقسیم بر حاشیه مشارکت؛ فقط مدل آموزشی"],
     ], [34,24,90])
-    ws2["B5"].number_format = "0.00"
     ws2["B6"].number_format = "0.00"
+    ws2["B7"].number_format = "0.00"
     wb.save(OUT / filename)
 
 def build_pdf(filename, title, subtitle, sections):
