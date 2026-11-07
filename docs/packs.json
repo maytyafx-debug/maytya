@@ -28,11 +28,11 @@
       "disclaimer": "ابزار آموزشی عمومی است؛ توصیه سرمایه‌گذاری یا ابزار اجرای معامله نیست.",
       "files": [
         {
-          "name": "downloads/risk-guide.pdf",
+          "name": "risk-guide.pdf",
           "label": "راهنمای سواد مالی (PDF)"
         },
         {
-          "name": "downloads/risk-journal.xlsx",
+          "name": "risk-journal.xlsx",
           "label": "دفترچه آموزشی PRO (اکسل)"
         }
       ]
@@ -66,11 +66,11 @@
       "disclaimer": "ابزار آموزشی مطالعه گزارش است؛ توصیه خرید، فروش یا نگهداری هیچ نماد نیست.",
       "files": [
         {
-          "name": "downloads/bourse-guide.pdf",
+          "name": "bourse-guide.pdf",
           "label": "راهنمای مطالعه گزارش (PDF)"
         },
         {
-          "name": "downloads/bourse-tracker.xlsx",
+          "name": "bourse-tracker.xlsx",
           "label": "دفترچه مطالعه شرکت‌ها PRO (اکسل)"
         }
       ]
@@ -102,11 +102,11 @@
       "disclaimer": "آموزشی و عمومی است؛ تمرین باید متناسب با سن و شرایط فرد و با راهنمایی مربی/سرپرست باشد.",
       "files": [
         {
-          "name": "downloads/fit-guide.pdf",
+          "name": "fit-guide.pdf",
           "label": "راهنمای عادت ورزشی (PDF)"
         },
         {
-          "name": "downloads/fit-program.xlsx",
+          "name": "fit-program.xlsx",
           "label": "برنامه مهارت و بازیابی PRO (اکسل)"
         }
       ]
@@ -138,11 +138,11 @@
       "disclaimer": "این پک تشخیص یا درمان روان‌شناختی نیست؛ در ناراحتی پایدار از بزرگسال مورد اعتماد و متخصص کمک بگیر.",
       "files": [
         {
-          "name": "downloads/mind-guide.pdf",
+          "name": "mind-guide.pdf",
           "label": "راهنمای خودآگاهی (PDF)"
         },
         {
-          "name": "downloads/mind-journal.xlsx",
+          "name": "mind-journal.xlsx",
           "label": "دفترچه ۲۱ روزه PRO (اکسل)"
         }
       ]
@@ -174,11 +174,11 @@
       "disclaimer": "آموزشی است؛ اعداد فرضی‌اند و نتیجه یا درآمدی را تضمین نمی‌کند. مقررات محل فعالیت را بررسی کن.",
       "files": [
         {
-          "name": "downloads/biz-guide.pdf",
+          "name": "biz-guide.pdf",
           "label": "راهنمای مدل کسب‌وکار (PDF)"
         },
         {
-          "name": "downloads/biz-model.xlsx",
+          "name": "biz-model.xlsx",
           "label": "مدل کسب‌وکار PRO (اکسل)"
         }
       ]
