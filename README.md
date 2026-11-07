@@ -287,3 +287,36 @@ create policy "anon insert leads" on public.leads
 ## استاندارد طراحی رابط کاربری
 
 برای هر تغییر در رابط وب، ابتدا `AGENTS.md` و سپس [استاندارد طراحی فرانت‌اند متاتیا](docs/design-system/metatya-frontend-standards.md) را بخوان. این سند، اصول طراحی متمایز، UX، دسترس‌پذیری، حرکت، انتخاب کامپوننت و قواعد استفاده از منابع وب و موبایل را مشخص می‌کند. سایت فعلی همچنان HTML/CSS/JavaScript استاتیک است؛ راهنماهای Android و SwiftUI فقط برای اپ‌های بومی آینده کاربرد دارند.
+
+
+---
+
+## ۱۹. نسخه پشتیبان و بازیابی مخزن (به‌روزرسانی ۲۰۲۶-۱۱-۰۸)
+
+شاخه پشتیبان مستقل از وضعیت فعلی main ایجاد شده است:
+
+- نام شاخه: backup/2026-11-08
+- نشانی مخزن: https://github.com/maytyafx-debug/maytya/tree/backup/2026-11-08
+
+برای دریافت شاخه‌ها و رفتن به نسخه پشتیبان:
+
+~~~bash
+git fetch origin
+git checkout backup/2026-11-08
+~~~
+
+برای ساخت یک بسته مستقل شامل تاریخچه و شاخه‌های دریافت‌شده:
+
+~~~bash
+git clone https://github.com/maytyafx-debug/maytya.git
+cd maytya
+git bundle create ../maytya-all-refs.bundle --all
+~~~
+
+برای بازگردانی یک کپی از bundle:
+
+~~~bash
+git clone ../maytya-all-refs.bundle maytya-restored
+~~~
+
+نکته: این پشتیبان شامل کد و فایل‌های ثبت‌شده در Git است؛ Secrets مربوط به GitHub Actions، توکن‌های تلگرام، تنظیمات Cloudflare، داده‌های Supabase و تنظیمات خارج از مخزن داخل شاخه Git قرار نمی‌گیرند. از تنظیمات و داده‌های سرویس‌های بیرونی جداگانه و به‌صورت امن نسخه پشتیبان تهیه کن.
