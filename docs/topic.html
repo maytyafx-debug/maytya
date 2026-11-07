@@ -325,7 +325,7 @@ footer{margin-top:28px;padding:18px 0 8px;border-top:1px solid var(--line);font-
     const og = $('offerGrid');
     (T.offers || []).forEach(o => {
       const c = el('article', 'card offer reveal');
-      c.append(el('h3', '', o.title), el('div', 'price', o.price || 'قیمت در ربات اعلام می‌شود'));
+      c.append(el('h3', '', o.title), el('div', 'price', 'برای اطلاع از قیمت و شرایط دریافت، در ربات رسمی استعلام بگیر.'));
       const ul = el('ul'); (o.bullets || []).forEach(b => ul.appendChild(el('li', '', b))); c.appendChild(ul);
       if (o.note) c.appendChild(el('p', 'note', o.note));
       const bot = o.persona && cfg.bots && cfg.bots[o.persona];
