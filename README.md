@@ -16,6 +16,7 @@
 | `scripts/` | کدهای پایتون: جمع‌آوری داده، تولید محتوا، ساخت صفحات، ویدیو، ارسال تلگرام، جستجوی فرصت |
 | `worker/` | کد Cloudflare Worker ربات‌های فروش (`index.js`) و تنظیمات آن (`wrangler.toml`) |
 | `docs/` | خود سایت (GitHub Pages). هر چیزی در این پوشه عمومی منتشر می‌شود |
+| `docs/strategy/metatya-bot-charter-social-roadmap.md` | شرح وظایف ربات‌ها، وضعیت واقعی قابلیت‌ها و نقشه راه تلگرام، اینستاگرام و یوتیوب |
 | `docs/index.html` | صفحه‌ی اصلی |
 | `docs/home-2026.html` | نسخه‌ی قبلی صفحه‌ی اصلی (پشتیبان) |
 | `docs/topic.html` | صفحه‌ی هر حوزه. اطلاعاتش را از `topics.json` و `content.json` می‌خواند |
