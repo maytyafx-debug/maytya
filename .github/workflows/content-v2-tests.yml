@@ -1,0 +1,29 @@
+name: Metatya Content Engine V2 tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/content_engine_v2/**"
+      - ".github/workflows/content-v2-tests.yml"
+  pull_request:
+    paths:
+      - "scripts/content_engine_v2/**"
+      - ".github/workflows/content-v2-tests.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: دریافت مخزن
+        uses: actions/checkout@v4
+      - name: آماده‌سازی Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: اجرای تست‌های موتور V2
+        run: python -m unittest discover -s scripts/content_engine_v2/tests -v
