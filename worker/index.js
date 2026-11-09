@@ -211,67 +211,13 @@ async function handle(env, ctx, key, upd) {
   return send(ans || `الان نمی‌توانم جواب دقیق بدهم. سؤالت را از مسئول بپرس: ${contact}`, { reply_markup: menu(hasFree) });
 }
 
-
-const AGENT_ORIGINS = new Set(['https://maytyafx-debug.github.io']);
-const AGENT_PERSONAS = {
-  tia: { name: 'تیا', role: 'جنتلمن دیجیتال، متین، صادق، دقیق و راه‌حل‌محور', task: 'نیاز کاربر را روشن کن، مسئله را ساختار بده، گزینه‌های عملی و گام بعدی پیشنهاد بده.' },
-  mahnoosh: { name: 'ماه‌نوش', role: 'بانوی دانا، خلاق، آرام و الهام‌بخش با زیبایی‌شناسی ایرانی', task: 'با نگاه خلاق و آموزشی به مسئله نگاه کن و ایده‌های تازه اما قابل‌اجرا پیشنهاد بده.' }
-};
-function agentCors(origin) {
-  return { 'Access-Control-Allow-Origin': AGENT_ORIGINS.has(origin) ? origin : 'null', 'Access-Control-Allow-Methods': 'POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type', 'Vary': 'Origin' };
-}
-async function runAgent(env, persona, messages, extraContext = '') {
-  const p = AGENT_PERSONAS[persona];
-  const system = [
-    'تو یک عامل هوش مصنوعی از اکوسیستم METATYA هستی.',
-    'هویت تو: ' + p.name + '؛ ' + p.role + '.',
-    'وظیفه: ' + p.task,
-    'همیشه فارسی روان پاسخ بده مگر کاربر زبان دیگری بخواهد.',
-    'شفاف باش؛ هرگز ادعا نکن کاری را انجام داده‌ای یا داده‌ای را بررسی کرده‌ای مگر واقعاً انجام نشده باشد.',
-    'اگر اطلاعات کافی نداری، سؤال روشن‌کننده بپرس. ایده‌ها را به مراحل کوچک و قابل‌آزمایش تبدیل کن.',
-    'اطلاعات حساس مانند رمز، کلید API، اطلاعات بانکی یا داده خصوصی مشتری را درخواست یا بازگو نکن.',
-    'در موضوعات مالی، پزشکی و حقوقی فقط اطلاعات عمومی و محتاطانه بده و از توصیه قطعی تخصصی خودداری کن.',
-    extraContext ? 'زمینه گفت‌وگوی مشترک:\n' + extraContext : ''
-  ].filter(Boolean).join('\n');
-  const safe = messages.slice(-12).map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: String(m.content || '').slice(0, 1800) })).filter(m => m.content.trim());
-  const result = await env.AI.run(MODEL, { messages: [{ role: 'system', content: system }, ...safe], max_tokens: 650, temperature: 0.55 });
-  return String((result && (result.response || result.result)) || '').trim();
-}
-async function handleAgentChat(req, env) {
-  const origin = req.headers.get('Origin') || '';
-  const headers = { ...agentCors(origin), 'Content-Type': 'application/json; charset=utf-8' };
-  if (!AGENT_ORIGINS.has(origin)) return new Response(JSON.stringify({ error: 'origin_not_allowed' }), { status: 403, headers });
-  let body;
-  try { body = await req.json(); } catch (_) { return new Response(JSON.stringify({ error: 'invalid_json' }), { status: 400, headers }); }
-  const persona = String(body.persona || '');
-  if (!['tia', 'mahnoosh', 'duo'].includes(persona)) return new Response(JSON.stringify({ error: 'invalid_persona' }), { status: 400, headers });
-  if (!Array.isArray(body.messages) || !body.messages.length) return new Response(JSON.stringify({ error: 'messages_required' }), { status: 400, headers });
-  const messages = body.messages.slice(-12).map(m => ({ role: m.role, content: String(m.content || '').slice(0, 1800) }));
-  const total = messages.reduce((n, m) => n + m.content.length, 0);
-  if (total > 9000 || messages.some(m => !['user', 'assistant'].includes(m.role))) return new Response(JSON.stringify({ error: 'message_limit_exceeded' }), { status: 413, headers });
-  const ip = req.headers.get('CF-Connecting-IP') || 'unknown';
-  const now = Date.now(), key = 'agent:' + ip;
-  const recent = (hits.get(key) || []).filter(t => now - t < 60000);
-  if (recent.length >= 8) return new Response(JSON.stringify({ error: 'rate_limited', message: 'کمی مکث کن و یک دقیقه دیگر دوباره تلاش کن.' }), { status: 429, headers });
-  recent.push(now); hits.set(key, recent);
-  try {
-    if (persona === 'duo') {
-      const first = await runAgent(env, 'tia', messages);
-      const second = await runAgent(env, 'mahnoosh', [...messages, { role: 'assistant', content: 'نظر تیا برای بررسی مشترک: ' + first }], 'تیا این دیدگاه را ارائه کرده است: ' + first + '\nماه‌نوش باید ایده را تکمیل یا نقد سازنده کند.');
-      return new Response(JSON.stringify({ ok: true, replies: [{ persona: 'tia', text: first }, { persona: 'mahnoosh', text: second }] }), { status: 200, headers });
-    }
-    const answer = await runAgent(env, persona, messages);
-    if (!answer) throw new Error('empty model response');
-    return new Response(JSON.stringify({ ok: true, persona, text: answer }), { status: 200, headers });
-  } catch (e) {
-    console.log('agent_error', String(e).slice(0, 180));
-    return new Response(JSON.stringify({ error: 'agent_unavailable', message: 'فعلاً پاسخ‌گویی در دسترس نیست. کمی بعد دوباره تلاش کن.' }), { status: 503, headers });
-  }
-}
-
 export default {
   async fetch(req, env, ctx) {
-    const u = new URL(req.url); const m = u.pathname.match(/^\/tg\/(\w+)$/);
+    const u = new URL(req.url);
+    if (req.method === 'GET' && u.pathname === '/health') {
+      return Response.json({ ok: true, service: 'metatya-bots', routes: Object.keys(PERSONAS).map(key => `/tg/${key}`) });
+    }
+    const m = u.pathname.match(/^\/tg\/(\w+)$/);
     if (req.method !== 'POST' || !m) return new Response('metatya-bots ok');
     const key = m[1];
     if (!PERSONAS[key] || !env['BOT_' + key.toUpperCase()]) return new Response('unknown', { status: 404 });
@@ -281,9 +227,4 @@ export default {
     try { await handle(env, ctx, key, upd); } catch (e) { console.log('err', String(e).slice(0, 200)); }
     return new Response('ok');
   },
-};    if (u.pathname === '/api/agents/chat' && req.method === 'OPTIONS') {
-      const origin = req.headers.get('Origin') || '';
-      return new Response(null, { status: AGENT_ORIGINS.has(origin) ? 204 : 403, headers: agentCors(origin) });
-    }
-    if (u.pathname === '/api/agents/chat' && req.method === 'POST') return handleAgentChat(req, env);
-
+};
