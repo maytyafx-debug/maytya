@@ -25,4 +25,15 @@ class EngineV2Tests(unittest.TestCase):
         item=self.sample(); legacy=to_v1(item, date="2026-11-10")
         self.assertEqual(legacy["date"], "2026-11-10"); self.assertEqual(len(legacy["short_script"]), 3)
 
+    def test_sport_tracks_are_separate(self):
+        item=self.sample(); item["domain"]="sport"
+        self.assertFalse(evaluate(item)["checks"]["audience"])
+        item["audience"]="sport_national"
+        self.assertTrue(evaluate(item)["checks"]["audience"])
+
+    def test_v1_adapter_keeps_disclaimer(self):
+        item=self.sample(); item["disclaimer"]="هشدار آموزشی"
+        legacy=to_v1(item)
+        self.assertIn("هشدار آموزشی", legacy["body"])
+
 if __name__ == "__main__": unittest.main()
