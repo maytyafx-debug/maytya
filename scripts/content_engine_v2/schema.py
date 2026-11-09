@@ -40,8 +40,12 @@ def to_v1(item: dict, *, date: str | None = None) -> dict:
     """Render an approved V2 item into the existing docs/content.json item shape."""
     stamp = item.get("created_at", "")
     day = date or (stamp[:10] if stamp else datetime.now(timezone.utc).date().isoformat())
+    body = item["body"]
+    disclaimer = item.get("disclaimer") or ""
+    if disclaimer and disclaimer not in body:
+        body = body.rstrip() + "\\n\\n" + disclaimer
     return {
-        "title": item["title"], "body": item["body"], "tab": item["tab"],
+        "title": item["title"], "body": body, "tab": item["tab"],
         "provider": "metatya-content-engine-v2", "date": day,
         "short_script": list(item.get("short_script") or []),
         "tg": item.get("channel_copy", {}).get("telegram", ""),
