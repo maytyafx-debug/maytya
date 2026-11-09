@@ -17,5 +17,7 @@ class ProfileProviderTests(unittest.TestCase):
     def test_sources_resolve_from_pack_only(self):
         pack=[{"id":"nist","title":"NIST Framework","url":"https://www.nist.gov/"}]
         self.assertEqual(resolve_sources(["nist"],pack)[0]["title"],"NIST Framework")
+    def test_malformed_json_is_rejected(self):
+        with self.assertRaises(ValueError): parse_json("no structured content")
 
 if __name__ == "__main__": unittest.main()
