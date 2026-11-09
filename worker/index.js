@@ -213,7 +213,11 @@ async function handle(env, ctx, key, upd) {
 
 export default {
   async fetch(req, env, ctx) {
-    const u = new URL(req.url); const m = u.pathname.match(/^\/tg\/(\w+)$/);
+    const u = new URL(req.url);
+    if (req.method === 'GET' && u.pathname === '/health') {
+      return Response.json({ ok: true, service: 'metatya-bots', routes: Object.keys(PERSONAS).map(key => `/tg/${key}`) });
+    }
+    const m = u.pathname.match(/^\/tg\/(\w+)$/);
     if (req.method !== 'POST' || !m) return new Response('metatya-bots ok');
     const key = m[1];
     if (!PERSONAS[key] || !env['BOT_' + key.toUpperCase()]) return new Response('unknown', { status: 404 });
