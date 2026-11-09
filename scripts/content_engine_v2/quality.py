@@ -27,8 +27,14 @@ def evaluate(item: dict, *, existing_titles: set[str] | None = None, allowed_tab
     if not checks["body_length"]: errors.append("متن باید بین ۱۰۰ تا ۱۸۰۰ نویسه باشد.")
     checks["domain_tab"] = bool(domain and tab and (allowed_tabs is None or tab in allowed_tabs))
     if not checks["domain_tab"]: errors.append("حوزه یا تب نامعتبر است.")
-    checks["audience"] = item.get("audience") in {"beginner","intermediate","professional","sport_beginner","sport_advanced","sport_national","sport_olympic"}
-    if not checks["audience"]: errors.append("مخاطب هدف معتبر نیست.")
+    audience = item.get("audience")
+    known_domains = {"forex","crypto","bourse","income","business","finance","education","psychology","law","ai","privacy","sport","health"}
+    sport_audiences = {"sport_beginner","sport_advanced","sport_national","sport_olympic"}
+    general_audiences = {"beginner","intermediate","professional"}
+    checks["domain_known"] = domain in known_domains
+    if not checks["domain_known"]: errors.append("حوزه محتوایی در فهرست رسمی Metatya نیست.")
+    checks["audience"] = (audience in sport_audiences if domain == "sport" else audience in general_audiences)
+    if not checks["audience"]: errors.append("سطح مخاطب معتبر نیست؛ مسیرهای ورزشی باید مستقل از مسیرهای عمومی انتخاب شوند.")
     checks["short_script"] = _sentences(item.get("short_script"))
     if not checks["short_script"]: errors.append("سناریوی کوتاه باید دقیقاً سه جمله معتبر داشته باشد.")
     combined = normalize_text(title + " " + body)
