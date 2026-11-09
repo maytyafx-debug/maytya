@@ -18,7 +18,7 @@ class EngineV2Tests(unittest.TestCase):
     def test_financial_disclaimer_required(self):
         item=self.sample(); item["domain"]="forex"
         report=evaluate(item)
-        self.assertFalse(report["ok"]); self.assertIn("disclaimer", report["errors"][0] if report["errors"] else "")
+        self.assertFalse(report["ok"]); self.assertFalse(report["checks"]["disclaimer"])
     def test_duplicate_title_rejected(self):
         item=self.sample(); self.assertFalse(evaluate(item, existing_titles={item["title"]})["ok"])
     def test_v1_adapter(self):
