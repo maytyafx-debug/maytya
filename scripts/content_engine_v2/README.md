@@ -12,14 +12,25 @@ This package is an isolated V2 foundation. It does **not** replace or write to t
 ## Canonical item
 See `schema.py` and `make_item()`. Required editorial fields include domain, tab, audience, title, body, formats, three-part short script, source records, disclaimer, and status.
 
+## Generate review drafts
+Prepare a manifest with `jobs[]`. Every job needs `domain`, `tab`, `audience`, and a `source_pack[]` containing records with `id`, `title`, and `url`. Source records must be collected and checked by the caller; the model is not allowed to invent source URLs.
+
+```bash
+export OPENROUTER_API_KEY="..."
+export OPENROUTER_MODELS="provider/model-one,provider/model-two"
+python -m scripts.content_engine_v2.generate_cli manifest.json --output out/content-v2-generated.json
+```
+
+The generator uses bounded retries and model fallback for rate limits/server errors. It fails closed instead of substituting fabricated fallback content. Every generated item remains a draft or review candidate.
+
 ## Quality gate
 Run from repository root:
 
 ```bash
-python -m scripts.content_engine_v2.engine path/to/staged-v2.json --output out/content-v2-review.json
+python -m scripts.content_engine_v2.engine out/content-v2-generated.json --output out/content-v2-review.json
 ```
 
-Input format: `{"items": [{...canonical V2 item...}]}`. The command writes only the review artifact. It never changes `docs/content.json` or sends posts.
+The command writes only a review artifact. It never changes `docs/content.json` or sends posts. Human editorial approval is still required before any publication.
 
 ## Current stage
-Schema, deterministic editorial gate, and channel renderers are implemented. Generation/provider orchestration, source verification, similarity detection beyond normalized exact titles, editorial UI, and controlled V1 promotion remain later stages. No production workflow points to V2 yet.
+Schema, audience/domain profiles, provider fallback, review-only batch generation, deterministic quality gate, source-ID validation, channel renderers, V1 compatibility adapter, and automated tests are implemented. Automated source discovery/verification, semantic similarity detection, editorial UI, and controlled V1 promotion remain later stages. No production workflow points to V2 yet.
