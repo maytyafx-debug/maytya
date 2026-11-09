@@ -110,7 +110,7 @@ jobs:
         run: python scripts/post_telegram.py
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ vars.TELEGRAM_CHAT_ID || '@Maytyafx' }}
+          TELEGRAM_CHAT_ID: '@maytya'
           TELEGRAM_REVIEW_CHAT_ID: ${{ secrets.TELEGRAM_REVIEW_CHAT_ID }}
           POST_MODE: ${{ vars.POST_MODE || 'auto' }}
           POST_KEYS: ${{ vars.POST_KEYS }}
