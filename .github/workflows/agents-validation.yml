@@ -3,7 +3,7 @@ name: Validate Tia and Mahnoosh MVP
 on:
   pull_request:
     paths:
-      - "worker/index.js"
+      - "agents-worker/**"
       - "docs/tia-mahnoosh/**"
       - ".github/workflows/agents-validation.yml"
   workflow_dispatch:
@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: "22"
       - name: Check Worker JavaScript syntax
-        run: node --check worker/index.js
+        run: node --check agents-worker/index.js
       - name: Check browser JavaScript and required safeguards
         run: |
           python3 - <<'PY'
