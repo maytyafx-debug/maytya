@@ -106,6 +106,7 @@ jobs:
           SITE_URL: ${{ vars.SITE_URL }}
 
       - name: ارسال محتوای تلگرام
+        id: telegram_publish
         run: python scripts/post_telegram.py
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -115,6 +116,19 @@ jobs:
           POST_KEYS: ${{ vars.POST_KEYS }}
           SITE_URL: ${{ vars.SITE_URL }}
         continue-on-error: true
+
+      - name: ثبت نتیجه انتشار تلگرام در گزارش اجرا
+        if: always()
+        env:
+          TELEGRAM_STEP_OUTCOME: ${{ steps.telegram_publish.outcome }}
+        run: |
+          if [ "$TELEGRAM_STEP_OUTCOME" = "success" ]; then
+            echo "### انتشار تلگرام: موفق" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "### هشدار انتشار تلگرام" >> "$GITHUB_STEP_SUMMARY"
+            echo "ارسال به مقصد تنظیم‌شده ناموفق بود؛ سایر مراحل روزانه ادامه یافتند. شناسه کانال و دسترسی ربات باید بررسی شود." >> "$GITHUB_STEP_SUMMARY"
+            echo "::warning::Telegram publishing failed; check TELEGRAM_CHAT_ID and bot channel permissions."
+          fi
 
       - name: ربات جستجوگر فرصت
         run: python scripts/radar.py
