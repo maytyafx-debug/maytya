@@ -40,6 +40,7 @@ try: posted = json.load(open(POSTED, encoding="utf-8"))
 except Exception: posted = {}
 force = os.environ.get("FORCE_POST") == "1"
 KEYS = [k.strip() for k in (os.environ.get("POST_KEYS") or "forex,crypto,bourse").split(",") if k.strip()]  # مثلاً POST_KEYS=forex تا فقط یک پست در روز برود
+failures = []
 for key in KEYS:
     sec = data["sections"].get(key)
     if not sec or not sec["items"]:
@@ -64,4 +65,11 @@ for key in KEYS:
             with open(vid, "rb") as fh:
                 v = requests.post(f"https://api.telegram.org/bot{tok}/sendVideo", data={"chat_id": chat, "caption": f"🎬 {it['title']}"[:1000], "supports_streaming": "true"}, files={"video": fh}, timeout=120)
             print(key, "video", v.status_code, "" if v.status_code == 200 else v.text[:200])
+            if v.status_code != 200:
+                failures.append(f"{key}: video HTTP {v.status_code}")
+    else:
+        failures.append(f"{key}: message HTTP {r.status_code}")
 json.dump(posted, open(POSTED, "w", encoding="utf-8"), ensure_ascii=False)
+if failures:
+    print("Telegram publishing failures:", "; ".join(failures))
+    raise SystemExit(1)
