@@ -12,6 +12,11 @@ class QualitySimilarityIntegrationTests(unittest.TestCase):
         result=evaluate(current,existing_items=[old])
         self.assertFalse(result["checks"]["near_duplicate"])
         self.assertTrue(result["near_duplicates"])
+    def test_source_is_mandatory(self):
+        current=self.item("عنوان آموزشی مستقل","متن آموزشی که منبع معتبر برای آن مشخص نشده است.")
+        current["sources"]=[]
+        result=evaluate(current)
+        self.assertFalse(result["checks"]["sources"])
     def test_unrelated_content_passes_similarity_gate(self):
         current=self.item("ارزیابی خروجی هوش مصنوعی","برای سنجش پاسخ مدل باید ادعاها را با منبع معتبر بررسی کرد و محدودیت‌ها را شناخت.")
         old=self.item("ریکاوری در ورزش قهرمانی","ثبت خواب و خستگی می‌تواند گفت‌وگو با کادر تخصصی را بهتر کند.")
