@@ -13,6 +13,11 @@ class HistoryTests(unittest.TestCase):
             self.assertEqual(len(history),2)
             self.assertEqual({x["domain"] for x in history},{"forex","sport"})
             self.assertEqual(path.read_text(encoding="utf-8"),original)
+    def test_live_archive_contains_all_metatya_domains(self):
+        history=load_v1_history("docs/content.json")
+        self.assertGreater(len(history),400)
+        self.assertEqual({x["domain"] for x in history},
+            {"forex","crypto","bourse","income","business","finance","education","psychology","law","ai","privacy","sport","health"})
     def test_missing_archive_is_empty(self):
         with tempfile.TemporaryDirectory() as tmp:
             self.assertEqual(load_v1_history(Path(tmp)/"missing.json"),[])
