@@ -69,3 +69,8 @@ Only after checking the preview, add `--apply` to write. The script makes a time
 ## Run the live pilot from GitHub Actions
 
 Use the manual workflow **Metatya V2 — Generate review drafts**. It runs only when manually dispatched, reads the repository secret `OPENROUTER_API_KEY` (and optional `OPENROUTER_MODELS`), generates the Forex/AI/Sport pilot, and stores the JSON as a seven-day Actions artifact. It does not commit files, update the website, or send Telegram posts. A missing API key stops the workflow.
+
+
+## Bounded self-repair
+
+The generator now attempts up to two revisions by default when deterministic checks fail. It feeds the exact failed checks back into a fresh generation request, regenerates the complete draft, re-verifies selected source endpoints, and reruns the full quality gate. It does not silently patch numeric claims or invent missing facts. If the revision limit is reached, the item remains blocked as a draft with a repair history; it cannot enter the approval/promotion path. The revision limit is configurable in code and capped at three.
