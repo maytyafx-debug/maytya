@@ -7,7 +7,7 @@ from .quality import evaluate, DISCLAIMERS
 from .source_registry import verify_source
 
 def generate_item(*, domain: str, tab: str, audience: str, source_pack: list[dict],
-                  history_titles: list[str] | None = None, formats: list[str] | None = None,
+                  history_titles: list[str] | None = None, existing_items: list[dict] | None = None, formats: list[str] | None = None,
                   provider=None) -> dict:
     prompt = build_prompt(domain=domain, tab=tab, audience=audience,
                           source_pack=source_pack, history_titles=history_titles)
@@ -30,7 +30,7 @@ def generate_item(*, domain: str, tab: str, audience: str, source_pack: list[dic
         status="draft")
     item["provider"] = response.get("_provider", "custom")
     item["model"] = response.get("_model", "unspecified")
-    report = evaluate(item, existing_titles=set(history_titles or []))
+    report = evaluate(item, existing_titles=set(history_titles or []), existing_items=existing_items or [])
     item["quality"] = report
     item["status"] = "review" if report["ok"] else "draft"
     return item
