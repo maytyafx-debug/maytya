@@ -4,13 +4,14 @@ import argparse, json
 from pathlib import Path
 from .quality import evaluate
 from .render import render_all
+from .history import load_v1_history
 
 
 def main():
     parser = argparse.ArgumentParser(description="Metatya Content Engine V2 (safe staging mode)")
     parser.add_argument("input", help="JSON file containing {items:[...]}")
     parser.add_argument("--output", default="out/content-v2-review.json")
-    parser.add_argument("--site-url", default="")
+    parser.add_argument("--site-url", default="")\n    parser.add_argument("--history", default="docs/content.json")\n    parser.add_argument("--no-history", action="store_true")
     args = parser.parse_args()
     data = json.loads(Path(args.input).read_text(encoding="utf-8"))
     if not isinstance(data, dict) or not isinstance(data.get("items"), list):
