@@ -33,4 +33,17 @@ python -m scripts.content_engine_v2.engine out/content-v2-generated.json --outpu
 The command writes only a review artifact. It never changes `docs/content.json` or sends posts. Human editorial approval is still required before any publication.
 
 ## Current stage
-Schema, audience/domain profiles, provider fallback, review-only batch generation, deterministic quality gate, source-ID validation, channel renderers, V1 compatibility adapter, and automated tests are implemented. Automated source discovery/verification, semantic similarity detection, editorial UI, and controlled V1 promotion remain later stages. No production workflow points to V2 yet.
+Schema, audience/domain profiles, provider fallback, review-only batch generation, deterministic quality gate, source-ID validation, channel renderers, V1 compatibility adapter, and automated tests are implemented. An allowlisted HTTPS source verifier, curated official-source registry, near-duplicate comparison, and review-only batch generation are implemented. Source reachability is not a fact-check: editors must still confirm that each source supports the specific claims. Editorial UI, semantic evaluation against the full historical archive, and controlled V1 promotion remain later stages. No production workflow points to V2 yet.
+
+
+## Source verification and duplicate checks
+
+Check the curated source list:
+
+```bash
+python -m scripts.content_engine_v2.verify_sources scripts/content_engine_v2/examples/source-registry.json --output out/source-verification.json
+```
+
+The verifier only requests HTTPS URLs on an explicit official-domain allowlist, rejects redirects and private destinations, limits response reads, and reports whether the source endpoint is reachable. A reachable page is **not** proof that it supports an article's claims.
+
+The quality gate compares new drafts against earlier items supplied to it. It uses normalized text, token overlap, and sequence similarity to flag likely near-duplicates; editors should review flagged matches and borderline cases.
