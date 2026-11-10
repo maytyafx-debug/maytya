@@ -64,3 +64,8 @@ python -m scripts.content_engine_v2.promote out/reviewed-v2.json --approval-file
 ```
 
 Only after checking the preview, add `--apply` to write. The script makes a timestamped backup before the atomic replacement, inserts new items without truncating or deleting existing history, rejects items not explicitly marked approved, and refuses duplicate promotion. No GitHub workflow calls this command.
+
+
+## Run the live pilot from GitHub Actions
+
+Use the manual workflow **Metatya V2 — Generate review drafts**. It runs only when manually dispatched, reads the repository secret `OPENROUTER_API_KEY` (and optional `OPENROUTER_MODELS`), generates the Forex/AI/Sport pilot, and stores the JSON as a seven-day Actions artifact. It does not commit files, update the website, or send Telegram posts. A missing API key stops the workflow.
