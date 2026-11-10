@@ -33,37 +33,49 @@ def _safe_url(url: str, allowlist: set[str]) -> tuple[bool,str]:
         return False,"invalid URL"
 
 def verify_source(source: dict, *, allowlist: set[str] | None = None, session=None,
-                  timeout: int = 12, max_bytes: int = 65536) -> dict:
+                  timeout: int = 12, max_bytes: int = 65536, max_redirects: int = 3) -> dict:
+    from urllib.parse import urljoin
     allowed=allowlist or DEFAULT_ALLOWLIST
-    url=str(source.get("url",""))
-    safe,detail=_safe_url(url,allowed)
-    if not safe: return {"ok":False,"url":url,"reason":detail}
+    original_url=str(source.get("url",""))
+    url=original_url
     client=session or requests
-    try:
-        response=client.get(url,headers={"User-Agent":"MetatyaSourceVerifier/2.0","Range":f"bytes=0-{max_bytes-1}"},
-                            timeout=timeout,stream=True,allow_redirects=False)
-        status=response.status_code
-        if status != 200 and status != 206:
+    redirects=0
+    while True:
+        safe,detail=_safe_url(url,allowed)
+        if not safe: return {"ok":False,"url":original_url,"final_url":url,"reason":detail}
+        try:
+            response=client.get(url,headers={"User-Agent":"MetatyaSourceVerifier/2.0","Range":f"bytes=0-{max_bytes-1}"},
+                                timeout=timeout,stream=True,allow_redirects=False)
+            status=response.status_code
+            if status in {301,302,303,307,308}:
+                location=response.headers.get("Location","")
+                response.close()
+                if not location or redirects >= max_redirects:
+                    return {"ok":False,"url":original_url,"status":status,"reason":"redirect limit reached or missing Location"}
+                url=urljoin(url,location)
+                redirects+=1
+                continue
+            if status not in {200,206}:
+                response.close()
+                return {"ok":False,"url":original_url,"final_url":url,"status":status,"reason":"source did not return a direct 200/206 response"}
+            content_type=response.headers.get("Content-Type","").split(";")[0].lower()
+            if content_type not in {"text/html","application/pdf","application/xhtml+xml"}:
+                response.close()
+                return {"ok":False,"url":original_url,"final_url":url,"status":status,"content_type":content_type,"reason":"unsupported source content type"}
+            chunks=[]; total=0
+            for chunk in response.iter_content(chunk_size=8192):
+                if not chunk: continue
+                remaining=max_bytes-total
+                chunks.append(chunk[:remaining]); total+=min(len(chunk),remaining)
+                if total>=max_bytes: break
             response.close()
-            return {"ok":False,"url":url,"status":status,"reason":"source did not return a direct 200/206 response"}
-        content_type=response.headers.get("Content-Type","").split(";")[0].lower()
-        if content_type not in {"text/html","application/pdf","application/xhtml+xml"}:
-            response.close()
-            return {"ok":False,"url":url,"status":status,"content_type":content_type,"reason":"unsupported source content type"}
-        chunks=[]; total=0
-        for chunk in response.iter_content(chunk_size=8192):
-            if not chunk: continue
-            remaining=max_bytes-total
-            chunks.append(chunk[:remaining]); total+=min(len(chunk),remaining)
-            if total>=max_bytes: break
-        response.close()
-        sample=b"".join(chunks)
-        title=""
-        if content_type in {"text/html","application/xhtml+xml"}:
-            match=re.search(rb"<title[^>]*>(.*?)</title>",sample,re.I|re.S)
-            if match: title=re.sub(r"\s+"," ",match.group(1).decode("utf-8","ignore")).strip()[:240]
-        return {"ok":True,"url":url,"status":status,"content_type":content_type,
-                "title":title or source.get("title",""),"bytes_checked":total,
-                "reason":"direct HTTPS source responded; content is not a full fact-check"}
-    except requests.RequestException as exc:
-        return {"ok":False,"url":url,"reason":type(exc).__name__}
+            sample=b"".join(chunks)
+            title=""
+            if content_type in {"text/html","application/xhtml+xml"}:
+                match=re.search(rb"<title[^>]*>(.*?)</title>",sample,re.I|re.S)
+                if match: title=re.sub(r"\\s+"," ",match.group(1).decode("utf-8","ignore")).strip()[:240]
+            return {"ok":True,"url":original_url,"final_url":url,"status":status,"redirects":redirects,
+                    "content_type":content_type,"title":title or source.get("title",""),
+                    "bytes_checked":total,"reason":"official allowlisted HTTPS endpoint responded; this is not a full fact-check"}
+        except requests.RequestException as exc:
+            return {"ok":False,"url":original_url,"final_url":url,"reason":type(exc).__name__}
