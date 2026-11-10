@@ -20,13 +20,12 @@ def prepare_promotion(v2_data: dict, legacy_data: dict, approved_ids: set[str]) 
         if not item.get("quality",{}).get("ok"): raise ValueError(f"Item {item_id} failed quality gate")
         if not item.get("sources"): raise ValueError(f"Item {item_id} has no traceable sources")
         item=dict(item)
-        item["channel_copy"]=render_all(item).get("telegram","")
-        selected.append(to_v1(item))
+        item["channel_copy"]=render_all(item)
+        selected.append((item.get("domain"),to_v1(item)))
     result=json.loads(json.dumps(legacy_data,ensure_ascii=False))
     sections=result.setdefault("sections",{})
     counts={}
-    for legacy in selected:
-        domain=by_id[next(k for k in approved_ids if by_id[k]["title"]==legacy["title"])].get("domain")
+    for domain,legacy in selected:
         if domain not in sections: sections[domain]={"name":domain,"items":[]}
         section=sections[domain]
         section.setdefault("items",[])
