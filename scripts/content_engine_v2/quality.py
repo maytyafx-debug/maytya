@@ -1,5 +1,7 @@
 """Editorial quality gate. Deterministic checks only; human review remains mandatory."""
 from __future__ import annotations
+import ast
+import operator
 import re
 from .schema import normalize_text
 from .similarity import find_near_duplicates
@@ -12,10 +14,58 @@ DISCLAIMERS = {
     "medical": "این محتوا عمومی است و جایگزین نظر متخصص سلامت نیست.",
     "law": "این مطلب اطلاعات عمومی است و جایگزین مشاوره حقوقی نیست.",
 }
+_DIGITS = str.maketrans("۰۱۲۳۴۵۶۷۸۹٠١٢٣٤٥٦٧٨٩", "01234567890123456789")
+_BINOPS = {ast.Add: operator.add, ast.Sub: operator.sub, ast.Mult: operator.mul,
+           ast.Div: operator.truediv, ast.Pow: operator.pow}
+_UNARY = {ast.UAdd: operator.pos, ast.USub: operator.neg}
 
 
 def _sentences(script):
     return isinstance(script, list) and len(script) == 3 and all(isinstance(x, str) and 3 <= len(x.strip()) <= 160 for x in script)
+
+
+def _safe_math(node):
+    if isinstance(node, ast.Expression):
+        return _safe_math(node.body)
+    if isinstance(node, ast.Constant) and isinstance(node.value, (int, float)) and not isinstance(node.value, bool):
+        return node.value
+    if isinstance(node, ast.BinOp) and type(node.op) in _BINOPS:
+        left, right = _safe_math(node.left), _safe_math(node.right)
+        if isinstance(node.op, ast.Pow) and abs(right) > 8:
+            raise ValueError("exponent too large")
+        value = _BINOPS[type(node.op)](left, right)
+        if abs(value) > 1e15:
+            raise ValueError("result too large")
+        return value
+    if isinstance(node, ast.UnaryOp) and type(node.op) in _UNARY:
+        return _UNARY[type(node.op)](_safe_math(node.operand))
+    raise ValueError("unsupported expression")
+
+
+def _arithmetic_errors(text):
+    """Catch explicit, simple arithmetic equalities with a safe AST evaluator."""
+    normalized = text.translate(_DIGITS).replace("×", "*").replace("÷", "/").replace("−", "-")
+    pattern = re.compile(r"(?P<left>\(?\s*\d[\d.\s()+*/-]*\s*\)?)\s*=\s*(?P<right>\d[\d.\s()+*/-]*)")
+    errors = []
+    for match in pattern.finditer(normalized):
+        left, right = match.group("left").strip(), match.group("right").strip().rstrip(".")
+        # Ignore malformed or overlong captures rather than guessing.
+        if len(left) > 100 or len(right) > 40:
+            continue
+        try:
+            lhs = _safe_math(ast.parse(left, mode="eval"))
+            rhs = _safe_math(ast.parse(right, mode="eval"))
+        except (SyntaxError, ValueError, ZeroDivisionError, OverflowError):
+            continue
+        if abs(lhs - rhs) > max(1e-8, abs(lhs) * 1e-8):
+            errors.append(f"{left} = {right}")
+    return errors
+
+
+def _language_warnings(text):
+    # Narrow high-confidence patterns observed in malformed Persian model output.
+    suspicious = ("نظارت دقیق‌سازان", "یکسان‌پذیر", "مکانیسم‌های بازگشت به حالت اولیه")
+    return [phrase for phrase in suspicious if phrase in text]
 
 
 def evaluate(item: dict, *, existing_titles: set[str] | None = None, existing_items: list[dict] | None = None, allowed_tabs: set[str] | None = None) -> dict:
@@ -42,6 +92,12 @@ def evaluate(item: dict, *, existing_titles: set[str] | None = None, existing_it
     banned = [p for p in BANNED if normalize_text(p) in combined]
     checks["claims"] = not banned
     if banned: errors.append("عبارت تبلیغاتی/وعده ممنوع: " + "، ".join(banned))
+    math_errors = _arithmetic_errors(body)
+    checks["arithmetic"] = not math_errors
+    if math_errors: errors.append("معادله یا محاسبه عددی ناسازگار است: " + "؛ ".join(math_errors[:3]))
+    language_warnings = _language_warnings(body)
+    checks["language_patterns"] = not language_warnings
+    if language_warnings: errors.append("عبارت نامفهوم یا مشکوک به خطای نگارشی: " + "، ".join(language_warnings))
     required = DISCLAIMERS["financial"] if domain in FINANCIAL else DISCLAIMERS["medical"] if domain in MEDICAL else DISCLAIMERS["law"] if domain == "law" else ""
     disclaimer_text = str(item.get("disclaimer") or "")
     checks["disclaimer"] = not required or required in (body + " " + disclaimer_text)
