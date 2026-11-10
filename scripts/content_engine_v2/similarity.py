@@ -22,7 +22,7 @@ def similarity(left: str, right: str) -> float:
     return round(max(jaccard, sequence * 0.92), 4)
 
 def find_near_duplicates(item: dict, existing_items: list[dict] | None = None,
-                         *, threshold: float = 0.72) -> list[dict]:
+                         *, threshold: float = 0.62) -> list[dict]:
     matches=[]
     candidate = str(item.get("title","")) + " " + str(item.get("body",""))
     for old in existing_items or []:
