@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 from scripts.content_engine_v2.source_registry import verify_source
 
 class SourceRegistryTests(unittest.TestCase):
@@ -17,7 +17,8 @@ class SourceRegistryTests(unittest.TestCase):
         response.iter_content.return_value=[b"<html><title>NIST Framework</title></html>"]
         response.close=Mock()
         session=Mock(); session.get.return_value=response
-        result=verify_source({"url":"https://www.nist.gov/example","title":"NIST"},allowlist={"nist.gov"},session=session)
+        with patch("scripts.content_engine_v2.source_registry.socket.getaddrinfo", return_value=[(None,None,None,None,("8.8.8.8",443))]):
+            result=verify_source({"url":"https://www.nist.gov/example","title":"NIST"},allowlist={"nist.gov"},session=session)
         self.assertTrue(result["ok"]); self.assertEqual(result["title"],"NIST Framework")
         session.get.assert_called_once()
 
