@@ -43,7 +43,7 @@ def to_v1(item: dict, *, date: str | None = None) -> dict:
     body = item["body"]
     disclaimer = item.get("disclaimer") or ""
     if disclaimer and disclaimer not in body:
-        body = body.rstrip() + "\\n\\n" + disclaimer
+        body = body.rstrip() + "\n\n" + disclaimer
     return {
         "title": item["title"], "body": body, "tab": item["tab"],
         "provider": "metatya-content-engine-v2", "date": day,
