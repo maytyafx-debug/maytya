@@ -53,7 +53,7 @@ def evaluate(item: dict, *, existing_titles: set[str] | None = None, existing_it
     normalized = normalize_text(title)
     checks["duplicate"] = bool(normalized) and normalized not in {normalize_text(x) for x in known}
     if not checks["duplicate"]: errors.append("عنوان خالی یا تکراری است.")
-    near = find_near_duplicates(item, existing_items or [], threshold=0.80)
+    near = find_near_duplicates(item, existing_items or [], threshold=0.62)
     checks["near_duplicate"] = not near
     if near: errors.append("محتوای بسیار مشابه با سابقه پیدا شد: " + "، ".join(x["title"] for x in near[:3]))
     formats = item.get("formats")
