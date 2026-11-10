@@ -1,6 +1,6 @@
 import unittest
 
-from run import evaluate, parse_json
+from scripts.model_benchmark_v1.run import evaluate, parse_json
 
 
 class BenchmarkTests(unittest.TestCase):
