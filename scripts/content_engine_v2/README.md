@@ -47,3 +47,20 @@ python -m scripts.content_engine_v2.verify_sources scripts/content_engine_v2/exa
 The verifier only requests HTTPS URLs on an explicit official-domain allowlist, rejects redirects and private destinations, limits response reads, and reports whether the source endpoint is reachable. A reachable page is **not** proof that it supports an article's claims.
 
 The quality gate compares new drafts against earlier items supplied to it. It uses normalized text, token overlap, and sequence similarity to flag likely near-duplicates; editors should review flagged matches and borderline cases.
+
+
+## Explicit approval and reversible promotion
+
+The generator never publishes. A human editor must review each draft, correct it, and set its `status` to `approved` in the reviewed JSON. Then create an approval file containing only the exact approved IDs:
+
+```json
+{"approved_ids":["item-id-reviewed-by-editor"]}
+```
+
+Preview the promotion first (dry-run is the default):
+
+```bash
+python -m scripts.content_engine_v2.promote out/reviewed-v2.json --approval-file approvals.json
+```
+
+Only after checking the preview, add `--apply` to write. The script makes a timestamped backup before the atomic replacement, inserts new items without truncating or deleting existing history, rejects items not explicitly marked approved, and refuses duplicate promotion. No GitHub workflow calls this command.
