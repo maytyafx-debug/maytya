@@ -18,11 +18,11 @@ def main():
     results = []
     seen = set()
     for item in data["items"]:
-        report = evaluate(item, existing_titles=seen)
+        report = evaluate(item, existing_titles=seen, existing_items=seen_items)
         item["quality"] = report
         item["channel_copy"] = render_all(item, args.site_url) if report["ok"] else {}
         results.append({"id":item.get("id"), "title":item.get("title"), **report})
-        if report["ok"]: seen.add(item.get("title", ""))
+        if report["ok"]:\n            seen.add(item.get("title", ""))\n            seen_items.append(item)
     out = {"schema":"metatya.content.v2.review", "items":data["items"], "summary":{"total":len(results),"passed":sum(x["ok"] for x in results),"failed":sum(not x["ok"] for x in results)}}
     path = Path(args.output); path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(out, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
