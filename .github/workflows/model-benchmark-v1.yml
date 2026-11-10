@@ -18,6 +18,8 @@ jobs:
           python-version: "3.12"
       - name: نصب وابستگی
         run: python -m pip install requests
+      - name: اجرای تست‌های واحد
+        run: python -m unittest discover -s scripts/model_benchmark_v1 -p 'test_*.py' -v
       - name: بررسی کلید
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
