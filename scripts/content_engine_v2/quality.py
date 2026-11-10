@@ -2,6 +2,7 @@
 from __future__ import annotations
 import re
 from .schema import normalize_text
+from .similarity import find_near_duplicates
 
 BANNED = ("سود تضمینی", "تضمین سود", "بدون ریسک", "قطعاً سود", "قطعا سود", "درآمد تضمینی")
 FINANCIAL = {"forex", "crypto", "bourse", "income", "business", "finance"}
@@ -17,7 +18,7 @@ def _sentences(script):
     return isinstance(script, list) and len(script) == 3 and all(isinstance(x, str) and 3 <= len(x.strip()) <= 160 for x in script)
 
 
-def evaluate(item: dict, *, existing_titles: set[str] | None = None, allowed_tabs: set[str] | None = None) -> dict:
+def evaluate(item: dict, *, existing_titles: set[str] | None = None, existing_items: list[dict] | None = None, allowed_tabs: set[str] | None = None) -> dict:
     errors, checks = [], {}
     title, body = str(item.get("title", "")).strip(), str(item.get("body", "")).strip()
     domain, tab = item.get("domain"), item.get("tab")
@@ -52,9 +53,12 @@ def evaluate(item: dict, *, existing_titles: set[str] | None = None, allowed_tab
     normalized = normalize_text(title)
     checks["duplicate"] = bool(normalized) and normalized not in {normalize_text(x) for x in known}
     if not checks["duplicate"]: errors.append("عنوان خالی یا تکراری است.")
+    near = find_near_duplicates(item, existing_items or [], threshold=0.80)
+    checks["near_duplicate"] = not near
+    if near: errors.append("محتوای بسیار مشابه با سابقه پیدا شد: " + "، ".join(x["title"] for x in near[:3]))
     formats = item.get("formats")
     checks["formats"] = isinstance(formats, list) and bool(formats) and set(formats) <= {"website","telegram","instagram_reel","instagram_carousel","youtube_short"}
     if not checks["formats"]: errors.append("قالب انتشار نامعتبر است.")
     score = round(100 * sum(bool(v) for v in checks.values()) / max(1, len(checks)))
-    return {"ok": not errors, "score": score, "checks": checks, "errors": errors,
+    return {"ok": not errors, "score": score, "checks": checks, "errors": errors, "near_duplicates": near,
             "decision": "needs_human_review" if not errors else "eligible_for_human_review"}
