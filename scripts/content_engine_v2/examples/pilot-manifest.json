@@ -1,0 +1,31 @@
+{
+  "jobs": [
+    {
+      "domain": "forex",
+      "tab": "آموزش",
+      "audience": "beginner",
+      "formats": ["website", "telegram", "instagram_reel", "instagram_carousel"],
+      "source_pack": [
+        {"id":"cftc-forex","title":"CFTC Customer Advisory: Forex","url":"https://www.cftc.gov/LearnAndProtect/AdvisoriesAndArticles/CustomerAdvisory_MustKnowForex.html"}
+      ]
+    },
+    {
+      "domain": "ai",
+      "tab": "آموزش",
+      "audience": "intermediate",
+      "formats": ["website", "telegram", "instagram_reel", "instagram_carousel"],
+      "source_pack": [
+        {"id":"nist-ai-rmf","title":"NIST AI Risk Management Framework","url":"https://www.nist.gov/itl/ai-risk-management-framework"}
+      ]
+    },
+    {
+      "domain": "sport",
+      "tab": "تمرین",
+      "audience": "sport_advanced",
+      "formats": ["website", "telegram", "instagram_reel", "instagram_carousel"],
+      "source_pack": [
+        {"id":"who-physical-activity","title":"WHO Physical Activity Fact Sheet","url":"https://www.who.int/news-room/fact-sheets/detail/physical-activity"}
+      ]
+    }
+  ]
+}
