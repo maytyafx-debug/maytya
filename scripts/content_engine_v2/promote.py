@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from .schema import to_v1
 from .render import render_all
+from .quality import evaluate
 
 
 def prepare_promotion(v2_data: dict, legacy_data: dict, approved_ids: set[str]) -> tuple[dict,dict]:
@@ -14,14 +15,21 @@ def prepare_promotion(v2_data: dict, legacy_data: dict, approved_ids: set[str]) 
     missing=approved_ids-set(by_id)
     if missing: raise ValueError("Unknown approved IDs: "+", ".join(sorted(missing)))
     selected=[]
+    sections=legacy_data.get("sections",{})
+    history=[{"domain":domain,"title":entry.get("title",""),"body":entry.get("body","")}
+             for domain,section in sections.items() for entry in section.get("items",[])]
+    history_titles={x["title"] for x in history}
     for item_id in sorted(approved_ids):
         item=by_id[item_id]
         if item.get("status") != "approved": raise ValueError(f"Item {item_id} is not marked approved")
-        if not item.get("quality",{}).get("ok"): raise ValueError(f"Item {item_id} failed quality gate")
-        if not item.get("sources"): raise ValueError(f"Item {item_id} has no traceable sources")
+        report=evaluate(item,existing_titles=history_titles,existing_items=history)
+        if not report.get("ok"): raise ValueError(f"Item {item_id} failed fresh quality checks: " + "; ".join(report.get("errors",[])))
+        if not item.get("quality",{}).get("ok"): raise ValueError(f"Item {item_id} has no prior passing review record")
         item=dict(item)
         item["channel_copy"]=render_all(item)
         selected.append((item.get("domain"),to_v1(item)))
+        history_titles.add(item.get("title",""))
+        history.append(item)
     result=json.loads(json.dumps(legacy_data,ensure_ascii=False))
     sections=result.setdefault("sections",{})
     counts={}
