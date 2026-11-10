@@ -1,0 +1,41 @@
+name: METATYA Model Benchmark V1 — Manual
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - name: دریافت مخزن
+        uses: actions/checkout@v4
+      - name: آماده‌سازی Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: نصب وابستگی
+        run: python -m pip install requests
+      - name: بررسی کلید
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          if [ -z "$OPENROUTER_API_KEY" ]; then
+            echo "OPENROUTER_API_KEY repository secret is not configured."
+            exit 1
+          fi
+      - name: اجرای آزمون مدل‌ها
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          python scripts/model_benchmark_v1/run.py             --output out/model-benchmark-v1.json
+      - name: ذخیره گزارش برای بازبینی
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: metatya-model-benchmark-v1
+          path: out/model-benchmark-v1.json
+          if-no-files-found: warn
+          retention-days: 7
