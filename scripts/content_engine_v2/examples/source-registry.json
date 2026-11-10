@@ -1,0 +1,9 @@
+{
+  "schema": "metatya.source-registry.v1",
+  "sources": [
+    {"id":"nist-ai-rmf","domain":"ai","title":"NIST AI Risk Management Framework","url":"https://www.nist.gov/itl/ai-risk-management-framework","authority":"official"},
+    {"id":"cftc-forex-advisory","domain":"forex","title":"CFTC Customer Advisory: Forex","url":"https://www.cftc.gov/LearnAndProtect/AdvisoriesAndArticles/CustomerAdvisory_MustKnowForex.html","authority":"official"},
+    {"id":"who-physical-activity","domain":"sport","title":"WHO Physical Activity Fact Sheet","url":"https://www.who.int/news-room/fact-sheets/detail/physical-activity","authority":"official"},
+    {"id":"who-guidelines-2020","domain":"sport","title":"WHO Guidelines on Physical Activity and Sedentary Behaviour","url":"https://www.who.int/publications/i/item/9789240014886","authority":"official"}
+  ]
+}
