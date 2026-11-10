@@ -1,0 +1,44 @@
+name: Metatya V2 — Generate review drafts
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: دریافت مخزن
+        uses: actions/checkout@v4
+      - name: آماده‌سازی Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: نصب وابستگی
+        run: python -m pip install requests
+      - name: بررسی کلید سرویس
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          if [ -z "$OPENROUTER_API_KEY" ]; then
+            echo "OPENROUTER_API_KEY repository secret is not configured."
+            exit 1
+          fi
+      - name: تولید پیش‌نویس‌های آزمایشی (بدون انتشار)
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENROUTER_MODELS: ${{ secrets.OPENROUTER_MODELS }}
+        run: |
+          python -m scripts.content_engine_v2.generate_cli \
+            scripts/content_engine_v2/examples/pilot-manifest.json \
+            --output out/content-v2-generated.json
+      - name: ذخیره خروجی برای بازبینی انسانی
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: metatya-content-v2-review
+          path: out/content-v2-generated.json
+          if-no-files-found: warn
+          retention-days: 7
