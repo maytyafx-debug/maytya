@@ -117,4 +117,4 @@ def evaluate(item: dict, *, existing_titles: set[str] | None = None, existing_it
     if not checks["formats"]: errors.append("قالب انتشار نامعتبر است.")
     score = round(100 * sum(bool(v) for v in checks.values()) / max(1, len(checks)))
     return {"ok": not errors, "score": score, "checks": checks, "errors": errors, "near_duplicates": near,
-            "decision": "needs_human_review" if not errors else "eligible_for_human_review"}
+            "decision": "eligible_for_human_review" if not errors else "blocked_for_revision"}
