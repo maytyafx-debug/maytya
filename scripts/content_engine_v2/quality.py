@@ -47,7 +47,7 @@ def evaluate(item: dict, *, existing_titles: set[str] | None = None, existing_it
     checks["disclaimer"] = not required or required in (body + " " + disclaimer_text)
     if not checks["disclaimer"]: errors.append("هشدار حوزه تخصصی درج نشده است.")
     sources = item.get("sources")
-    checks["sources"] = isinstance(sources, list) and all(isinstance(s, dict) and s.get("title") and s.get("url") for s in sources)
+    checks["sources"] = isinstance(sources, list) and bool(sources) and all(isinstance(s, dict) and s.get("title") and s.get("url") for s in sources)
     if not checks["sources"]: errors.append("منابع باید فهرست ساختاریافته عنوان و نشانی باشند؛ برای محتوای ماندگار منبع رسمی/معتبر ثبت شود.")
     known = existing_titles or set()
     normalized = normalize_text(title)
