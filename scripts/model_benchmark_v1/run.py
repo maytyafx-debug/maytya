@@ -182,6 +182,8 @@ def main() -> None:
                 record["status"] = "invalid_response_or_http_error"
                 record["error"] = str(exc)[:300]
             results.append(record)
+            # Keep the 12-call pilot comfortably below the free-tier per-minute cap.
+            time.sleep(1.1)
 
     summaries = []
     for model in model_config["models"]:
