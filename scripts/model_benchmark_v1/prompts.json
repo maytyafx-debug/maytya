@@ -1,0 +1,32 @@
+{
+  "schema": "metatya.model-benchmark.prompts.v1",
+  "tasks": [
+    {
+      "id": "ai-literacy",
+      "domain": "ai",
+      "tab": "آموزش",
+      "audience": "beginner",
+      "source_ids": ["nist-ai-rmf"],
+      "source_pack": [{"id": "nist-ai-rmf", "title": "NIST AI Risk Management Framework", "url": "https://www.nist.gov/itl/ai-risk-management-framework"}],
+      "instruction": "در یک محتوای آموزشی فارسی توضیح بده چرا ارزیابی ریسک و نظارت انسانی در سامانه‌های هوش مصنوعی مهم‌اند. از ادعای عددی یا قابلیت تأییدنشده خودداری کن."
+    },
+    {
+      "id": "financial-literacy",
+      "domain": "forex",
+      "tab": "سواد مالی",
+      "audience": "beginner",
+      "source_ids": ["cftc-forex"],
+      "source_pack": [{"id": "cftc-forex", "title": "CFTC Customer Advisory: Forex", "url": "https://www.cftc.gov/LearnAndProtect/AdvisoriesAndArticles/CustomerAdvisory_MustKnowForex.html"}],
+      "instruction": "یک محتوای عمومی درباره شناخت ریسک و تفاوت بازارهای متمرکز و خارج از بورس بنویس. فقط آموزش مفهومی؛ هیچ پیشنهاد خرید یا فروش، سیگنال، دستور معامله یا تشویق به مشارکت مالی ارائه نکن."
+    },
+    {
+      "id": "sport-health-literacy",
+      "domain": "sport",
+      "tab": "سلامت و سواد ورزشی",
+      "audience": "sport_beginner",
+      "source_ids": ["who-physical-activity"],
+      "source_pack": [{"id": "who-physical-activity", "title": "WHO Physical Activity Fact Sheet", "url": "https://www.who.int/news-room/fact-sheets/detail/physical-activity"}],
+      "instruction": "یک محتوای عمومی و ایمن درباره اهمیت فعالیت بدنی و تفاوت توصیه‌های سنی بنویس. برای افراد نسخه تمرینی شخصی یا برنامه تخصصی تعیین نکن؛ اعداد را فقط در صورت اطمینان و با ذکر گروه سنی بیان کن."
+    }
+  ]
+}

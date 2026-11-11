@@ -1,0 +1,10 @@
+{
+  "schema": "metatya.model-benchmark.v1",
+  "provider": "openrouter",
+  "models": [
+    {"id": "nvidia/nemotron-3-ultra-550b-a55b:free", "label": "NVIDIA Nemotron 3 Ultra", "role": "reasoning"},
+    {"id": "nvidia/nemotron-3.5-super-vl:free", "label": "NVIDIA Nemotron 3.5 Super VL", "role": "multimodal_candidate_text_only_in_v1"},
+    {"id": "google/gemma-4-26b-a4b-it:free", "label": "Google Gemma 4 26B A4B", "role": "structured_writing"},
+    {"id": "xingchen-agi/xing4.0-29b-a4b:free", "label": "Xing4.0 29B A4B", "role": "baseline"}
+  ]
+}
