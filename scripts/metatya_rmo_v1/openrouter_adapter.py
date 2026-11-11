@@ -16,7 +16,7 @@ from .orchestrator import ProviderFailure
 
 
 DEFAULT_BASE_URL = "https://openrouter.ai/api/v1/chat/completions"
-RETRYABLE_STATUS = {408, 409, 425, 429}
+RETRYABLE_STATUS = {404, 408, 409, 425, 429}
 
 
 class OpenRouterChatAdapter:
