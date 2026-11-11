@@ -140,7 +140,17 @@ const files = [
   ["فهرست محصولات","packs.json","json"],
   ["محتوای سایت","content.json","json"],
   ["اطلاعات درآمدزایی","monetization.json","json"],
-  ["فایل CTA","cta.js","js"]
+  ["فایل CTA","cta.js","js"],
+  ["خانه مستقل Metatya","metatya-home.html","html"],
+  ["صفحه خدمات","services.html","html"],
+  ["صفحه مسیرهای آموزشی","topic.html","html"],
+  ["مسیر سازگاری قدیمی","pillar.html","html"],
+  ["حریم خصوصی","privacy.html","html"],
+  ["شرایط استفاده","terms.html","html"],
+  ["جعبه‌ابزار","toolbox.html","html"],
+  ["پرونده‌ها","trades.html","html"],
+  ["داده بازار","data/latest.json","json"],
+  ["دفترچه دانلودی","downloads/Metatya-Trading-Journal-LITE.xlsx","binary"]
 ];
 
 const results = [];
@@ -242,69 +252,71 @@ async function checkFile(name,path,type){
 }
 
 async function checkLocalLinks(){
-  try{
-    const response = await fetch(
-      new URL("index.html",location.href).href,
-      {cache:"no-store"}
-    );
+  const pages = ["index.html","metatya-home.html","services.html","topic.html"];
+  let checked = 0;
+  let broken = 0;
+  const unique = new Set();
 
-    if(!response.ok){
-      addResult("بررسی لینک‌های داخلی","FAIL",
-        "صفحه اصلی قابل دریافت نیست.");
-      return;
-    }
+  for(const page of pages){
+    try{
+      const response = await fetch(
+        new URL(page,location.href).href,
+        {cache:"no-store"}
+      );
 
-    const html = await response.text();
-    const doc = new DOMParser().parseFromString(html,"text/html");
-    const anchors = [...doc.querySelectorAll("a[href]")];
-
-    let checked = 0;
-    let broken = 0;
-    const unique = new Set();
-
-    for(const anchor of anchors){
-      const href = anchor.getAttribute("href");
-
-      if(!href || href.startsWith("#") ||
-         /^(mailto:|tel:|javascript:)/i.test(href)) continue;
-
-      let url;
-      try{
-        url = new URL(href,location.href);
-      }catch{
+      if(!response.ok){
+        addResult("لینک‌های داخلی: "+page,"FAIL",
+          "صفحه مبنا قابل دریافت نیست.");
         broken++;
         continue;
       }
 
-      if(url.origin !== location.origin) continue;
+      const html = await response.text();
+      const doc = new DOMParser().parseFromString(html,"text/html");
+      const anchors = [...doc.querySelectorAll("a[href]")];
 
-      url.hash = "";
-      if(unique.has(url.href)) continue;
-      unique.add(url.href);
+      for(const anchor of anchors){
+        const href = anchor.getAttribute("href");
 
-      checked++;
+        if(!href || href.startsWith("#") ||
+           /^(mailto:|tel:|javascript:)/i.test(href)) continue;
 
-      try{
-        const result = await fetch(url.href,{
-          method:"GET",
-          cache:"no-store"
-        });
+        let url;
+        try{
+          url = new URL(href,new URL(page,location.href));
+        }catch{
+          broken++;
+          continue;
+        }
 
-        if(!result.ok) broken++;
-      }catch{
-        broken++;
+        if(url.origin !== location.origin) continue;
+
+        url.hash = "";
+        if(unique.has(url.href)) continue;
+        unique.add(url.href);
       }
+    }catch(error){
+      addResult("لینک‌های داخلی: "+page,"FAIL",error.message);
+      broken++;
     }
+  }
 
-    if(broken){
-      addResult("بررسی لینک‌های داخلی","WARN",
-        `${broken} لینک از ${checked} لینک داخلی پاسخ موفق نداد.`);
-    }else{
-      addResult("بررسی لینک‌های داخلی","OK",
-        `${checked} لینک داخلی بررسی شد.`);
+  for(const href of unique){
+    checked++;
+    try{
+      const result = await fetch(href,{method:"GET",cache:"no-store"});
+      if(!result.ok) broken++;
+    }catch{
+      broken++;
     }
-  }catch(error){
-    addResult("بررسی لینک‌های داخلی","FAIL",error.message);
+  }
+
+  if(broken){
+    addResult("بررسی لینک‌های داخلی","WARN",
+      `${broken} خطا از ${checked} لینک یکتای داخلی و صفحات مبنا ثبت شد.`);
+  }else{
+    addResult("بررسی لینک‌های داخلی","OK",
+      `${checked} لینک یکتای داخلی از ۴ صفحه بررسی شد.`);
   }
 }
 
