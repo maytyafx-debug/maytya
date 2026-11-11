@@ -12,14 +12,18 @@ It is deliberately disabled unless the host explicitly constructs and calls it.
 - Reads `OPENROUTER_API_KEY` from the process environment at call time, unless
   an explicit key is injected by the host for testing.
 - Does not make requests at import time and does not store credentials.
-- Uses a finite HTTP timeout and caps response bytes.
+- Uses a finite HTTP timeout and caps both request and response bodies
+  (256 KB request and 1 MB response by default).
 - Does not log prompts, response bodies, or credentials.
-- 401/403 are non-retryable authentication failures; 404 is model-specific and advances to the next RMO candidate (the same model is never retried).
+- Approved Knowledge Bridge records are appended as a separate user-level
+  reference-data message; they are never promoted to a system instruction.
+  The content is still untrusted and must not be treated as policy or commands.
+- 401/403 are non-retryable authentication failures; 404 is model-specific and
+  advances to the next RMO candidate (the same model is never retried).
 - 429, selected transient statuses, and 5xx are retryable by the outer RMO;
   this adapter itself never retries.
 - Network/timeout failures are normalized for the RMO.
-- Only approved knowledge supplied by the Knowledge Bridge is included, as
-  reference material rather than instructions.
+- Provider error messages and response bodies are not exposed in raised errors.
 
 ## Model ID note
 
