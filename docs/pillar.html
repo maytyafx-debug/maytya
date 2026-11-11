@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,follow">
+<meta name="theme-color" content="#05060a">
+<title>Metatya | مسیر آموزشی</title>
+<style>
+:root{color-scheme:dark;background:#05060a;color:#f3f5f9;font-family:Tahoma,Arial,sans-serif}
+*{box-sizing:border-box}
+body{min-height:100vh;margin:0;display:grid;place-items:center;padding:24px;line-height:1.9}
+main{width:min(560px,100%);padding:28px;border:1px solid #ffffff20;border-radius:20px;background:#0a0d16;text-align:center}
+h1{font-size:1.4rem;margin:0 0 10px}
+p{color:#aab6c5}
+a{display:inline-block;margin-top:12px;padding:10px 18px;border-radius:12px;background:#34f5a6;color:#03130c;text-decoration:none;font-weight:800}
+</style>
+</head>
+<body>
+<main>
+<h1>در حال انتقال به مسیر آموزشی…</h1>
+<p>اگر انتقال خودکار انجام نشد، از دکمهٔ زیر استفاده کنید.</p>
+<a id="continue" href="topic.html?t=forex">رفتن به مسیر آموزشی</a>
+</main>
+<script>
+(() => {
+  const params = new URLSearchParams(location.search);
+  const requested = (params.get("id") || "").trim().toLowerCase();
+  const aliases = {
+    "stocks": "bourse",
+    "personal-finance": "finance"
+  };
+  const slug = aliases[requested] || requested || "forex";
+  const destination = "topic.html?t=" + encodeURIComponent(slug);
+  document.getElementById("continue").href = destination;
+  location.replace(destination);
+})();
+</script>
+</body>
+</html>
