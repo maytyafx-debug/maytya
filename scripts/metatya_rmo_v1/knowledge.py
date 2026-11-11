@@ -16,6 +16,8 @@ def prepare_knowledge(records: list[dict[str, Any]], *, max_records: int = 20) -
     """
     if max_records < 0:
         raise ValueError("max_records cannot be negative")
+    if max_records == 0:
+        return []
 
     approved: list[dict[str, str]] = []
     seen: set[str] = set()
