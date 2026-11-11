@@ -90,6 +90,7 @@ class KnowledgeBridgeTests(unittest.TestCase):
             for i in range(3)
         ]
         self.assertEqual(len(prepare_knowledge(records, max_records=2)), 2)
+        self.assertEqual(prepare_knowledge(records, max_records=0), [])
 
 
 if __name__ == "__main__":
