@@ -70,14 +70,14 @@ class OpenRouterAdapterTests(unittest.TestCase):
         self.assertTrue(caught.exception.retryable)
         self.assertEqual(caught.exception.http_status, 429)
 
-    def test_404_is_configuration_failure(self):
+    def test_404_is_model_specific_and_allows_next_candidate(self):
         def opener(*args, **kwargs):
             raise HTTPError("https://openrouter.ai", 404, "missing", {}, BytesIO(b""))
         adapter = OpenRouterChatAdapter(api_key="test-key", opener=opener)
         with self.assertRaises(ProviderFailure) as caught:
             adapter("sample/model", "hello", [])
         self.assertEqual(caught.exception.code, "model_or_endpoint_not_found")
-        self.assertFalse(caught.exception.retryable)
+        self.assertTrue(caught.exception.retryable)
 
     def test_invalid_json_response_is_retryable(self):
         adapter = OpenRouterChatAdapter(
