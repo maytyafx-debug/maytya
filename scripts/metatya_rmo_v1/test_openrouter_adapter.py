@@ -4,7 +4,7 @@ from io import BytesIO
 from urllib.error import HTTPError
 
 from scripts.metatya_rmo_v1.openrouter_adapter import OpenRouterChatAdapter
-from scripts.metatya_rmo_v1.orchestrator import ProviderFailure
+from scripts.metatya_rmo_v1.orchestrator import ModelCandidate, ProviderFailure, ResilientModelOrchestrator
 
 
 class FakeResponse:
@@ -113,6 +113,33 @@ class OpenRouterAdapterTests(unittest.TestCase):
         with self.assertRaises(ProviderFailure) as caught:
             adapter("sample/model", "hello", [])
         self.assertEqual(caught.exception.code, "response_too_large")
+
+    def test_model_specific_404_advances_to_next_rmo_candidate(self):
+        attempted = []
+
+        def opener(request, timeout):
+            model = json.loads(request.data.decode("utf-8"))["model"]
+            attempted.append(model)
+            if model == "missing/model":
+                raise HTTPError(request.full_url, 404, "not found", {}, BytesIO(b""))
+            return FakeResponse(
+                b'{"choices":[{"message":{"content":"fallback worked"}}]}'
+            )
+
+        adapter = OpenRouterChatAdapter(api_key="test-key", opener=opener)
+        runner = ResilientModelOrchestrator(
+            [
+                ModelCandidate("missing/model", "openrouter"),
+                ModelCandidate("available/model", "openrouter"),
+            ],
+            adapter,
+            lambda value: isinstance(value, dict) and value.get("content") == "fallback worked",
+            max_attempts=2,
+        )
+        result = runner.run("hello")
+        self.assertEqual(result.status, "accepted")
+        self.assertEqual(result.selected_model, "available/model")
+        self.assertEqual(attempted, ["missing/model", "available/model"])
 
 
 if __name__ == "__main__":
