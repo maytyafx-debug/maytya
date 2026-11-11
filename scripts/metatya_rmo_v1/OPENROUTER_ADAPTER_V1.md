@@ -14,7 +14,7 @@ It is deliberately disabled unless the host explicitly constructs and calls it.
 - Does not make requests at import time and does not store credentials.
 - Uses a finite HTTP timeout and caps response bytes.
 - Does not log prompts, response bodies, or credentials.
-- 401/403 and 404 are non-retryable configuration/authentication failures.
+- 401/403 are non-retryable authentication failures; 404 is model-specific and advances to the next RMO candidate (the same model is never retried).
 - 429, selected transient statuses, and 5xx are retryable by the outer RMO;
   this adapter itself never retries.
 - Network/timeout failures are normalized for the RMO.
