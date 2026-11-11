@@ -113,7 +113,7 @@
           "جعبه‌ابزار مقدماتی"
         ],
         action: "دریافت نسخه رایگان",
-        url: "https://t.me/Maytyafx"
+        url: "https://t.me/maytya?direct"
       },
       {
         id: "pro",
@@ -127,7 +127,7 @@
           "گزارش‌های پیشرفته"
         ],
         action: "استعلام مشخصات و قیمت",
-        url: "https://t.me/Maytyafx"
+        url: "https://t.me/maytya?direct"
       },
       {
         id: "master",
@@ -141,7 +141,7 @@
           "راهنمای استفاده"
         ],
         action: "استعلام مشخصات و قیمت",
-        url: "https://t.me/Maytyafx"
+        url: "https://t.me/maytya?direct"
       },
       {
         id: "consultation",
@@ -154,7 +154,7 @@
           "ارائه نقشه راه یادگیری"
         ],
         action: "دریافت اطلاعات",
-        url: "https://t.me/Maytyafx"
+        url: "https://t.me/maytya?direct"
       }
     ],
 
