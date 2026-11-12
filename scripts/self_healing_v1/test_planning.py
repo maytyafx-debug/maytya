@@ -19,8 +19,16 @@ class RepairPlannerTests(unittest.TestCase):
     def test_reviewed_failure_gets_scoped_proposal(self):
         report = {"workflow_runs":[{"run_id":42,"category":"workflow_execution_failure"}]}
         plan = build_repair_plans(report, {"42":{"job_logs_reviewed":True,"failed_step":"Run unit tests"}})[0]
-        self.assertEqual(plan["allowed_scope"], "workflow_configuration")
+        self.assertEqual(plan["allowed_scope"], "diagnostics_only")
         self.assertTrue(plan["requires_approval"])
+
+    def test_confirmed_workflow_root_cause_is_scoped(self):
+        report = {"workflow_runs":[{"run_id":43,"category":"workflow_execution_failure"}]}
+        evidence = {"43":{"job_logs_reviewed":True,"failed_step":"Build",
+                          "root_cause_confirmed":True,
+                          "affected_path":".github/workflows/build.yml"}}
+        plan = build_repair_plans(report,evidence)[0]
+        self.assertEqual(plan["allowed_scope"], "workflow_configuration")
     def test_healthy_findings_produce_no_plans(self):
         self.assertEqual(build_repair_plans({"site_checks":[{"ok":True}],"workflow_runs":[{"category":"healthy"}]}), [])
 
@@ -45,6 +53,19 @@ class SafetyGateTests(unittest.TestCase):
         result = validate_repair_plan(dict(self.plan,target_path=".env.production"),human_approved=True,target_branch="feat/repair")
         self.assertFalse(result["accepted_for_review"])
         self.assertIn("sensitive_path_forbidden",result["reasons"])
+    def test_non_isolated_branch_prefix_rejected(self):
+        result = validate_repair_plan(self.plan,human_approved=True,target_branch="dev")
+        self.assertFalse(result["accepted_for_review"])
+        self.assertIn("isolated_branch_required",result["reasons"])
+    def test_unrecognized_action_rejected(self):
+        result = validate_repair_plan(self.plan,human_approved=True,target_branch="feat/repair",action="execute")
+        self.assertFalse(result["accepted_for_review"])
+        self.assertIn("action_forbidden",result["reasons"])
+    def test_workflow_scope_requires_workflow_path(self):
+        plan = dict(self.plan,allowed_scope="workflow_configuration",target_path="scripts/app.py")
+        result = validate_repair_plan(plan,human_approved=True,target_branch="feat/repair")
+        self.assertFalse(result["accepted_for_review"])
+        self.assertIn("workflow_scope_path_mismatch",result["reasons"])
     def test_approved_proposal_still_does_not_execute(self):
         result = validate_repair_plan(self.plan,human_approved=True,target_branch="feat/repair")
         self.assertTrue(result["accepted_for_review"])
