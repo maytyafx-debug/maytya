@@ -29,6 +29,15 @@ class RepairPlannerTests(unittest.TestCase):
                           "affected_path":".github/workflows/build.yml"}}
         plan = build_repair_plans(report,evidence)[0]
         self.assertEqual(plan["allowed_scope"], "workflow_configuration")
+    def test_provider_429_remains_diagnostics_only(self):
+        report = {"workflow_runs":[{"run_id":44,"category":"workflow_execution_failure"}]}
+        evidence = {"44":{"job_logs_reviewed":True,"failed_step":"Generate drafts",
+                          "root_cause_confirmed":True,"affected_path":"scripts/content_engine_v2/providers.py",
+                          "failure_signature":"provider_http_429"}}
+        plan = build_repair_plans(report,evidence)[0]
+        self.assertEqual(plan["allowed_scope"], "diagnostics_only")
+        self.assertIn("rate limits", plan["recommended_action"])
+
     def test_healthy_findings_produce_no_plans(self):
         self.assertEqual(build_repair_plans({"site_checks":[{"ok":True}],"workflow_runs":[{"category":"healthy"}]}), [])
 
