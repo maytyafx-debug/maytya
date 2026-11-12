@@ -21,7 +21,7 @@ export OPENROUTER_MODELS="provider/model-one,provider/model-two"
 python -m scripts.content_engine_v2.generate_cli manifest.json --output out/content-v2-generated.json
 ```
 
-The generator uses bounded retries and model fallback for rate limits/server errors. It fails closed instead of substituting fabricated fallback content. Every generated item remains a draft or review candidate.
+The provider uses an ordered model list from OPENROUTER_MODELS when configured. Otherwise it tries the benchmarked Nemotron 3 Ultra candidate, then the OpenRouter Free Models Router (openrouter/free), which selects from currently available free models. The router is a fallback candidate, not a guarantee of output quality or availability. HTTP 429 immediately advances to the next candidate instead of repeating a rate-limited request; server/network errors use bounded retries. If all candidates fail, generation fails closed and never substitutes fabricated content. Every generated item remains a draft or review candidate.
 
 ## Quality gate
 Run from repository root:
@@ -74,3 +74,13 @@ Use the manual workflow **Metatya V2 — Generate review drafts**. It runs only 
 ## Bounded self-repair
 
 The generator now attempts up to two revisions by default when deterministic checks fail. It feeds the exact failed checks back into a fresh generation request, regenerates the complete draft, re-verifies selected source endpoints, and reruns the full quality gate. It does not silently patch numeric claims or invent missing facts. If the revision limit is reached, the item remains blocked as a draft with a repair history; it cannot enter the approval/promotion path. The revision limit is configurable in code and capped at three.
+
+
+## OpenRouter fallback policy (V1)
+
+- Default order: benchmarked Nemotron 3 Ultra candidate, then `openrouter/free`.
+- A supplied `OPENROUTER_MODELS` comma-separated list is deduplicated and the free router is appended unless already present.
+- HTTP 429 advances immediately to the next candidate to conserve free-tier quota.
+- HTTP 404/other client errors advance to the next candidate; transient server/network failures remain bounded.
+- The OpenRouter free router selects a currently available free model; it does not guarantee Persian quality, factual accuracy, or successful JSON generation.
+- All outputs still pass the deterministic quality gate and human review. No publication or production workflow is changed.
