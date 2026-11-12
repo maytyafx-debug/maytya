@@ -135,7 +135,7 @@ def main(argv: list[str] | None = None) -> int:
     report = build_report(args.repo, args.site_url, os.getenv("GITHUB_TOKEN"))
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("METATYA Self-Healing Engine V1:", report["overall_state"])
     print("Site checks:", sum(x.get("ok", False) for x in report["site_checks"]), "/", len(report["site_checks"]))
     print("Workflow runs inspected:", len(report["workflow_runs"]))
