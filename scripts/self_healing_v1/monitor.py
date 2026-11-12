@@ -14,6 +14,8 @@ import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+from scripts.self_healing_v1.repair_planner import build_repair_plans, planner_metadata
+
 USER_AGENT = "METATYA-Self-Healing-Engine/1.0"
 DEFAULT_SITE = "https://maytyafx-debug.github.io/maytya"
 ENDPOINTS = ("/", "/content.json", "/data/latest.json")
@@ -125,6 +127,8 @@ def build_report(repo: str, site_url: str, token: str | None = None) -> dict:
         "overall_state": state,
         "site_checks": site,
         "workflow_runs": runs,
+        "repair_planner": planner_metadata(),
+        "repair_plans": build_repair_plans({"site_checks": site, "workflow_runs": run_alerts}),
         "repair_policy": {
             "automatic_mutations": False,
             "production_deployments": False,
