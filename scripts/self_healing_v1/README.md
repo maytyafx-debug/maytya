@@ -13,11 +13,11 @@ A bounded, evidence-first health monitor and repair-proposal system. V1 diagnose
 ## Safety invariants
 - Scheduled workflow is read-only; no GitHub writes.
 - No automatic source edits, commits, merges, deployments, restarts, settings changes, deletions, or secret operations.
-- Any future write proposal must use a dedicated non-main branch and explicit human approval.
+- Any future write proposal must use a dedicated feat/, fix/, repair/, or hotfix/ branch and explicit human approval.
 - main and master are never accepted as repair targets.
 - Startup failures do not justify application-source edits.
 - Network/DNS failures trigger diagnostics only.
-- Workflow execution failures require failed-job and failed-step log review before a scoped workflow-configuration proposal.
+- Workflow execution failures require reviewed logs, confirmed root cause, and an allowlisted affected path before a scoped code proposal. Provider HTTP 429 remains diagnostic-only.
 - Secrets and raw log contents are excluded from planner evidence.
 - A passing gate is not authorization to execute a change.
 
