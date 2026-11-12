@@ -10,7 +10,8 @@ def validate_repair_plan(plan: dict, *, human_approved: bool = False,
                          action: str = "propose") -> dict:
     """Validate policy only; this function never performs a repository mutation."""
     reasons = []
-    if plan.get("allowed_scope") not in ALLOWED_SCOPES:
+    scope = plan.get("allowed_scope")
+    if scope not in ALLOWED_SCOPES:
         reasons.append("scope_not_allowlisted")
     if plan.get("requires_approval") is not True:
         reasons.append("approval_requirement_missing")
