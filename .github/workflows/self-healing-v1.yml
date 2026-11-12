@@ -1,6 +1,11 @@
 name: METATYA Self-Healing Engine V1 — Monitor
 
 on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "scripts/self_healing_v1/**"
+      - ".github/workflows/self-healing-v1.yml"
   workflow_dispatch:
   schedule:
     - cron: "17 */6 * * *"
