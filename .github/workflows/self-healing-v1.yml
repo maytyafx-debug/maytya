@@ -48,6 +48,7 @@ jobs:
             python - <<'PY'
           import json
           from pathlib import Path
+          import os
           data = json.loads(Path("out/self-healing-report.json").read_text(encoding="utf-8"))
           summary = ["## METATYA Self-Healing V1", "", f"**State:** {data['overall_state']}",
                      f"**Mode:** {data['mode']}", "", "### Site checks"]
