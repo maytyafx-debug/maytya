@@ -37,12 +37,24 @@ def build_repair_plans(report: dict, job_evidence: dict | None = None) -> list[d
             action = "Inspect GitHub Actions service/runner initialization and perform one controlled rerun; do not edit application code."
             scope, confidence, risk = "diagnostics_only", "medium", "low"
         elif category == "workflow_execution_failure":
-            if not supplied.get("job_logs_reviewed") or not supplied.get("failed_step"):
-                action = "Collect and review the failed job and step logs; no source repair is justified yet."
+            if supplied.get("failure_signature") == "provider_http_429":
+                action = ("Review provider rate limits and benchmarked fallback-model availability; "
+                          "OPENROUTER_MODELS was empty in the observed run. "
+                          "Do not infer a source-code defect from HTTP 429.")
+                scope, confidence, risk = "diagnostics_only", "medium", "low"
+            elif not all((supplied.get("job_logs_reviewed"), supplied.get("failed_step"),
+                          supplied.get("root_cause_confirmed"), supplied.get("affected_path"))):
+                action = "Review failed job/step evidence and confirm root cause plus affected path; no source repair is justified yet."
                 scope, confidence, risk = "diagnostics_only", "low", "low"
-            else:
-                action = "Prepare a minimal branch-only proposal limited to the confirmed failed workflow step."
+            elif str(supplied.get("affected_path", "")).startswith(".github/workflows/"):
+                action = "Prepare a minimal branch-only workflow proposal limited to the confirmed affected file."
                 scope, confidence, risk = "workflow_configuration", "medium", "medium"
+            elif str(supplied.get("affected_path", "")).startswith("scripts/"):
+                action = "Prepare a minimal branch-only source proposal limited to the confirmed affected module."
+                scope, confidence, risk = "application_source", "medium", "medium"
+            else:
+                action = "The confirmed affected path is outside allowlisted code scopes; keep this diagnostic-only."
+                scope, confidence, risk = "diagnostics_only", "low", "low"
         elif category in {"actions_api_error", "actions_api_unavailable"}:
             action = "Recheck API connectivity and read permissions; do not modify repository source."
             scope, confidence, risk = "diagnostics_only", "low", "low"
@@ -54,7 +66,10 @@ def build_repair_plans(report: dict, job_evidence: dict | None = None) -> list[d
                          "workflow": item.get("workflow"), "category": category,
                          "html_url": item.get("html_url"),
                          "job_logs_reviewed": bool(supplied.get("job_logs_reviewed")),
-                         "failed_step": supplied.get("failed_step")},
+                         "failed_step": supplied.get("failed_step"),
+                         "root_cause_confirmed": bool(supplied.get("root_cause_confirmed")),
+                         "affected_path": supplied.get("affected_path"),
+                         "failure_signature": supplied.get("failure_signature")},
             "confidence": confidence, "risk": risk, "recommended_action": action,
             "requires_approval": True, "allowed_scope": scope,
             "rollback_plan": "Keep all work on an isolated branch; revert the proposal commit if approved changes fail verification.",
