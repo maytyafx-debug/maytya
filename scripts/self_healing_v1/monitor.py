@@ -11,7 +11,7 @@ import json
 import os
 import urllib.error
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 USER_AGENT = "METATYA-Self-Healing-Engine/1.0"
@@ -43,7 +43,7 @@ def classify_run(run: dict) -> dict:
         category, action = "unknown_conclusion", "Collect more evidence before proposing repair."
     return {"workflow": workflow, "run_id": run.get("id"), "status": status,
             "conclusion": conclusion, "category": category, "recommended_action": action,
-            "html_url": run.get("html_url")}
+            "html_url": run.get("html_url"), "created_at": run.get("created_at")}
 
 
 def _request(url: str, token: str | None = None, timeout: int = 15) -> tuple[int, bytes]:
@@ -95,8 +95,22 @@ def build_report(repo: str, site_url: str, token: str | None = None) -> dict:
     site = check_site(site_url)
     runs = fetch_recent_runs(repo, token)
     failures = [item for item in site if not item.get("ok", False)]
-    run_alerts = [item for item in runs if item.get("category") not in
-                  {"healthy", "in_progress", "not_checked"}]
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=24)
+    run_alerts = []
+    for item in runs:
+        if item.get("category") in {"healthy", "in_progress", "not_checked"}:
+            continue
+        created_at = item.get("created_at")
+        if not created_at:
+            run_alerts.append(item)
+            continue
+        try:
+            created = datetime.fromisoformat(created_at.replace("Z", "+00:00"))
+        except (TypeError, ValueError):
+            run_alerts.append(item)
+            continue
+        if created >= cutoff:
+            run_alerts.append(item)
     if failures or run_alerts:
         state = "attention_required"
     else:
