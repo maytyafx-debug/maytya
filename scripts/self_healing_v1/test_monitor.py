@@ -63,5 +63,24 @@ class ClassifyRunTests(unittest.TestCase):
         self.assertTrue(all(item["finding"] == "network_error" for item in results))
 
 
+    @patch("scripts.self_healing_v1.monitor.check_site", return_value=[{"url":"/","ok":True}])
+    @patch("scripts.self_healing_v1.monitor.fetch_recent_runs", return_value=[
+        {"workflow":"Content Engine","category":"workflow_execution_failure","created_at":"2026-11-12T05:00:00Z"},
+        {"workflow":"Content Engine","category":"healthy","created_at":"2026-11-12T06:00:00Z"},
+    ])
+    def test_later_success_clears_earlier_failure_for_same_workflow(self, _runs, _site):
+        report = build_report("owner/repo","https://example.test")
+        self.assertEqual(report["overall_state"],"no_detected_failure")
+
+    @patch("scripts.self_healing_v1.monitor.check_site", return_value=[{"url":"/","ok":True}])
+    @patch("scripts.self_healing_v1.monitor.fetch_recent_runs", return_value=[
+        {"workflow":"Content Engine","category":"workflow_execution_failure","created_at":"2026-11-12T05:00:00Z"},
+        {"workflow":"Content Engine","category":"in_progress","created_at":"2026-11-12T06:00:00Z"},
+    ])
+    def test_latest_in_progress_run_suppresses_prior_failure(self, _runs, _site):
+        report = build_report("owner/repo","https://example.test")
+        self.assertEqual(report["overall_state"],"no_detected_failure")
+
+
 if __name__ == "__main__":
     unittest.main()
