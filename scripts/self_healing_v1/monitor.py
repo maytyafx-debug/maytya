@@ -98,20 +98,25 @@ def build_report(repo: str, site_url: str, token: str | None = None) -> dict:
     runs = fetch_recent_runs(repo, token)
     failures = [item for item in site if not item.get("ok", False)]
     cutoff = datetime.now(timezone.utc) - timedelta(hours=24)
-    run_alerts = []
+    # Only the newest run for each workflow determines its current health.
+    # This clears a transient failure after a later successful run.
+    latest_by_workflow = {}
     for item in runs:
+        key = str(item.get("workflow") or "unknown")
+        created_at = item.get("created_at")
+        try:
+            created = datetime.fromisoformat(created_at.replace("Z", "+00:00")) if created_at else None
+        except (TypeError, ValueError):
+            created = None
+        previous = latest_by_workflow.get(key)
+        if previous is None or (created is not None and
+                (previous[0] is None or created > previous[0])):
+            latest_by_workflow[key] = (created, item)
+    run_alerts = []
+    for created, item in latest_by_workflow.values():
         if item.get("category") in {"healthy", "in_progress", "not_checked"}:
             continue
-        created_at = item.get("created_at")
-        if not created_at:
-            run_alerts.append(item)
-            continue
-        try:
-            created = datetime.fromisoformat(created_at.replace("Z", "+00:00"))
-        except (TypeError, ValueError):
-            run_alerts.append(item)
-            continue
-        if created >= cutoff:
+        if created is None or created >= cutoff:
             run_alerts.append(item)
     if failures or run_alerts:
         state = "attention_required"
