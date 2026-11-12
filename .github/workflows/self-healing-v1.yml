@@ -1,0 +1,62 @@
+name: METATYA Self-Healing Engine V1 — Monitor
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */6 * * *"
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: metatya-self-healing-v1
+  cancel-in-progress: false
+
+jobs:
+  diagnose:
+    name: Read-only health diagnosis
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run isolated unit tests
+        run: python -m unittest scripts.self_healing_v1.test_monitor -v
+      - name: Inspect site and recent workflow runs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          SITE_URL: ${{ vars.SITE_URL || 'https://maytyafx-debug.github.io/maytya' }}
+        run: python -m scripts.self_healing_v1.monitor --output out/self-healing-report.json
+      - name: Publish diagnostic report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: metatya-self-healing-v1-report
+          path: out/self-healing-report.json
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Add concise report to run summary
+        if: always()
+        run: |
+          if [ -s out/self-healing-report.json ]; then
+            python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path("out/self-healing-report.json").read_text(encoding="utf-8"))
+          summary = ["## METATYA Self-Healing V1", "", f"**State:** {data['overall_state']}",
+                     f"**Mode:** {data['mode']}", "", "### Site checks"]
+          summary += [f"- {'OK' if x.get('ok') else 'ALERT'} — {x['url']} — {x.get('status_code', x.get('finding'))}" for x in data['site_checks']]
+          summary += ["", "### Workflow alerts"]
+          summary += [f"- {x.get('workflow', 'Actions API')} — {x.get('category')} — {x.get('recommended_action')}" for x in data['workflow_runs'] if x.get('category') not in ('healthy', 'in_progress')]
+          summary += ["", "### Safety", "No repository, settings, or deployment mutations are performed by this workflow."]
+          Path("$GITHUB_STEP_SUMMARY").write_text("\\n".join(summary), encoding="utf-8")
+          PY
+          else
+            echo "Diagnostic report was not generated." >> "$GITHUB_STEP_SUMMARY"
+          fi
