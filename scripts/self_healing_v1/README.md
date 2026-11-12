@@ -18,6 +18,8 @@ A bounded, evidence-first health monitor and repair-proposal system. V1 diagnose
 - Startup failures do not justify application-source edits.
 - Network/DNS failures trigger diagnostics only.
 - Workflow execution failures require reviewed logs, confirmed root cause, and an allowlisted affected path before a scoped code proposal. Provider HTTP 429 remains diagnostic-only.
+- The gate accepts only proposal/review validation actions; workflow changes must target .github/workflows/ and application changes must target scripts/.
+- Non-main branch names must use feat/, fix/, repair/, or hotfix/ prefixes.
 - Secrets and raw log contents are excluded from planner evidence.
 - A passing gate is not authorization to execute a change.
 
