@@ -3,7 +3,7 @@ from __future__ import annotations
 from .profiles import build_prompt
 from .providers import generate_json, resolve_sources
 from .schema import make_item
-from .quality import evaluate, DISCLAIMERS
+from .quality import evaluate, required_disclaimer
 from .source_registry import verify_source
 
 
@@ -44,9 +44,7 @@ def generate_item(*, domain: str, tab: str, audience: str, source_pack: list[dic
                 verified_sources.append({**source, "verified": True, "verified_status": verification.get("status"),
                                          "content_type": verification.get("content_type"),
                                          "checked_title": verification.get("title")})
-            disclaimer = (DISCLAIMERS["financial"] if domain in {"forex","crypto","bourse","income","business","finance"}
-                          else DISCLAIMERS["medical"] if domain in {"sport","health"}
-                          else DISCLAIMERS["law"] if domain == "law" else "")
+            disclaimer = required_disclaimer(domain)
             item = make_item(domain=domain, tab=tab, title=response.get("title",""),
                 body=response.get("body",""), audience=audience, formats=formats or ["website","telegram"],
                 short_script=response.get("short_script",[]), sources=verified_sources, disclaimer=disclaimer,

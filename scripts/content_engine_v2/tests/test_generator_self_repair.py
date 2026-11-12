@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import patch
 from scripts.content_engine_v2.generator import generate_item
+from scripts.content_engine_v2.quality import DISCLAIMERS
 
 GOOD = {
     "title": "آموزش محاسبه نرخ تبدیل ارز",
@@ -35,6 +36,20 @@ class GeneratorSelfRepairTests(unittest.TestCase):
         self.assertEqual(item["status"],"draft")
         self.assertEqual(item["repair"]["outcome"],"blocked_after_revisions")
         self.assertFalse(item["quality"]["ok"])
+
+    @patch("scripts.content_engine_v2.generator.verify_source", return_value={"ok":True,"status":200,"content_type":"text/html","title":"NIST"})
+    def test_ai_generation_adds_mandatory_disclaimer(self, _verify):
+        response = {
+            "title": "ارزیابی خروجی هوش مصنوعی با منبع معتبر",
+            "body": "برای ارزیابی خروجی هوش مصنوعی، معیارهای روشن تعریف کنید. ادعاهای مهم را با محتوای منابع معتبر تطبیق دهید و محدودیت‌ها را ثبت کنید. در تصمیم‌های مهم، بازبینی انسانی را حفظ کنید.",
+            "short_script": ["خروجی هوش مصنوعی را قطعی فرض نکن.", "ادعاهای مهم را با منبع تطبیق بده.", "برای تصمیم مهم بازبینی انسانی داشته باش."],
+            "source_ids": ["nist"],
+        }
+        item = generate_item(domain="ai",tab="آموزش",audience="beginner",
+            source_pack=[{"id":"nist","title":"NIST AI RMF","url":"https://www.nist.gov/"}],
+            provider=lambda _prompt: response,max_revisions=0)
+        self.assertEqual(item["disclaimer"], DISCLAIMERS["ai"])
+        self.assertTrue(item["quality"]["checks"]["disclaimer"])
 
     def test_revision_limit_is_bounded(self):
         with self.assertRaises(ValueError):
