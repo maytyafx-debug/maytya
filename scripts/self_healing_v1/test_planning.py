@@ -15,7 +15,7 @@ class RepairPlannerTests(unittest.TestCase):
     def test_workflow_failure_requires_job_logs(self):
         plan = build_repair_plans({"workflow_runs":[{"run_id":42,"category":"workflow_execution_failure"}]})[0]
         self.assertEqual(plan["allowed_scope"], "diagnostics_only")
-        self.assertIn("review failed job/step", plan["recommended_action"])
+        self.assertIn("Review failed job/step", plan["recommended_action"])
     def test_reviewed_failure_gets_scoped_proposal(self):
         report = {"workflow_runs":[{"run_id":42,"category":"workflow_execution_failure"}]}
         plan = build_repair_plans(report, {"42":{"job_logs_reviewed":True,"failed_step":"Run unit tests"}})[0]
