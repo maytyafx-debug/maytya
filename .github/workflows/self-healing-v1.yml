@@ -1,6 +1,11 @@
 name: METATYA Self-Healing Engine V1 — Monitor
 
 on:
+  push:
+    branches: [feat/metatya-self-healing-engine-v1]
+    paths:
+      - "scripts/self_healing_v1/**"
+      - ".github/workflows/self-healing-v1.yml"
   pull_request:
     branches: [main]
     paths:
