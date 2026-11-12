@@ -31,7 +31,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Run isolated unit tests
-        run: python -m unittest scripts.self_healing_v1.test_monitor -v
+        run: python -m unittest scripts.self_healing_v1.test_monitor scripts.self_healing_v1.test_planning -v
       - name: Inspect site and recent workflow runs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
