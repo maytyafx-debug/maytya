@@ -4,7 +4,10 @@ import json, os, re, time
 import requests
 
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
-DEFAULT_MODELS = ["xingchen-agi/xing4.0-29b-a4b:free"]
+# The first candidate had at least one successful response in the isolated benchmark.
+# The final router delegates fallback selection to OpenRouter's current free catalog.
+DEFAULT_MODELS = ["nvidia/nemotron-3-ultra-550b-a55b:free"]
+FREE_FALLBACK_ROUTER = "openrouter/free"
 
 
 def parse_json(text: str) -> dict:
@@ -19,8 +22,12 @@ def parse_json(text: str) -> dict:
 
 def configured_models() -> list[str]:
     raw = os.getenv("OPENROUTER_MODELS", "")
-    models = [x.strip() for x in raw.split(",") if x.strip()]
-    return models or DEFAULT_MODELS
+    models = list(dict.fromkeys(x.strip() for x in raw.split(",") if x.strip()))
+    if not models:
+        models = list(DEFAULT_MODELS)
+    if FREE_FALLBACK_ROUTER not in models:
+        models.append(FREE_FALLBACK_ROUTER)
+    return models
 
 
 def generate_json(prompt: str, *, api_key: str | None = None, models: list[str] | None = None,
@@ -34,7 +41,11 @@ def generate_json(prompt: str, *, api_key: str | None = None, models: list[str] 
             try:
                 response = client.post(API_URL, headers={"Authorization":f"Bearer {key}","Content-Type":"application/json"},
                     json={"model":model,"messages":[{"role":"user","content":prompt}],"temperature":0.55}, timeout=timeout)
-                if response.status_code == 429 or response.status_code >= 500:
+                if response.status_code == 429:
+                    # A rate limit is a signal to move on, not to spend more free-tier calls.
+                    failures.append(f"{model}: HTTP 429")
+                    break
+                if response.status_code >= 500:
                     failures.append(f"{model}: HTTP {response.status_code}")
                     if attempt + 1 < retries_per_model: time.sleep(min(2 ** attempt, 4))
                     continue
