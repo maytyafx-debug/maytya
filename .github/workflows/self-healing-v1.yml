@@ -56,7 +56,7 @@ jobs:
           summary += ["", "### Workflow alerts"]
           summary += [f"- {x.get('workflow', 'Actions API')} — {x.get('category')} — {x.get('recommended_action')}" for x in data['workflow_runs'] if x.get('category') not in ('healthy', 'in_progress')]
           summary += ["", "### Safety", "No repository, settings, or deployment mutations are performed by this workflow."]
-          Path("$GITHUB_STEP_SUMMARY").write_text("\\n".join(summary), encoding="utf-8")
+          Path(os.environ["GITHUB_STEP_SUMMARY"]).write_text("\n".join(summary), encoding="utf-8")
           PY
           else
             echo "Diagnostic report was not generated." >> "$GITHUB_STEP_SUMMARY"
