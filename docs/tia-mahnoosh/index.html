@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070a0b">
+<title>TIA & MAHNOOSH | METATYA</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#070a0b;--panel:#101615;--line:#26352f;--fg:#f3f5f4;--muted:#9aa9a1;--green:#00e69a;--gold:#d9b66d;--red:#ff8a83}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#123126 0,transparent 42%),radial-gradient(ellipse at 90% 15%,#302617 0,transparent 35%),var(--bg);color:var(--fg);font-family:Vazirmatn,system-ui,sans-serif;min-height:100vh}
+.shell{max-width:980px;margin:auto;padding:24px 16px 48px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.brand{letter-spacing:.16em;color:var(--gold);font-size:12px}.sub{color:var(--muted);font-size:13px}
+h1{font-size:clamp(25px,5vw,42px);margin:12px 0 4px}.lead{color:var(--muted);margin:0 0 22px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}.persona{background:#101715d9;border:1px solid var(--line);border-radius:18px;padding:16px;text-align:right;color:var(--fg);cursor:pointer;min-height:110px}.persona.active{border-color:var(--green);box-shadow:0 0 0 1px #00e69a35,0 12px 35px #00e69a12}.persona strong{display:block;font-size:18px}.persona small{color:var(--muted)}
+.panel{border:1px solid var(--line);border-radius:20px;background:#0d1211eF;overflow:hidden}.bar{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px}.status{font-size:12px;color:var(--muted)}.chat{height:min(52vh,520px);min-height:300px;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px}.msg{max-width:88%;padding:11px 14px;border-radius:16px;white-space:pre-wrap;line-height:1.9;overflow-wrap:anywhere}.msg.user{align-self:flex-start;background:#193a2d;border:1px solid #245a43}.msg.tia{align-self:flex-end;background:#18221e;border:1px solid #46634f}.msg.mahnoosh{align-self:flex-end;background:#292217;border:1px solid #66512e}.who{font-size:11px;color:var(--gold);display:block;margin-bottom:4px}.composer{display:flex;gap:10px;padding:14px;border-top:1px solid var(--line)}textarea{flex:1;min-height:54px;max-height:150px;resize:vertical;border:1px solid var(--line);border-radius:13px;background:#080d0b;color:var(--fg);padding:12px;font:inherit;outline:none}textarea:focus,input:focus{border-color:var(--green)}button{font:inherit;cursor:pointer;border:1px solid var(--line);border-radius:12px;padding:10px 16px;background:#14251d;color:var(--green)}button.primary{background:var(--green);color:#04110b;border:0;font-weight:700}button:disabled{opacity:.45;cursor:wait}.tools{display:flex;gap:8px;flex-wrap:wrap}.tools button{font-size:12px;padding:7px 10px;color:var(--muted);background:transparent}.setup{margin-top:18px;border:1px solid var(--line);border-radius:16px;padding:14px;background:#0d1211}.setup summary{cursor:pointer;color:var(--gold)}.setup label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px}.setup input{width:100%;background:#080d0b;border:1px solid var(--line);border-radius:10px;padding:11px;color:var(--fg);font:inherit;direction:ltr;text-align:left}.notice{font-size:12px;color:var(--muted);line-height:1.9;margin-top:14px}.err{color:var(--red);font-size:13px;padding:0 16px 12px}.empty{margin:auto;text-align:center;color:var(--muted);max-width:440px;line-height:2}.empty b{color:var(--green)}
+@media(max-width:620px){.cards{grid-template-columns:1fr}.persona{min-height:75px}.composer{flex-direction:column}.composer button{min-height:46px}.msg{max-width:96%}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <div class="top"><div class="brand">METATYA · INTELLIGENCE / INNOVATION / EXECUTION</div><div class="sub">نسخه آزمایشی ۰.۱</div></div>
+  <h1>با تیا و ماه‌نوش گفت‌وگو کن</h1>
+  <p class="lead">دو شخصیت مستقل، یک هسته هوشمند مشترک؛ آماده شنیدن ایده‌ها و تبدیل آن‌ها به گام‌های اجرایی.</p>
+
+  <section class="cards" aria-label="انتخاب شخصیت">
+    <button class="persona active" data-persona="tia"><strong>تیا · TIA</strong><small>جنتلمن دیجیتال · دقیق و راه‌حل‌محور</small></button>
+    <button class="persona" data-persona="mahnoosh"><strong>ماه‌نوش · MAHNOOSH</strong><small>بانوی دانا · خلاق و الهام‌بخش</small></button>
+    <button class="persona" data-persona="duo"><strong>گفت‌وگوی مشترک</strong><small>مشورت تیا و ماه‌نوش با یکدیگر</small></button>
+  </section>
+
+  <section class="panel">
+    <div class="bar"><strong id="chatTitle">گفت‌وگو با تیا</strong><span class="status" id="status">آماده اتصال</span></div>
+    <div class="chat" id="chat" aria-live="polite"><div class="empty">به فضای گفت‌وگوی آزمایشی خوش آمدی.<br><b>یک پرسش یا ایده مطرح کن.</b><br>تیا و ماه‌نوش کمک می‌کنند آن را به راهکار تبدیل کنی.</div></div>
+    <div class="err" id="error" role="alert"></div>
+    <form class="composer" id="form"><textarea id="prompt" maxlength="1800" placeholder="پیامت را بنویس… (Enter برای ارسال، Shift+Enter برای خط جدید)" required></textarea><button class="primary" id="send" type="submit">ارسال پیام</button></form>
+    <div class="bar"><div class="tools"><button id="clear">پاک‌کردن گفت‌وگو</button><button id="export">خروجی متن</button></div><span class="status">حافظه محلی همین مرورگر</span></div>
+  </section>
+
+  <details class="setup">
+    <summary>تنظیم اتصال موتور هوشمند</summary>
+    <label for="api">آدرس پایه Cloudflare Worker (بدون مسیر انتهایی)</label>
+    <input id="api" type="url" placeholder="https://your-worker.workers.dev">
+    <div class="tools" style="margin-top:10px"><button id="saveApi">ذخیره آدرس اتصال</button></div>
+    <p class="notice">این صفحه رابط کاربری عمومی است. برای فعال‌شدن پاسخ هوشمند باید Worker نسخه جدید منتشر شده و آدرس آن اینجا ثبت شود. هیچ کلید API را در این صفحه وارد نکن.</p>
+  </details>
+  <p class="notice">پیش‌نمایش MVP: تاریخچه این نسخه در حافظه مرورگر نگهداری می‌شود و هنوز حافظه ابری دائمی، صدای زنده یا آواتار متحرک فعال نیست. اطلاعات محرمانه، رمزها و اطلاعات حساس مشتریان را وارد نکن. پاسخ‌ها توسط هوش مصنوعی تولید می‌شوند و در صورت نیاز باید توسط انسان بررسی شوند.</p>
+</main>
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  let persona='tia', busy=false;
+  const names={tia:'تیا',mahnoosh:'ماه‌نوش',duo:'تیا و ماه‌نوش'};
+  let histories=read('metatya_tia_mahnoosh_history_v1',{tia:[],mahnoosh:[],duo:[]});
+  function read(k,f){try{return JSON.parse(localStorage.getItem(k))||f}catch(e){return f}}
+  function save(){localStorage.setItem('metatya_tia_mahnoosh_history_v1',JSON.stringify(histories))}
+  function api(){return localStorage.getItem('metatya_agent_api')||''}
+  $('api').value=api();
+  function render(){
+    const chat=$('chat'),items=histories[persona]||[];
+    chat.innerHTML='';
+    if(!items.length){chat.innerHTML='<div class="empty">گفت‌وگو با <b>'+names[persona]+'</b> را شروع کن.<br>یک مسئله، سؤال یا ایده مطرح کن.</div>';return}
+    items.forEach(item=>{
+      const box=document.createElement('div');box.className='msg '+(item.role==='user'?'user':item.persona||persona);
+      if(item.role!=='user'){const who=document.createElement('span');who.className='who';who.textContent=item.persona==='tia'?'تیا':item.persona==='mahnoosh'?'ماه‌نوش':names[persona];box.appendChild(who)}
+      box.appendChild(document.createTextNode(item.content));chat.appendChild(box);
+    });
+    chat.scrollTop=chat.scrollHeight;
+  }
+  function setPersona(p){persona=p;document.querySelectorAll('.persona').forEach(b=>b.classList.toggle('active',b.dataset.persona===p));$('chatTitle').textContent='گفت‌وگو با '+names[p];$('error').textContent='';render()}
+  document.querySelectorAll('.persona').forEach(b=>b.addEventListener('click',()=>setPersona(b.dataset.persona)));
+  $('saveApi').addEventListener('click',()=>{const v=$('api').value.trim().replace(/\/$/,'');if(v&&!/^https:\/\//.test(v)){$('error').textContent='آدرس باید با https شروع شود.';return}localStorage.setItem('metatya_agent_api',v);$('status').textContent=v?'آدرس اتصال ذخیره شد':'آدرس اتصال پاک شد';$('error').textContent=''});
+  function add(role,content,p){histories[persona].push({role,content,persona:p||persona});save();render()}
+  $('form').addEventListener('submit',async e=>{
+    e.preventDefault();if(busy)return;
+    const text=$('prompt').value.trim();if(!text)return;
+    const base=api();if(!base){$('error').textContent='ابتدا آدرس Worker را در «تنظیم اتصال موتور هوشمند» وارد کن.';return}
+    add('user',text);$('prompt').value='';busy=true;$('send').disabled=true;$('status').textContent='در حال دریافت پاسخ…';$('error').textContent='';
+    try{
+      const response=await fetch(base.replace(/\/$/,'')+'/api/agents/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({persona,messages:histories[persona].filter(x=>x.role==='user'||x.role==='assistant').slice(-12).map(x=>({role:x.role,content:x.content}))})});
+      const data=await response.json();if(!response.ok)throw new Error(data.message||data.error||'خطا در ارتباط با موتور هوشمند');
+      if(persona==='duo'&&Array.isArray(data.replies)){data.replies.forEach(r=>add('assistant',r.text,r.persona))}
+      else add('assistant',data.text,persona);
+      $('status').textContent='پاسخ دریافت شد';
+    }catch(err){$('error').textContent=String(err.message||err);$('status').textContent='اتصال ناموفق'}
+    finally{busy=false;$('send').disabled=false;$('prompt').focus()}
+  });
+  $('prompt').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('form').requestSubmit()}});
+  $('clear').addEventListener('click',()=>{if(confirm('گفت‌وگوی این شخصیت از حافظه همین مرورگر پاک شود؟')){histories[persona]=[];save();render();$('error').textContent=''}});
+  $('export').addEventListener('click',()=>{const text=(histories[persona]||[]).map(x=>(x.persona==='tia'?'تیا':x.persona==='mahnoosh'?'ماه‌نوش':x.role==='user'?'شما':names[persona])+': '+x.content).join('\n\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'}));a.download='metatya-'+persona+'-chat.txt';a.click();URL.revokeObjectURL(a.href)});
+  render();
+})();
+</script>
+</body>
+</html>
