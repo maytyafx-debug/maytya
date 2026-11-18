@@ -6,6 +6,7 @@ on:
       - feat/metatya-corporate-home
     paths:
       - "docs/metatya.html"
+      - "docs/company-*.html"
       - "docs/metatya-company.css"
       - "docs/metatya-company.js"
       - "docs/design-system/metatya-corporate-page-template.html"
