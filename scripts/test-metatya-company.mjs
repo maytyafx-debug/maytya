@@ -7,6 +7,13 @@ const js = readFileSync("docs/metatya-company.js", "utf8");
 const templatePath = "docs/design-system/metatya-corporate-page-template.html";
 const template = readFileSync(templatePath, "utf8");
 const designSystem = readFileSync("docs/design-system/metatya-corporate-design-system.md", "utf8");
+const corporatePages = [
+  "docs/metatya.html",
+  "docs/company-ecosystem.html",
+  "docs/company-technology.html",
+  "docs/company-trust.html",
+  "docs/company-contact.html"
+].map(path => ({ path, html: readFileSync(path, "utf8") }));
 
 const checks = [
   ["Persian RTL document", /<html lang="fa" dir="rtl">/.test(html)],
@@ -39,6 +46,19 @@ const checks = [
     const selectors = [".hero{", ".section-heading{", ".product-card{", ".site-footer{"];
     return components.every((name, index) => classes.has(name) && css.includes(selectors[index]));
   })()],
+  ["Integrated corporate pages share canonical shell", corporatePages.every(({html}) =>
+    /<html lang="fa" dir="rtl">/.test(html) &&
+    /metatya-company.css/.test(html) &&
+    /metatya-company.js/.test(html) &&
+    /<main id="main">/.test(html) &&
+    /class="site-footer"/.test(html)
+  )],
+  ["Corporate pages link to one another", corporatePages.slice(1).every(({html}) =>
+    ["metatya.html", "company-ecosystem.html", "company-technology.html", "company-trust.html", "company-contact.html"]
+      .filter(target => !html.includes(target))
+      .length <= 1
+  )],
+  ["Corporate homepage exposes integrated page navigation", ["company-ecosystem.html", "company-technology.html", "company-trust.html", "company-contact.html"].every(path => html.includes(path))],
   ["Design system documents canonical visual tokens", ["#050807", "#00ff9d", "#c5d0ca", "metatya-company.css"].every(token => designSystem.includes(token))],
   ["Design system preserves Academy separation and change control", /METATYA Academy/.test(designSystem) && /explicit approval/i.test(designSystem)]
 ];
@@ -61,6 +81,18 @@ const templateTargets = [...template.matchAll(/(?:href|src)="([^"]+)"/g)]
 for (const target of templateTargets) {
   const path = resolve(dirname(templatePath), target);
   checks.push([`Template local target exists: ${target}`, existsSync(path)]);
+}
+
+for (const {path, html: pageHtml} of corporatePages.slice(1)) {
+  const targets = [...pageHtml.matchAll(/(?:href|src)="([^"]+)"/g)]
+    .map(match => match[1])
+    .filter(value => !/^(https?:|mailto:|tel:|#|data:|javascript:)/i.test(value))
+    .map(value => value.split("#")[0].split("?")[0])
+    .filter(Boolean);
+  for (const target of targets) {
+    const targetPath = target.startsWith("/") ? `docs${target}` : `docs/${target}`;
+    checks.push([`${path} local target exists: ${target}`, existsSync(targetPath)]);
+  }
 }
 
 const failed = checks.filter(([, ok]) => !ok);
