@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{PAGE_DESCRIPTION}}">
+  <title>{{PAGE_TITLE}} | METATYA</title>
+  <link rel="stylesheet" href="metatya-core.css">
+  <link rel="stylesheet" href="metatya-shared-pages.css">
+</head>
+<body class="mt-shared-page">
+  <!-- Keep navigation consistent across all METATYA shared-capability pages. -->
+  <header class="mt-header">
+    <div class="mt-container mt-nav">
+      <a href="index.html" class="mt-brand" aria-label="صفحه اصلی METATYA">
+        <span class="mt-brand-mark" aria-hidden="true">M</span><span>METATYA</span>
+      </a>
+      <nav class="mt-nav-links" aria-label="ناوبری اصلی">
+        <!-- Add section anchors that exist on this page. -->
+        {{DESKTOP_NAV_LINKS}}
+      </nav>
+      <a class="mt-button mt-button-primary" href="index.html">صفحه اصلی</a>
+      <button class="mt-mobile-menu mt-button mt-button-outline" type="button"
+        data-mt-menu-toggle aria-expanded="false" aria-controls="mtMobileMenu">منو ☰</button>
+    </div>
+    <nav id="mtMobileMenu" class="mt-mobile-links" data-mt-menu hidden aria-label="ناوبری موبایل">
+      {{MOBILE_NAV_LINKS}}
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="mt-container mt-shared-hero">
+      <span class="mt-shared-kicker">{{EYEBROW}}</span>
+      <h1 class="mt-shared-title">{{HERO_TITLE_HTML}}</h1>
+      <p class="mt-shared-lead">{{HERO_DESCRIPTION}}</p>
+      <div class="mt-shared-actions">{{HERO_ACTIONS}}</div>
+      <div class="mt-shared-proof">{{PROOF_POINTS}}</div>
+    </section>
+
+    <!-- Repeat section and card patterns; do not copy shared CSS into page-specific files. -->
+    {{PAGE_SECTIONS}}
+
+  </main>
+  <footer class="mt-footer">
+    <div class="mt-container mt-footer-inner">
+      <span><strong>METATYA</strong> — زیرساخت مشترک، محصولات مستقل</span>
+      <span>© <span data-mt-year>2026</span> METATYA</span>
+      <a href="index.html">صفحه اصلی</a>
+    </div>
+  </footer>
+  <script src="metatya-shared-pages.js" defer></script>
+</body>
+</html>
