@@ -1,0 +1,54 @@
+name: Validate Tia and Mahnoosh MVP
+
+on:
+  pull_request:
+    paths:
+      - "agents-worker/**"
+      - "docs/tia-mahnoosh/**"
+      - ".github/workflows/agents-validation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Check Worker JavaScript syntax
+        run: node --check agents-worker/index.js
+      - name: Check browser JavaScript and required safeguards
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re, subprocess, tempfile
+
+          html = Path("docs/tia-mahnoosh/index.html").read_text(encoding="utf-8")
+          scripts = re.findall(r"<script>(.*?)</script>", html, flags=re.S)
+          assert scripts, "No inline browser script found"
+          with tempfile.NamedTemporaryFile("w", suffix=".js", encoding="utf-8") as f:
+              f.write("\n".join(scripts))
+              f.flush()
+              subprocess.run(["node", "--check", f.name], check=True)
+
+          required = [
+              "data-persona=\"tia\"",
+              "data-persona=\"mahnoosh\"",
+              "data-persona=\"duo\"",
+              "/api/agents/chat",
+              "metatya_tia_mahnoosh_history_v1",
+              "ابتدا آدرس Worker",
+          ]
+          missing = [item for item in required if item not in html]
+          if missing:
+              raise SystemExit("Missing UI requirements: " + ", ".join(missing))
+          forbidden = ["service_role", "SUPABASE_SERVICE_KEY", "OPENROUTER_API_KEY"]
+          found = [item for item in forbidden if item in html]
+          if found:
+              raise SystemExit("Secret-like values must not be in browser UI: " + ", ".join(found))
+          print("UI syntax and MVP safeguards passed.")
+          PY
