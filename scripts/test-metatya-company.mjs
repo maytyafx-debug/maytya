@@ -29,7 +29,16 @@ const checks = [
   ["Reusable template uses Persian RTL", /<html lang="fa" dir="rtl">/.test(template)],
   ["Reusable template uses canonical CSS and JS", template.includes('href="../metatya-company.css"') && template.includes('src="../metatya-company.js"')],
   ["Reusable template has accessible page shell", /class="skip-link" href="#main"/.test(template) && /<main id="main">/.test(template) && /aria-controls="mobile-menu"/.test(template)],
-  ["Reusable template uses canonical components", [".hero", ".section-heading", ".product-card", ".site-footer"].every(token => template.includes(token))],
+  ["Reusable template uses canonical components", (() => {
+    // Component names belong to the shared stylesheet, not to the HTML template.
+    // Verify both sides: each component is used in markup and styled in canonical CSS.
+    const classes = new Set(
+      [...template.matchAll(/\\bclass="([^"]+)"/g)]
+        .flatMap(match => match[1].split(/\\s+/))
+    );
+    return ["hero", "section-heading", "product-card", "site-footer"]
+      .every(name => classes.has(name) && new RegExp(`\\\\.${name}(?![\\\\w-])`).test(css));
+  })()],
   ["Design system documents canonical visual tokens", ["#050807", "#00ff9d", "#c5d0ca", "metatya-company.css"].every(token => designSystem.includes(token))],
   ["Design system preserves Academy separation and change control", /METATYA Academy/.test(designSystem) && /explicit approval/i.test(designSystem)]
 ];
