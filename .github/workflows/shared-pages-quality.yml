@@ -1,0 +1,42 @@
+name: METATYA Shared Pages Quality
+
+on:
+  push:
+    branches:
+      - feat/metatya-shared-capabilities-page
+    paths:
+      - "docs/shared-capabilities.html"
+      - "docs/metatya-shared-pages.css"
+      - "docs/metatya-shared-pages.js"
+      - "scripts/test-shared-pages.mjs"
+      - ".github/workflows/shared-pages-quality.yml"
+  pull_request:
+    paths:
+      - "docs/shared-capabilities.html"
+      - "docs/metatya-shared-pages.css"
+      - "docs/metatya-shared-pages.js"
+      - "scripts/test-shared-pages.mjs"
+      - ".github/workflows/shared-pages-quality.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: metatya-shared-pages-quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate reusable page system
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate shared page, assets, anchors and accessibility hooks
+        run: node scripts/test-shared-pages.mjs
