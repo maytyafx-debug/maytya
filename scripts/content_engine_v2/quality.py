@@ -13,11 +13,25 @@ DISCLAIMERS = {
     "financial": "این محتوا آموزشی است و توصیه مالی یا سرمایه‌گذاری نیست.",
     "medical": "این محتوا عمومی است و جایگزین نظر متخصص سلامت نیست.",
     "law": "این مطلب اطلاعات عمومی است و جایگزین مشاوره حقوقی نیست.",
+    "ai": "این محتوا آموزشی است؛ خروجی هوش مصنوعی ممکن است خطا داشته باشد و باید با منابع معتبر و بازبینی انسانی بررسی شود.",
 }
 _DIGITS = str.maketrans("۰۱۲۳۴۵۶۷۸۹٠١٢٣٤٥٦٧٨٩", "01234567890123456789")
 _BINOPS = {ast.Add: operator.add, ast.Sub: operator.sub, ast.Mult: operator.mul,
            ast.Div: operator.truediv, ast.Pow: operator.pow}
 _UNARY = {ast.UAdd: operator.pos, ast.USub: operator.neg}
+
+
+def required_disclaimer(domain: str) -> str:
+    """Return the mandatory domain disclaimer, or an empty string when none applies."""
+    if domain in FINANCIAL:
+        return DISCLAIMERS["financial"]
+    if domain in MEDICAL:
+        return DISCLAIMERS["medical"]
+    if domain == "law":
+        return DISCLAIMERS["law"]
+    if domain == "ai":
+        return DISCLAIMERS["ai"]
+    return ""
 
 
 def _sentences(script):
@@ -98,7 +112,7 @@ def evaluate(item: dict, *, existing_titles: set[str] | None = None, existing_it
     language_warnings = _language_warnings(body)
     checks["language_patterns"] = not language_warnings
     if language_warnings: errors.append("عبارت نامفهوم یا مشکوک به خطای نگارشی: " + "، ".join(language_warnings))
-    required = DISCLAIMERS["financial"] if domain in FINANCIAL else DISCLAIMERS["medical"] if domain in MEDICAL else DISCLAIMERS["law"] if domain == "law" else ""
+    required = required_disclaimer(domain)
     disclaimer_text = str(item.get("disclaimer") or "")
     checks["disclaimer"] = not required or required in (body + " " + disclaimer_text)
     if not checks["disclaimer"]: errors.append("هشدار حوزه تخصصی درج نشده است.")
@@ -117,4 +131,6 @@ def evaluate(item: dict, *, existing_titles: set[str] | None = None, existing_it
     if not checks["formats"]: errors.append("قالب انتشار نامعتبر است.")
     score = round(100 * sum(bool(v) for v in checks.values()) / max(1, len(checks)))
     return {"ok": not errors, "score": score, "checks": checks, "errors": errors, "near_duplicates": near,
-            "decision": "eligible_for_human_review" if not errors else "blocked_for_revision"}
+            "decision": "eligible_for_human_review" if not errors else "blocked_for_revision",
+            "source_content_review": "human_review_required",
+            "source_verification_scope": "URL availability and source metadata only; factual entailment is not automated"}

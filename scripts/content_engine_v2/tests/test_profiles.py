@@ -8,6 +8,12 @@ class ProfileProviderTests(unittest.TestCase):
         olympic=build_prompt(domain="sport",tab="تمرین",audience="sport_olympic",source_pack=[])
         self.assertNotEqual(beginner,olympic)
         with self.assertRaises(ValueError): build_prompt(domain="sport",tab="تمرین",audience="beginner",source_pack=[])
+    def test_ai_prompt_names_the_four_official_nist_functions(self):
+        prompt=build_prompt(domain="ai",tab="آموزش",audience="beginner",source_pack=[])
+        for function in ("Govern", "Map", "Measure", "Manage"):
+            self.assertIn(function, prompt)
+        self.assertIn("وجود یا پاسخ‌دادن یک نشانی اینترنتی", prompt)
+
     def test_json_parser_accepts_fenced_json(self):
         fence=chr(96)*3
         raw=fence+"json\n{\"title\":\"نمونه\"}\n"+fence

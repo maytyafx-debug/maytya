@@ -26,7 +26,7 @@
       "formats": ["website", "telegram", "instagram_reel", "instagram_carousel"],
       "short_script": ["پاسخ روان، الزاماً پاسخ درست نیست.", "زمینه، معیار سنجش، ریسک و نظارت انسانی را بررسی کن.", "خروجی را راستی‌آزمایی کن؛ نه اینکه فقط به لحنش اعتماد کنی."],
       "sources": [{"title":"AI Risk Management Framework — NIST","url":"https://www.nist.gov/itl/ai-risk-management-framework"}],
-      "disclaimer": "این محتوا آموزشی و عمومی است.",
+      "disclaimer": "این محتوا آموزشی است؛ خروجی هوش مصنوعی ممکن است خطا داشته باشد و باید با منابع معتبر و بازبینی انسانی بررسی شود.",
       "status": "draft"
     },
     {
