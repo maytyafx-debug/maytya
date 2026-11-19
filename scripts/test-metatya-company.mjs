@@ -95,6 +95,22 @@ for (const {path, html: pageHtml} of corporatePages.slice(1)) {
   }
 }
 
+
+const refinementCssPath = "docs/metatya-corporate-refinement.css";
+const refinementCss = readFileSync(refinementCssPath, "utf8");
+checks.push(["Corporate refinement stylesheet exists", existsSync(refinementCssPath)]);
+checks.push(["Refinement stylesheet respects reduced motion", /prefers-reduced-motion:reduce/.test(refinementCss)]);
+checks.push(["Mobile navigation preserves hidden state", /\.mobile-nav\[hidden\]\s*\{\s*display\s*:\s*none/.test(refinementCss) || /\.mobile-nav\[hidden\]\s*\{\s*display\s*:\s*none/.test(css)]);
+checks.push(["Corporate sitemap includes all five pages", ["metatya.html", "company-ecosystem.html", "company-technology.html", "company-trust.html", "company-contact.html"].every(name => readFileSync("docs/sitemap.xml", "utf8").includes("/" + name))]);
+for (const {path, html: pageHtml} of corporatePages) {
+  const pageName = path.split("/").pop();
+  const canonical = `https://maytyafx-debug.github.io/maytya/${pageName}`;
+  checks.push([`${pageName} loads the corporate refinement stylesheet`, /<link rel="stylesheet" href="metatya-corporate-refinement\.css">/.test(pageHtml)]);
+  checks.push([`${pageName} declares its canonical URL`, pageHtml.includes(`<link rel="canonical" href="${canonical}">`)]);
+  checks.push([`${pageName} declares its Open Graph URL`, pageHtml.includes(`<meta property="og:url" content="${canonical}">`)]);
+  checks.push([`${pageName} has a main landmark`, /<main\b[^>]*id="main"/.test(pageHtml)]);
+}
+
 const failed = checks.filter(([, ok]) => !ok);
 for (const [name, ok] of checks) console.log(`${ok ? "PASS" : "FAIL"} ${name}`);
 console.log(`\n${checks.length - failed.length}/${checks.length} checks passed`);
