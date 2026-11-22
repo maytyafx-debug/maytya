@@ -1,24 +1,24 @@
 {
- "updated": "2026-11-21T12:55:20+00:00",
+ "updated": "2026-11-22T12:47:11+00:00",
  "prices": {
   "BTC/USD": {
-   "value": 58763,
-   "change24h_pct": -4.71,
+   "value": 60726,
+   "change24h_pct": 3.25,
    "source": "CoinGecko"
   },
   "ETH/USD": {
-   "value": 1662.04,
-   "change24h_pct": -4.6,
+   "value": 1704.57,
+   "change24h_pct": 2.44,
    "source": "CoinGecko"
   },
   "SOL/USD": {
-   "value": 69.13,
-   "change24h_pct": -3.06,
+   "value": 70.27,
+   "change24h_pct": 1.54,
    "source": "CoinGecko"
   },
   "XRP/USD": {
-   "value": 0.905294,
-   "change24h_pct": -4.53,
+   "value": 0.922593,
+   "change24h_pct": 1.88,
    "source": "CoinGecko"
   },
   "EUR/USD": {
@@ -55,9 +55,9 @@
  "news": {
   "forex": [
    {
-    "title": "EUR/USD outlook: euro back above 1.1000 as dollar rally loses steam - StoneX",
-    "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNWjl3S1lZaWJwRVd2Y2tNRUtVZEczdnNGZWJqb3gxcUNiXzZVZVNIdHNhVnRNZzgxTktSSlA5MXdodUJ6NmZRZ2hyT0dnallmWW5uWUhGeWtDeVYxaVlXT25lTUhydm01U19UdHlRSjd5WXZ6akRwVXVYMndqV3I0NG82U0pEckwtbzNKTlBrb0NTZC1Vd2NXWkFPV2FKbE1sOW1yRzlXenJjMmdyWFdYSDlQeGxQclNHYXVYNzNGeTVhOHM?oc=5",
-    "published": "Tue, 17 Nov 2026 19:35:26 GMT"
+    "title": "US Dollar, Gold, Silver Outlook: 2026 Extremes and Key Levels to Watch - StoneX",
+    "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPUDljRjF3dng3YUhZZTB4RDk5Tzdzb2Y4Z3h4bm1JMHRlWERnX3F4X0NDQTFZSnBUSDhnN3lSTjQ3bzd1VHF3MW54U0tRZVR0ZzZPUkVzWFV2ZFJ4U2cyOHVSYkI0QmNGLVUyMk02QXBpSjNaRXFlQ2k0ZEFnWHZaWVhOWk1leVMxT3YySWdQcmcxcWNfM2k1TjBWTFJWMVlHVWdOQkFqbUJUMUt5bHVrdmVSUGNzM2Y3cVZiRXBDZGpzQnRN?oc=5",
+    "published": "Tue, 17 Nov 2026 11:20:30 GMT"
    },
    {
     "title": "EUR/USD, EUR/JPY: Hawkish Fed Weighs on Euro as Yen Bulls Struggle - FOREX.com",
@@ -70,19 +70,14 @@
     "published": "Thu, 19 Nov 2026 07:45:00 GMT"
    },
    {
-    "title": "US Dollar, Gold, Silver Outlook: 2026 Extremes and Key Levels to Watch - StoneX",
-    "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPUDljRjF3dng3YUhZZTB4RDk5Tzdzb2Y4Z3h4bm1JMHRlWERnX3F4X0NDQTFZSnBUSDhnN3lSTjQ3bzd1VHF3MW54U0tRZVR0ZzZPUkVzWFV2ZFJ4U2cyOHVSYkI0QmNGLVUyMk02QXBpSjNaRXFlQ2k0ZEFnWHZaWVhOWk1leVMxT3YySWdQcmcxcWNfM2k1TjBWTFJWMVlHVWdOQkFqbUJUMUt5bHVrdmVSUGNzM2Y3cVZiRXBDZGpzQnRN?oc=5",
-    "published": "Tue, 17 Nov 2026 11:20:30 GMT"
+    "title": "EUR/USD Price Forecast: Gains build above 1.0950, but can the pair break past 100-day SMA resistance? - www.tmgm.com",
+    "link": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxOLTI0a21MN200bGtqdGxsTU5abHFGMzRudWk4OFJTSHFvZUJ6aGY3bEFiazBjS2JSSEpaT2xQbmxWUEdHOS1VSnh0RGY2Y1hpYTI5UTJ3QTl6RnNLYVNoMHJwZ195ZWNxTVdwUUpmUWtyckVSUXhJM3ZnQnJKY29hSDQ3LTRkc1g0WHRseWlOTVBRV2VMeWh4aTlYWTFBcWk5cEhBdmJfNnZrMmdiYzlUMk1MYUNXeThkREF6Sk45R0ZSOFpqdGRKVWU2dGxjeW9IQkdub0NIcUt5SU1vbUV4dmZkQThGOG5HbU9kQ0FQWklGZ2p4LWdOVQ?oc=5",
+    "published": "Fri, 20 Nov 2026 15:47:02 GMT"
    },
    {
     "title": "Euro finds recovery elusive as Fed outlook turns increasingly hawkish - www.tmgm.com",
     "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNZWRIcGFhcUVJZE1CQTY0ZVVBV1hSMmlzVnAwVkJ1SDBrREwyNEJScDdUamZ3VUFIR09lSXVGc1VnVHNkRGFJdHA5RTY1SW1acDAxcHRHajY3WHdfSHkya3owNmtXTFBydVlRZ1Q4TjBFWXdvMVpsR3gtaVFzc1JQYmsxMWNHbGU4N1prLUVIUWVYSE5aMnNuUEo3Z1A5dllTUW5NVFN4a3Z2dVdJMUI4elVtaDhDLUNlYldNWmlEekJiSjh0alE3ZVNlNDM?oc=5",
     "published": "Thu, 19 Nov 2026 23:14:35 GMT"
-   },
-   {
-    "title": "Euro Little Changed Amid Hawkish Fed Signals and a Steady US Dollar - www.tmgm.com",
-    "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxPR2JlUFZRWTNLOU5TR3ppU1FzdFE3anZjLWFUSUMzRFBmNDFwT25QbDZHdHBUS1E5ZElTSnIyeUZfZXdEM2h0TnRWYUZBVGFnQlZnekJCamhpcnFiRmxqU1lhaEdkekpTN3JQdUtjam1xSUl0RnhTU21uNXZLNzVZUXpKRVNVNTlvbHVXZ3dCc2FHSDN6VWNzTC1RWDczM0RGTC15ek1JZWhxWkVkUU9pTml6Z1RpQjhWU0JNSkdFeFdhVEg1bHdhTEJRMkE4YmFpZDRz?oc=5",
-    "published": "Thu, 19 Nov 2026 08:17:00 GMT"
    },
    {
     "title": "EUR/USD, Gold Forecast: Two trades to watch - FOREX.com",
@@ -93,28 +88,23 @@
     "title": "Gold, EUR/USD Forecast: Two trades to watch 200826 - StoneX",
     "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPbU5VdjlxeURHSVBIckktWUlrUm9wZTFYY2l3Y21pbEcwcXRtUnpDbnF1YkZMalB2bFh3ZjdlV1pQWmhzQVhHZ3YzYURuSTNhbFNwQS03ZFNFZDhYX0FzeVR0WDd4SDJlck45N0JWSjd0dU5sNlRzeFJKbDlRQVFwV1hka3VmTWZ2TFgzZVUxUFJvR01mdWFDcjRnazg?oc=5",
     "published": "Tue, 22 Sep 2026 15:13:25 GMT"
+   },
+   {
+    "title": "Third Weekly Loss Still on Track for Euro Despite Modest Gains as US Dollar Softens - www.tmgm.com",
+    "link": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxON1RVVGdraHIzTFJGNS10cExlYWpXZ3A3NGlDRjUwNHY3aU52YnNTYktqOWQtQTBwdUdjTnZWSE1uSWlpMXlmYXlWc3EyelV0eGZyQUdnenJZdElaSkNWNGVKVkxJVUdwTVlUbDNOV3YxOE5UVWw1WXdrWUdFZ0UzNjh4dTIyX2U4LUZRUE96WGR5M3RtZDNDZHpLRmRvY0thRU55OUJoSVU0QUFxdTNEYmptMEVvLXNLXzI3XzlNbUxsZEZ1UU14ZzBUMUdtampH?oc=5",
+    "published": "Fri, 20 Nov 2026 21:13:27 GMT"
    }
   ],
   "crypto": [
    {
+    "title": "Ether Falls 10% to Near $1,550 as Four-Week Loss Reaches 35% - Bitcoin Foundation",
+    "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNSzMtVkNLTDRTTTlydkEwT3dsdFp0THNUeGRVN1ZaX2lMcTVBUXNVc29kSHZudWFMTHhIZE9EZFRUbVFFZnJ1d0dKbUpHcHZwbzdpOUlrQkduVGQwSUw5bjJwSmJTdm9NM25ZWFVPRkJfZ2x0a3JCcHJKd0FpMjJUYXlNMXU1Qy1kdGNIRl9mS1Jqa2JJVDR4QmgwQld5bkxIR2ppeA?oc=5",
+    "published": "Sat, 21 Nov 2026 06:37:33 GMT"
+   },
+   {
     "title": "28 Ethereum ETFs (Plus Their Fees, Holdings and Promotions) - NerdWallet",
     "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFA5eF9FN29MUmNWR2M5TDBBdE5pZ2VqSFhramwxb2p2QVg5c3ZkODliVUhGdERHaDNHeVczRXRZRGh0alc1RVdJbi1yS19XZ0RieTZCaEpBRHUyOTBVWmpyV0dMZFVIUG8?oc=5",
     "published": "Mon, 16 Nov 2026 08:00:00 GMT"
-   },
-   {
-    "title": "Cathie Wood’s ARK Cut Ethereum and Solana Funds to Buy $90 Million of Anthropic - 24/7 Wall St.",
-    "link": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxNdmItNTRneWZqX3UwYmxRendRVl83OFdmOE93ZjJwUkhPRXNUQjNpQVpzblJMY0RkSTAybWtEWWtZZ1ZiVkFYNUN2ZThNQ241WWJPTHU4bG9qNy1TV2UzY1p3NURKbUtDcGVoOHliRDhyUU9iYWRFSTFLeGNkMWUyaE5idDFhdUNqV05hc3owSENLTUVUWlFvY1ozam5ucEFaTGpQbkZZQUNrQi1PNW9IQkh4YkF2eGtvT2toZlRGSDF2dzN2dTVMSnV3TnhWckt5ZFE?oc=5",
-    "published": "Fri, 20 Nov 2026 19:19:00 GMT"
-   },
-   {
-    "title": "VanEck Drops Gemini As Custodian Of Its Crypto ETFs - Yahoo Finance",
-    "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPWllmbVVQX2VmWTkwRGhtNmJURnhQZWIzdVZ6WFBKR2NubGFpV3RlUVZNeTBqYXZWMnI3TmNYY2FqY1lwSGtQWUIza1BjSk0tbHFLU2NtQTJKbkMxdmk0QzRGNGc4ajRWNmlid0VuZ3lLMWZaZGJSb2hlS2Faa01jRmJxT0dXRzVvTFk0T0VzZmg1emRHS3JtTTNaNTY1TkJyRjNF?oc=5",
-    "published": "Fri, 20 Nov 2026 14:51:00 GMT"
-   },
-   {
-    "title": "Crypto Market Today, Nov. 20: Bitcoin Plunges Below $60,000 as Wall Street's Sell-Off Spreads to Crypto - The Globe and Mail",
-    "link": "https://news.google.com/rss/articles/CBMilAJBVV95cUxQVXJwQ0w3bWlJcEY1bUpadEtYX05Mc2gxZUlJTmVMMHRLencyak0wbkNDajcyeWhKSjVXWGNlQUxjQ0RfSnNVeDI1WnRPaDZLcDlmaXU5b2RFdDhla1FRby1PQ3FEMmFHVVctNzBMd0hxQ2ZDM1VXU0k1bGk3Vmx2Ql9iSFpycTh0X0YwbVhXT1BJb2hXSDBTbzd5TXg3T1lmNUZTeEVtNDVTaGN0c0NJOTZJMUNHbnVibDV6SzMwSzRpaU1JSDc3MWRnRWhGTHZibEVZQURnNXV4dGNJMnVUYXNZX1Z2aFpVMTdiZHN5MWJYUW1VamdyWjk2a2pLMFM5OE5xZFNLaEVzNnNNR3BDSmJScjE?oc=5",
-    "published": "Fri, 20 Nov 2026 22:30:35 GMT"
    },
    {
     "title": "BTC, ETH, SOL news: VanEck drops Gemini as custodian of its bitcoin, ether and SOL ETFs - CoinDesk",
@@ -127,23 +117,28 @@
     "published": "Fri, 20 Nov 2026 05:59:00 GMT"
    },
    {
-    "title": "Bitcoin, Ethereum, XRP Face Pivotal Week After $1.49B ETF Exodus - Benzinga",
-    "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOVmlrNHFidlpPN1c1TWJteE5YN1otOWlObXhnRFA0UkJFVjd5WG5GM29rTHdVUUJTby1nV1ZWYXZzUWZyQzg4NGZ0ZFJXeDNPcTNjRzlYLWdJZkc0X3l5ZEQ5bEpXNTBmTDdhVmRuQnMzRzRpb3FSa1AyWEhIOEViQkpSLVRoTkdvbjRvbWl0VldOZ3N2YWpDdmRVdzRMVGFmYXZia0EwRndVQjFvcDUwbEU5dDV0ajRPMmlvOXVMWGc?oc=5",
-    "published": "Mon, 16 Nov 2026 16:59:06 GMT"
-   },
-   {
     "title": "What's next Bitcoin, Ethereum and XRP rise? - FXStreet",
     "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNU2lzbXlnd2x0NTV1RjFrOU5QQWd6WnBqU0lGUDFfRE5nT2V6NTRCSmNIb0xEQ2I5TEdCUzQwN21wY3ctc2dJT0dQMDlKQXpFX3RNZ1ZhWWdJWjlBU25MV3pnemQ3MHJCLUhCZVlqeWw4WWhKS2NyMnVwNjU4RlNpTE02eDhVSy0zdFVkQ1FOOXc4V1VEX3pwYnlhREJkaFVVNFF4X01CVVJaSmNpeldVal9ucXVCQ1gwZVNv?oc=5",
     "published": "Thu, 19 Nov 2026 11:25:30 GMT"
+   },
+   {
+    "title": "VanEck Drops Gemini As Custodian Of Its Crypto ETFs - Yahoo Finance",
+    "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPWllmbVVQX2VmWTkwRGhtNmJURnhQZWIzdVZ6WFBKR2NubGFpV3RlUVZNeTBqYXZWMnI3TmNYY2FqY1lwSGtQWUIza1BjSk0tbHFLU2NtQTJKbkMxdmk0QzRGNGc4ajRWNmlid0VuZ3lLMWZaZGJSb2hlS2Faa01jRmJxT0dXRzVvTFk0T0VzZmg1emRHS3JtTTNaNTY1TkJyRjNF?oc=5",
+    "published": "Fri, 20 Nov 2026 14:51:00 GMT"
+   },
+   {
+    "title": "Crypto Market Today, Nov. 19: Bitcoin Approaches $60,000 as ETF Outflows Surpass $2.5 Billion in 2026 - The Motley Fool",
+    "link": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxOVC1yNlUxdFdOVG15TG1yblczMm02MFZnblBPUzF3bUZfV1FaQ2dMMHRrb1hWSHo4OTl0cGpVd2RUdnA5dVlGeDhuRTA4TGVZY0ttbTRQRHE2VVRIa2g3c1JMV0RxV1NvRXdxVDQxR1hwb1Q2MVFrTFh0cS14MHhHc1lob0szOGJxSWdYQmNVWEdKR2NBbU5TdURqTUZYcWl4UmIxZ3ZUaTI2aWJDZndmRjMyRkZLVzE0Z0xxUlpvM2JnUU80djFMUU5GM3Rsa2QwckIxTFYzMGR4TTNTTXVRRUF2MVNkakdBbHpWd2ZldDdwTkFlb2c?oc=5",
+    "published": "Thu, 19 Nov 2026 22:25:02 GMT"
+   },
+   {
+    "title": "Crypto Today: Bitcoin, Ethereum and XRP Advance Amid ETF Capital Outflows - www.tmgm.com",
+    "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNdDJ2c0dlV2gyMl8xblVWeXU2aGtEeUF3MFNXcVBDSW5rOWl3cEthN2hjZ1d1WHhHZVZUX2FxRE5WUWhYZXd4QlR4QU5ERlpzODY3dURXa0lGLUJteUY0TC1abWhvN3E1VWJqc2pLa1E5WXQwX0tYWVlwMEg2cjdaMHZYMjR6Vjg2Wk9ObEg4UHhBTXFlLUlwUWdSNXp4dFhBVG44Z0pEOFdhLVptTy1adHE5Y3oybE5hNDBjMkRQLXpyX2xEOUdN?oc=5",
+    "published": "Thu, 19 Nov 2026 13:58:39 GMT"
    }
   ],
   "bourse": [],
   "sport": [
-   {
-    "title": "Elderly Urged: Strength Training, Not Just Walking - 조선일보",
-    "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOSzdrdng5ZURhN1RXamE1VjVKTDBCa3hFQzR1ZWk0Y2hwOURMRnBGWUtYOVFuejlROC1mRVJRalM0RmQyOVZDS2d3M05YZVh0QlVZTldHNC1pUVFYamo5bFNqUkVjbnJQb050MDM1V1ZvZmlzd0ZHZEhhUkpRWEZmZTZqblZkT0VkU2dESw?oc=5",
-    "published": "Thu, 19 Nov 2026 05:00:20 GMT"
-   },
    {
     "title": "'Age Appropriate': I’ve taken creatine for 10 years. Does it help healthy aging? - Medical News Today",
     "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQN2VZa3B6WjZ6RkVVSXBOSFBDZlFoMy1NUk90SHdHSU5MMnBPU2lWVnIycmE4d3MyOUVuRlI0dDNUdkJlNlZUbkE5Z0Z5SVo0TmY2NTEyT3hsZEs2eUVyNGNVMzU1cGdBNkRvVXNNbTEybjVnOHZnM2x4WWh0cFhaSlgxa0VNN3N0SWVfajRIRXFhY0dNdkRVSUtrbExTNmxIcXc?oc=5",
@@ -170,31 +165,31 @@
     "published": "Thu, 20 Aug 2026 07:00:00 GMT"
    },
    {
+    "title": "Tonum Health Announces Strategic Partnership With Euvita Health to Integrate Research-Backed Supplements Into Personalized Medicine and Longevity Programs - PR Newswire",
+    "link": "https://news.google.com/rss/articles/CBMitAJBVV95cUxNMENMSUdXNE5rTDdiT3N5RGx3R0wxQzZhcVNYVkc4NXd6cTJnTldhSGViTXZhcC1fTFU0M0NPWG8xaGpjWGdRVll0c2tVZFFZa2F1Rl9oUUk2eldXdEtsMmFDd1IwQ3BkajByYjhQWDRXaDVhTmM3dHhoN3NrNmhKWnpiU1hlTjVYQVlqb0dzRkZ5elhVR0lQQ0hCc2RQdERoOVZYLVRabFY2dGlQV0dtVWJhSjFnRHRnU1E2M1BLV05OZWZDd3E2eERJTmxFbjVuR1VJME1lcU9aYUlyeDc0c2pUQmk3aG5ZYkxzcm9WTlJYUjlERW9uWjg2dDNjS2IwSHpYaUo3bnNtTXBwMmF2cmI0dnJnZkNxc2tGcWw4emduY3dnZk5rdmdsRDF0YkNlWHZBOA?oc=5",
+    "published": "Wed, 18 Nov 2026 12:35:00 GMT"
+   },
+   {
     "title": "How can strength training build healthier bodies as we age? - National Institute on Aging (.gov)",
     "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPbFdvTW9oMHctUk1mNF90WVBxRHp1WVhLcjFWbWdBMTk1REV5OGhmTWVxZGpBNWU1djhxbnpVdnFCa1FBNkx6ejFhS0tpbmp6OFpaNjJwaDE4Yi16NzZSUW1vNXlRM1ZQbGxxWVVwLXBnQ25QZzAwd1F3OEVuaTJ6SS1nY2pfN1g5SWk4aA?oc=5",
     "published": "Thu, 30 Jun 2022 07:00:00 GMT"
    },
    {
-    "title": "9 meals and snacks for strength training you'll actually want to eat - BBC",
-    "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE41Vk9uQzNxMlFkOXJ2YjlEZGRYUFdQbmNQLUxTNUdQT3hOUC0ySmZKb3pUUWV1QkhkSl9xeWoxNEp6RkdZNktLTnBxVFl0N1JKV0R0UEdhSzkzdWRP?oc=5",
-    "published": "Fri, 13 Mar 2026 07:00:00 GMT"
+    "title": "Study: Muscle-building response to weight training differs among high-protein animal foods - University of Illinois Urbana-Champaign",
+    "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOd01qLWF2TXVvb2VYTFJjWGJOMmlpWU0tWVB0dUNSVGFIYmNiOGgtRzNRNFRJU2ZuNkRyYjZTSXVueUNSM2t5Um9fQWptcWEzVkt6QkhSS1hQS3lTRjZVaG9jYUE2OWczWEVRMVVmNkFERE5ZYW9IQ25rLVJDZUZSZ1Y5a2RfX0xNOXJ6d0hWN1JtNWRuSnVFalctTTZFTFQyVXJpbVF3dk1pMFJEejE1TjhnYnd6VDA?oc=5",
+    "published": "Mon, 15 Sep 2025 07:00:00 GMT"
    }
   ],
   "psychology": [
    {
-    "title": "سخنرانی و پنل تخصصی مهرماه ۱۴۰۵ - YouTube",
-    "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFB5N213NnZGT0VXUnpldHp1TG94TG4zdWQ2WlZ0VjNQRVhUUVVUMGFiRU9ISkhIQ3UwMDRXMVIwS0lOUUp6eklkd3Z6dkVmQVRxaVhublROQldHQmh0?oc=5",
-    "published": "Fri, 23 Oct 2026 07:00:00 GMT"
-   },
-   {
-    "title": "Study highlights need for trauma-informed, community-based mental health support for refugees in India - The Hindu",
-    "link": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxNLXotcjhzTEZsaTRDb3FUNUpkU0swaHAtZGJ6WkE0LVVCTTJkSVFEbWo2Z051RGZuX0VaS2R5MXltZ3hPWDJzaG9vbjRaSklQSjItY1F0N09FNThOeVNaY0RRRkJEOUtMaUdrU1JTdExhN1dmQWRJNFNzMTlvUmpMczEtYkdxY2Vnc3JOdE0xMnBXZzh6RVI3Tnh3ZWVOcTEyY0ZIaDNQbjFMUEhHLUJBY1k5cEpnRTBOSWZ0ZllfUkRHRDRaYTRpSFU0eFplVUlISHZSenRaUWc1cXd4WjZyaGpfbjJLYjBncmJ5bmQ0dnpvS2Z50gH7AUFVX3lxTE10bjktQXB2bHhyM2lIaWlFeW4wX3hjY2JuUVM1bGFEWVdNd3JMX3lHY2dWNlNFMW1iQU51MWR0em9YaWZhczB4OTNpS1k5bVpuRUxCX0JtX0dIMUVwekxqSDhpdkIzQW84NUZ5dHJqQjlZc19HeWJITHpBeVFvV0dfaHZYaDJ4RDF3WmI2VjFtdzJiSWdEVEVjZWdDOVgxaVFaRE9fUmNJUEFxM2FhRWFNcjR4eUs2WUxqby1MdjlocXFGeEFUOFVvRUhKNmRMcDdVOWk5UWhjV2FWSUdlNjk1Q0RrQVZ5YktXSXFOZlpxR2VvVE03Z1dUVWtR?oc=5",
-    "published": "Sat, 21 Nov 2026 11:30:52 GMT"
-   },
-   {
     "title": "Childhood neglect, unmet needs, mental health struggles: this is the making of a Neet | Mark Mon-Williams - The Guardian",
     "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOdGhJelhjUXlwVjBYR3FZdUtaZktjbzI2SGYzaFJjNlh1UzRlVjM5dkpnOWFpbVJwVGNaeW4xdVBOS3lUVHcwanRwV3c0UHBiNWw3MmJma20tcWRWQW82c1U4b0wyTllXamw3alNEWVBqMk5fektzTV94RU1MbVRaU1p2LU5HamNrTXIwN19iS2YzRnVlenAzVG5ham5PeGk2WEE3RnJtY2p5YTVRWGstWEhodUlKZkZtbmhv?oc=5",
     "published": "Thu, 19 Nov 2026 11:34:00 GMT"
+   },
+   {
+    "title": "Mental illness, mental health, and mental well-being - npj Mental Health Research - Nature",
+    "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFBpQmdLLTVXdkp4WmVTZm0xbXl4c2tTcTU5Vy1DSWIxLTRUbFlpZm8xRUtFVmQxcDlRWGZwclJObXNxZzVuZHpRaUNwZjdKM0UtalluMURJMU5FWjd5aFdr?oc=5",
+    "published": "Sat, 14 Feb 2026 08:00:00 GMT"
    },
    {
     "title": "Mental health of older adults - World Health Organization (WHO)",
@@ -202,9 +197,9 @@
     "published": "Mon, 20 Jul 2026 07:00:00 GMT"
    },
    {
-    "title": "Prevalence and severity of mental health problems in early-career researchers: a systematic review and meta-analysis - Nature",
-    "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9iZEZWOV9qanJwNHhqRTN3UFBCdFZQNXJnbERrWDN1alJheFJhWXZvSjJ2UGg0bmhTVnNXaXl5M2R0YlE0YnpKb2c3MUstX2FuaGRLZDE1WXJhZlhRcXNj?oc=5",
-    "published": "Mon, 29 Jun 2026 07:00:00 GMT"
+    "title": "Study highlights need for trauma-informed, community-based mental health support for refugees in India - The Hindu",
+    "link": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxNLXotcjhzTEZsaTRDb3FUNUpkU0swaHAtZGJ6WkE0LVVCTTJkSVFEbWo2Z051RGZuX0VaS2R5MXltZ3hPWDJzaG9vbjRaSklQSjItY1F0N09FNThOeVNaY0RRRkJEOUtMaUdrU1JTdExhN1dmQWRJNFNzMTlvUmpMczEtYkdxY2Vnc3JOdE0xMnBXZzh6RVI3Tnh3ZWVOcTEyY0ZIaDNQbjFMUEhHLUJBY1k5cEpnRTBOSWZ0ZllfUkRHRDRaYTRpSFU0eFplVUlISHZSenRaUWc1cXd4WjZyaGpfbjJLYjBncmJ5bmQ0dnpvS2Z50gH7AUFVX3lxTE10bjktQXB2bHhyM2lIaWlFeW4wX3hjY2JuUVM1bGFEWVdNd3JMX3lHY2dWNlNFMW1iQU51MWR0em9YaWZhczB4OTNpS1k5bVpuRUxCX0JtX0dIMUVwekxqSDhpdkIzQW84NUZ5dHJqQjlZc19HeWJITHpBeVFvV0dfaHZYaDJ4RDF3WmI2VjFtdzJiSWdEVEVjZWdDOVgxaVFaRE9fUmNJUEFxM2FhRWFNcjR4eUs2WUxqby1MdjlocXFGeEFUOFVvRUhKNmRMcDdVOWk5UWhjV2FWSUdlNjk1Q0RrQVZ5YktXSXFOZlpxR2VvVE03Z1dUVWtR?oc=5",
+    "published": "Sat, 21 Nov 2026 11:30:52 GMT"
    },
    {
     "title": "Patients are bringing AI to therapy - American Psychological Association (APA)",
@@ -212,14 +207,19 @@
     "published": "Tue, 16 Jun 2026 13:27:45 GMT"
    },
    {
-    "title": "Psychologists say patients are turning to chatbots as mental health professionals - American Psychological Association (APA)",
-    "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPUXR0d3BFV2dVa2tzbTRoS1F3a2ZXemVSdmNZeDVyU2UwRDJhaHQ0Skg5RE1VZUlObTlEQnkxbm02MHc0UXd0SUd6Y3gtZjFTaTFfNlJ1NGZWSm1GMWhHa1pqVjZ3SS1wamc1YkM3UUFCOU9CVF9JOTFYUGFNZUliMEhfYkd2QQ?oc=5",
-    "published": "Tue, 16 Jun 2026 07:00:00 GMT"
-   },
-   {
     "title": "Social Media and Youth Mental Health: Does More Use Always Mean More Harm? - Yale School of Medicine",
     "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNUGt2VElzX05xT0FtZ3Bic1cxVmpEa1BlNVRqQlJjRUg3UVZBRThyYUMwdDgtWWRrenBQTDVYNFFlNEhnbDNzV1M1MWxRWXRSQTJWdlBkcGYtbkM2OUl2V1Fad1lGMmdhZlY2Q3RnVzJCVGRMUHRPNHBWa19TQ1ZwYVFn?oc=5",
     "published": "Mon, 30 Mar 2026 07:00:00 GMT"
+   },
+   {
+    "title": "Addressing Mental Health in Athletes - Mass General Brigham",
+    "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOemxFb0E5UEo1UTFybktNcHV4R3BGRTVaSThZVVlBYmk5My0ySnRiUnBsVVlMR1ZQYWV0V0N6MVcxYUViVVFRWGJqb3d6NnBTSklESXJZdkpSNENUSXg5YmN2SmsxMjRRdk9aTWdxQm5LNWZ5eHRILVJqdy04UXNKZjBWdmU0WGxROXplRWVFVzZVTHNPQXFiTEdPTQ?oc=5",
+    "published": "Tue, 17 Feb 2026 08:00:00 GMT"
+   },
+   {
+    "title": "Prevalence and severity of mental health problems in early-career researchers: a systematic review and meta-analysis - Nature",
+    "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9iZEZWOV9qanJwNHhqRTN3UFBCdFZQNXJnbERrWDN1alJheFJhWXZvSjJ2UGg0bmhTVnNXaXl5M2R0YlE0YnpKb2c3MUstX2FuaGRLZDE1WXJhZlhRcXNj?oc=5",
+    "published": "Mon, 29 Jun 2026 07:00:00 GMT"
    }
   ],
   "business": [
@@ -239,9 +239,9 @@
     "published": "Wed, 15 Apr 2026 07:00:00 GMT"
    },
    {
-    "title": "Beyond Startup Funding: Are Investors Looking at Established Small Businesses? SMERGERS Examines the Trend - India Technology News",
-    "link": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQOTJuVGJtMU9ONEh1bF94bjBmZVpQbVEtQnVmWm1mUEJTM0EtTGF1dmlkTm9XajBrX2dVeUJMVzNLMzNyM2dLVkQ4cDhBY0o0SktLV1p0Q2p3WnRIN0wwUnBWeFNMZVhyOWVoSWlrN29fWUpDa25yTHpnUTMwRElZQk9sQWRoU2R4VDBNem5iRHQ2VktCNVBfRTFodXRTdktuZWhtRUo1WnBVVWEyZGVQdmVIcS1seGRRR1NEbnhFNUtUbnB0QkxGQ1U5UkZHZmIyMWc?oc=5",
-    "published": "Thu, 19 Nov 2026 14:17:55 GMT"
+    "title": "America’s startup boom offers hope for the future of work - The Economist",
+    "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQbVhpV1h1NGVXd3VUNlN1TzU0UGF2bXUxYTM1SkEyV0RVaDNJaXowN21wVmprUGFjZEZCck96Q1RqcGJ4T2tHTDJSMkxZSUZiNVVBM0hQZjdvak0waWNYY29Tcy1UQTZ0VWJSanh1Z19fTmt2cjJDQW14WTBsQTRrZ1pfTjFUTXJnT3gtZGFJNExVTTNFZTNYUHBUb1BQZTMwd1NR?oc=5",
+    "published": "Thu, 30 Jul 2026 07:00:00 GMT"
    },
    {
     "title": "40 Startup Business Ideas That Could Take Off in 2026 - NerdWallet",
